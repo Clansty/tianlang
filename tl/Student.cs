@@ -148,7 +148,7 @@ namespace tianlang
             if (origin.IndexOf("金阊") != -1)
             {
                 branch = true;
-
+                origin = origin.GetRight("金阊").Trim();
             }
             if (origin.IndexOf("初") != -1)
                 junior = true;
@@ -160,7 +160,10 @@ namespace tianlang
                 else
                     tmp = origin.Substring(origin.IndexOf("高"), 2);
                 if (tmp != "")
+                {
                     grade = tmp;
+                    origin = origin.GetRight(tmp).Trim();
+                }
             }
             catch
             {
@@ -168,10 +171,47 @@ namespace tianlang
                 if (origin.IndexOf("届") != -1)
                     tmp = Convert.ToInt32(Regex.Replace(origin.GetLeft("届").Trim(), @"[^0-9]+", "").Trim());
                 if (tmp > 0)
+                {
                     enrollment = tmp - 3;
+                    origin = origin.GetRight("届").Trim();
+                }
             }
 
+            if (origin.IndexOf("班") != -1)
+                origin = origin.GetLeft("班").Trim();
+            try
+            {
+                int tmp = 0;
+                tmp = Convert.ToInt32(Regex.Replace(origin.Trim(), @"[^0-9]+", "").Trim());
+                if (tmp > 0)
+                    Class = tmp;
+                else
+                    Convert.ToInt32("boom"); // goto catch
+            }
+            catch
+            {
+                if (origin.IndexOf("一") != -1)
+                    Class = 1;
+                else if (origin.IndexOf("二") != -1)
+                    Class = 2;
+                else if (origin.IndexOf("三") != -1)
+                    Class = 3;
+                else if (origin.IndexOf("四") != -1)
+                    Class = 4;
+                else if (origin.IndexOf("五") != -1)
+                    Class = 5;
+                else if (origin.IndexOf("六") != -1)
+                    Class = 6;
+                else if (origin.IndexOf("七") != -1)
+                    Class = 7;
+                else if (origin.IndexOf("八") != -1)
+                    Class = 8;
+                else if (origin.IndexOf("九") != -1)
+                    Class = 9;
+                else if (origin.IndexOf("十") != -1)
+                    Class = 10;
 
+            }
         }
     }
 }
