@@ -20,8 +20,10 @@ namespace tianlang
          *     开始制作 query
          * 39: query 基本完成
          * 40: GetUid 测试
+         * 41: Student 类
+         *     测试 Fill 方法和从数据库初始化
          */
-        public const int version = 40;
+        public const int version = 41;
 
 
         public const string wp= "1980853671";

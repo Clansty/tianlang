@@ -78,6 +78,25 @@ namespace tianlang
                                 if (Msg != "")
                                     S.Test(C.GetUid(Msg).ToString());
                             }
+                            if (Msg.StartsWith("解析"))
+                            {
+                                Msg = Msg.Replace("解析", "").Trim();
+                                if (Msg != "")
+                                {
+                                    Student s = new Student();
+                                    s.Fill(Msg);
+                                    S.Test(s.ToString());
+                                }
+                            }
+                            if (Msg.StartsWith("info -q"))
+                            {
+                                Msg = Msg.Replace("info -q", "").Trim();
+                                if (Msg != "")
+                                {
+                                    Student s = new Student(Msg);
+                                    S.Test(s.ToString());
+                                }
+                            }
                             Repeater.Enter(Msg);
                             Si.Enter(Msg);
                         }

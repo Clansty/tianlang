@@ -47,6 +47,10 @@ namespace tianlang
 
         }
 
+        public Student()
+        {
+        }
+
         // 成员
         public int uid = 0;
         public string qq = "";
@@ -212,6 +216,20 @@ namespace tianlang
                     Class = 10;
 
             }
+        }
+
+        public override string ToString()
+        {
+            return $"uid: {uid}\n" +
+                $"qq: {qq}\n" +
+                $"name: {name}\n" +
+                $"class: {Class}\n" +
+                $"branch: {branch}\n" +
+                $"nick: {nick}\n" +
+                $"junior: {junior}\n" +
+                $"enrollment: {enrollment}\n" +
+                $"grade: {grade}\n" +
+                $"namecard: {nameCard}";
         }
     }
 }
