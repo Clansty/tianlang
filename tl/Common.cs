@@ -22,8 +22,9 @@ namespace tianlang
          * 40: GetUid 测试
          * 41: Student 类
          *     测试 Fill 方法和从数据库初始化
+         * 42: Student 完善，生产版本部署
          */
-        public const int version = 41;
+        public const int version = 42;
 
 
         public const string wp= "1980853671";
@@ -41,7 +42,7 @@ namespace tianlang
                 uid = Convert.ToInt32(r[0]);
             r.Close();
             if (uid == 0)
-                if (Db.Exec($"INSERT INTO user_info (QQ) VALUES ({qq})") == 1)
+                if (Db.Exec($"INSERT INTO user_info (QQ) VALUES ('{qq}')") == 1)
                 {
                     r = Db.QueryReader($"SELECT uid FROM user_info WHERE QQ='{qq}'");
                     while (r.Read())

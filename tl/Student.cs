@@ -20,12 +20,12 @@ namespace tianlang
             uid = Uid;
             DataSet data = Db.Query($"SELECT * FROM user_info WHERE uid={uid}");
             qq = data.Tables[0].Rows[0]["QQ"].ToString();
-            name = data.Tables[0].Rows[0]["name"].ToString();
-            Class = (int)data.Tables[0].Rows[0]["class"];
-            branch = (bool)data.Tables[0].Rows[0]["branch"];
-            nick = data.Tables[0].Rows[0]["nick"].ToString();
-            junior = (bool)data.Tables[0].Rows[0]["junior"];
-            enrollment = (int)data.Tables[0].Rows[0]["enrollment"];
+            name = data.Tables[0].Rows[0]["name"] == DBNull.Value ? "" : data.Tables[0].Rows[0]["name"].ToString();
+            Class = data.Tables[0].Rows[0]["class"] == DBNull.Value ? 0 : (int)data.Tables[0].Rows[0]["class"];
+            branch = data.Tables[0].Rows[0]["branch"] == DBNull.Value ? false : (bool)data.Tables[0].Rows[0]["branch"];
+            nick = data.Tables[0].Rows[0]["nick"] == DBNull.Value ? "" : data.Tables[0].Rows[0]["nick"].ToString();
+            junior = data.Tables[0].Rows[0]["junior"] == DBNull.Value ? false : (bool)data.Tables[0].Rows[0]["junior"];
+            enrollment = data.Tables[0].Rows[0]["enrollment"] == DBNull.Value ? 0 : (int)data.Tables[0].Rows[0]["enrollment"];
             nameCard = IRQQApi.Api_GetGroupCard(C.w, G.major, qq);
         }
         /// <summary>
@@ -34,15 +34,16 @@ namespace tianlang
         /// <param name="QQ"></param>
         public Student(string QQ)
         {
+            C.GetUid(QQ);
             qq = QQ;
             DataSet data = Db.Query($"SELECT * FROM user_info WHERE QQ='{qq}'");
             uid = (int)data.Tables[0].Rows[0]["uid"];
-            name = data.Tables[0].Rows[0]["name"].ToString();
-            Class = (int)data.Tables[0].Rows[0]["class"];
-            branch = (bool)data.Tables[0].Rows[0]["branch"];
-            nick = data.Tables[0].Rows[0]["nick"].ToString();
-            junior = (bool)data.Tables[0].Rows[0]["junior"];
-            enrollment = (int)data.Tables[0].Rows[0]["enrollment"];
+            name = data.Tables[0].Rows[0]["name"] == DBNull.Value ? "" : data.Tables[0].Rows[0]["name"].ToString();
+            Class = data.Tables[0].Rows[0]["class"] == DBNull.Value ? 0 : (int)data.Tables[0].Rows[0]["class"];
+            branch = data.Tables[0].Rows[0]["branch"] == DBNull.Value ? false : (bool)data.Tables[0].Rows[0]["branch"];
+            nick = data.Tables[0].Rows[0]["nick"] == DBNull.Value ? "" : data.Tables[0].Rows[0]["nick"].ToString();
+            junior = data.Tables[0].Rows[0]["junior"] == DBNull.Value ? false : (bool)data.Tables[0].Rows[0]["junior"];
+            enrollment = data.Tables[0].Rows[0]["enrollment"] == DBNull.Value ? 0 : (int)data.Tables[0].Rows[0]["enrollment"];
             nameCard = IRQQApi.Api_GetGroupCard(C.w, G.major, qq);
 
         }
@@ -109,6 +110,8 @@ namespace tianlang
             get => Enrollment;
             set
             {
+                if (value == 0)
+                    return;
                 if (10 < value && value < 20)
                 value += 2000;
 
