@@ -121,7 +121,7 @@ namespace tianlang
         /// <returns>右边内容</returns>
         public static string GetRight(this string str, string s)
         {
-            string temp = str.Substring(str.IndexOf(s), str.Length - str.Substring(0, str.IndexOf(s)).Length);
+            string temp = str.Substring(str.IndexOf(s) + s.Length);
             return temp;
         }
 
