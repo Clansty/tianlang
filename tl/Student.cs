@@ -17,16 +17,16 @@ namespace tianlang
         /// <param name="Uid"></param>
         public Student(int Uid)
         {
-            uid = Uid;
-            DataSet data = Db.Query($"SELECT * FROM user_info WHERE uid={uid}");
-            qq = data.Tables[0].Rows[0]["QQ"].ToString();
-            name = data.Tables[0].Rows[0]["name"] == DBNull.Value ? "" : data.Tables[0].Rows[0]["name"].ToString();
+            this.Uid = Uid;
+            DataSet data = Db.Query($"SELECT * FROM user_info WHERE uid={this.Uid}");
+            QQ = data.Tables[0].Rows[0]["QQ"].ToString();
+            Name = data.Tables[0].Rows[0]["name"] == DBNull.Value ? "" : data.Tables[0].Rows[0]["name"].ToString();
             Class = data.Tables[0].Rows[0]["class"] == DBNull.Value ? 0 : (int)data.Tables[0].Rows[0]["class"];
-            branch = data.Tables[0].Rows[0]["branch"] == DBNull.Value ? false : (bool)data.Tables[0].Rows[0]["branch"];
-            nick = data.Tables[0].Rows[0]["nick"] == DBNull.Value ? "" : data.Tables[0].Rows[0]["nick"].ToString();
-            junior = data.Tables[0].Rows[0]["junior"] == DBNull.Value ? false : (bool)data.Tables[0].Rows[0]["junior"];
-            enrollment = data.Tables[0].Rows[0]["enrollment"] == DBNull.Value ? 0 : (int)data.Tables[0].Rows[0]["enrollment"];
-            nameCard = IRQQApi.Api_GetGroupCard(C.w, G.major, qq);
+            Branch = data.Tables[0].Rows[0]["branch"] == DBNull.Value ? false : (bool)data.Tables[0].Rows[0]["branch"];
+            Nick = data.Tables[0].Rows[0]["nick"] == DBNull.Value ? "" : data.Tables[0].Rows[0]["nick"].ToString();
+            Junior = data.Tables[0].Rows[0]["junior"] == DBNull.Value ? false : (bool)data.Tables[0].Rows[0]["junior"];
+            Enrollment = data.Tables[0].Rows[0]["enrollment"] == DBNull.Value ? 0 : (int)data.Tables[0].Rows[0]["enrollment"];
+            NameCard = IRQQApi.Api_GetGroupCard(C.w, G.major, QQ);
         }
         /// <summary>
         /// 创建 Student 并用 QQ 填充
@@ -35,16 +35,16 @@ namespace tianlang
         public Student(string QQ)
         {
             C.GetUid(QQ);
-            qq = QQ;
-            DataSet data = Db.Query($"SELECT * FROM user_info WHERE QQ='{qq}'");
-            uid = (int)data.Tables[0].Rows[0]["uid"];
-            name = data.Tables[0].Rows[0]["name"] == DBNull.Value ? "" : data.Tables[0].Rows[0]["name"].ToString();
+            this.QQ = QQ;
+            DataSet data = Db.Query($"SELECT * FROM user_info WHERE QQ='{this.QQ}'");
+            Uid = (int)data.Tables[0].Rows[0]["uid"];
+            Name = data.Tables[0].Rows[0]["name"] == DBNull.Value ? "" : data.Tables[0].Rows[0]["name"].ToString();
             Class = data.Tables[0].Rows[0]["class"] == DBNull.Value ? 0 : (int)data.Tables[0].Rows[0]["class"];
-            branch = data.Tables[0].Rows[0]["branch"] == DBNull.Value ? false : (bool)data.Tables[0].Rows[0]["branch"];
-            nick = data.Tables[0].Rows[0]["nick"] == DBNull.Value ? "" : data.Tables[0].Rows[0]["nick"].ToString();
-            junior = data.Tables[0].Rows[0]["junior"] == DBNull.Value ? false : (bool)data.Tables[0].Rows[0]["junior"];
-            enrollment = data.Tables[0].Rows[0]["enrollment"] == DBNull.Value ? 0 : (int)data.Tables[0].Rows[0]["enrollment"];
-            nameCard = IRQQApi.Api_GetGroupCard(C.w, G.major, qq);
+            Branch = data.Tables[0].Rows[0]["branch"] == DBNull.Value ? false : (bool)data.Tables[0].Rows[0]["branch"];
+            Nick = data.Tables[0].Rows[0]["nick"] == DBNull.Value ? "" : data.Tables[0].Rows[0]["nick"].ToString();
+            Junior = data.Tables[0].Rows[0]["junior"] == DBNull.Value ? false : (bool)data.Tables[0].Rows[0]["junior"];
+            Enrollment = data.Tables[0].Rows[0]["enrollment"] == DBNull.Value ? 0 : (int)data.Tables[0].Rows[0]["enrollment"];
+            NameCard = IRQQApi.Api_GetGroupCard(C.w, G.major, this.QQ);
 
         }
 
@@ -53,61 +53,61 @@ namespace tianlang
         }
 
         // 成员
-        public int uid = 0;
-        public string qq = "";
-        public string name = "";
+        public int Uid = 0;
+        public string QQ = "";
+        public string Name = "";
         public int Class = 0;
-        public bool branch = false;
-        public string nick = "";
-        public readonly string nameCard = "";
-        private string Grade = "";
-        private int Enrollment = 0;
-        public bool junior = false;
+        public bool Branch = false;
+        public string Nick = "";
+        public readonly string NameCard = "";
+        public bool Junior = false;
+        // 系统维护的字段
+        private string grade = "";
+        private int enrollment = 0;
         // 封装字段
-        public string grade {
-            get => Grade;
+        public string Grade {
+            get => grade;
             set
             {
                 switch (value)
                 {
                     case "高一":
                     case "高1":
-                        Enrollment = 2018;
-                        Grade = "高一";
+                        enrollment = 2018;
+                        grade = "高一";
                         break;
                     case "高二":
                     case "高2":
-                        Enrollment = 2017;
-                        Grade = "高二";
+                        enrollment = 2017;
+                        grade = "高二";
                         break;
                     case "高三":
                     case "高3":
-                        Enrollment = 2016;
-                        Grade = "高三";
+                        enrollment = 2016;
+                        grade = "高三";
                         break;
                     case "初一":
                     case "初1":
-                        Enrollment = 2018;
-                        Grade = "初一";
+                        enrollment = 2018;
+                        grade = "初一";
                         break;
                     case "初二":
                     case "初2":
-                        Enrollment = 2017;
-                        Grade = "初二";
+                        enrollment = 2017;
+                        grade = "初二";
                         break;
                     case "初三":
                     case "初3":
-                        Enrollment = 2016;
-                        Grade = "初三";
+                        enrollment = 2016;
+                        grade = "初三";
                         break;
 
                 }
             }
         }
-
-        public int enrollment
+        public int Enrollment
         {
-            get => Enrollment;
+            get => enrollment;
             set
             {
                 if (value == 0)
@@ -115,35 +115,35 @@ namespace tianlang
                 if (10 < value && value < 20)
                 value += 2000;
 
-                if (junior)
+                if (Junior)
                     switch (value)
                     {
                         case 2018:
-                            Grade = "初一";
+                            grade = "初一";
                             break;
                         case 2017:
-                            Grade = "初二";
+                            grade = "初二";
                             break;
                         case 2016:
-                            Grade = "初三";
+                            grade = "初三";
                             break;
                     }
                 else
                     switch (value)
                     {
                         case 2018:
-                            Grade = "高一";
+                            grade = "高一";
                             break;
                         case 2017:
-                            Grade = "高二";
+                            grade = "高二";
                             break;
                         case 2016:
-                            Grade = "高三";
+                            grade = "高三";
                             break;
                     }
                 if (value < 2016)
-                    Grade = (value + 3).ToString() + "届" + (junior ? "初中" : "");
-                Enrollment = value;
+                    grade = (value + 3).ToString() + "届" + (Junior ? "初中" : "");
+                enrollment = value;
             }
         }
         /// <summary>
@@ -154,21 +154,21 @@ namespace tianlang
         {
             if (origin.IndexOf("金阊") != -1)
             {
-                branch = true;
+                Branch = true;
                 origin = origin.GetRight("金阊").Trim();
             }
             if (origin.IndexOf("初") != -1)
-                junior = true;
+                Junior = true;
             try
             {
                 string tmp = "";
-                if (junior)
+                if (Junior)
                     tmp = origin.Substring(origin.IndexOf("初"), 2);
                 else
                     tmp = origin.Substring(origin.IndexOf("高"), 2);
                 if (tmp != "")
                 {
-                    grade = tmp;
+                    Grade = tmp;
                     origin = origin.GetRight(tmp).Trim();
                 }
             }
@@ -179,7 +179,7 @@ namespace tianlang
                     tmp = Convert.ToInt32(Regex.Replace(origin.GetLeft("届").Trim(), @"[^0-9]+", "").Trim());
                 if (tmp > 0)
                 {
-                    enrollment = tmp - 3;
+                    Enrollment = tmp - 3;
                     origin = origin.GetRight("届").Trim();
                 }
             }
@@ -223,16 +223,16 @@ namespace tianlang
 
         public override string ToString()
         {
-            return $"uid: {uid}\n" +
-                $"qq: {qq}\n" +
-                $"name: {name}\n" +
+            return $"uid: {Uid}\n" +
+                $"qq: {QQ}\n" +
+                $"name: {Name}\n" +
                 $"class: {Class}\n" +
-                $"branch: {branch}\n" +
-                $"nick: {nick}\n" +
-                $"junior: {junior}\n" +
-                $"enrollment: {enrollment}\n" +
-                $"grade: {grade}\n" +
-                $"namecard: {nameCard}";
+                $"branch: {Branch}\n" +
+                $"nick: {Nick}\n" +
+                $"junior: {Junior}\n" +
+                $"enrollment: {Enrollment}\n" +
+                $"grade: {Grade}\n" +
+                $"namecard: {NameCard}";
         }
     }
 }
