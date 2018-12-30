@@ -8,14 +8,14 @@ using System.Text.RegularExpressions;
 
 namespace tianlang
 {
-    public class Student
+    class User
     {
         // 构造函数
         /// <summary>
         /// 创建 Student 并用 UID 填充
         /// </summary>
         /// <param name="Uid"></param>
-        public Student(int Uid)
+        public User(int Uid)
         {
             this.Uid = Uid;
             DataSet data = Db.Query($"SELECT * FROM user_info WHERE uid={this.Uid}");
@@ -32,7 +32,7 @@ namespace tianlang
         /// 创建 Student 并用 QQ 填充
         /// </summary>
         /// <param name="QQ"></param>
-        public Student(string QQ)
+        public User(string QQ)
         {
             C.GetUid(QQ);
             this.QQ = QQ;
@@ -48,7 +48,7 @@ namespace tianlang
 
         }
 
-        public Student()
+        public User()
         {
         }
 

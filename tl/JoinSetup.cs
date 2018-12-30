@@ -31,6 +31,8 @@ namespace tianlang
             return (Step)s;
         }
 
+        // 关于 SubStep 的设置项
+
         /// <summary>
         /// 设置某个 QQ 的 SubStep
         /// </summary>
@@ -38,7 +40,7 @@ namespace tianlang
         /// <param name="status"></param>
         private static void SetSubStep(string qq, SubStep status) => Db.Exec($"UPDATE user_info SET substep={status} WHERE QQ='{qq}'");
         /// <summary>
-        /// 根据 uid 设置 Step
+        /// 根据 uid 设置 SubStep
         /// </summary>
         /// <param name="uid"></param>
         /// <param name="status"></param>
@@ -57,8 +59,14 @@ namespace tianlang
         private enum Step
         {
             no,
+            /// <summary>
+            /// 提交年级昵称姓名，进入大群时使用
+            /// </summary>
             gradeNickName,
-            gradeName,
+            /// <summary>
+            /// 提交年级班级姓名，为今后保留
+            /// </summary>
+            gradeClassName,
             
         }
         private enum SubStep
@@ -69,7 +77,7 @@ namespace tianlang
             name,
         }
 
-        public void Start(string qq)
+        public static void Start(string qq)
         {
             C.GetUid(qq);
             C.SetStatus(qq, Status.joinSetup);
@@ -86,9 +94,23 @@ namespace tianlang
                 "例如: 高二八班，金阊高一1班，本部高三2班，2018届");
         }
 
-        public void Enter(string QQ)
+        public static void Enter(string QQ, string msg)
         {
+            Step step = GetStep(QQ);
+            SubStep subStep = GetSubStep(QQ);
+            User u = new User(QQ);
 
+            switch (step)
+            {
+                case Step.gradeNickName:
+                    switch (subStep)
+                    {
+                        case SubStep.grade:
+
+                            break;
+                    }
+                    break;
+            }
         }
     }
 }

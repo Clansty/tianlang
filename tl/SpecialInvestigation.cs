@@ -39,9 +39,9 @@ namespace tianlang
                 command = command.Replace("解析", "").Trim();
                 if (command != "")
                 {
-                    Student s = new Student();
-                    s.Fill(command);
-                    R(s.ToString());
+                    User u = new User();
+                    u.Fill(command);
+                    R(u.ToString());
                 }
             }
             if (command.StartsWith("info"))
@@ -49,8 +49,8 @@ namespace tianlang
                 command = command.Replace("info", "").Trim();
                 if (command != "") try
                 {
-                    Student s = new Student(command);
-                    R(s.ToString());
+                    User u = new User(command);
+                    R(u.ToString());
                     }
                     catch(Exception e) { S.Test(e.Message); }
             }
@@ -66,10 +66,12 @@ namespace tianlang
                     R("用法:\nsql exec <SQL 语句>\n回复受影响的行数或出现的错误");
                     return;
                 }
-                SqlCommand cmd = new SqlCommand();
-                cmd.CommandType = CommandType.Text;
-                cmd.Connection = Db.conn;
-                cmd.CommandText = command;
+                SqlCommand cmd = new SqlCommand
+                {
+                    CommandType = CommandType.Text,
+                    Connection = Db.conn,
+                    CommandText = command
+                };
                 try
                 {
                     int result = cmd.ExecuteNonQuery();
