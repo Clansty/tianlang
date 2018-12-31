@@ -22,9 +22,8 @@ namespace tianlang
         }
 
 
-
-        [DllExport(ExportName = nameof(IR_Event), CallingConvention = CallingConvention.StdCall)]
         ///此子程序会分发IRC_机器人QQ接收到的所有：事件，消息；您可在此函数中自行调用所有参数
+        [DllExport(ExportName = nameof(IR_Event), CallingConvention = CallingConvention.StdCall)]
         public static int IR_Event(string RobotQQ, int MsgType, int MsgCType, string MsgFrom, string TigObjF, string TigObjC, string Msg,string MsgNum ,string MsgID,string RawMsg,string Json, int pText)
         {
             ///RobotQQ		机器人QQ				多Q版用于判定哪个QQ接收到该消息
@@ -76,7 +75,10 @@ namespace tianlang
                 case 5: //讨论组临时
                     QQ = TigObjF;
                     if (Msg == "cancel" | Msg == "取消" | Msg == "主菜单")
+                    {
                         C.SetStatus(QQ, Status.no);
+                        S.P(QQ, "你的状态已重置");
+                    }
                     else if (C.GetStatus(QQ) == Status.joinSetup)
                         JoinSetup.Enter(QQ, Msg);
                     break;

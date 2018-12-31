@@ -23,8 +23,9 @@ namespace tianlang
          * 41: Student 类
          *     测试 Fill 方法和从数据库初始化
          * 42: Student 完善，生产版本部署
+         * 43: 测试生成 测试进群向导
          */
-        public const int version = 42;
+        public const int version = 43;
 
 
         public const string wp= "1980853671";

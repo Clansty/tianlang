@@ -10,7 +10,7 @@ namespace tianlang
 {
     public static class Si
     {
-        private static void R(string msg)
+        public static void R(string msg)
         {
             if (C.isTest)
                 S.Test(msg);
