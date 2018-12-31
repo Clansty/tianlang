@@ -504,14 +504,15 @@ namespace tianlang
         ///<param name="GroupNum">群号</param>
         ///<param name="Swit">开关：真开 假关</param>
         public static extern bool Api_SetAnon(string RobotQQ, string GroupNum, bool swit);
+        /// <summary>
+        /// 修改对象群名片，成功返回真，失败返回假
+        /// </summary>
+        /// <param name="RobotQQ">机器人QQ</param>
+        /// <param name="GroupNum">群号</param>
+        /// <param name="ObjQQ">对象QQ：被修改名片人QQ</param>
+        /// <param name="NewCard">需要修改的群名片</param>
+        /// <returns>是否成功</returns>
         [DllImport("../IRapi.dll")]
-        ///<summary>
-        ///修改对象群名片，成功返回真，失败返回假
-        ///</summary>
-        ///<param name="RobotQQ">机器人QQ</param>
-        ///<param name="GroupNum">群号</param>
-        ///<param name="ObjQQ">对象QQ：被修改名片人QQ</param>
-        ///<param name="NewCard">需要修改的群名片</param>
         public static extern bool Api_SetGroupCard(string RobotQQ, string GroupNum,
            string ObjQQ, string NewCard);
         [DllImport("../IRapi.dll")]

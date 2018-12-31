@@ -26,7 +26,7 @@ namespace tianlang
         [DllExport(ExportName = nameof(IR_Event), CallingConvention = CallingConvention.StdCall)]
         ///此子程序会分发IRC_机器人QQ接收到的所有：事件，消息；您可在此函数中自行调用所有参数
         public static int IR_Event(string RobotQQ, int MsgType, int MsgCType, string MsgFrom, string TigObjF, string TigObjC, string Msg,string MsgNum ,string MsgID,string RawMsg,string Json, int pText)
-        {            
+        {
             ///RobotQQ		机器人QQ				多Q版用于判定哪个QQ接收到该消息
             ///MsgType		消息类型				接收到消息类型，该类型可在常量表中查询具体定义，此处仅列举： - 1 未定义事件 1 好友信息 2, 群信息 3, 讨论组信息 4, 群临时会话 5, 讨论组临时会话 6, 财付通转账
             ///MsgCType		消息子类型			    此参数在不同消息类型下，有不同的定义，暂定：接收财付通转账时 1为好友 2为群临时会话 3为讨论组临时会话    有人请求入群时，不良成员这里为1
@@ -40,6 +40,7 @@ namespace tianlang
             ///Json			Json信息				为后期新参数预留，方便无限扩展
             ///pText		信息回传文本指针		此参数用于插件加载拒绝理由  用法：写到内存（“拒绝理由”，IRC_信息回传文本指针_Out）
 
+            string QQ;
             switch (MsgType)
             {
                 case 1101: //登录成功
@@ -66,6 +67,18 @@ namespace tianlang
                     Db.DisConnect();
                     break;
                 case 212: //群成员增加
+                    QQ = TigObjC;
+                    if (MsgFrom == (C.isTest ? G.test : G.major))
+                        JoinSetup.Start(QQ);
+                    break;
+                case 1: //好友
+                case 4: //群临时
+                case 5: //讨论组临时
+                    QQ = TigObjF;
+                    if (Msg == "cancel" | Msg == "取消" | Msg == "主菜单")
+                        C.SetStatus(QQ, Status.no);
+                    else if (C.GetStatus(QQ) == Status.joinSetup)
+                        JoinSetup.Enter(QQ, Msg);
                     break;
                 case 2: //群
                     if (C.isTest) //测试模式
@@ -108,13 +121,15 @@ namespace tianlang
 
 
         [DllExport(ExportName = nameof(IR_SetUp), CallingConvention = CallingConvention.StdCall)]
-        ///启动窗体
         public static void IR_SetUp()
         {
         }
 
+        /// <summary>
+        /// 卸载插件
+        /// </summary>
+        /// <returns></returns>
         [DllExport(ExportName = nameof(IR_DestroyPlugin), CallingConvention = CallingConvention.StdCall)]
-        //插件即将被销毁
         public static int IR_DestroyPlugin()
         {
 

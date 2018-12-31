@@ -227,7 +227,7 @@ namespace tianlang
                 $"qq: {QQ}\n" +
                 $"name: {Name}\n" +
                 $"class: {Class}\n" +
-                $"branch: {Branch}\n" +
+                $"branch: {(Branch ? "金阊" : "本部")}\n" +
                 $"nick: {Nick}\n" +
                 $"junior: {Junior}\n" +
                 $"enrollment: {Enrollment}\n" +
