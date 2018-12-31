@@ -24,6 +24,7 @@ namespace tianlang
          *     测试 Fill 方法和从数据库初始化
          * 42: Student 完善，生产版本部署
          * 43: 测试生成 测试进群向导
+         * 44: 解决 status 存储 bug
          */
         public const int version = 43;
 
@@ -60,7 +61,7 @@ namespace tianlang
         /// <param name="status"></param>
         public static void SetStatus(string qq, Status status)
         {
-            Db.Exec($"UPDATE user_info SET status={status} WHERE QQ='{qq}'");
+            Db.Exec($"UPDATE user_info SET status={(int)status} WHERE QQ='{qq}'");
             Db.Exec($"UPDATE user_info SET step=0 WHERE QQ='{qq}'");
             Db.Exec($"UPDATE user_info SET substep=0 WHERE QQ='{qq}'");
         }
@@ -72,7 +73,7 @@ namespace tianlang
         /// <param name="status"></param>
         public static void SetStatus(int uid, Status status)
         {
-            Db.Exec($"UPDATE user_info SET status={status} WHERE uid={uid}");
+            Db.Exec($"UPDATE user_info SET status={(int)status} WHERE uid={uid}");
             Db.Exec($"UPDATE user_info SET step=0 WHERE uid={uid}");
             Db.Exec($"UPDATE user_info SET substep=0 WHERE uid={uid}");
         }

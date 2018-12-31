@@ -16,13 +16,13 @@ namespace tianlang
         /// </summary>
         /// <param name="qq"></param>
         /// <param name="status"></param>
-        private static void SetStep(string qq, Step status) => Db.Exec($"UPDATE user_info SET step={status} WHERE QQ='{qq}'");
+        private static void SetStep(string qq, Step status) => Db.Exec($"UPDATE user_info SET step={(int)status} WHERE QQ='{qq}'");
         /// <summary>
         /// 根据 uid 设置 Step
         /// </summary>
         /// <param name="uid"></param>
         /// <param name="status"></param>
-        private static void SetStep(int uid, Step status) => Db.Exec($"UPDATE user_info SET step={status} WHERE uid={uid}");
+        private static void SetStep(int uid, Step status) => Db.Exec($"UPDATE user_info SET step={(int)status} WHERE uid={uid}");
         private static Step GetStep(string qq)
         {
             SqlDataReader r = Db.QueryReader($"SELECT step FROM user_info WHERE QQ='{qq}'");
@@ -40,13 +40,13 @@ namespace tianlang
         /// </summary>
         /// <param name="qq"></param>
         /// <param name="status"></param>
-        private static void SetSubStep(string qq, SubStep status) => Db.Exec($"UPDATE user_info SET substep={status} WHERE QQ='{qq}'");
+        private static void SetSubStep(string qq, SubStep status) => Db.Exec($"UPDATE user_info SET substep={(int)status} WHERE QQ='{qq}'");
         /// <summary>
         /// 根据 uid 设置 SubStep
         /// </summary>
         /// <param name="uid"></param>
         /// <param name="status"></param>
-        private static void SetSubStep(int uid, SubStep status) => Db.Exec($"UPDATE user_info SET substep={status} WHERE uid={uid}");
+        private static void SetSubStep(int uid, SubStep status) => Db.Exec($"UPDATE user_info SET substep={(int)status} WHERE uid={uid}");
         private static SubStep GetSubStep(string qq)
         {
             SqlDataReader r = Db.QueryReader($"SELECT substep FROM user_info WHERE QQ='{qq}'");
