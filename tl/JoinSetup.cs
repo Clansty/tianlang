@@ -199,7 +199,7 @@ namespace tianlang
                             break;
                         // 姓名步骤
                         case SubStep.name:
-                            R($"你的群名片已修改为 {u.NameCard}[next]" +
+                            R($"你的群名片已修改为 {u.NameCard}[Next]" +
                                "目前我们需要的信息就这么多，祝你在群里玩的开心");
                             if (u.Enrollment == 2018)
                                 R(grade1Tip);

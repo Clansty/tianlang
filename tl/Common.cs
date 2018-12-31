@@ -25,8 +25,10 @@ namespace tianlang
          * 42: Student 完善，生产版本部署
          * 43: 测试生成 测试进群向导
          * 44: 解决 status 存储 bug
+         * 45: 尝试修复小问题
+         *     似乎可生产了
          */
-        public const int version = 44;
+        public const int version = 45;
 
 
         public const string wp= "1980853671";

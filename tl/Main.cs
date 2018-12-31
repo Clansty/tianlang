@@ -89,6 +89,8 @@ namespace tianlang
                         {
                             Repeater.Enter(Msg);
                             Si.Enter(Msg);
+                            if (Msg == "go")
+                                JoinSetup.Start("839827911");
                         }
                     }
                     else //生产模式
