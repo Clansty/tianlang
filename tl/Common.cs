@@ -26,7 +26,7 @@ namespace tianlang
          * 43: 测试生成 测试进群向导
          * 44: 解决 status 存储 bug
          */
-        public const int version = 43;
+        public const int version = 44;
 
 
         public const string wp= "1980853671";
