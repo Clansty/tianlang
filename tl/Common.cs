@@ -27,8 +27,9 @@ namespace tianlang
          * 44: 解决 status 存储 bug
          * 45: 尝试修复小问题
          *     似乎可生产了
+         * 46: 修复向导完成时不会自动重置状态的毛病
          */
-        public const int version = 45;
+        public const int version = 46;
 
 
         public const string wp= "1980853671";

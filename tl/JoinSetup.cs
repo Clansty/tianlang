@@ -207,6 +207,7 @@ namespace tianlang
                             Commit("name", $"'{msg}'");
                             subStep = SubStep.no;
                             CommitSubStep();
+                            C.SetStatus(QQ, Status.no);
                             u = new User(QQ);
                             Si.R("新人信息\n" + u.ToString());
                             break;
