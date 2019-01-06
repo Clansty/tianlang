@@ -46,7 +46,20 @@ namespace tianlang
                     return "err";
             }
         }
-        private static Song GetSong(string name)
+
+        public static string GetTheRedirectUrl(string originalAddress)
+        {
+            string redirectUrl;
+            WebRequest myRequest = WebRequest.Create(originalAddress);
+
+            WebResponse myResponse = myRequest.GetResponse();
+            redirectUrl = myResponse.ResponseUri.ToString();
+
+            myResponse.Close();
+            return redirectUrl;
+        }
+
+            private static Song GetSong(string name)
         {
             Song s = new Song();
             try
@@ -67,7 +80,7 @@ namespace tianlang
                 s.name = r.Between("\"name\":\"", "\"");
                 s.pic = r.Between("\"pic\":\"", "\"");
                 s.singer = r.Between("\"singer\":\"", "\"");
-                s.url = r.Between("\"url\":\"", "\"");
+                s.url = GetTheRedirectUrl(r.Between("\"url\":\"", "\""));
                 s.success = true;
                 return s;
             }
