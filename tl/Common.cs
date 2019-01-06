@@ -30,8 +30,10 @@ namespace tianlang
          * 46: 修复向导完成时不会自动重置状态的毛病
          * 47: 网易云点歌开发
          * 50: 网易云点歌完成
+         * 51: 点歌发送空文本时显示提示
          */
-        public const int version = 50;
+
+        public const int version = 51;
 
 
         public const string wp= "1980853671";
