@@ -85,6 +85,7 @@ namespace tianlang
                 S.Group(group, C.err);
             else
                 IRQQApi.Api_SendXML(C.w, 1, 2, group, group, x, 2);
+            S.Test(x);
         }
     }
 }
