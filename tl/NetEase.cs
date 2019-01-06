@@ -80,7 +80,7 @@ namespace tianlang
                 s.name = r.Between("\"name\":\"", "\"");
                 s.pic = r.Between("\"pic\":\"", "\"");
                 s.singer = r.Between("\"singer\":\"", "\"");
-                s.url = GetTheRedirectUrl(r.Between("\"url\":\"", "\""));
+                s.url = GetTheRedirectUrl(r.Between("\"url\":\"", "\"")).Replace("https:", "http:");
                 s.success = true;
                 return s;
             }
