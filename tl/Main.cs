@@ -83,7 +83,9 @@ namespace tianlang
                         JoinSetup.Enter(QQ, Msg);
                     break;
                 case 2: //群
-                    if (C.isTest) //测试模式
+                    if (Msg.StartsWith("点歌"))
+                        NetEase.Enter(MsgFrom, Msg.GetRight("点歌").Trim());
+                    else if (C.isTest) //测试模式
                     {
                         if (MsgFrom == G.test)
                         {

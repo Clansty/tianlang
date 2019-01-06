@@ -187,7 +187,7 @@ namespace tianlang
                             bool isOK = IRQQApi.Api_SetGroupCard(C.w, C.isTest ? G.test : G.major, u.QQ, qmp);
                             if (!isOK)
                             {
-                                R("Warning: 出现了一些故障");
+                                R(C.err);
                                 S.Test($"修改群名片出错\n" +
                                        $"QQ: {u.QQ}\n" +
                                        $"Card: {qmp}");

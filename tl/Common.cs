@@ -28,16 +28,18 @@ namespace tianlang
          * 45: 尝试修复小问题
          *     似乎可生产了
          * 46: 修复向导完成时不会自动重置状态的毛病
+         * 47: 网易云点歌开发
          */
-        public const int version = 46;
+        public const int version = 47;
 
 
         public const string wp= "1980853671";
         public const string wt = "2125742312";
         public static string w;
 
-
         public static bool isTest;
+
+        public const string err = "出现了一些错误";
 
         public static int GetUid(string qq)
         {

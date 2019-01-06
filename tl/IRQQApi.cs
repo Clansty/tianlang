@@ -468,19 +468,20 @@ namespace tianlang
         ///<param name="ObjQQ">接收QQ</param>
         ///<param name="pAmr">语音数据的指针</param>
         public static extern bool Api_SendVoice(string RobotQQ, string ObjQQ, int pAmr);
+
+        /// <summary>
+        /// 发送XML消息
+        /// </summary>
+        /// <param name="RobotQQ">机器人QQ</param>
+        /// <param name="SendType">发送方式：1普通 2匿名（匿名需要群开启）</param>
+        /// <param name="MsgType">信息类型：1好友 2群 3讨论组 4群临时会话 5讨论组临时会话</param>
+        /// <param name="MsgTo">收信对象群、讨论组：发送群、讨论组、临时时填写，如MsgType为好友可空</param>
+        /// <param name="ObjQQ">收信对象QQ</param>
+        /// <param name="ObjectMsg">XML代码</param>
+        /// <param name="ObjCType">结构子类型：00基本 02点歌</param>
         [DllImport("../IRapi.dll")]
-        ///<summary>
-        ///发送XML消息
-        ///</summary>
-        ///<param name="RobotQQ">机器人QQ</param>
-        ///<param name="SendType">发送方式：1普通 2匿名（匿名需要群开启）</param>
-        ///<param name="MsgType">信息类型：1好友 2群 3讨论组 4群临时会话 5讨论组临时会话</param>
-        ///<param name="MsgTo">收信对象群、讨论组：发送群、讨论组、临时时填写，如MsgType为好友可空</param>
-        ///<param name="ObjQQ">收信对象QQ</param>
-        ///<param name="ObjectMsg">XML代码</param>
-        ///<param name="ObjCType">结构子类型：00基本 02点歌</param>
-        public static extern void Api_SendXML(string RobotQQ, int SendType, int MsgFrom,
-           string MsgTo, string ObjQQ, string ObjectMsg, int ObjeCType);
+        public static extern void Api_SendXML(string RobotQQ, int SendType, int MsgType,
+           string MsgTo, string ObjQQ, string ObjectMsg, int ObjCType);
         [DllImport("../IRapi.dll")]
         ///<summary>
         ///获取会话SessionKey密匙
