@@ -65,6 +65,7 @@ namespace tianlang
                 case 12002: //插件禁用
                     Db.DisConnect();
                     break;
+                case 219:
                 case 212: //群成员增加
                     QQ = TigObjC;
                     if (MsgFrom == (C.isTest ? G.test : G.major))

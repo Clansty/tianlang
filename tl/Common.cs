@@ -32,9 +32,10 @@ namespace tianlang
          * 50: 网易云点歌完成
          * 51: 点歌发送空文本时显示提示
          * 52: 修复安卓 QQ 无法显示的问题
+         * 53: 修复管理员拉人无法触发向导
          */
 
-        public const int version = 52;
+        public const int version = 53;
 
 
         public const string wp= "1980853671";
