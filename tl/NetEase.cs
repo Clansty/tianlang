@@ -30,8 +30,7 @@ namespace tianlang
             public override string ToString()
             {
                 if (success)
-                    return "<? xml version = \"1.0\" encoding = \"UTF-8\" standalone = \"yes\" ?>" +
-                           "<msg serviceID=\"2\" templateID=\"1\" action=\"web\" " +
+                    return "<msg serviceID=\"2\" templateID=\"1\" action=\"web\" " +
                                $"brief=\"[甜狼点歌] {name}\" sourceMsgId=\"0\" " +
                                $"url=\"{Page}\" flag=\"0\" adverSign=\"0\" multiMsgFlag=\"0\">" +
                              "<item layout=\"2\">" +
