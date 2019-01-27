@@ -10,6 +10,10 @@ namespace tianlang
 {
     public static class Si
     {
+        /// <summary>
+        /// 回复
+        /// </summary>
+        /// <param name="msg"></param>
         public static void R(string msg)
         {
             if (C.isTest)
@@ -19,6 +23,7 @@ namespace tianlang
         }
         public static void Enter(string command)
         {
+            
             if (command.StartsWith("sql"))
             {
                 command = command.Replace("sql", "").Trim();
@@ -47,12 +52,16 @@ namespace tianlang
             if (command.StartsWith("info"))
             {
                 command = command.Replace("info", "").Trim();
-                if (command != "") try
-                {
-                    User u = new User(command);
-                    R(u.ToString());
+                if (command != "")
+                    try
+                    {
+                        User u = new User(command);
+                        R(u.ToString());
                     }
-                    catch(Exception e) { S.Test(e.Message); }
+                    catch(Exception e)
+                    {
+                        R(e.Message);
+                    }
             }
 
         }
@@ -63,7 +72,9 @@ namespace tianlang
                 command = command.Replace("exec", "").Trim();
                 if (command == "")
                 {
-                    R("用法:\nsql exec <SQL 语句>\n回复受影响的行数或出现的错误");
+                    R("用法:\n" +
+                      "sql exec <SQL 语句>\n" +
+                      "回复受影响的行数或出现的错误");
                     return;
                 }
                 SqlCommand cmd = new SqlCommand
@@ -75,7 +86,8 @@ namespace tianlang
                 try
                 {
                     int result = cmd.ExecuteNonQuery();
-                    R($"执行成功\n{result.ToString()}行受到影响");
+                    R("执行成功\n" +
+                     $"{result.ToString()}行受到影响");
                 }
                 catch (Exception e)
                 {
@@ -88,7 +100,9 @@ namespace tianlang
                 command = command.Replace("query", "").Trim();
                 if (command == "")
                 {
-                    R("用法:\nsql query <SQL 语句>\n回复查询到的结果或出现的错误");
+                    R("用法:\n" +
+                      "sql query <SQL 语句>\n" +
+                      "回复查询到的结果或出现的错误");
                     return;
                 }
                 try
