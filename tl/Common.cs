@@ -122,7 +122,7 @@ namespace tianlang
     public enum Status
     {
         no,
-        joinSetup
+        infoSetup
     }
 
     public static class StringHelper

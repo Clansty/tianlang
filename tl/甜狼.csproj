@@ -50,9 +50,9 @@
   <ItemGroup>
     <Compile Include="Common.cs" />
     <Compile Include="DbClass.cs" />
+    <Compile Include="InfoSetup.cs" />
     <Compile Include="IRQQApi.cs" />
     <Compile Include="Main.cs" />
-    <Compile Include="JoinSetup.cs" />
     <Compile Include="Msg.cs" />
     <Compile Include="NetEase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

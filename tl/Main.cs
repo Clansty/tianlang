@@ -54,7 +54,7 @@ namespace tianlang
                     C.UpdateMemberList();
                     QQ = TigObjC;
                     if (MsgFrom == (C.isTest ? G.test : G.major))
-                        JoinSetup.Start(QQ);
+                        InfoSetup.Start(QQ);
                     break;
                 case 1: //好友
                 case 4: //群临时
@@ -65,8 +65,8 @@ namespace tianlang
                         C.SetStatus(QQ, Status.no);
                         S.P(QQ, "你的状态已重置");
                     }
-                    else if (C.GetStatus(QQ) == Status.joinSetup)
-                        JoinSetup.Enter(QQ, Msg);
+                    else if (C.GetStatus(QQ) == Status.infoSetup)
+                        InfoSetup.Enter(QQ, Msg);
                     break;
                 case 2: //群
                     if (Msg.StartsWith("点歌"))

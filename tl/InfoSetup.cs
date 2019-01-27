@@ -3,7 +3,7 @@ using System.Data.SqlClient;
 
 namespace tianlang
 {
-    public class JoinSetup
+    public class InfoSetup
     {
 
 
@@ -97,7 +97,7 @@ namespace tianlang
         public static void Start(string qq)
         {
             C.GetUid(qq);
-            C.SetStatus(qq, Status.joinSetup);
+            C.SetStatus(qq, Status.infoSetup);
             SetStep(qq, Step.gradeNickName);
             if (!C.isTest)
                 S.Major($"欢迎新人 [IR:at={qq}]，请注意我给你发送的私聊消息哦~");
