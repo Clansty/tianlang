@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 
 namespace tianlang
 {
-    class User
+    public class User
     {
         // 构造函数
         /// <summary>
@@ -65,7 +65,8 @@ namespace tianlang
         private string grade = "";
         private int enrollment = 0;
         // 封装字段
-        public string Grade {
+        public string Grade
+        {
             get => grade;
             set
             {
@@ -113,7 +114,7 @@ namespace tianlang
                 if (value == 0)
                     return;
                 if (10 < value && value < 20)
-                value += 2000;
+                    value += 2000;
 
                 if (Junior)
                     switch (value)
