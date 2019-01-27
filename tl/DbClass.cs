@@ -10,14 +10,14 @@ namespace tianlang
 {
     public static class Db
     {
-        public static SqlConnection conn = null;
+        public static SqlConnection conn = new SqlConnection();
         public static void Connect()
         {
-            
+
             if (C.isTest)
-                conn = new SqlConnection("server=119.3.78.168,1433;database=tianlang;uid=sa;pwd=Ti@nlang2018");
+                conn.ConnectionString = "server=119.3.78.168,1433;database=tianlang;uid=sa;pwd=Ti@nlang2018";
             else
-                conn = new SqlConnection("server=.;database=tianlang;integrated security=SSPI");
+                conn.ConnectionString = "server=.;database=tianlang;integrated security=SSPI";
 
             try
             {

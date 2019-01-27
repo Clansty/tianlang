@@ -18,7 +18,7 @@ namespace CGIUserInfo
             {
 
                 SqlConnection conn = new SqlConnection();
-                conn.ConnectionString = "server=127.0.0.1,1433;database=tianlang;uid=sa;pwd=Ti@nlang2018";
+                conn.ConnectionString = "server=.;database=tianlang;integrated security=SSPI";
                 conn.Open();
                 string queryStr = Environment.GetEnvironmentVariable("QUERY_STRING").Trim();
                 int uid = Convert.ToInt32(queryStr);
