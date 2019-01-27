@@ -103,6 +103,9 @@ namespace tianlang
                 case Step.asMember:
                     AsMember();
                     break;
+                case Step.nonMember:
+                    NonMember();
+                    break;
             }
 
             void AsMember()
@@ -213,6 +216,12 @@ namespace tianlang
                         Si.R("新人信息\n" + u.ToString());
                         break;
                 }
+            }
+            void NonMember()
+            {
+                const string step2 = "请回复你的昵称，也就是显示名字";
+                const string step3 = "请告诉我你的姓名";
+
             }
             void R(string rmsg) => S.P(QQ, rmsg);
             void Commit(string key, string value) => Db.Exec($"UPDATE user_info SET {key}={value} WHERE uid={u.Uid}");

@@ -234,5 +234,30 @@ namespace tianlang
                 $"grade: {Grade}\n" +
                 $"namecard: {NameCard}";
         }
+
+        public string ToXml() => ToXml("用户信息");
+        public string ToXml(string title)
+        {
+            if (title == "" || title == null)
+                title = "用户信息";
+            return "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" +
+                   "<msg serviceID=\"1\">" +
+                     "<item>" +
+                      $"<title>{title}</title>" +
+                      $"<summary>uid: {Uid}</summary>" +
+                      $"<summary>QQ: {QQ}</summary>" +
+                      $"<summary>姓名: {Name}</summary>" +
+                      $"<summary>班级: {Class}</summary>" +
+                      $"<summary>校区: {(Branch ? "金阊" : "本部")}</summary>" +
+                      $"<summary>昵称: {Nick}</summary>" +
+                      $"<summary>初中: {Junior}</summary>" +
+                      $"<summary>入学年份: {Enrollment}</summary>" +
+                      $"<summary>年级: {Grade}</summary>" +
+                      $"<summary>群名片: {NameCard}</summary>" +
+                       "<hr />" +
+                      $"甜狼 Ver.{C.version}" +
+                     "</item>" +
+                   "</msg>";
+        }
     }
 }

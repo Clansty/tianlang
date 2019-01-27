@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClubMan.cs" />
     <Compile Include="Common.cs" />
     <Compile Include="DbClass.cs" />
     <Compile Include="InfoSetup.cs" />
