@@ -51,6 +51,7 @@ namespace tianlang
                     break;
                 case 219:
                 case 212: //群成员增加
+                    C.UpdateMemberList();
                     QQ = TigObjC;
                     if (MsgFrom == (C.isTest ? G.test : G.major))
                         JoinSetup.Start(QQ);
