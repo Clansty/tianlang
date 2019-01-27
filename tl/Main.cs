@@ -71,7 +71,7 @@ namespace tianlang
                 case 4: //群临时
                 case 5: //讨论组临时
                     QQ = TigObjF;
-                    if (Msg == "cancel" | Msg == "取消" | Msg == "主菜单")
+                    if (Msg == "cancel" || Msg == "取消" || Msg == "主菜单")
                     {
                         C.SetStatus(QQ, Status.no);
                         S.P(QQ, "你的状态已重置");
@@ -90,7 +90,6 @@ namespace tianlang
                         {
                             Repeater.Enter(Msg);
                             Si.Enter(Msg);
-
                         }
                     }
                     else //生产模式
