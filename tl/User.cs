@@ -156,6 +156,7 @@ namespace tianlang
             {
                 Branch = true;
                 origin = origin.GetRight("金阊").Trim();
+                Enrollment = 2018;
             }
             if (origin.IndexOf("初") != -1)
                 Junior = true;
