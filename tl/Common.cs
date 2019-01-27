@@ -33,9 +33,10 @@ namespace tianlang
          * 51: 点歌发送空文本时显示提示
          * 52: 修复安卓 QQ 无法显示的问题
          * 53: 修复管理员拉人无法触发向导
+         * 54: 测试群转发 XML
          */
 
-        public const int version = 53;
+        public const int version = 54;
 
 
         public const string wp= "1980853671";
@@ -45,6 +46,8 @@ namespace tianlang
         public static bool isTest;
 
         public const string err = "出现了一些错误";
+
+        private static string memberList = "";
 
         public static int GetUid(string qq)
         {
@@ -98,6 +101,15 @@ namespace tianlang
             return (Status)s;
         }
 
+        public static void UpdateMemberList()
+        {
+            if (isTest)
+                memberList = IRQQApi.Api_GetGroupMemberList(w, G.test);
+            else
+                memberList = IRQQApi.Api_GetGroupMemberList(w, G.major);
+        }
+
+        public static bool IsMember(string qq) => memberList.IndexOf(qq) >= 0;
     }
 
     public static class G

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.InteropServices;
 
 namespace tianlang
 {
@@ -61,6 +56,7 @@ namespace tianlang
                             break;
                     } //决定是否是测试模式
                     Db.Connect();
+                    C.UpdateMemberList();
                     break;
                 case 12002: //插件禁用
                     Db.DisConnect();
@@ -86,14 +82,15 @@ namespace tianlang
                 case 2: //群
                     if (Msg.StartsWith("点歌"))
                         NetEase.Enter(MsgFrom, Msg.GetRight("点歌").Trim());
+                    else if (Msg.IndexOf("</msg>") >= 0 && MsgFrom == G.test)
+                        IRQQApi.Api_SendXML(C.w, 1, 2, G.test, G.test, Msg, 0);
                     else if (C.isTest) //测试模式
                     {
                         if (MsgFrom == G.test)
                         {
                             Repeater.Enter(Msg);
                             Si.Enter(Msg);
-                            if (Msg == "go")
-                                JoinSetup.Start("839827911");
+
                         }
                     }
                     else //生产模式
@@ -113,15 +110,6 @@ namespace tianlang
             
 
             return 1;
-            
-            //char tenpay[512];
-            //当IRC_消息类型为接收到财付通消息时候，IRC_消息内容将以：#换行符分割，1：金额；2：留言；3：单号；无留言时：1：金额；2：单号
-
-            ///版权声明：此SDK是应{续写}邀请为IRQQ\CleverQQ编写，请合理使用无用于黄赌毒相关方面。
-            ///作者QQ：1276986643,铃兰
-            ///如果您对CleverQQ感兴趣，欢迎加入QQ群：476715371，进行讨论
-            ///最后修改时间：2017年7月22日10:49:15
-
         }
 
 
