@@ -4,20 +4,8 @@ namespace tianlang
 {
     public class Main
     {
-        [DllExport(ExportName = nameof(IR_Create), CallingConvention = CallingConvention.StdCall)]
-        public static string IR_Create()
-        {
-            string szBuffer = "插件名称{甜狼}\n插件版本{" + C.version.ToString() + "}\n插件作者{凌莞}\n插件说明{十中第一人工智障}\n插件skey{8956RTEWDFG3216598WERDF3}插件sdk{S3}";
-            return szBuffer;
-        }
-        [DllExport(ExportName = nameof(IR_Message), CallingConvention = CallingConvention.StdCall)]
-        public static int IR_Message(string RobotQQ, int MsgType, string Msg, string Cookies, string SessionKey, string ClientKey)
-        {
-            return 1;
-        }
 
 
-        ///此子程序会分发IRC_机器人QQ接收到的所有：事件，消息；您可在此函数中自行调用所有参数
         [DllExport(ExportName = nameof(IR_Event), CallingConvention = CallingConvention.StdCall)]
         public static int IR_Event(string RobotQQ, int MsgType, int MsgCType, string MsgFrom, string TigObjF, string TigObjC, string Msg,string MsgNum ,string MsgID,string RawMsg,string Json, int pText)
         {
@@ -113,16 +101,21 @@ namespace tianlang
 
 
 
-
+        [DllExport(ExportName = nameof(IR_Create), CallingConvention = CallingConvention.StdCall)]
+        public static string IR_Create()
+        {
+            string szBuffer = "插件名称{甜狼}\n插件版本{" + C.version.ToString() + "}\n插件作者{凌莞}\n插件说明{十中第一人工智障}\n插件skey{8956RTEWDFG3216598WERDF3}插件sdk{S3}";
+            return szBuffer;
+        }
+        [DllExport(ExportName = nameof(IR_Message), CallingConvention = CallingConvention.StdCall)]
+        public static int IR_Message(string RobotQQ, int MsgType, string Msg, string Cookies, string SessionKey, string ClientKey)
+        {
+            return 1;
+        }
         [DllExport(ExportName = nameof(IR_SetUp), CallingConvention = CallingConvention.StdCall)]
         public static void IR_SetUp()
         {
         }
-
-        /// <summary>
-        /// 卸载插件
-        /// </summary>
-        /// <returns></returns>
         [DllExport(ExportName = nameof(IR_DestroyPlugin), CallingConvention = CallingConvention.StdCall)]
         public static int IR_DestroyPlugin()
         {
