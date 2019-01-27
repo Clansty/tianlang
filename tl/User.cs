@@ -243,21 +243,24 @@ namespace tianlang
             if (title == "" || title == null)
                 title = "用户信息";
             return "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" +
-                   "<msg serviceID=\"1\">" +
-                     "<item>" +
+                  $"<msg serviceID=\"1\" brief=\"{title}\">" +
+                     "<item></item>" +
+                     "<item layout=\"6\">" +
                       $"<title>{title}</title>" +
-                      $"<summary>uid: {Uid}</summary>" +
-                      $"<summary>QQ: {QQ}</summary>" +
-                      $"<summary>姓名: {Name}</summary>" +
-                      $"<summary>班级: {Class}</summary>" +
-                      $"<summary>校区: {(Branch ? "金阊" : "本部")}</summary>" +
-                      $"<summary>昵称: {Nick}</summary>" +
-                      $"<summary>初中: {Junior}</summary>" +
-                      $"<summary>入学年份: {Enrollment}</summary>" +
-                      $"<summary>年级: {Grade}</summary>" +
-                      $"<summary>群名片: {NameCard}</summary>" +
+                       "<summary>" +
+                      $"uid: {Uid}\n" +
+                      $"QQ: {QQ}\n" +
+                      $"姓名: {Name}\n" +
+                      $"班级: {Class}\n" +
+                      $"校区: {(Branch ? "金阊" : "本部")}\n" +
+                      $"昵称: {Nick}\n" +
+                      $"初中: {Junior}\n" +
+                      $"入学年份: {Enrollment}\n" +
+                      $"年级: {Grade}\n" +
+                      $"群名片: {NameCard}" +
+                       "</summary>" +
                        "<hr />" +
-                      $"甜狼 Ver.{C.version}" +
+                      $"<summary>甜狼 Ver.{C.version}</summary>" +
                      "</item>" +
                    "</msg>";
         }

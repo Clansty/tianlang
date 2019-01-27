@@ -34,9 +34,10 @@ namespace tianlang
          * 52: 修复安卓 QQ 无法显示的问题
          * 53: 修复管理员拉人无法触发向导
          * 54: 测试群转发 XML
+         * 55: 用户信息返回 XML
          */
 
-        public const int version = 54;
+        public const int version = 55;
 
 
         public const string wp= "1980853671";

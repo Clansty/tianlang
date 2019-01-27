@@ -56,7 +56,7 @@ namespace tianlang
                     try
                     {
                         User u = new User(command);
-                        R(u.ToString());
+                        R(u.ToXml());
                     }
                     catch(Exception e)
                     {

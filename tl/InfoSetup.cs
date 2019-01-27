@@ -213,7 +213,7 @@ namespace tianlang
                         CommitSubStep();
                         C.SetStatus(QQ, Status.no);
                         u = new User(QQ);
-                        Si.R("新人信息\n" + u.ToString());
+                        Si.R(u.ToXml("新人信息"));
                         break;
                 }
             }
