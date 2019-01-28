@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AntiFukubukuro.cs" />
     <Compile Include="ClubMan.cs" />
     <Compile Include="Common.cs" />
     <Compile Include="DbClass.cs" />

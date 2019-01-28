@@ -36,9 +36,10 @@ namespace tianlang
          * 54: 测试群转发 XML
          * 55: 用户信息返回 XML
          * 56: 增加网易云点歌调用方法
+         * 57: 发福袋随机禁言
          */
 
-        public const int version = 56;
+        public const int version = 57;
 
 
         public const string wp= "1980853671";
