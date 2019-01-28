@@ -49,15 +49,31 @@ namespace tianlang
             {
                 if (IRQQApi.Api_IfFriend(C.w, qq))
                     IRQQApi.Api_SendXML(C.w, 1, 1, qq, qq, msg, 0);
-                else
+                else if (C.IsMember(qq))
                     IRQQApi.Api_SendXML(C.w, 1, 4, G.major, qq, msg, 0);
+                else
+                {
+                    string session = C.GetSession(qq);
+                    if (session != "" && session != null)
+                        IRQQApi.Api_SendXML(C.w, 1, 4, session, qq, msg, 0);
+                    else
+                        Test($"向非好友且非大群成员 {qq} 发送 xml 失败");
+                }
             }
             else
             {
                 if (IRQQApi.Api_IfFriend(C.w, qq))
                     IRQQApi.Api_SendMsg(C.w, 1, qq, qq, msg, -2);
-                else
+                else if (C.IsMember(qq))
                     IRQQApi.Api_SendMsg(C.w, 4, G.major, qq, msg, -2);
+                else
+                {
+                    string session = C.GetSession(qq);
+                    if (session != "" && session != null)
+                        IRQQApi.Api_SendMsg(C.w, 4, session, qq, msg, -2);
+                    else
+                        Test($"向非好友且非大群成员 {qq} 发送 {msg} 失败");
+                }
             }
         }
         
