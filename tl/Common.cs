@@ -103,6 +103,29 @@ namespace tianlang
             return (Status)s;
         }
 
+        public static string GetSession(int uid)
+        {
+            SqlDataReader r = Db.QueryReader($"SELECT session FROM user_info WHERE uid={uid}");
+            string s = "";
+            while (r.Read())
+                s = (string)r[0];
+            r.Close();
+            return s;
+        }
+
+        public static void SetSession(int uid, string s) => Db.Exec($"UPDATE user_info SET session='{s}' WHERE uid={uid}");
+        public static void SetSession(string QQ, string s) => Db.Exec($"UPDATE user_info SET session='{s}' WHERE QQ='{QQ}'");
+
+        public static string GetSession(string QQ)
+        {
+            SqlDataReader r = Db.QueryReader($"SELECT session FROM user_info WHERE QQ='{QQ}'");
+            string s = "";
+            while (r.Read())
+                s = (string)r[0];
+            r.Close();
+            return s;
+        }
+
         public static void UpdateMemberList()
         {
             if (isTest)
@@ -124,7 +147,8 @@ namespace tianlang
     public enum Status
     {
         no,
-        infoSetup
+        infoSetup,
+        clubMan
     }
 
     public static class StringHelper

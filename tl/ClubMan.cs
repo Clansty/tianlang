@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace tianlang
 {
-    class ClubMan
+    public static class ClubMan
     {
+        public static void Enroll(string QQ,string group)
+        {
 
+        }
     }
 }
