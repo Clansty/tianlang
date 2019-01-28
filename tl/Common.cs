@@ -152,6 +152,26 @@ namespace tianlang
         clubMan
     }
 
+    public class GroupMemberList
+    {
+        //根据 IR 的 JSON
+        public string card;
+        public int flag;
+        public int g;
+        public long join_time;
+        public long last_speak_time;
+        public class lv
+        {
+            public int level;
+            public int point;
+        }
+        public string nick;
+        public int qage;
+        public int role;
+        public string tags;
+        public long uin;
+    }
+
     public static class StringHelper
     {
         /// <summary>

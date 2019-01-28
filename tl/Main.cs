@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Runtime.InteropServices;
 
 namespace tianlang
 {
@@ -11,12 +12,12 @@ namespace tianlang
         {
             ///RobotQQ		机器人QQ				多Q版用于判定哪个QQ接收到该消息
             ///MsgType		消息类型				接收到消息类型，该类型可在常量表中查询具体定义，此处仅列举： - 1 未定义事件 1 好友信息 2, 群信息 3, 讨论组信息 4, 群临时会话 5, 讨论组临时会话 6, 财付通转账
-            ///MsgCType		消息子类型			    此参数在不同消息类型下，有不同的定义，暂定：接收财付通转账时 1为好友 2为群临时会话 3为讨论组临时会话    有人请求入群时，不良成员这里为1
+            ///MsgCType		消息子类型			此参数在不同消息类型下，有不同的定义，暂定：接收财付通转账时 1为好友 2为群临时会话 3为讨论组临时会话    有人请求入群时，不良成员这里为1
             ///MsgFrom		消息来源				此消息的来源，如：群号、讨论组ID、临时会话QQ、好友QQ等
             ///TigObjF		触发对象_主动			主动发送这条消息的QQ，踢人时为踢人管理员QQ
             ///TigObjC		触发对象_被动			被动触发的QQ，如某人被踢出群，则此参数为被踢出人QQ
             ///MsgNum		消息序号				此参数暂定用于消息回复，消息撤回
-            ///MsgID		消息ID				    此参数暂定用于消息回复，消息撤回
+            ///MsgID		消息ID				此参数暂定用于消息回复，消息撤回
             ///Msg			消息内容				常见为：对方发送的消息内容，但当IRC_消息类型为 某人申请入群，则为入群申请理由
             ///RawMsg		原始信息				特殊情况下会返回JSON结构（本身返回的就是JSON）
             ///Json			Json信息				为后期新参数预留，方便无限扩展
@@ -88,10 +89,20 @@ namespace tianlang
                     else if (C.isTest) //测试模式
                     {
                         if (MsgFrom == G.test)
-                        {
-                            Repeater.Enter(Msg);
-                            new Si(Msg);
-                        }
+                            try
+                            {
+                                if (Msg == "list")
+                                    S.Test(IRQQApi.Api_GetGroupMemberList(C.w, G.test));
+                                else if (Msg == "enroll")
+                                    ClubMan.Enroll("839827911", G.test);
+                                Repeater.Enter(Msg);
+                                new Si(Msg);
+
+                            }
+                            catch(Exception e)
+                            {
+                                S.Test(e.Message);
+                            }
                     }
                     else //生产模式
                     {
