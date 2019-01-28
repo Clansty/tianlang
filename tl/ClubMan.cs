@@ -11,20 +11,25 @@ namespace tianlang
     {
         public static void Enroll(string QQ, string group)
         {
-            
-        }
-        private static void Import(int cid, string group)
-        {
             string json = IRQQApi.Api_GetGroupMemberList(C.w, group);
-            
             dynamic d = JToken.Parse(json);
             JArray ja = d.mems;
+            List<GroupMember> l = ja.ToObject<List<GroupMember>>();
 
-            List<GroupMemberList> l = ja.ToObject<List<GroupMemberList>>();
+            GroupMember groupMaster = l.Find(C.master);
 
+            if (groupMaster.uin.ToString() != QQ)
+            {
+                S.Group(group, "只有群主可以使用此功能");
+                return;
+            }
+        }
+        private static void Import(int cid, List<GroupMember> l)
+        {
+            
             string c = "";
             string n = "";
-            foreach (GroupMemberList m in l)
+            foreach (GroupMember m in l)
             {
                 c = c + m.card + '\n';
                 n = n + m.nick + '\n';

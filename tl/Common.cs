@@ -137,6 +137,15 @@ namespace tianlang
         }
 
         public static bool IsMember(string qq) => memberList.IndexOf(qq) >= 0;
+
+        public static Predicate<GroupMember> master = new Predicate<GroupMember>( //表示判断群主的方法
+                delegate (GroupMember member)
+                {
+                    if (member.role == 0)
+                        return true;
+                    return false;
+                });
+
     }
 
     public static class G
@@ -153,24 +162,41 @@ namespace tianlang
         clubMan
     }
 
-    public class GroupMemberList
+    /// <summary>
+    /// 根据 IR
+    /// </summary>
+    public class GroupMember
     {
         //根据 IR 的 JSON
+        /// <summary>
+        /// 群名片
+        /// </summary>
         public string card;
         public int flag;
         public int g;
         public long join_time;
         public long last_speak_time;
-        public class lv
+        public Lv lv = new Lv();
+        /// <summary>
+        /// 昵称
+        /// </summary>
+        public string nick;
+        public int qage;
+        /// <summary>
+        /// 0 群主 1 管理 2 普通成员
+        /// </summary>
+        public int role;
+        public string tags;
+        /// <summary>
+        /// QQ 号
+        /// </summary>
+        public long uin;
+
+        public class Lv
         {
             public int level;
             public int point;
         }
-        public string nick;
-        public int qage;
-        public int role;
-        public string tags;
-        public long uin;
     }
 
     public static class StringHelper

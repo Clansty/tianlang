@@ -167,14 +167,14 @@ namespace tianlang
 
         [DllImport("../IRapi.dll")]
         /// <summary>
-        ///取Q龄，成功返回Q龄，失败返回-1
+        /// 取Q龄，成功返回Q龄，失败返回-1
         /// </summary>
         /// <param name="RobotQQ">响应的QQ</param>
         /// <param name="ObjQQ">对象QQ</param>
         public static extern int Api_GetQQAge(string RobotQQ, string ObjQQ);
         [DllImport("../IRapi.dll")]
         /// <summary>
-        ///取框架所有QQ号
+        /// 取框架所有QQ号
         /// </summary>
         public static extern string Api_GetQQList();
         [DllImport("../IRapi.dll")]
@@ -201,7 +201,7 @@ namespace tianlang
 
         [DllImport("../IRapi.dll")]
         /// <summary>
-        ///是否QQ好友，好友返回真，非好友或获取失败返回假
+        /// 是否QQ好友，好友返回真，非好友或获取失败返回假
         /// </summary>
         /// <param name="RobotQQ">响应的QQ</param>
         /// <param name="OBjQQ">对象QQ</param>
@@ -216,7 +216,7 @@ namespace tianlang
         public static extern string Api_InviteDisGroup(string RobotQQ, string DisGroupID, string ObjQQ);
         [DllImport("../IRapi.dll")]
         /// <summary>
-        ///查询对象或自己是否被禁言，禁言返回真，失败或未禁言返回假
+        /// 查询对象或自己是否被禁言，禁言返回真，失败或未禁言返回假
         /// </summary>
         /// <param name="RobotQQ">响应的QQ</param>
         /// <param name="GroupNum">群号</param>
@@ -326,7 +326,7 @@ namespace tianlang
            string ObjQQ, string Msg, int ABID);
         [DllImport("../IRapi.dll")]
         /// <summary>
-        ///好友语音上传并发送（成功返回真，失败返回假）
+        /// 好友语音上传并发送（成功返回真，失败返回假）
         /// <summary>
         /// <param name="RobotQQ">响应的QQ</param>
         /// <param name="ObjQQ">接收QQ</param>
