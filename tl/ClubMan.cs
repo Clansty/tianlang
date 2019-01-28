@@ -13,10 +13,10 @@ namespace tianlang
         {
             
         }
-        private static void Import(int cid,string group)
+        private static void Import(int cid, string group)
         {
-            string json = IRQQApi.Api_GetGroupMemberList(C.w, G.test);
-
+            string json = IRQQApi.Api_GetGroupMemberList(C.w, group);
+            
             dynamic d = JToken.Parse(json);
             JArray ja = d.mems;
 

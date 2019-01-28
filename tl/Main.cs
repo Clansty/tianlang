@@ -41,7 +41,7 @@ namespace tianlang
                             break;
                         default:
                             IRQQApi.Api_OutPutLog("登录的账号不对");
-                            IRQQApi.Api_DisabledPlugin();
+                            Environment.Exit(233);
                             break;
                     } //决定是否是测试模式
                     Db.Connect();
