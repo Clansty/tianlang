@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace tianlang
 {
-    public static class Si
+    public class Si
     {
         /// <summary>
         /// 回复
@@ -21,7 +21,7 @@ namespace tianlang
             else
                 S.Si(msg);
         }
-        public static void Enter(string command)
+        public Si(string command)
         {
             
             if (command.StartsWith("sql"))
@@ -65,7 +65,7 @@ namespace tianlang
             }
 
         }
-        private static void Sql(string command)
+        private void Sql(string command)
         {
             if (command.StartsWith("exec"))
             {

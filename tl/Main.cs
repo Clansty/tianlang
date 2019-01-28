@@ -90,18 +90,20 @@ namespace tianlang
                         if (MsgFrom == G.test)
                         {
                             Repeater.Enter(Msg);
-                            Si.Enter(Msg);
+                            new Si(Msg);
                         }
                     }
                     else //生产模式
                     {
                         if (MsgFrom == G.major)
                         {
+                            if (Msg.Trim().Trim('\n').Trim() == "收到福袋，请使用新版手机QQ查看")
+                                new AntiFukubukuro(TigObjF);
                             Repeater.Enter(Msg);
                         }
                         else if (MsgFrom == G.si)
                         {
-                            Si.Enter(Msg);
+                            new Si(Msg);
                         }
                     }
                     break;
