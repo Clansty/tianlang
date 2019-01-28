@@ -69,8 +69,20 @@ namespace tianlang
                         InfoSetup.Enter(QQ, Msg);
                     break;
                 case 2: //群
+                    //点歌
                     if (Msg.StartsWith("点歌"))
                         NetEase.Enter(MsgFrom, Msg.GetRight("点歌").Trim());
+                    else if (Msg.StartsWith("来首"))
+                        NetEase.Enter(MsgFrom, Msg.GetRight("来首").Trim());
+                    else if (Msg.StartsWith("甜狼点歌"))
+                        NetEase.Enter(MsgFrom, Msg.GetRight("甜狼点歌").Trim());
+                    else if (Msg.StartsWith("音乐"))
+                        NetEase.Enter(MsgFrom, Msg.GetRight("音乐").Trim());
+                    else if (Msg.StartsWith("网易云音乐"))
+                        NetEase.Enter(MsgFrom, Msg.GetRight("网易云音乐").Trim());
+                    else if (Msg.StartsWith("网易云"))
+                        NetEase.Enter(MsgFrom, Msg.GetRight("网易云").Trim());
+                    //测试群转发 XML
                     else if (Msg.IndexOf("</msg>") >= 0 && MsgFrom == G.test)
                         IRQQApi.Api_SendXML(C.w, 1, 2, G.test, G.test, Msg, 0);
                     else if (C.isTest) //测试模式

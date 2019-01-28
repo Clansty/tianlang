@@ -35,9 +35,10 @@ namespace tianlang
          * 53: 修复管理员拉人无法触发向导
          * 54: 测试群转发 XML
          * 55: 用户信息返回 XML
+         * 56: 增加网易云点歌调用方法
          */
 
-        public const int version = 55;
+        public const int version = 56;
 
 
         public const string wp= "1980853671";
