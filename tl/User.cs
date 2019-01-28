@@ -226,15 +226,15 @@ namespace tianlang
         public override string ToString()
         {
             return $"uid: {Uid}\n" +
-                $"qq: {QQ}\n" +
-                $"name: {Name}\n" +
-                $"class: {Class}\n" +
-                $"branch: {(Branch ? "金阊" : "本部")}\n" +
-                $"nick: {Nick}\n" +
-                $"junior: {Junior}\n" +
-                $"enrollment: {Enrollment}\n" +
-                $"grade: {Grade}\n" +
-                $"namecard: {NameCard}";
+                   $"qq: {QQ}\n" +
+                   $"name: {Name}\n" +
+                   $"class: {Class}\n" +
+                   $"branch: {(Branch ? "金阊" : "本部")}\n" +
+                   $"nick: {Nick}\n" +
+                   $"junior: {Junior}\n" +
+                   $"enrollment: {Enrollment}\n" +
+                   $"grade: {Grade}" +
+                   (C.IsMember(QQ) ? $"\nnamecard: {NameCard}" : "");
         }
 
         public string ToXml() => ToXml("用户信息");
@@ -256,8 +256,8 @@ namespace tianlang
                       $"昵称: {Nick}\n" +
                       $"初中: {Junior}\n" +
                       $"入学年份: {Enrollment}\n" +
-                      $"年级: {Grade}\n" +
-                      $"群名片: {NameCard}" +
+                      $"年级: {Grade}" +
+                      (C.IsMember(QQ) ? $"\n群名片: {NameCard}" : "") +
                        "</summary>" +
                        "<hr />" +
                       $"<summary>甜狼 Ver.{C.version}</summary>" +
