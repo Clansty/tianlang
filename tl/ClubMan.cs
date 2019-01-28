@@ -9,7 +9,11 @@ namespace tianlang
 {
     public static class ClubMan
     {
-        public static void Enroll(string QQ,string group)
+        public static void Enroll(string QQ, string group)
+        {
+            
+        }
+        private static void Import(int cid,string group)
         {
             string json = IRQQApi.Api_GetGroupMemberList(C.w, G.test);
 
@@ -28,7 +32,6 @@ namespace tianlang
 
             S.Test(c);
             S.Test(n);
-
 
         }
     }

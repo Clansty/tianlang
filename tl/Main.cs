@@ -110,7 +110,8 @@ namespace tianlang
                         {
                             if (Msg.Trim().Trim('\n').Trim() == "收到福袋，请使用新版手机QQ查看")
                                 new AntiFukubukuro(TigObjF);
-                            Repeater.Enter(Msg);
+                            else
+                                Repeater.Enter(Msg);
                         }
                         else if (MsgFrom == G.si)
                         {
