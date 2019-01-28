@@ -9,17 +9,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CGIUserInfo", "CGIUserInfo\
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Nya~ = Debug|Nya~
-		Release|Nya~ = Release|Nya~
+		Poi~|Nya~ = Poi~|Nya~
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A42D2AA2-DD47-476D-9E12-B56F2D54CAEC}.Debug|Nya~.ActiveCfg = Release|x86
-		{A42D2AA2-DD47-476D-9E12-B56F2D54CAEC}.Debug|Nya~.Build.0 = Release|x86
-		{A42D2AA2-DD47-476D-9E12-B56F2D54CAEC}.Release|Nya~.ActiveCfg = Release|x86
-		{A42D2AA2-DD47-476D-9E12-B56F2D54CAEC}.Release|Nya~.Build.0 = Release|x86
-		{3769BAC9-C89F-4EAC-85A0-27CD4728EA5F}.Debug|Nya~.ActiveCfg = Debug|x64
-		{3769BAC9-C89F-4EAC-85A0-27CD4728EA5F}.Release|Nya~.ActiveCfg = Release|x64
-		{3769BAC9-C89F-4EAC-85A0-27CD4728EA5F}.Release|Nya~.Build.0 = Release|x64
+		{A42D2AA2-DD47-476D-9E12-B56F2D54CAEC}.Poi~|Nya~.ActiveCfg = Release|x86
+		{A42D2AA2-DD47-476D-9E12-B56F2D54CAEC}.Poi~|Nya~.Build.0 = Release|x86
+		{3769BAC9-C89F-4EAC-85A0-27CD4728EA5F}.Poi~|Nya~.ActiveCfg = Release|x64
+		{3769BAC9-C89F-4EAC-85A0-27CD4728EA5F}.Poi~|Nya~.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
