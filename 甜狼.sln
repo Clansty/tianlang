@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "甜狼", "tl\甜狼.csproj"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CGIUserInfo", "CGIUserInfo\CGIUserInfo.csproj", "{3769BAC9-C89F-4EAC-85A0-27CD4728EA5F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tlWeb", "tlWeb\tlWeb.csproj", "{463C682E-56E0-495A-8FE3-3CA04A7A340C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Poi~|Nya~ = Poi~|Nya~
@@ -16,6 +18,8 @@ Global
 		{A42D2AA2-DD47-476D-9E12-B56F2D54CAEC}.Poi~|Nya~.Build.0 = Release|x86
 		{3769BAC9-C89F-4EAC-85A0-27CD4728EA5F}.Poi~|Nya~.ActiveCfg = Release|x64
 		{3769BAC9-C89F-4EAC-85A0-27CD4728EA5F}.Poi~|Nya~.Build.0 = Release|x64
+		{463C682E-56E0-495A-8FE3-3CA04A7A340C}.Poi~|Nya~.ActiveCfg = Release|x64
+		{463C682E-56E0-495A-8FE3-3CA04A7A340C}.Poi~|Nya~.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

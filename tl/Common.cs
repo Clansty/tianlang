@@ -38,9 +38,10 @@ namespace tianlang
          * 56: 增加网易云点歌调用方法
          * 57: 发福袋随机禁言
          * 58: 修复打断 bug
+         * 59: 福袋禁言信息使用 XML
          */
 
-        public const int version = 58;
+        public const int version = 59;
 
 
         public const string wp= "1980853671";
