@@ -42,7 +42,7 @@ namespace tianlang
         /// </summary>
         /// <param name="qq"></param>
         /// <param name="msg"></param>
-        public static void P(string qq,string msg)
+        public static void P(string qq, string msg)
         {
             bool isXml = msg.IndexOf("</msg>") > -1;
             if (isXml)
@@ -76,6 +76,7 @@ namespace tianlang
                 }
             }
         }
+        public static void P(int uid, string msg) => P(new User(uid).QQ, msg);
         public static void P(GroupMember m, string msg) => P(m.uin.ToString(), msg);
     }
 }

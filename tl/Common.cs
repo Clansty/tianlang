@@ -154,8 +154,8 @@ namespace tianlang
         public static List<GroupMember> GetMembers(string group)
         {
             string json = IRQQApi.Api_GetGroupMemberList(C.w, group);
-            dynamic d = JToken.Parse(json);
-            JArray ja = d.mems;
+            json = json.Between("\"mems\":", ",\"search_count\"");
+            JArray ja = JArray.Parse(json);
             List<GroupMember> l = ja.ToObject<List<GroupMember>>();
             return l;
         }
