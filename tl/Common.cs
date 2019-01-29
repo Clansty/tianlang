@@ -71,29 +71,20 @@ namespace tianlang
             return uid;
         }
 
-        /// <summary>
-        /// 设置某个 QQ 的状态
-        /// </summary>
-        /// <param name="qq"></param>
-        /// <param name="status"></param>
         public static void SetStatus(string qq, Status status)
         {
             Db.Exec($"UPDATE user_info SET status={(int)status} WHERE QQ='{qq}'");
             Db.Exec($"UPDATE user_info SET step=0 WHERE QQ='{qq}'");
             Db.Exec($"UPDATE user_info SET substep=0 WHERE QQ='{qq}'");
         }
-
-        /// <summary>
-        /// 根据 uid 设置状态
-        /// </summary>
-        /// <param name="uid"></param>
-        /// <param name="status"></param>
         public static void SetStatus(int uid, Status status)
         {
             Db.Exec($"UPDATE user_info SET status={(int)status} WHERE uid={uid}");
             Db.Exec($"UPDATE user_info SET step=0 WHERE uid={uid}");
             Db.Exec($"UPDATE user_info SET substep=0 WHERE uid={uid}");
         }
+        public static void SetStatus(GroupMember member, Status status) => SetStatus(member.uin.ToString(), status);
+        public static void SetStatus(User u, Status status) => SetStatus(u.Uid, status);
 
         public static Status GetStatus(string qq)
         {
@@ -104,6 +95,18 @@ namespace tianlang
             r.Close();
             return (Status)s;
         }
+        public static Status GetStatus(int uid)
+        {
+            SqlDataReader r = Db.QueryReader($"SELECT status FROM user_info WHERE uid={uid}");
+            int s = 0;
+            while (r.Read())
+                s = Convert.ToInt32(r[0]);
+            r.Close();
+            return (Status)s;
+        }
+        public static Status GetStatus(GroupMember member) => GetStatus(member.uin.ToString());
+        public static Status GetStatus(User u) => GetStatus(u.Uid);
+
 
         public static string GetSession(int uid)
         {

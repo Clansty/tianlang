@@ -93,6 +93,13 @@ namespace tianlang
                             {
                                 if (Msg == "list")
                                     S.Test(IRQQApi.Api_GetGroupMemberList(C.w, G.test));
+                                else if (Msg == "enroll")
+                                {
+                                    if (C.GetMaster(MsgFrom).uin.ToString() == TigObjF)
+                                        new ClubMan(MsgFrom);
+                                    else
+                                        S.Group(MsgFrom, "只有群主可以使用此功能");
+                                }
                                 Repeater.Enter(Msg);
                                 new Si(Msg);
 

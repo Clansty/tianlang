@@ -73,6 +73,10 @@ namespace tianlang
             
         }
 
+        public ClubMan(string group)
+        {
+            
+        }
 
         private void Enroll(string QQ, string group)
         {
