@@ -84,7 +84,7 @@ namespace tianlang
                     else if (Msg.StartsWith("网易云"))
                         NetEase.Enter(MsgFrom, Msg.GetRight("网易云").Trim());
                     //测试群转发 XML
-                    else if (Msg.IndexOf("</msg>") >= 0 && MsgFrom == G.test)
+                    else if (Msg.IndexOf("</msg>") >= 0 && MsgFrom == G.test && TigObjF == "839827911")
                         IRQQApi.Api_SendXML(C.w, 1, 2, G.test, G.test, Msg, 0);
                     else if (C.isTest) //测试模式
                     {
@@ -93,8 +93,6 @@ namespace tianlang
                             {
                                 if (Msg == "list")
                                     S.Test(IRQQApi.Api_GetGroupMemberList(C.w, G.test));
-                                else if (Msg == "enroll")
-                                    ClubMan.Enroll("839827911", G.test);
                                 Repeater.Enter(Msg);
                                 new Si(Msg);
 

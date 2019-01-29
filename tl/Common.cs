@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
-
+using Newtonsoft.Json.Linq;
 
 namespace tianlang
 {
@@ -110,7 +110,7 @@ namespace tianlang
             SqlDataReader r = Db.QueryReader($"SELECT session FROM user_info WHERE uid={uid}");
             string s = "";
             while (r.Read())
-                s = (string)r[0];
+                s = r[0].ToString();
             r.Close();
             return s;
         }
@@ -123,7 +123,7 @@ namespace tianlang
             SqlDataReader r = Db.QueryReader($"SELECT session FROM user_info WHERE QQ='{QQ}'");
             string s = "";
             while (r.Read())
-                s = (string)r[0];
+                s = r[0].ToString();
             r.Close();
             return s;
         }
@@ -146,9 +146,24 @@ namespace tianlang
                     return false;
                 });
 
+        public static List<GroupMember> GetMembers(string group)
+        {
+            string json = IRQQApi.Api_GetGroupMemberList(C.w, group);
+            dynamic d = JToken.Parse(json);
+            JArray ja = d.mems;
+            List<GroupMember> l = ja.ToObject<List<GroupMember>>();
+            return l;
+        }
+
+        public static GroupMember GetMaster(string group)
+        {
+            List<GroupMember> l = GetMembers(group);
+            GroupMember groupMaster = l.Find(C.master);
+            return groupMaster;
+        }
     }
 
-    public static class G
+    public readonly struct G
     {
         public const string major = "646751705";
         public const string si = "690696283";
