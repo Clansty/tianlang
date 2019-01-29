@@ -76,6 +76,6 @@ namespace tianlang
                 }
             }
         }
-        
+        public static void P(GroupMember m, string msg) => P(m.uin.ToString(), msg);
     }
 }

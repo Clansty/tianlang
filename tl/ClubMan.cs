@@ -10,18 +10,10 @@ namespace tianlang
 {
     public class ClubMan
     {
-        /// <summary>
-        /// 设置某个 QQ 的 Step
-        /// </summary>
-        /// <param name="qq"></param>
-        /// <param name="status"></param>
         private void SetStep(string qq, Step status) => Db.Exec($"UPDATE user_info SET step={(int)status} WHERE QQ='{qq}'");
-        /// <summary>
-        /// 根据 uid 设置 Step
-        /// </summary>
-        /// <param name="uid"></param>
-        /// <param name="status"></param>
         private void SetStep(int uid, Step status) => Db.Exec($"UPDATE user_info SET step={(int)status} WHERE uid={uid}");
+        private void SetStep(GroupMember m, Step s) => SetStep(m.uin.ToString(), s);
+
         private Step GetStep(string qq)
         {
             SqlDataReader r = Db.QueryReader($"SELECT step FROM user_info WHERE QQ='{qq}'");
@@ -32,20 +24,13 @@ namespace tianlang
             return (Step)s;
         }
 
+
         // 关于 SubStep 的设置项
 
-        /// <summary>
-        /// 设置某个 QQ 的 SubStep
-        /// </summary>
-        /// <param name="qq"></param>
-        /// <param name="status"></param>
         private void SetSubStep(string qq, SubStep status) => Db.Exec($"UPDATE user_info SET substep={(int)status} WHERE QQ='{qq}'");
-        /// <summary>
-        /// 根据 uid 设置 SubStep
-        /// </summary>
-        /// <param name="uid"></param>
-        /// <param name="status"></param>
         private void SetSubStep(int uid, SubStep status) => Db.Exec($"UPDATE user_info SET substep={(int)status} WHERE uid={uid}");
+        private void SetSubStep(GroupMember m, SubStep s) => SetSubStep(m.uin.ToString(), s);
+
         private SubStep GetSubStep(string qq)
         {
             SqlDataReader r = Db.QueryReader($"SELECT substep FROM user_info WHERE QQ='{qq}'");
@@ -73,15 +58,25 @@ namespace tianlang
             
         }
 
+        /// <summary>
+        /// 开始 enroll 过程
+        /// </summary>
+        /// <param name="group"></param>
         public ClubMan(string group)
         {
-            
+            GroupMember master = C.GetMaster(group);
+            C.GetUid(master.uin.ToString());
+            bool isFoM = IRQQApi.Api_IfFriend(C.w, master.uin.ToString()) || C.IsMember(master.uin.ToString());
+            if (!isFoM)
+                C.SetSession(master, group);
+            C.SetStatus(master, Status.clubMan);
+            SetStep(master, Step.enroll);
+            SetSubStep(master, SubStep.name);
+
+            master.S($"[甜狼 Ver.{C.version}][Next]" +
+                      "请回复社团的名字");
         }
 
-        private void Enroll(string QQ, string group)
-        {
-
-        }
         private void Import(int cid, List<GroupMember> l)
         {
             

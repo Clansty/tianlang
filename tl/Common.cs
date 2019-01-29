@@ -117,10 +117,6 @@ namespace tianlang
             r.Close();
             return s;
         }
-
-        public static void SetSession(int uid, string s) => Db.Exec($"UPDATE user_info SET session='{s}' WHERE uid={uid}");
-        public static void SetSession(string QQ, string s) => Db.Exec($"UPDATE user_info SET session='{s}' WHERE QQ='{QQ}'");
-
         public static string GetSession(string QQ)
         {
             SqlDataReader r = Db.QueryReader($"SELECT session FROM user_info WHERE QQ='{QQ}'");
@@ -130,6 +126,11 @@ namespace tianlang
             r.Close();
             return s;
         }
+
+        public static void SetSession(int uid, string s) => Db.Exec($"UPDATE user_info SET session='{s}' WHERE uid={uid}");
+        public static void SetSession(string QQ, string s) => Db.Exec($"UPDATE user_info SET session='{s}' WHERE QQ='{QQ}'");
+        public static void SetSession(GroupMember member, string s) => SetSession(member.uin.ToString(), s);
+
 
         public static void UpdateMemberList()
         {
@@ -210,6 +211,7 @@ namespace tianlang
         /// </summary>
         public long uin;
 
+        public void S(string msg) => tianlang.S.P(this, msg);
         public class Lv
         {
             public int level;
