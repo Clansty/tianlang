@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
@@ -86,16 +87,32 @@ namespace tianlang
                                 R("子域名不能包含中文，请重新选择");
                                 return;
                             }
-                            Commit("subdomain", $"'{sd}'");
+                            try
+                            {
+                                Commit("subdomain", $"'{sd}'");
+                            }
+                            catch (Exception e)
+                            {
+                                R("出现错误: \n" +
+                                 $"{e.Message}" +
+                                  "可能是你指定的子域名已被占用");
+                                return;
+                            }
                             C.SetStatus(u, Status.no);
                             R("保存成功\n" +
                              $"你的访问域名将是 https://{sd}.nths.moe[Next]");
                             SqlDataReader r = Db.QueryReader($"SELECT groupid FROM club_info WHERE master={u.Uid}");
-                            string s = "";
+                            string group = "";
                             while (r.Read())
-                                s = r[0].ToString();
+                                group = r[0].ToString();
                             r.Close();
-                            R($"正在通过群 {IRQQApi.Api_GetGroupName(C.w, s)} 导入成员，可能需要一些时间，请稍后");
+                            r = Db.QueryReader($"SELECT name FROM club_info WHERE master={u.Uid}");
+                            string n = "";
+                            while (r.Read())
+                                n = r[0].ToString();
+                            r.Close();
+                            R($"正在通过群 {IRQQApi.Api_GetGroupName(C.w, group)} 导入成员，可能需要一些时间，请稍后");
+                            ImportResult import = Import(group, n);
                             break;
                     }
                     break;
@@ -129,20 +146,33 @@ namespace tianlang
                       "请回复社团的名字");
         }
 
-        private void Import(int cid, List<GroupMember> l)
+        private ImportResult Import(string g, string brief)
         {
-            
-            string c = "";
-            string n = "";
+            List<GroupMember> l = C.GetMembers(g);
+            ImportResult result;
+            result.all = 0;
+            result.notReged = 0;
+            result.users = new List<User>();
             foreach (GroupMember m in l)
             {
-                c = c + m.card + '\n';
-                n = n + m.nick + '\n';
+                string qq = m.uin.ToString();
+                User u = new User(qq);
+                result.all++;
+                if (u.Enrollment == 0 || u.Name == "" || u.Nick == "")
+                {
+                    result.notReged++;
+                    InfoSetup.StartNonMember(qq, g, brief);
+                }
+                result.users.Add(u);
             }
+            return result;
+        }
 
-            S.Test(c);
-            S.Test(n);
-
+        private struct ImportResult
+        {
+            public int all;
+            public int notReged;
+            public List<User> users;
         }
     }
 }

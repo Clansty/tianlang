@@ -71,7 +71,7 @@ namespace tianlang
 
         // 文本常量
         const string step1 = "请回复你的 校区 年级 [班级]\n" +
-                             "年级是必须要的，校区不写默认本部，班级可以不写\n" +
+                             "校区不写默认本部\n" +
                              "例如: 高二八班，金阊高一1班，本部高三2班，2018届";
 
         public static void Start(string qq)
@@ -84,6 +84,22 @@ namespace tianlang
             SetStep(qq, Step.asMember);
             if (!C.isTest)
                 S.Major($"欢迎新人 [IR:at={qq}]，请注意我给你发送的私聊消息哦~");
+            S.P(qq, $"[Version 2.{C.version}][Next]" + welcome);
+            SetSubStep(qq, SubStep.grade);
+            S.P(qq, step1);
+        }
+
+        public static void StartNonMember(string qq, string group, string brief)
+        {
+            string welcome = "你好，我是甜狼，十中的人工智能管理[Next]" +
+                            $"<{brief}>正在导入成员，由于你的信息不完整，请跟随引导回答以下问题，我会自动帮你完善信息。[Next]" +
+                             "如果输入错误，你可以说<上一步>，或者<重新开始>.(不包括尖括号哦）";
+            C.GetUid(qq);
+            C.SetStatus(qq, Status.infoSetup);
+            bool isFoM = IRQQApi.Api_IfFriend(C.w, qq) || C.IsMember(qq);
+            if (!isFoM)
+                C.SetSession(qq, group);
+            SetStep(qq, Step.nonMember);
             S.P(qq, $"[Version 2.{C.version}][Next]" + welcome);
             SetSubStep(qq, SubStep.grade);
             S.P(qq, step1);

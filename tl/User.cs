@@ -12,13 +12,13 @@ namespace tianlang
     {
         // 构造函数
         /// <summary>
-        /// 创建 Student 并用 UID 填充
+        /// 创建 User 并用 UID 填充
         /// </summary>
-        /// <param name="Uid"></param>
-        public User(int Uid)
+        /// <param name="uid"></param>
+        public User(int uid)
         {
-            this.Uid = Uid;
-            DataSet data = Db.Query($"SELECT * FROM user_info WHERE uid={this.Uid}");
+            Uid = uid;
+            DataSet data = Db.Query($"SELECT * FROM user_info WHERE uid={Uid}");
             QQ = data.Tables[0].Rows[0]["QQ"].ToString();
             Name = data.Tables[0].Rows[0]["name"] == DBNull.Value ? "" : data.Tables[0].Rows[0]["name"].ToString();
             Class = data.Tables[0].Rows[0]["class"] == DBNull.Value ? 0 : (int)data.Tables[0].Rows[0]["class"];
@@ -29,7 +29,7 @@ namespace tianlang
             NameCard = IRQQApi.Api_GetGroupCard(C.w, G.major, QQ);
         }
         /// <summary>
-        /// 创建 Student 并用 QQ 填充
+        /// 创建 User 并用 QQ 填充
         /// </summary>
         /// <param name="QQ"></param>
         public User(string QQ)
