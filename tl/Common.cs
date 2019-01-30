@@ -40,11 +40,11 @@ namespace tianlang
          * 58: 修复打断 bug
          * 59: 福袋禁言信息使用 XML
          * 60: 社团信息注册与导入成员
+         * 61: 发送秀图
          */
 
-        public const int version = 60;
-
-
+        public const int version = 61;
+        
         public const string wp= "1980853671";
         public const string wt = "2125742312";
         public static string w;
@@ -180,7 +180,8 @@ namespace tianlang
     {
         no,
         infoSetup,
-        clubMan
+        clubMan,
+        showPic
     }
 
     /// <summary>

@@ -73,6 +73,19 @@ namespace tianlang
                             InfoSetup.Enter(QQ, Msg);
                         else if (status == Status.clubMan)
                             new ClubMan(QQ, Msg);
+                        else if (status == Status.showPic)
+                        {
+                            if (Msg.IndexOf("[IR:pic=") > -1)
+                                S.Test(Msg.Replace("[IR:pic=", "[IR:ShowPic=").Replace("]", ",type=0]"));
+                            else
+                                S.P(QQ, "发送图片哦\n" +
+                                        "再次发送<秀图>可再进入秀图状态");
+                            C.SetStatus(QQ, Status.no);
+                        }
+                        else if (Msg == "秀图")
+                            C.SetStatus(QQ, Status.showPic);
+                        else if (Msg == "showpic")
+                            C.SetStatus(QQ, Status.showPic);
                         break;
                     case 2: //群
                             //点歌

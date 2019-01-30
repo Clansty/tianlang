@@ -180,7 +180,7 @@ namespace tianlang
                 {
                     result.notReged++;
                     InfoSetup.StartNonMember(qq, g, brief);
-                    Thread.Sleep(1000);
+                    Thread.Sleep(5000);
                 }
                 result.users.Add(u);
             }
