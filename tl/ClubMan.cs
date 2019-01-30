@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 using Newtonsoft.Json.Linq;
 
 namespace tianlang
@@ -54,6 +55,11 @@ namespace tianlang
             subDomain
         }
 
+        /// <summary>
+        /// Continue Enrollment Session
+        /// </summary>
+        /// <param name="QQ"></param>
+        /// <param name="msg"></param>
         public ClubMan(string QQ, string msg)
         {
             User u = new User(QQ);
@@ -113,6 +119,9 @@ namespace tianlang
                             r.Close();
                             R($"正在通过群 {IRQQApi.Api_GetGroupName(C.w, group)} 导入成员，可能需要一些时间，请稍后");
                             ImportResult import = Import(group, n);
+                            R("导入完成\n" +
+                             $"导入了 {import.all} 个成员\n" +
+                             $"其中 {import.notReged} 个信息不完整，已发起信息补全会话");
                             break;
                     }
                     break;
@@ -124,12 +133,12 @@ namespace tianlang
         }
 
         /// <summary>
-        /// 开始 enroll 过程
+        /// 开始 enroll 会话
         /// </summary>
         /// <param name="group"></param>
         public ClubMan(string group)
         {
-            S.Group(group, "注册过程已启动，请查看私聊界面");
+            S.Group(group, "注册会话已启动，请查看私聊界面");
             GroupMember master = C.GetMaster(group);
             int uid = C.GetUid(master.uin.ToString());
             bool isFoM = IRQQApi.Api_IfFriend(C.w, master.uin.ToString()) || C.IsMember(master.uin.ToString());
@@ -139,15 +148,21 @@ namespace tianlang
             SetStep(master, Step.enroll);
             SetSubStep(master, SubStep.name);
 
-            Db.Exec($"INSERT INTO club_info (master) VALUES ({uid})");
+            Db.Exec($"INSERT INTO club_info (master, groupid) VALUES ({uid}, '{group}')");
 
             master.S($"[甜狼 Ver.{C.version}]\n" +
-                      "社团信息注册过程[Next]" +
+                      "社团信息注册会话[Next]" +
                       "请回复社团的名字");
         }
 
+
         private ImportResult Import(string g, string brief)
         {
+            int cid = 0;
+            SqlDataReader r = Db.QueryReader($"SELECT cid FROM club_info WHERE groupid='{g}'");
+            while (r.Read())
+                cid = (int)r[0];
+            r.Close();
             List<GroupMember> l = C.GetMembers(g);
             ImportResult result;
             result.all = 0;
@@ -155,13 +170,17 @@ namespace tianlang
             result.users = new List<User>();
             foreach (GroupMember m in l)
             {
+                if (m.uin.ToString() == C.wp || m.uin.ToString() == C.wt)
+                    continue; //跳过狼
                 string qq = m.uin.ToString();
                 User u = new User(qq);
+                Db.Exec($"INSERT INTO club_member (cid, uid) VALUES ({cid}, {u.Uid})");
                 result.all++;
                 if (u.Enrollment == 0 || u.Name == "" || u.Nick == "")
                 {
                     result.notReged++;
                     InfoSetup.StartNonMember(qq, g, brief);
+                    Thread.Sleep(1000);
                 }
                 result.users.Add(u);
             }

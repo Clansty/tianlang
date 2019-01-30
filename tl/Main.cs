@@ -23,110 +23,135 @@ namespace tianlang
             ///Json			Json信息				为后期新参数预留，方便无限扩展
             ///pText		信息回传文本指针		此参数用于插件加载拒绝理由  用法：写到内存（“拒绝理由”，IRC_信息回传文本指针_Out）
 
-            string QQ;
-            switch (MsgType)
+            try
             {
-                case 1101: //登录成功
-                    switch (IRQQApi.Api_GetQQList().Trim().Trim('\n'))
-                    {
-                        case C.wp:
-                            C.isTest = false;
-                            C.w = C.wp;
-                            IRQQApi.Api_OutPutLog("生产模式");
-                            break;
-                        case C.wt:
-                            C.isTest = true;
-                            C.w = C.wt;
-                            IRQQApi.Api_OutPutLog("测试模式");
-                            break;
-                        default:
-                            IRQQApi.Api_OutPutLog("登录的账号不对");
-                            Environment.Exit(233);
-                            break;
-                    } //决定是否是测试模式
-                    Db.Connect();
-                    C.UpdateMemberList();
-                    break;
-                case 12002: //插件禁用
-                    Db.DisConnect();
-                    break;
-                case 219:
-                case 212: //群成员增加
-                    C.UpdateMemberList();
-                    QQ = TigObjC;
-                    if (MsgFrom == (C.isTest ? G.test : G.major))
-                        InfoSetup.Start(QQ);
-                    break;
-                case 1: //好友
-                case 4: //群临时
-                case 5: //讨论组临时
-                    QQ = TigObjF;
-                    if (Msg == "cancel" || Msg == "取消" || Msg == "主菜单")
-                    {
-                        C.SetStatus(QQ, Status.no);
-                        S.P(QQ, "你的状态已重置");
-                    }
-                    else if (C.GetStatus(QQ) == Status.infoSetup)
-                        InfoSetup.Enter(QQ, Msg);
-                    break;
-                case 2: //群
-                    //点歌
-                    if (Msg.StartsWith("点歌"))
-                        NetEase.Enter(MsgFrom, Msg.GetRight("点歌").Trim());
-                    else if (Msg.StartsWith("来首"))
-                        NetEase.Enter(MsgFrom, Msg.GetRight("来首").Trim());
-                    else if (Msg.StartsWith("甜狼点歌"))
-                        NetEase.Enter(MsgFrom, Msg.GetRight("甜狼点歌").Trim());
-                    else if (Msg.StartsWith("音乐"))
-                        NetEase.Enter(MsgFrom, Msg.GetRight("音乐").Trim());
-                    else if (Msg.StartsWith("网易云音乐"))
-                        NetEase.Enter(MsgFrom, Msg.GetRight("网易云音乐").Trim());
-                    else if (Msg.StartsWith("网易云"))
-                        NetEase.Enter(MsgFrom, Msg.GetRight("网易云").Trim());
-                    //测试群转发 XML
-                    else if (Msg.IndexOf("</msg>") >= 0 && MsgFrom == G.test && TigObjF == "839827911")
-                        IRQQApi.Api_SendXML(C.w, 1, 2, G.test, G.test, Msg, 0);
-                    else if (C.isTest) //测试模式
-                    {
-                        if (MsgFrom == G.test)
-                            try
-                            {
-                                if (Msg == "list")
-                                    S.Test(IRQQApi.Api_GetGroupMemberList(C.w, G.test));
-                                else if (Msg == "enroll")
+                string QQ;
+                switch (MsgType)
+                {
+                    case 1101: //登录成功
+                        switch (IRQQApi.Api_GetQQList().Trim().Trim('\n'))
+                        {
+                            case C.wp:
+                                C.isTest = false;
+                                C.w = C.wp;
+                                IRQQApi.Api_OutPutLog("生产模式");
+                                break;
+                            case C.wt:
+                                C.isTest = true;
+                                C.w = C.wt;
+                                IRQQApi.Api_OutPutLog("测试模式");
+                                break;
+                            default:
+                                IRQQApi.Api_OutPutLog("登录的账号不对");
+                                Environment.Exit(233);
+                                break;
+                        } //决定是否是测试模式
+                        Db.Connect();
+                        C.UpdateMemberList();
+                        break;
+                    case 12002: //插件禁用
+                        Db.DisConnect();
+                        break;
+                    case 219:
+                    case 212: //群成员增加
+                        C.UpdateMemberList();
+                        QQ = TigObjC;
+                        if (MsgFrom == (C.isTest ? G.test : G.major))
+                            InfoSetup.Start(QQ);
+                        break;
+                    case 1: //好友
+                    case 4: //群临时
+                    case 5: //讨论组临时
+                        QQ = TigObjF;
+                        Status status = C.GetStatus(QQ);
+                        if (Msg == "cancel" || Msg == "取消" || Msg == "主菜单")
+                        {
+                            C.SetStatus(QQ, Status.no);
+                            S.P(QQ, "你的状态已重置");
+                        }
+                        else if (status == Status.infoSetup)
+                            InfoSetup.Enter(QQ, Msg);
+                        else if (status == Status.clubMan && C.isTest)
+                            new ClubMan(QQ, Msg);
+                        break;
+                    case 2: //群
+                            //点歌
+                        if (Msg.StartsWith("点歌"))
+                            NetEase.Enter(MsgFrom, Msg.GetRight("点歌").Trim());
+                        else if (Msg.StartsWith("来首"))
+                            NetEase.Enter(MsgFrom, Msg.GetRight("来首").Trim());
+                        else if (Msg.StartsWith("甜狼点歌"))
+                            NetEase.Enter(MsgFrom, Msg.GetRight("甜狼点歌").Trim());
+                        else if (Msg.StartsWith("音乐"))
+                            NetEase.Enter(MsgFrom, Msg.GetRight("音乐").Trim());
+                        else if (Msg.StartsWith("网易云音乐"))
+                            NetEase.Enter(MsgFrom, Msg.GetRight("网易云音乐").Trim());
+                        else if (Msg.StartsWith("网易云"))
+                            NetEase.Enter(MsgFrom, Msg.GetRight("网易云").Trim());
+                        //测试群转发 XML
+                        else if (Msg.IndexOf("</msg>") >= 0 && MsgFrom == G.test && TigObjF == "839827911")
+                            IRQQApi.Api_SendXML(C.w, 1, 2, G.test, G.test, Msg, 0);
+                        else if (C.isTest) //测试模式
+                        {
+                            if (MsgFrom == G.test)
+                                try
                                 {
-                                    if (C.GetMaster(MsgFrom).uin.ToString() == TigObjF)
-                                        new ClubMan(MsgFrom);
-                                    else
-                                        S.Group(MsgFrom, "只有群主可以使用此功能");
-                                }
-                                Repeater.Enter(Msg);
-                                new Si(Msg);
+                                    if (Msg == "list")
+                                        S.Test(IRQQApi.Api_GetGroupMemberList(C.w, G.test));
+                                    else if (Msg == "enroll")
+                                    {
+                                        if (C.GetMaster(MsgFrom).uin.ToString() == TigObjF)
+                                            new ClubMan(MsgFrom);
+                                        else
+                                            S.Group(MsgFrom, "只有群主可以使用此功能");
+                                    }
+                                    Repeater.Enter(Msg);
+                                    new Si(Msg);
 
-                            }
-                            catch(Exception e)
+                                }
+                                catch (Exception e)
+                                {
+                                    S.Test(e.Message);
+                                }
+                        }
+                        else //生产模式
+                        {
+                            if (MsgFrom == G.major)
                             {
-                                S.Test(e.Message);
+                                if (Msg.Trim().Trim('\n').Trim() == "收到福袋，请使用新版手机QQ查看")
+                                    new AntiFukubukuro(TigObjF);
+                                else
+                                    Repeater.Enter(Msg);
                             }
-                    }
-                    else //生产模式
-                    {
-                        if (MsgFrom == G.major)
-                        {
-                            if (Msg.Trim().Trim('\n').Trim() == "收到福袋，请使用新版手机QQ查看")
-                                new AntiFukubukuro(TigObjF);
-                            else
-                                Repeater.Enter(Msg);
+                            else if (MsgFrom == G.si)
+                            {
+                                new Si(Msg);
+                            }
                         }
-                        else if (MsgFrom == G.si)
-                        {
-                            new Si(Msg);
-                        }
-                    }
-                    break;
+                        break;
+                }
+
+
+            }
+            catch (Exception e)
+            {
+                switch (MsgType)
+                {
+                    case 1:
+                    case 4:
+                    case 5:
+                        S.P(TigObjF, e.Message);
+                        break;
+                    case 2:
+                        S.Group(MsgFrom, e.Message);
+                        break;
+                    default:
+                        S.Test(e.Message);
+                        break;
+                }
             }
 
-            
+
 
             return 1;
         }

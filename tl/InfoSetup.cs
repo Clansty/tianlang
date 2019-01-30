@@ -308,12 +308,15 @@ namespace tianlang
                         break;
                     // 姓名步骤
                     case SubStep.name:
-                        R("OK 了");
+                        R("目前我们需要的信息就这么多，OK 了");
                         Commit("name", $"'{msg}'");
                         subStep = SubStep.no;
                         CommitSubStep();
-
                         C.SetStatus(QQ, Status.no);
+                        if (!C.IsMember(QQ))
+                            R("你还没有加入<跨年级大群>哦\n" +
+                              "赶快来和小伙伴们创造更多快乐，还有各种福利等着你[Next]" +
+                              "[IR:pic=C:\\Users\\Administrator\\Pictures\\qr.jpg]");
                         u = new User(QQ);
                         Si.R(u.ToXml("数据库更新"));
                         break;
