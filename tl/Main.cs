@@ -76,19 +76,26 @@ namespace tianlang
                         else if (status == Status.showPic)
                         {
                             if (Msg.IndexOf("[IR:pic=") > -1)
-                                S.Test(Msg.Replace("[IR:pic=", "[IR:ShowPic=").Replace("]", ",type=0]"));
+                            {
+                                string link = IRQQApi.Api_GetPicLink(C.w, 2, QQ, Msg);
+                                S.Major($"[IR:ShowPic={link},type=1]");
+                                S.P(QQ, "秀图成功");
+                            }
                             else
                                 S.P(QQ, "发送图片哦\n" +
                                         "再次发送<秀图>可再进入秀图状态");
                             C.SetStatus(QQ, Status.no);
                         }
                         else if (Msg == "秀图")
+                        {
                             C.SetStatus(QQ, Status.showPic);
-                        else if (Msg == "showpic")
-                            C.SetStatus(QQ, Status.showPic);
+                            S.P(QQ, "请发送图片，回复 cancel 取消");
+                        }
+                        else
+                            S.P(QQ, "无法处理的消息");
                         break;
                     case 2: //群
-                            //点歌
+                        //点歌
                         if (Msg.StartsWith("点歌"))
                             NetEase.Enter(MsgFrom, Msg.GetRight("点歌").Trim());
                         else if (Msg.StartsWith("来首"))
@@ -173,7 +180,7 @@ namespace tianlang
 
 
 
-            return 2;
+            return 0;
         }
 
 
