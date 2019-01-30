@@ -71,7 +71,7 @@ namespace tianlang
                         }
                         else if (status == Status.infoSetup)
                             InfoSetup.Enter(QQ, Msg);
-                        else if (status == Status.clubMan && C.isTest)
+                        else if (status == Status.clubMan)
                             new ClubMan(QQ, Msg);
                         break;
                     case 2: //群
@@ -127,6 +127,13 @@ namespace tianlang
                             {
                                 new Si(Msg);
                             }
+                            else if (Msg == "enroll")
+                            {
+                                if (C.GetMaster(MsgFrom).uin.ToString() == TigObjF)
+                                    new ClubMan(MsgFrom);
+                                else
+                                    S.Group(MsgFrom, "只有群主可以使用此功能");
+                            }
                         }
                         break;
                 }
@@ -153,7 +160,7 @@ namespace tianlang
 
 
 
-            return 1;
+            return 2;
         }
 
 

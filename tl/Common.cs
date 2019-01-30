@@ -39,9 +39,10 @@ namespace tianlang
          * 57: 发福袋随机禁言
          * 58: 修复打断 bug
          * 59: 福袋禁言信息使用 XML
+         * 60: 社团信息注册与导入成员
          */
 
-        public const int version = 59;
+        public const int version = 60;
 
 
         public const string wp= "1980853671";
