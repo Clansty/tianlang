@@ -26,7 +26,7 @@ namespace tianlang
             Nick = data.Tables[0].Rows[0]["nick"] == DBNull.Value ? "" : data.Tables[0].Rows[0]["nick"].ToString();
             Junior = data.Tables[0].Rows[0]["junior"] == DBNull.Value ? false : (bool)data.Tables[0].Rows[0]["junior"];
             Enrollment = data.Tables[0].Rows[0]["enrollment"] == DBNull.Value ? 0 : (int)data.Tables[0].Rows[0]["enrollment"];
-            NameCard = IRQQApi.Api_GetGroupCard(C.w, G.major, QQ);
+            NameCard = IRQQApi.Api_GetGroupCard(C.W, G.major, QQ);
         }
         /// <summary>
         /// 创建 User 并用 QQ 填充
@@ -44,7 +44,7 @@ namespace tianlang
             Nick = data.Tables[0].Rows[0]["nick"] == DBNull.Value ? "" : data.Tables[0].Rows[0]["nick"].ToString();
             Junior = data.Tables[0].Rows[0]["junior"] == DBNull.Value ? false : (bool)data.Tables[0].Rows[0]["junior"];
             Enrollment = data.Tables[0].Rows[0]["enrollment"] == DBNull.Value ? 0 : (int)data.Tables[0].Rows[0]["enrollment"];
-            NameCard = IRQQApi.Api_GetGroupCard(C.w, G.major, this.QQ);
+            NameCard = IRQQApi.Api_GetGroupCard(C.W, G.major, this.QQ);
 
         }
 

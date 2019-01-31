@@ -203,7 +203,7 @@ namespace tianlang
                         string qmp = $"{u.Grade} | {msg}";
                         if (u.Branch)
                             qmp = "金阊" + qmp;
-                        bool isOK = IRQQApi.Api_SetGroupCard(C.w, C.isTest ? G.test : G.major, u.QQ, qmp);
+                        bool isOK = IRQQApi.Api_SetGroupCard(C.W, C.isTest ? G.test : G.major, u.QQ, qmp);
                         if (!isOK)
                         {
                             R(C.err);

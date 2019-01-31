@@ -98,7 +98,7 @@ namespace tianlang
                 if (x == "err")
                     S.Group(group, C.err);
                 else
-                    IRQQApi.Api_SendXML(C.w, 1, 2, group, group, x, 2);
+                    IRQQApi.Api_SendXML(C.W, 1, 2, group, group, x, 2);
             }
             else
                 S.Group(group, "网易云音乐点歌\n" +

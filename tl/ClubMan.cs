@@ -117,7 +117,7 @@ namespace tianlang
                             while (r.Read())
                                 n = r[0].ToString();
                             r.Close();
-                            R($"正在通过群 {IRQQApi.Api_GetGroupName(C.w, group)} 导入成员，可能需要一些时间，请稍后");
+                            R($"正在通过群 {IRQQApi.Api_GetGroupName(C.W, group)} 导入成员，可能需要一些时间，请稍后");
                             ImportResult import = Import(group, n);
                             R("导入完成\n" +
                              $"导入了 {import.all} 个成员\n" +

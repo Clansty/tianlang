@@ -19,13 +19,13 @@ namespace tianlang
             else if (r <= 7)
             {
                 int a = rnd.Next(1, 6);
-                IRQQApi.Api_ShutUP(C.w, G.major, QQ, a * 60);
+                IRQQApi.Api_ShutUP(C.W, G.major, QQ, a * 60);
                 rmsg = rmsg + $"<title>恭喜你，中了小型禁言套餐 {a} 分钟</title><summary>继续加油！</summary>";
             }
             else
             {
                 int a = rnd.Next(6, 11);
-                IRQQApi.Api_ShutUP(C.w, G.major, QQ, a * 60);
+                IRQQApi.Api_ShutUP(C.W, G.major, QQ, a * 60);
                 rmsg = rmsg + $"<title>恭喜你，中了大型禁言套餐 {a} 分钟</title>";
             }
             rmsg = rmsg + "</item><item layout=\"3\"><button size=\"30\" action=\"web\" url=\"https://docs.lwqwq.com/functions/antifukubukuro\">为什么会这样</button></item></msg>";

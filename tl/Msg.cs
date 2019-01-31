@@ -16,9 +16,9 @@ namespace tianlang
         public static void Group(string to, string msg)
         {
             if (msg.IndexOf("</msg>") > -1)
-                IRQQApi.Api_SendXML(C.w, 1, 2, to, to, msg, 0);
+                IRQQApi.Api_SendXML(C.W, 1, 2, to, to, msg, 0);
             else
-                IRQQApi.Api_SendMsg(C.w, 2, to, to, msg, -2);
+                IRQQApi.Api_SendMsg(C.W, 2, to, to, msg, 600028);
         }
         /// <summary>
         /// 发到测试群
@@ -47,36 +47,36 @@ namespace tianlang
             bool isXml = msg.IndexOf("</msg>") > -1;
             if (isXml)
             {
-                if (IRQQApi.Api_IfFriend(C.w, qq))
-                    IRQQApi.Api_SendXML(C.w, 1, 1, qq, qq, msg, 0);
+                if (IRQQApi.Api_IfFriend(C.W, qq))
+                    IRQQApi.Api_SendXML(C.W, 1, 1, qq, qq, msg, 0);
                 else if (alternative)
                 {
                     string session = C.GetSession(qq);
                     if (session != "" && session != null)
-                        IRQQApi.Api_SendXML(C.w, 1, 4, session, qq, msg, 0);
+                        IRQQApi.Api_SendXML(C.W, 1, 4, session, qq, msg, 0);
                     else
-                        IRQQApi.Api_SendXML(C.w, 1, 4, G.major, qq, msg, 0);
+                        IRQQApi.Api_SendXML(C.W, 1, 4, G.major, qq, msg, 0);
                 }
                 else
                 {
-                    IRQQApi.Api_SendXML(C.w, 1, 4, G.major, qq, msg, 0);
+                    IRQQApi.Api_SendXML(C.W, 1, 4, G.major, qq, msg, 0);
                 }
             }
             else
             {
-                if (IRQQApi.Api_IfFriend(C.w, qq))
-                    IRQQApi.Api_SendMsg(C.w, 1, qq, qq, msg, 600028);
+                if (IRQQApi.Api_IfFriend(C.W, qq))
+                    IRQQApi.Api_SendMsg(C.W, 1, qq, qq, msg, 600028);
                 else if (alternative)
                 {
                     string session = C.GetSession(qq);
                     if (session != "" && session != null)
-                        IRQQApi.Api_SendMsg(C.w, 4, session, qq, msg, 600028);
+                        IRQQApi.Api_SendMsg(C.W, 4, session, qq, msg, 600028);
                     else
-                        IRQQApi.Api_SendMsg(C.w, 4, G.major, qq, msg, 600028);
+                        IRQQApi.Api_SendMsg(C.W, 4, G.major, qq, msg, 600028);
                 }
                 else
                 {
-                    IRQQApi.Api_SendMsg(C.w, 4, G.major, qq, msg, 600028);
+                    IRQQApi.Api_SendMsg(C.W, 4, G.major, qq, msg, 600028);
                 }
 
 

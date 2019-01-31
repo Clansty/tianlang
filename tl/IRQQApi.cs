@@ -106,7 +106,7 @@ namespace tianlang
         /// <param name="GroupNum">欲取群成员列表群号</param>
         /// <returns>返回QQ号和身份Json格式信息 失败返回空</returns>
         [DllImport("../IRapi.dll")]
-        public static extern string Api_GetGroupMemberList_B(string RobotQQ, string GroupNum);
+        public static extern IntPtr Api_GetGroupMemberList_B(string RobotQQ, string GroupNum);
         
         /// <summary>
         /// 取QQ群名

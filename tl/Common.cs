@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
 using Newtonsoft.Json.Linq;
+using System.Runtime.InteropServices;
 
 namespace tianlang
 {
@@ -44,13 +45,15 @@ namespace tianlang
          * 62: 调整群成员判断方法
          *     关闭并继续调试秀图
          *     增加私聊 whoami 命令
+         * 63: 测试
+         * 64: 继续调试秀图
          */
 
-        public const int version = 63;
+        public const int version = 64;
         
         public const string wp= "1980853671";
         public const string wt = "2125742312";
-        public static string w;
+        public static string W { get => isTest ? wt : wp; }
 
         public static bool isTest;
 
@@ -151,7 +154,7 @@ namespace tianlang
         //}
 
         //public static bool IsMember(string qq) => IRQQApi.Api_GetGroupChatLv(C.w, G.major, qq) != -1;
-        public static bool IsMember(string qq) => IRQQApi.Api_GetGroupMemberList_B(C.w, G.major).IndexOf(qq.Trim()) > -1;
+        public static bool IsMember(string qq) => Marshal.PtrToStringAnsi(IRQQApi.Api_GetGroupMemberList_B(C.W, G.major)).IndexOf(qq.Trim()) > -1;
 
         public static Predicate<GroupMember> master = new Predicate<GroupMember>( //表示判断群主的方法
                 delegate (GroupMember member)
@@ -163,7 +166,7 @@ namespace tianlang
 
         public static List<GroupMember> GetMembers(string group)
         {
-            string json = IRQQApi.Api_GetGroupMemberList(C.w, group);
+            string json = IRQQApi.Api_GetGroupMemberList(C.W, group);
             json = json.Between("\"mems\":", ",\"search_count\"");
             JArray ja = JArray.Parse(json);
             List<GroupMember> l = ja.ToObject<List<GroupMember>>();

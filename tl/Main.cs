@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Runtime.InteropServices;
 
 namespace tianlang
@@ -29,16 +30,14 @@ namespace tianlang
                 switch (MsgType)
                 {
                     case 1101: //登录成功
-                        switch (IRQQApi.Api_GetQQList().Trim().Trim('\n'))
+                        switch (RobotQQ)
                         {
                             case C.wp:
                                 C.isTest = false;
-                                C.w = C.wp;
                                 IRQQApi.Api_OutPutLog("生产模式");
                                 break;
                             case C.wt:
                                 C.isTest = true;
-                                C.w = C.wt;
                                 IRQQApi.Api_OutPutLog("测试模式");
                                 break;
                             default:
@@ -79,33 +78,37 @@ namespace tianlang
                             InfoSetup.Enter(QQ, Msg);
                         else if (status == Status.clubMan)
                             new ClubMan(QQ, Msg);
-                        //else if (status == Status.showPic)
-                        //{
-                        //    if (Msg.IndexOf("[IR:pic=") > -1)
-                        //    {
-                        //        string link = IRQQApi.Api_GetPicLink(C.w, 2, QQ, Msg);
-                        //        S.Major($"[IR:ShowPic={link},type=1]");
-                        //        S.P(QQ, "秀图成功");
-                        //    }
-                        //    else
-                        //        S.P(QQ, "发送图片哦\n" +
-                        //                "再次发送<秀图>可再进入秀图状态");
-                        //    C.SetStatus(QQ, Status.no);
-                        //}
-                        //else if (Msg == "秀图")
-                        //{
-                        //    C.SetStatus(QQ, Status.showPic);
-                        //    S.P(QQ, "请发送图片，回复 cancel 取消");
-                        //}
+                        else if (status == Status.showPic)
+                        {
+                            if (Msg.IndexOf("[IR:pic=") > -1)
+                            {
+                                string link = IRQQApi.Api_GetPicLink(C.W, 2, QQ, Msg);
+                                WebClient client = new WebClient();
+                                string path = "C:\\Users\\Administrator\\Pictures\\show\\" + QQ + new DateTime().ToFileTime().ToString() + ".jpg";
+                                client.DownloadFile(link, path);
+                                S.Major($"[IR:ShowPic={path},type=2]");
+                                S.P(QQ, "秀图成功");
+                            }
+                            else
+                                S.P(QQ, "发送图片哦\n" +
+                                        "再次发送<秀图>可再进入秀图状态");
+                            C.SetStatus(QQ, Status.no);
+                        }
+                        else if (Msg == "秀图t")
+                        {
+                            C.SetStatus(QQ, Status.showPic);
+                            S.P(QQ, "请发送图片，回复 cancel 取消");
+                        }
                         else if(QQ == "839827911" && Msg.IndexOf("[IR:pic=") > -1)
                         {
-                            string link = IRQQApi.Api_GetPicLink(C.w, 2, QQ, Msg);
+                            string link = IRQQApi.Api_GetPicLink(C.W, 2, QQ, Msg);
                             S.P(QQ, link);
                         }
                         else if (QQ == "839827911" && Msg.StartsWith("ismember"))
                         {
                             Msg = Msg.GetRight("ismember").Trim();
-                            S.P(QQ, C.IsMember(QQ).ToString());
+                            S.P(QQ, C.IsMember(Msg).ToString());
+                            //S.P(QQ, IRQQApi.Api_GetGroupChatLv(C.w, G.major, Msg).ToString());
                         }
                         else
                             S.P(QQ, "无法处理的消息");
@@ -127,14 +130,14 @@ namespace tianlang
                             NetEase.Enter(MsgFrom, Msg.GetRight("网易云").Trim());
                         //测试群转发 XML
                         else if (Msg.IndexOf("</msg>") >= 0 && MsgFrom == G.test && TigObjF == "839827911")
-                            IRQQApi.Api_SendXML(C.w, 1, 2, G.test, G.test, Msg, 0);
+                            IRQQApi.Api_SendXML(C.W, 1, 2, G.test, G.test, Msg, 0);
                         else if (C.isTest) //测试模式
                         {
                             if (MsgFrom == G.test)
                                 try
                                 {
                                     if (Msg == "list")
-                                        S.Test(IRQQApi.Api_GetGroupMemberList(C.w, G.test));
+                                        S.Test(IRQQApi.Api_GetGroupMemberList(C.W, G.test));
                                     else if (Msg == "enroll")
                                     {
                                         if (C.GetMaster(MsgFrom).uin.ToString() == TigObjF)
