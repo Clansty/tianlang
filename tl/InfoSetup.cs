@@ -96,13 +96,13 @@ namespace tianlang
                              "如果输入错误，你可以说<上一步>，或者<重新开始>.(不包括尖括号哦）";
             C.GetUid(qq);
             C.SetStatus(qq, Status.infoSetup);
-            bool isFoM = IRQQApi.Api_IfFriend(C.w, qq) || C.IsMember(qq);
-            if (!isFoM)
-                C.SetSession(qq, group);
+            //bool isFoM = IRQQApi.Api_IfFriend(C.w, qq) || C.IsMember(qq);
+            //if (!isFoM)
+            C.SetSession(qq, group);
             SetStep(qq, Step.nonMember);
-            S.P(qq, $"[Version 2.{C.version}][Next]" + welcome);
+            S.P(qq, $"[Version 2.{C.version}][Next]" + welcome, true);
             SetSubStep(qq, SubStep.grade);
-            S.P(qq, step1);
+            S.P(qq, step1, true);
         }
 
         public static void Enter(string QQ, string msg)
@@ -160,7 +160,6 @@ namespace tianlang
                     CommitSubStep();
                     return;
                 }
-
                 if (msg == "重新开始")
                 {
                     subStep = SubStep.grade;
@@ -232,6 +231,8 @@ namespace tianlang
                         Si.R(u.ToXml("新人信息"));
                         break;
                 }
+
+                void R(string rmsg) => S.P(QQ, rmsg, false);
             }
             void NonMember()
             {
@@ -321,10 +322,10 @@ namespace tianlang
                         Si.R(u.ToXml("数据库更新"));
                         break;
                 }
-
+                void R(string rmsg) => S.P(QQ, rmsg, true);
             }
 
-            void R(string rmsg) => S.P(QQ, rmsg);
+            //void R(string rmsg) => S.P(QQ, rmsg, false);
             void Commit(string key, string value) => Db.Exec($"UPDATE user_info SET {key}={value} WHERE uid={u.Uid}");
             void CommitSubStep() => SetSubStep(u.Uid, subStep);
         }

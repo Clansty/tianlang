@@ -41,9 +41,12 @@ namespace tianlang
          * 59: 福袋禁言信息使用 XML
          * 60: 社团信息注册与导入成员
          * 61: 发送秀图
+         * 62: 调整群成员判断方法
+         *     关闭并继续调试秀图
+         *     增加私聊 whoami 命令
          */
 
-        public const int version = 61;
+        public const int version = 63;
         
         public const string wp= "1980853671";
         public const string wt = "2125742312";
@@ -53,7 +56,7 @@ namespace tianlang
 
         public const string err = "出现了一些错误";
 
-        private static string memberList = "";
+        //private static string memberList = "";
 
         public static int GetUid(string qq)
         {
@@ -134,15 +137,21 @@ namespace tianlang
         public static void SetSession(GroupMember member, string s) => SetSession(member.uin.ToString(), s);
 
 
-        public static void UpdateMemberList()
-        {
-            if (isTest)
-                memberList = IRQQApi.Api_GetGroupMemberList(w, G.test);
-            else
-                memberList = IRQQApi.Api_GetGroupMemberList(w, G.major);
-        }
+        //public static void UpdateMemberList()
+        //{
+        //    if (isTest)
+        //        memberList = IRQQApi.Api_GetGroupMemberList(w, G.test);
+        //    else
+        //        memberList = IRQQApi.Api_GetGroupMemberList(w, G.major);
+        //}
+        //public static void UpdateMemberList(bool notForce)
+        //{
+        //    if (memberList == "")
+        //        UpdateMemberList();
+        //}
 
-        public static bool IsMember(string qq) => memberList.IndexOf(qq) >= 0;
+        //public static bool IsMember(string qq) => IRQQApi.Api_GetGroupChatLv(C.w, G.major, qq) != -1;
+        public static bool IsMember(string qq) => IRQQApi.Api_GetGroupMemberList_B(C.w, G.major).IndexOf(qq.Trim()) > -1;
 
         public static Predicate<GroupMember> master = new Predicate<GroupMember>( //表示判断群主的方法
                 delegate (GroupMember member)

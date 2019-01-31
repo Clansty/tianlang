@@ -100,6 +100,15 @@ namespace tianlang
         public static extern string Api_GetGroupMemberList(string RobotQQ, string GroupNum);
 
         /// <summary>
+        /// 取得群成员列表
+        /// </summary>
+        /// <param name="RobotQQ">机器人QQ</param>
+        /// <param name="GroupNum">欲取群成员列表群号</param>
+        /// <returns>返回QQ号和身份Json格式信息 失败返回空</returns>
+        [DllImport("../IRapi.dll")]
+        public static extern string Api_GetGroupMemberList_B(string RobotQQ, string GroupNum);
+        
+        /// <summary>
         /// 取QQ群名
         /// </summary>
         /// <param name="RobotQQ">响应的QQ</param>
@@ -130,14 +139,6 @@ namespace tianlang
         /// <param name="ObjQQ">对象QQ</param>
         [DllImport("../IRapi.dll")]
         public static extern string Api_GetObjInfo(string RobotQQ, string ObjQQ);
-
-        /// <summary>
-        /// 取对象QQ等级，成功返回等级，失败返回-1
-        /// </summary>
-        /// <param name-="RobotQQ">机器人QQ</param>
-        /// <param name="ObjQQ">欲取得的QQ号码</param>
-        [DllImport("../IRapi.dll")]
-        public static extern int Api_GetObjLevel(string RobotQQ, string ObjQQ);
 
         /// <summary>
         /// 获取对象当前赞数量，失败返回-1，成功返回赞数量（获取频繁会出现失败现象，请自行写判断处理失败问题）
@@ -414,12 +415,24 @@ namespace tianlang
         /// <param name="RobotQQ">机器人QQ</param>
         /// <param name="GroupNum">群号</param>
         public static extern bool Api_SignIn(string RobotQQ, string GroupNum);
-        [DllImport("../IRapi.dll")]
+
         /// <summary>
-        ///调用一次点一下，成功返回空，失败返回理由如：每天最多给他点十个赞哦，调用此Api时应注意频率，每人每日10次，至多50人
+        /// 调用一次点一下，成功返回空，失败返回理由如：每天最多给他点十个赞哦，调用此Api时应注意频率，每人每日10次，至多50人
         /// </summary>
         /// <param name="RobotQQ">机器人QQ</param>
         /// <param name="ObjQQ">被赞人QQ</param>
+        [DllImport("../IRapi.dll")]
         public static extern string Api_UpVote(string RobotQQ, string ObjQQ);
+
+        /// <summary>
+        /// 查询对象或自身群聊等级 
+        /// Pro可用
+        /// </summary>
+        /// <param name="wolf">机器人QQ</param>
+        /// <param name="group">查询群号</param>
+        /// <param name="QQ">需查询对象或机器人QQ</param>
+        /// <returns>返回实际等级 失败返回-1</returns>
+        [DllImport("../IRapi.dll")]
+        public static extern int Api_GetGroupChatLv(string wolf, string group, string QQ);
     }
 }

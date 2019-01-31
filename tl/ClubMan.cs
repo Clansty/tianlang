@@ -141,9 +141,9 @@ namespace tianlang
             S.Group(group, "注册会话已启动，请查看私聊界面");
             GroupMember master = C.GetMaster(group);
             int uid = C.GetUid(master.uin.ToString());
-            bool isFoM = IRQQApi.Api_IfFriend(C.w, master.uin.ToString()) || C.IsMember(master.uin.ToString());
-            if (!isFoM)
-                C.SetSession(master, group);
+            //bool isFoM = IRQQApi.Api_IfFriend(C.w, master.uin.ToString()) || C.IsMember(master.uin.ToString());
+            //if (!isFoM)
+            C.SetSession(master, group);
             C.SetStatus(master, Status.clubMan);
             SetStep(master, Step.enroll);
             SetSubStep(master, SubStep.name);

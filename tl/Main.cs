@@ -47,14 +47,13 @@ namespace tianlang
                                 break;
                         } //决定是否是测试模式
                         Db.Connect();
-                        C.UpdateMemberList();
                         break;
                     case 12002: //插件禁用
                         Db.DisConnect();
                         break;
                     case 219:
                     case 212: //群成员增加
-                        C.UpdateMemberList();
+                        //C.UpdateMemberList();
                         QQ = TigObjC;
                         if (MsgFrom == (C.isTest ? G.test : G.major))
                             InfoSetup.Start(QQ);
@@ -62,6 +61,7 @@ namespace tianlang
                     case 1: //好友
                     case 4: //群临时
                     case 5: //讨论组临时
+                        //C.UpdateMemberList(true);
                         QQ = TigObjF;
                         Status status = C.GetStatus(QQ);
                         if (Msg == "cancel" || Msg == "取消" || Msg == "主菜单")
@@ -69,32 +69,49 @@ namespace tianlang
                             C.SetStatus(QQ, Status.no);
                             S.P(QQ, "你的状态已重置");
                         }
+                        else if (Msg == "whoami")
+                        {
+                            User u = new User(QQ);
+                            string x = u.ToXml("你的信息");
+                            S.P(QQ, x);
+                        }
                         else if (status == Status.infoSetup)
                             InfoSetup.Enter(QQ, Msg);
                         else if (status == Status.clubMan)
                             new ClubMan(QQ, Msg);
-                        else if (status == Status.showPic)
+                        //else if (status == Status.showPic)
+                        //{
+                        //    if (Msg.IndexOf("[IR:pic=") > -1)
+                        //    {
+                        //        string link = IRQQApi.Api_GetPicLink(C.w, 2, QQ, Msg);
+                        //        S.Major($"[IR:ShowPic={link},type=1]");
+                        //        S.P(QQ, "秀图成功");
+                        //    }
+                        //    else
+                        //        S.P(QQ, "发送图片哦\n" +
+                        //                "再次发送<秀图>可再进入秀图状态");
+                        //    C.SetStatus(QQ, Status.no);
+                        //}
+                        //else if (Msg == "秀图")
+                        //{
+                        //    C.SetStatus(QQ, Status.showPic);
+                        //    S.P(QQ, "请发送图片，回复 cancel 取消");
+                        //}
+                        else if(QQ == "839827911" && Msg.IndexOf("[IR:pic=") > -1)
                         {
-                            if (Msg.IndexOf("[IR:pic=") > -1)
-                            {
-                                string link = IRQQApi.Api_GetPicLink(C.w, 2, QQ, Msg);
-                                S.Major($"[IR:ShowPic={link},type=1]");
-                                S.P(QQ, "秀图成功");
-                            }
-                            else
-                                S.P(QQ, "发送图片哦\n" +
-                                        "再次发送<秀图>可再进入秀图状态");
-                            C.SetStatus(QQ, Status.no);
+                            string link = IRQQApi.Api_GetPicLink(C.w, 2, QQ, Msg);
+                            S.P(QQ, link);
                         }
-                        else if (Msg == "秀图")
+                        else if (QQ == "839827911" && Msg.StartsWith("ismember"))
                         {
-                            C.SetStatus(QQ, Status.showPic);
-                            S.P(QQ, "请发送图片，回复 cancel 取消");
+                            Msg = Msg.GetRight("ismember").Trim();
+                            S.P(QQ, C.IsMember(QQ).ToString());
                         }
                         else
                             S.P(QQ, "无法处理的消息");
                         break;
                     case 2: //群
+                        //C.UpdateMemberList(true);
                         //点歌
                         if (Msg.StartsWith("点歌"))
                             NetEase.Enter(MsgFrom, Msg.GetRight("点歌").Trim());

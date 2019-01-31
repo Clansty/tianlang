@@ -42,41 +42,59 @@ namespace tianlang
         /// </summary>
         /// <param name="qq"></param>
         /// <param name="msg"></param>
-        public static void P(string qq, string msg)
+        public static void P(string qq, string msg, bool alternative = false)
         {
             bool isXml = msg.IndexOf("</msg>") > -1;
             if (isXml)
             {
                 if (IRQQApi.Api_IfFriend(C.w, qq))
                     IRQQApi.Api_SendXML(C.w, 1, 1, qq, qq, msg, 0);
-                else if (C.IsMember(qq))
-                    IRQQApi.Api_SendXML(C.w, 1, 4, G.major, qq, msg, 0);
-                else
+                else if (alternative)
                 {
                     string session = C.GetSession(qq);
                     if (session != "" && session != null)
                         IRQQApi.Api_SendXML(C.w, 1, 4, session, qq, msg, 0);
                     else
-                        Test($"向非好友且非大群成员 {qq} 发送 xml 失败");
+                        IRQQApi.Api_SendXML(C.w, 1, 4, G.major, qq, msg, 0);
+                }
+                else
+                {
+                    IRQQApi.Api_SendXML(C.w, 1, 4, G.major, qq, msg, 0);
                 }
             }
             else
             {
                 if (IRQQApi.Api_IfFriend(C.w, qq))
-                    IRQQApi.Api_SendMsg(C.w, 1, qq, qq, msg, -2);
-                else if (C.IsMember(qq))
-                    IRQQApi.Api_SendMsg(C.w, 4, G.major, qq, msg, -2);
-                else
+                    IRQQApi.Api_SendMsg(C.w, 1, qq, qq, msg, 600028);
+                else if (alternative)
                 {
                     string session = C.GetSession(qq);
                     if (session != "" && session != null)
-                        IRQQApi.Api_SendMsg(C.w, 4, session, qq, msg, -2);
+                        IRQQApi.Api_SendMsg(C.w, 4, session, qq, msg, 600028);
                     else
-                        Test($"向非好友且非大群成员 {qq} 发送 {msg} 失败");
+                        IRQQApi.Api_SendMsg(C.w, 4, G.major, qq, msg, 600028);
                 }
+                else
+                {
+                    IRQQApi.Api_SendMsg(C.w, 4, G.major, qq, msg, 600028);
+                }
+
+
+                //if (IRQQApi.Api_IfFriend(C.w, qq))
+                //    IRQQApi.Api_SendMsg(C.w, 1, qq, qq, msg, 600028);
+                //else if (C.IsMember(qq))
+                //    IRQQApi.Api_SendMsg(C.w, 4, G.major, qq, msg, 600028);
+                //else
+                //{
+                //    string session = C.GetSession(qq);
+                //    if (session != "" && session != null)
+                //        IRQQApi.Api_SendMsg(C.w, 4, session, qq, msg, 600028);
+                //    else
+                //        Test($"向非好友且非大群成员 {qq} 发送 {msg} 失败");
+                //}
             }
         }
-        public static void P(int uid, string msg) => P(new User(uid).QQ, msg);
-        public static void P(GroupMember m, string msg) => P(m.uin.ToString(), msg);
+        public static void P(int uid, string msg, bool alternative = false) => P(new User(uid).QQ, msg, alternative);
+        public static void P(GroupMember m, string msg) => P(m.uin.ToString(), msg, true);
     }
 }
