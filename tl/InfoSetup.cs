@@ -102,6 +102,7 @@ namespace tianlang
             SetStep(qq, Step.nonMember);
             S.P(qq, $"[Version 2.{C.version}][Next]" + welcome, true);
             SetSubStep(qq, SubStep.grade);
+            System.Threading.Thread.Sleep(2000);
             S.P(qq, step1, true);
         }
 

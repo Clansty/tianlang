@@ -54,6 +54,31 @@ namespace tianlang
             name,
             subDomain
         }
+        
+        /// <summary>
+        /// 开始 enroll 会话
+        /// </summary>
+        /// <param name="group"></param>
+        public ClubMan(string group)
+        {
+            S.Group(group, "注册会话已启动，请查看私聊界面");
+            string qq = C.GetMaster(group);
+            int uid = C.GetUid(qq);
+            //bool isFoM = IRQQApi.Api_IfFriend(C.w, master.uin.ToString()) || C.IsMember(master.uin.ToString());
+            //if (!isFoM)
+            C.SetSession(uid, group);
+            C.SetStatus(uid, Status.clubMan);
+            SetStep(uid, Step.enroll);
+            SetSubStep(uid, SubStep.name);
+
+            Db.Exec($"INSERT INTO club_info (master, groupid) VALUES ({uid}, '{group}')");
+
+            if (!IRQQApi.IsFriend(qq))
+                S.P(qq, "你和甜狼还不是好友。建议你先加为好友以方便后续操作", true);
+            S.P(uid, $"[甜狼 Ver.{C.version}]\n" +
+                      "社团信息注册会话[Next]" +
+                      "请回复社团的名字", true);
+        }
 
         /// <summary>
         /// Continue Enrollment Session
@@ -81,44 +106,38 @@ namespace tianlang
                                "[?]处的内容");
                             break;
                         case SubStep.subDomain:
-                            string sd = msg;
-                            bool isOK = true;
-                            for (int i = 0; i < sd.Length; i++)
-                            {
-                                if (sd[i] > 127)
-                                    isOK = false;
-                            }
-                            if (!isOK)
-                            {
-                                R("子域名不能包含中文，请重新选择");
-                                return;
-                            }
-                            try
-                            {
-                                Commit("subdomain", $"'{sd}'");
-                            }
-                            catch (Exception e)
-                            {
-                                R("出现错误: \n" +
-                                 $"{e.Message}" +
-                                  "可能是你指定的子域名已被占用");
-                                return;
-                            }
+                            //string sd = msg;
+                            //bool isOK = true;
+                            //for (int i = 0; i < sd.Length; i++)
+                            //{
+                            //    if (sd[i] > 127)
+                            //        isOK = false;
+                            //}
+                            //if (!isOK)
+                            //{
+                            //    R("子域名不能包含中文，请重新选择");
+                            //    return;
+                            //}
+                            Commit("subdomain", $"'{msg}'");                            
                             C.SetStatus(u, Status.no);
                             R("保存成功\n" +
-                             $"你的访问域名将是 https://{sd}.nths.moe[Next]");
+                             $"你的访问域名将是 https://{msg}.nths.moe[Next]");
                             SqlDataReader r = Db.QueryReader($"SELECT groupid FROM club_info WHERE master={u.Uid}");
                             string group = "";
                             while (r.Read())
                                 group = r[0].ToString();
                             r.Close();
+                            r = null;
+                            Thread.Sleep(500);
                             r = Db.QueryReader($"SELECT name FROM club_info WHERE master={u.Uid}");
                             string n = "";
                             while (r.Read())
                                 n = r[0].ToString();
                             r.Close();
+                            r = null;
                             R($"正在通过群 {IRQQApi.Api_GetGroupName(C.W, group)} 导入成员，可能需要一些时间，请稍后");
-                            ImportResult import = Import(group, n);
+                            ImportResult import;
+                            import = Import(group, n);
                             R("导入完成\n" +
                              $"导入了 {import.all} 个成员\n" +
                              $"其中 {import.notReged} 个信息不完整，已发起信息补全会话");
@@ -127,71 +146,51 @@ namespace tianlang
                     break;
             }
 
-            void R(string rmsg) => S.P(QQ, rmsg);
+            void R(string rmsg) => S.P(QQ, rmsg, true);
             void Commit(string key, string value) => Db.Exec($"UPDATE club_info SET {key}={value} WHERE master={u.Uid}");
             void CommitSubStep() => SetSubStep(u.Uid, subStep);
         }
 
-        /// <summary>
-        /// 开始 enroll 会话
-        /// </summary>
-        /// <param name="group"></param>
-        public ClubMan(string group)
-        {
-            S.Group(group, "注册会话已启动，请查看私聊界面");
-            GroupMember master = C.GetMaster(group);
-            int uid = C.GetUid(master.uin.ToString());
-            //bool isFoM = IRQQApi.Api_IfFriend(C.w, master.uin.ToString()) || C.IsMember(master.uin.ToString());
-            //if (!isFoM)
-            C.SetSession(master, group);
-            C.SetStatus(master, Status.clubMan);
-            SetStep(master, Step.enroll);
-            SetSubStep(master, SubStep.name);
 
-            Db.Exec($"INSERT INTO club_info (master, groupid) VALUES ({uid}, '{group}')");
-
-            master.S($"[甜狼 Ver.{C.version}]\n" +
-                      "社团信息注册会话[Next]" +
-                      "请回复社团的名字");
-        }
-
-
-        private ImportResult Import(string g, string brief)
+        public static ImportResult Import(string g, string brief)
         {
             int cid = 0;
             SqlDataReader r = Db.QueryReader($"SELECT cid FROM club_info WHERE groupid='{g}'");
             while (r.Read())
                 cid = (int)r[0];
             r.Close();
+            r = null;
             List<GroupMember> l = C.GetMembers(g);
             ImportResult result;
             result.all = 0;
             result.notReged = 0;
-            result.users = new List<User>();
+            Stack<string> notReged = new Stack<string>();
+            notReged.Push("#"); //哨兵元素
             foreach (GroupMember m in l)
             {
-                if (m.uin.ToString() == C.wp || m.uin.ToString() == C.wt)
+                if (m.uin == C.wp || m.uin == C.wt)
                     continue; //跳过狼
-                string qq = m.uin.ToString();
-                User u = new User(qq);
+                User u = new User(m.uin);
                 Db.Exec($"INSERT INTO club_member (cid, uid) VALUES ({cid}, {u.Uid})");
                 result.all++;
                 if (u.Enrollment == 0 || u.Name == "" || u.Nick == "")
-                {
-                    result.notReged++;
-                    InfoSetup.StartNonMember(qq, g, brief);
-                    Thread.Sleep(5000);
-                }
-                result.users.Add(u);
+                    notReged.Push(m.uin);
+            }
+            result.notReged = notReged.Count - 1;
+            l = null;//省点内存
+            while (notReged.Peek() != "#")
+            {
+                InfoSetup.StartNonMember(notReged.Pop(), g, brief);
+                Thread.Sleep(10000);
             }
             return result;
         }
 
-        private struct ImportResult
+        public struct ImportResult
         {
             public int all;
             public int notReged;
-            public List<User> users;
+            //public List<User> users;
         }
     }
 }

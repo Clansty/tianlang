@@ -47,9 +47,13 @@ namespace tianlang
          *     增加私聊 whoami 命令
          * 63: 测试
          * 64: 继续调试秀图
+         * 65: 秀图分布
+         * 66: 部分函数细微调整，提高稳定性
+         * 67: 自动接受申请
+         * 68: 加强禁言套餐规格
          */
 
-        public const int version = 64;
+        public const int version = 69;
         
         public const string wp= "1980853671";
         public const string wt = "2125742312";
@@ -159,25 +163,24 @@ namespace tianlang
         public static Predicate<GroupMember> master = new Predicate<GroupMember>( //表示判断群主的方法
                 delegate (GroupMember member)
                 {
-                    if (member.role == 0)
+                    if (member.role == "群主")
                         return true;
                     return false;
                 });
 
         public static List<GroupMember> GetMembers(string group)
         {
-            string json = IRQQApi.Api_GetGroupMemberList(C.W, group);
-            json = json.Between("\"mems\":", ",\"search_count\"");
+            string json = Marshal.PtrToStringAnsi(IRQQApi.Api_GetGroupMemberList_B(C.W, group));
             JArray ja = JArray.Parse(json);
             List<GroupMember> l = ja.ToObject<List<GroupMember>>();
             return l;
         }
 
-        public static GroupMember GetMaster(string group)
+        public static string GetMaster(string group)
         {
             List<GroupMember> l = GetMembers(group);
             GroupMember groupMaster = l.Find(C.master);
-            return groupMaster;
+            return groupMaster.uin;
         }
     }
 
@@ -196,42 +199,12 @@ namespace tianlang
         showPic
     }
 
-    /// <summary>
-    /// 根据 IR
-    /// </summary>
-    public class GroupMember
+    public struct GroupMember
     {
-        //根据 IR 的 JSON
-        /// <summary>
-        /// 群名片
-        /// </summary>
-        public string card;
-        public int flag;
-        public int g;
-        public long join_time;
-        public long last_speak_time;
-        public Lv lv = new Lv();
-        /// <summary>
-        /// 昵称
-        /// </summary>
-        public string nick;
-        public int qage;
-        /// <summary>
-        /// 0 群主 1 管理 2 普通成员
-        /// </summary>
-        public int role;
-        public string tags;
-        /// <summary>
-        /// QQ 号
-        /// </summary>
-        public long uin;
+        public string role;
+        public string uin;
 
         public void S(string msg) => tianlang.S.P(this, msg);
-        public class Lv
-        {
-            public int level;
-            public int point;
-        }
     }
 
     public static class StringHelper

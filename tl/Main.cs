@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Runtime.InteropServices;
 
@@ -29,23 +30,40 @@ namespace tianlang
                 string QQ;
                 switch (MsgType)
                 {
-                    case 1101: //登录成功
-                        switch (RobotQQ)
+                    case 12001:
+                        string user = Environment.UserName;
+                        if (user == "Administrator")
                         {
-                            case C.wp:
-                                C.isTest = false;
-                                IRQQApi.Api_OutPutLog("生产模式");
-                                break;
-                            case C.wt:
-                                C.isTest = true;
-                                IRQQApi.Api_OutPutLog("测试模式");
-                                break;
-                            default:
-                                IRQQApi.Api_OutPutLog("登录的账号不对");
-                                Environment.Exit(233);
-                                break;
-                        } //决定是否是测试模式
+                            C.isTest = false;
+                            IRQQApi.Api_OutPutLog("生产模式");
+                        }
+                        else if (user == "c")
+                        {
+                            C.isTest = true;
+                            IRQQApi.Api_OutPutLog("测试模式");
+                        }
+                        else
+                        {
+                            Environment.Exit(233);
+                        }
                         Db.Connect();
+                    //case 1101: //登录成功
+                    //    switch (RobotQQ)
+                    //    {
+                    //        case C.wp:
+                    //            C.isTest = false;
+                    //            IRQQApi.Api_OutPutLog("生产模式");
+                    //            break;
+                    //        case C.wt:
+                    //            C.isTest = true;
+                    //            IRQQApi.Api_OutPutLog("测试模式");
+                    //            break;
+                    //        default:
+                    //            IRQQApi.Api_OutPutLog("登录的账号不对");
+                    //            Environment.Exit(233);
+                    //            break;
+                    //    } //决定是否是测试模式
+                    //    Db.Connect();
                         break;
                     case 12002: //插件禁用
                         Db.DisConnect();
@@ -56,6 +74,12 @@ namespace tianlang
                         QQ = TigObjC;
                         if (MsgFrom == (C.isTest ? G.test : G.major))
                             InfoSetup.Start(QQ);
+                        break;
+                    case 214: //狼被拉进群
+                        IRQQApi.Api_HandleEvent(C.W, 214, TigObjF, MsgFrom, 10, "");
+                        break;
+                    case 101: //加狼为好友
+                        IRQQApi.Api_HandleEvent(C.W, 101, TigObjF, "", 10, "");
                         break;
                     case 1: //好友
                     case 4: //群临时
@@ -76,29 +100,30 @@ namespace tianlang
                         }
                         else if (status == Status.infoSetup)
                             InfoSetup.Enter(QQ, Msg);
-                        else if (status == Status.clubMan)
+                        else if (!C.isTest && status == Status.clubMan)
                             new ClubMan(QQ, Msg);
-                        else if (status == Status.showPic)
-                        {
-                            if (Msg.IndexOf("[IR:pic=") > -1)
-                            {
-                                string link = IRQQApi.Api_GetPicLink(C.W, 2, QQ, Msg);
-                                WebClient client = new WebClient();
-                                string path = "C:\\Users\\Administrator\\Pictures\\show\\" + QQ + new DateTime().ToFileTime().ToString() + ".jpg";
-                                client.DownloadFile(link, path);
-                                S.Major($"[IR:ShowPic={path},type=2]");
-                                S.P(QQ, "秀图成功");
-                            }
-                            else
-                                S.P(QQ, "发送图片哦\n" +
-                                        "再次发送<秀图>可再进入秀图状态");
-                            C.SetStatus(QQ, Status.no);
-                        }
-                        else if (Msg == "秀图t")
-                        {
-                            C.SetStatus(QQ, Status.showPic);
-                            S.P(QQ, "请发送图片，回复 cancel 取消");
-                        }
+                        //else if (status == Status.showPic)
+                        //{
+                        //    if (Msg.IndexOf("[IR:pic=") > -1)
+                        //    {
+                        //        string link = IRQQApi.Api_GetPicLink(C.W, 2, QQ, Msg);
+                        //        WebClient client = new WebClient();
+                        //        string path = "C:\\Users\\Administrator\\Pictures\\show\\" + QQ + DateTime.Now.ToFileTime().ToString() + ".jpg";
+                        //        client.DownloadFile(link, path);
+                        //        S.Major($"[IR:at={QQ}] 秀了一张图！");
+                        //        S.Major($"[IR:ShowPic={path},type=2]");
+                        //        S.P(QQ, "秀图成功");
+                        //    }
+                        //    else
+                        //        S.P(QQ, "发送图片哦\n" +
+                        //                "再次发送<秀图>可再进入秀图状态");
+                        //    C.SetStatus(QQ, Status.no);
+                        //}
+                        //else if (Msg == "秀图")
+                        //{
+                        //    C.SetStatus(QQ, Status.showPic);
+                        //    S.P(QQ, "请发送图片，回复 cancel 取消");
+                        //}
                         else if(QQ == "839827911" && Msg.IndexOf("[IR:pic=") > -1)
                         {
                             string link = IRQQApi.Api_GetPicLink(C.W, 2, QQ, Msg);
@@ -137,17 +162,21 @@ namespace tianlang
                                 try
                                 {
                                     if (Msg == "list")
-                                        S.Test(IRQQApi.Api_GetGroupMemberList(C.W, G.test));
+                                        S.Test(Marshal.PtrToStringAnsi(IRQQApi.Api_GetGroupMemberList_B(C.W, G.test)));
+                                    else if (Msg == "lqq")
+                                    {
+                                        List<GroupMember> list = C.GetMembers(G.test);
+                                        string rmsg = "";
+                                        foreach (GroupMember m in list)
+                                            rmsg += m.uin + '\n';
+                                        S.Test(rmsg);
+                                    }
                                     else if (Msg == "enroll")
                                     {
-                                        if (C.GetMaster(MsgFrom).uin.ToString() == TigObjF)
-                                            new ClubMan(MsgFrom);
-                                        else
-                                            S.Group(MsgFrom, "只有群主可以使用此功能");
+                                        ClubMan.Import(G.test, "test");
                                     }
                                     Repeater.Enter(Msg);
                                     new Si(Msg);
-
                                 }
                                 catch (Exception e)
                                 {
@@ -156,6 +185,13 @@ namespace tianlang
                         }
                         else //生产模式
                         {
+                            //if(Msg.StartsWith("秀图"))
+                            //{
+                            //    IRQQApi.Api_WithdrawMsg(C.W, MsgFrom, MsgNum, MsgID);
+                            //    Msg = Msg.GetRight("秀图").Trim().Trim('\n').Trim();
+                            //    Msg = Msg.Replace("[IR:pic=", "[IR:ShowPic=").Replace("]", ",type=2]");
+                            //    S.Group(MsgFrom, Msg);
+                            //}
                             if (MsgFrom == G.major)
                             {
                                 if (Msg.Trim().Trim('\n').Trim() == "收到福袋，请使用新版手机QQ查看")
@@ -167,9 +203,13 @@ namespace tianlang
                             {
                                 new Si(Msg);
                             }
+                            //else if (MsgFrom == G.test)
+                            //{
+
+                            //}
                             else if (Msg == "enroll")
                             {
-                                if (C.GetMaster(MsgFrom).uin.ToString() == TigObjF)
+                                if (C.GetMaster(MsgFrom) == TigObjF)
                                     new ClubMan(MsgFrom);
                                 else
                                     S.Group(MsgFrom, "只有群主可以使用此功能");
