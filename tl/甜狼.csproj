@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="AntiFukubukuro.cs" />
     <Compile Include="ClubMan.cs" />
+    <Compile Include="CMS.cs" />
     <Compile Include="Common.cs" />
     <Compile Include="DbClass.cs" />
     <Compile Include="InfoSetup.cs" />

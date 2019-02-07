@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Data.SqlClient;
 
 namespace tianlang
@@ -213,6 +214,7 @@ namespace tianlang
                                    $"Card: {qmp}");
                         }
                         Commit("nick", $"'{msg}'");
+                        File.WriteAllText("C:\\inetpub\\api\\username\\" + u.Uid.ToString(), msg);
                         subStep = SubStep.name;
                         CommitSubStep();
                         R(step3);
@@ -304,6 +306,7 @@ namespace tianlang
                     // 昵称步骤
                     case SubStep.nick:
                         Commit("nick", $"'{msg}'");
+                        File.WriteAllText("C:\\inetpub\\api\\username\\" + u.Uid.ToString(), msg);
                         subStep = SubStep.name;
                         CommitSubStep();
                         R(step3);

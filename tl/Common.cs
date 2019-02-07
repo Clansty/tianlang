@@ -52,9 +52,11 @@ namespace tianlang
          * 67: 自动接受申请
          * 68: 加强禁言套餐规格
          * 71: 福袋判定改为收到福袋
+         * 72: 移除福袋
+         *     开始甜狼 CMS
          */
 
-        public const int version = 70;
+        public const int version = 72;
         
         public const string wp= "1980853671";
         public const string wt = "2125742312";
