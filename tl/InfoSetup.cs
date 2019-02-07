@@ -3,7 +3,7 @@ using System.Data.SqlClient;
 
 namespace tianlang
 {
-    public class InfoSetup
+    public struct InfoSetup
     {
 
 

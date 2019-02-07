@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace tianlang
 {
-    public static class Repeater
+    public struct Repeater
     {
         private static string last;
         private static int i;

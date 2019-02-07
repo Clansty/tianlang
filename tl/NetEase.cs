@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace tianlang
 {
-    public static class NetEase
+    public struct NetEase
     {
         private class Song
         {
@@ -58,7 +58,7 @@ namespace tianlang
             return redirectUrl;
         }
 
-            private static Song GetSong(string name)
+        private static Song GetSong(string name)
         {
             Song s = new Song();
             try

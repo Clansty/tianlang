@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 
 namespace tianlang
 {
-    public static class C
+    public struct C
     {
         /* 更新日志
          * 35: C# 版初代版本
@@ -51,9 +51,10 @@ namespace tianlang
          * 66: 部分函数细微调整，提高稳定性
          * 67: 自动接受申请
          * 68: 加强禁言套餐规格
+         * 71: 福袋判定改为收到福袋
          */
 
-        public const int version = 69;
+        public const int version = 70;
         
         public const string wp= "1980853671";
         public const string wt = "2125742312";

@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace tianlang
 {
-    public static class S
+    public struct S
     {
         /// <summary>
         /// 发群消息

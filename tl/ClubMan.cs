@@ -135,12 +135,15 @@ namespace tianlang
                                 n = r[0].ToString();
                             r.Close();
                             r = null;
-                            R($"正在通过群 {IRQQApi.Api_GetGroupName(C.W, group)} 导入成员，可能需要一些时间，请稍后");
+                            R($"正在通过群 {IRQQApi.Api_GetGroupName(C.W, group)} 导入成员，请稍后");
                             ImportResult import;
                             import = Import(group, n);
+                            //R("导入完成\n" +
+                            // $"导入了 {import.all} 个成员\n" +
+                            // $"其中 {import.notReged} 个信息不完整，已发起信息补全会话");
                             R("导入完成\n" +
-                             $"导入了 {import.all} 个成员\n" +
-                             $"其中 {import.notReged} 个信息不完整，已发起信息补全会话");
+                             $"导入了 {import.all} 个成员");
+
                             break;
                     }
                     break;
@@ -164,25 +167,25 @@ namespace tianlang
             ImportResult result;
             result.all = 0;
             result.notReged = 0;
-            Stack<string> notReged = new Stack<string>();
-            notReged.Push("#"); //哨兵元素
+            //Stack<string> notReged = new Stack<string>();
+            //notReged.Push("#"); //哨兵元素
             foreach (GroupMember m in l)
             {
                 if (m.uin == C.wp || m.uin == C.wt)
                     continue; //跳过狼
-                User u = new User(m.uin);
-                Db.Exec($"INSERT INTO club_member (cid, uid) VALUES ({cid}, {u.Uid})");
+                //User u = new User(m.uin);
+                Db.Exec($"INSERT INTO club_member (cid, uid) VALUES ({cid}, {C.GetUid(m.uin)})");
                 result.all++;
-                if (u.Enrollment == 0 || u.Name == "" || u.Nick == "")
-                    notReged.Push(m.uin);
+                //if (u.Enrollment == 0 || u.Name == "" || u.Nick == "")
+                //    notReged.Push(m.uin);
             }
-            result.notReged = notReged.Count - 1;
-            l = null;//省点内存
-            while (notReged.Peek() != "#")
-            {
-                InfoSetup.StartNonMember(notReged.Pop(), g, brief);
-                Thread.Sleep(10000);
-            }
+            //result.notReged = notReged.Count - 1;
+            //l = null;//省点内存
+            //while (notReged.Peek() != "#")
+            //{
+            //    InfoSetup.StartNonMember(notReged.Pop(), g, brief);
+            //    Thread.Sleep(10000);
+            //}
             return result;
         }
 

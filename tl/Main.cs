@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 
 namespace tianlang
 {
-    public class Main
+    public struct Main
     {
 
 
@@ -194,7 +194,7 @@ namespace tianlang
                             //}
                             if (MsgFrom == G.major)
                             {
-                                if (Msg.Trim().Trim('\n').Trim() == "收到福袋，请使用新版手机QQ查看")
+                                if (Msg.IndexOf("收到福袋") >- 1)
                                     new AntiFukubukuro(TigObjF);
                                 else
                                     Repeater.Enter(Msg);
