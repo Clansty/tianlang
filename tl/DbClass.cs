@@ -25,13 +25,13 @@ namespace tianlang
             }
             catch(Exception e)
             {
-                IRQQApi.Api_OutPutLog(e.Message);
+                Console.WriteLine(e.Message);
                 S.Test(e.Message);
             }
             if (IsConnected())
-                IRQQApi.Api_OutPutLog("数据库连接成功");
+                Console.WriteLine("数据库连接成功");
             else
-                IRQQApi.Api_OutPutLog("数据库连接失败");
+                Console.WriteLine("数据库连接失败");
         }
         public static void DisConnect()
         {

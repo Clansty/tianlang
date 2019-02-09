@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net;
 using System.Data.SqlClient;
 using Newtonsoft.Json.Linq;
 using System.Runtime.InteropServices;
@@ -56,7 +57,7 @@ namespace tianlang
          *     开始甜狼 CMS
          */
 
-        public const int version = 72;
+        public const int version = 73;
         
         public const string wp= "1980853671";
         public const string wt = "2125742312";
@@ -185,6 +186,16 @@ namespace tianlang
             GroupMember groupMaster = l.Find(C.master);
             return groupMaster.uin;
         }
+
+        public static void DownloadFile(string link,string path)
+        {
+            WebClient wc = new WebClient();
+            wc.DownloadFile(link, path);
+        }
+
+        [DllImport("kernel32.dll")]
+        public static extern bool AllocConsole();
+
     }
 
     public readonly struct G
@@ -199,7 +210,8 @@ namespace tianlang
         no,
         infoSetup,
         clubMan,
-        showPic
+        showPic,
+        cms
     }
 
     public struct GroupMember
@@ -208,6 +220,14 @@ namespace tianlang
         public string uin;
 
         public void S(string msg) => tianlang.S.P(this, msg);
+    }
+
+    public struct FileRecv
+    {
+        //{"filename":"Visual Studio 2017.lnk","filesize":"1.45 KB","filelink":"http://182.254.8.40/ftn_handler/953bc1b9487188f694d56bccdd7833657b202c7aac8c7406c7863d4a6295d4e70203c2d249fa4b66e7367c95e7fa00696e4ed6443bea65ce621defcd5197373a"}
+        public string filename;
+        public string filesize;
+        public string filelink;
     }
 
     public static class StringHelper

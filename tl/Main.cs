@@ -8,7 +8,6 @@ namespace tianlang
     public struct Main
     {
 
-
         [DllExport(ExportName = nameof(IR_Event), CallingConvention = CallingConvention.StdCall)]
         public static int IR_Event(string RobotQQ, int MsgType, int MsgCType, string MsgFrom, string TigObjF, string TigObjC, string Msg,string MsgNum ,string MsgID,string RawMsg,string Json, int pText)
         {
@@ -31,21 +30,23 @@ namespace tianlang
                 switch (MsgType)
                 {
                     case 12001:
+                        C.AllocConsole();
                         string user = Environment.UserName;
                         if (user == "Administrator")
                         {
                             C.isTest = false;
-                            IRQQApi.Api_OutPutLog("生产模式");
+                            Console.WriteLine("生产模式");
                         }
                         else if (user == "c")
                         {
                             C.isTest = true;
-                            IRQQApi.Api_OutPutLog("测试模式");
+                            Console.WriteLine("测试模式");
                         }
                         else
                         {
                             Environment.Exit(233);
                         }
+                        Console.Title = $"甜狼 Ver.{C.version} 输出窗口 {(C.isTest ? "测试模式" : "生产模式")}";
                         Db.Connect();
                     //case 1101: //登录成功
                     //    switch (RobotQQ)
@@ -80,6 +81,10 @@ namespace tianlang
                         break;
                     case 101: //加狼为好友
                         IRQQApi.Api_HandleEvent(C.W, 101, TigObjF, "", 10, "");
+                        break;
+                    case 105: //收door文件
+                        //{"filename":"Visual Studio 2017.lnk","filesize":"1.45 KB","filelink":"http://182.254.8.40/ftn_handler/953bc1b9487188f694d56bccdd7833657b202c7aac8c7406c7863d4a6295d4e70203c2d249fa4b66e7367c95e7fa00696e4ed6443bea65ce621defcd5197373a"}
+                        CMS.FileEnter(TigObjF, Msg);
                         break;
                     case 1: //好友
                     case 4: //群临时
