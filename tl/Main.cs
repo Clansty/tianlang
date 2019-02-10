@@ -228,6 +228,7 @@ namespace tianlang
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.Message);
                 switch (MsgType)
                 {
                     case 1:
