@@ -55,6 +55,7 @@ namespace tianlang
          * 71: 福袋判定改为收到福袋
          * 72: 移除福袋
          *     开始甜狼 CMS
+         * 73: 凌霄希望工程
          */
 
         public const int version = 73;

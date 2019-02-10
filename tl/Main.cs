@@ -48,6 +48,7 @@ namespace tianlang
                         }
                         Console.Title = $"甜狼 Ver.{C.version} 输出窗口 {(C.isTest ? "测试模式" : "生产模式")}";
                         Db.Connect();
+                        Lingxiao.StartSrv();
                     //case 1101: //登录成功
                     //    switch (RobotQQ)
                     //    {
