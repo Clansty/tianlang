@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 //using SuperSocket.SocketBase;
@@ -13,7 +14,7 @@ namespace tianlang
 {
     public static class Lingxiao
     {
-        public static Dictionary<string, string> codePairs = new Dictionary<string, string>();
+        public static Dictionary<IPEndPoint, string> codePairs = new Dictionary<IPEndPoint, string>();
         //public static AppServer srv;
         private static Random r = new Random();
 
@@ -23,7 +24,7 @@ namespace tianlang
             OnConnected = (c) =>
             {
                 Console.WriteLine($"{c.RemoteEndPoint} connected.");
-                c.NetConnection.Send($"tl<{C.version}>lx<0.0.0.1>");
+                //c.NetConnection.Send($"tl<{C.version}>lx<0.0.0.1>");
             },
             OnReceived = (c) =>
             {
@@ -34,9 +35,16 @@ namespace tianlang
                 {
                     s = s.GetRight("CODE").Trim();
                     string code = r.Next(10000, 100000).ToString();
-                    codePairs[s] = code;
+                    codePairs[c.RemoteEndPoint] = code;
                     S.P(s, $"你的验证码是: {code}");
-
+                }
+                else if (s.StartsWith("LOGIN"))
+                {
+                    s = s.GetRight("LOGIN").Trim();
+                    if (codePairs[c.RemoteEndPoint] == s)
+                        c.NetConnection.Send("SUCCESS");
+                    else
+                        c.NetConnection.Send("FAIL");
                 }
                 //c.NetConnection.Send(c.Buffers);
             },

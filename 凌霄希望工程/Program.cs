@@ -25,6 +25,7 @@ namespace 凌霄希望工程
     static class C
     {
         public static Socket s = new Socket(SocketType.Stream, ProtocolType.Tcp);
+        public static string qq = "";
         //public static TcpClient client = new TcpClient(new TcpClientOptions(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 23333), new IPEndPoint(IPAddress.Parse("119.3.78.168"), 2333)) { ConnectTimeout = -1 })
         //{
         //    OnConnected = (c) =>

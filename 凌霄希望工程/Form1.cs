@@ -22,10 +22,30 @@ namespace 凌霄希望工程
             //C.client.Start();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void SendCode(object sender, EventArgs e)
         {
+            if (textBox1.Text == "")
+                return;
+            C.qq = textBox1.Text;
             C.s.Send(Encoding.UTF8.GetBytes($"CODE {textBox1.Text}"));
-
+            label3.Text = "甜狼给你发了一个验证码";
+            textBox1.Text = "";
+            button1.Text = "登录";
+            button1.Click -= new EventHandler(SendCode);
+            button1.Click += new EventHandler(Login);
+        }
+        private void Login(object sender, EventArgs e)
+        {
+            C.s.Send(Encoding.UTF8.GetBytes($"LOGIN {textBox1.Text}"));
+            byte[] buffer = new byte[10];
+            while (C.s.Receive(buffer) == 0)
+                continue;
+            string s = Encoding.Default.GetString(buffer).Trim();
+            //MessageBox.Show(s);
+            if (s.StartsWith("SUCCESS"))
+                MessageBox.Show("登录成功");
+            else
+                MessageBox.Show("登录失败");
         }
     }
 }

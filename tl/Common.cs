@@ -58,7 +58,7 @@ namespace tianlang
          * 73: 凌霄希望工程
          */
 
-        public const int version = 73;
+        public const int version = 74;
         
         public const string wp= "1980853671";
         public const string wt = "2125742312";
