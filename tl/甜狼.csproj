@@ -23,7 +23,7 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <OutputPath>..\..\..\..\OneDrive - my.tccd.edu\Projects\智障\CAQ\plugin\</OutputPath>
+    <OutputPath>..\..\..\..\Desktop\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
     <PlatformTarget>x86</PlatformTarget>
@@ -35,12 +35,6 @@
     <Reference Include="DllExport, Version=1.5.2.30304, Culture=neutral, PublicKeyToken=8337224c9ad9e356, processorArchitecture=MSIL">
       <HintPath>..\packages\DllExport.1.5.2\lib\net20\DllExport.dll</HintPath>
       <Private>False</Private>
-    </Reference>
-    <Reference Include="GodSharp.Socket, Version=2019.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\GodSharp.Socket.2019.1.0\lib\net45\GodSharp.Socket.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />

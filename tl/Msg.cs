@@ -1,7 +1,7 @@
 ﻿
 namespace tianlang
 {
-    public struct S
+    public class S
     {
         /// <summary>
         /// 发群消息
@@ -90,6 +90,6 @@ namespace tianlang
             }
         }
         public static void P(int uid, string msg, bool alternative = false) => P(new User(uid).QQ, msg, alternative);
-        public static void P(GroupMember m, string msg) => P(m.uin.ToString(), msg, true);
+        //public static void P(GroupMember m, string msg) => P(m.uin.ToString(), msg, true);
     }
 }

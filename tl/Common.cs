@@ -5,12 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net;
 using System.Data.SqlClient;
-using Newtonsoft.Json.Linq;
+//using Newtonsoft.Json.Linq;
 using System.Runtime.InteropServices;
 
 namespace tianlang
 {
-    public struct C
+    public class C
     {
         /* 更新日志
          * 35: C# 版初代版本
@@ -56,9 +56,10 @@ namespace tianlang
          * 72: 移除福袋
          *     开始甜狼 CMS
          * 73: 凌霄希望工程
+         * 75: 删删删
          */
 
-        public const int version = 74;
+        public const int version = 75;
         
         public const string wp= "1980853671";
         public const string wt = "2125742312";
@@ -100,7 +101,7 @@ namespace tianlang
             Db.Exec($"UPDATE user_info SET step=0 WHERE uid={uid}");
             Db.Exec($"UPDATE user_info SET substep=0 WHERE uid={uid}");
         }
-        public static void SetStatus(GroupMember member, Status status) => SetStatus(member.uin.ToString(), status);
+        //public static void SetStatus(GroupMember member, Status status) => SetStatus(member.uin.ToString(), status);
         public static void SetStatus(User u, Status status) => SetStatus(u.Uid, status);
 
         public static Status GetStatus(string qq)
@@ -121,7 +122,7 @@ namespace tianlang
             r.Close();
             return (Status)s;
         }
-        public static Status GetStatus(GroupMember member) => GetStatus(member.uin.ToString());
+        //public static Status GetStatus(GroupMember member) => GetStatus(member.uin.ToString());
         public static Status GetStatus(User u) => GetStatus(u.Uid);
 
 
@@ -146,7 +147,7 @@ namespace tianlang
 
         public static void SetSession(int uid, string s) => Db.Exec($"UPDATE user_info SET session='{s}' WHERE uid={uid}");
         public static void SetSession(string QQ, string s) => Db.Exec($"UPDATE user_info SET session='{s}' WHERE QQ='{QQ}'");
-        public static void SetSession(GroupMember member, string s) => SetSession(member.uin.ToString(), s);
+        //public static void SetSession(GroupMember member, string s) => SetSession(member.uin.ToString(), s);
 
 
         //public static void UpdateMemberList()
@@ -163,30 +164,30 @@ namespace tianlang
         //}
 
         //public static bool IsMember(string qq) => IRQQApi.Api_GetGroupChatLv(C.w, G.major, qq) != -1;
-        public static bool IsMember(string qq) => Marshal.PtrToStringAnsi(IRQQApi.Api_GetGroupMemberList_B(C.W, G.major)).IndexOf(qq.Trim()) > -1;
+        //public static bool IsMember(string qq) => Marshal.PtrToStringAnsi(IRQQApi.Api_GetGroupMemberList_B(C.W, G.major)).IndexOf(qq.Trim()) > -1;
 
-        public static Predicate<GroupMember> master = new Predicate<GroupMember>( //表示判断群主的方法
-                delegate (GroupMember member)
-                {
-                    if (member.role == "群主")
-                        return true;
-                    return false;
-                });
+        //public static Predicate<GroupMember> master = new Predicate<GroupMember>( //表示判断群主的方法
+        //        delegate (GroupMember member)
+        //        {
+        //            if (member.role == "群主")
+        //                return true;
+        //            return false;
+        //        });
 
-        public static List<GroupMember> GetMembers(string group)
-        {
-            string json = Marshal.PtrToStringAnsi(IRQQApi.Api_GetGroupMemberList_B(C.W, group));
-            JArray ja = JArray.Parse(json);
-            List<GroupMember> l = ja.ToObject<List<GroupMember>>();
-            return l;
-        }
+        //public static List<GroupMember> GetMembers(string group)
+        //{
+        //    string json = Marshal.PtrToStringAnsi(IRQQApi.Api_GetGroupMemberList_B(C.W, group));
+        //    JArray ja = JArray.Parse(json);
+        //    List<GroupMember> l = ja.ToObject<List<GroupMember>>();
+        //    return l;
+        //}
 
-        public static string GetMaster(string group)
-        {
-            List<GroupMember> l = GetMembers(group);
-            GroupMember groupMaster = l.Find(C.master);
-            return groupMaster.uin;
-        }
+        //public static string GetMaster(string group)
+        //{
+        //    List<GroupMember> l = GetMembers(group);
+        //    GroupMember groupMaster = l.Find(C.master);
+        //    return groupMaster.uin;
+        //}
 
         public static void DownloadFile(string link,string path)
         {
@@ -199,7 +200,7 @@ namespace tianlang
 
     }
 
-    public readonly struct G
+    public static class G
     {
         public const string major = "646751705";
         public const string si = "690696283";
@@ -215,21 +216,21 @@ namespace tianlang
         cms
     }
 
-    public struct GroupMember
-    {
-        public string role;
-        public string uin;
+    //public struct GroupMember
+    //{
+    //    public string role;
+    //    public string uin;
 
-        public void S(string msg) => tianlang.S.P(this, msg);
-    }
+    //    public void S(string msg) => tianlang.S.P(this, msg);
+    //}
 
-    public struct FileRecv
-    {
-        //{"filename":"Visual Studio 2017.lnk","filesize":"1.45 KB","filelink":"http://182.254.8.40/ftn_handler/953bc1b9487188f694d56bccdd7833657b202c7aac8c7406c7863d4a6295d4e70203c2d249fa4b66e7367c95e7fa00696e4ed6443bea65ce621defcd5197373a"}
-        public string filename;
-        public string filesize;
-        public string filelink;
-    }
+    //public struct FileRecv
+    //{
+    //    //{"filename":"Visual Studio 2017.lnk","filesize":"1.45 KB","filelink":"http://182.254.8.40/ftn_handler/953bc1b9487188f694d56bccdd7833657b202c7aac8c7406c7863d4a6295d4e70203c2d249fa4b66e7367c95e7fa00696e4ed6443bea65ce621defcd5197373a"}
+    //    public string filename;
+    //    public string filesize;
+    //    public string filelink;
+    //}
 
     public static class StringHelper
     {

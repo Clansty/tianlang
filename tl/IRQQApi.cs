@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace tianlang
 {
-    public struct IRQQApi
+    public class IRQQApi
     {
         
         /// <summary>

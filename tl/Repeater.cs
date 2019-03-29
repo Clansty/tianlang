@@ -1,7 +1,7 @@
 ﻿
 namespace tianlang
 {
-    public struct Repeater
+    public class Repeater
     {
         private static string last;
         private static int i;

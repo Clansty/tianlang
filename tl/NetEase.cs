@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace tianlang
 {
-    public struct NetEase
+    public class NetEase
     {
         private class Song
         {

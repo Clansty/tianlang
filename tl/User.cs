@@ -234,7 +234,7 @@ namespace tianlang
                    $"junior: {Junior}\n" +
                    $"enrollment: {Enrollment}\n" +
                    $"grade: {Grade}" +
-                   (C.IsMember(QQ) ? $"\nnamecard: {NameCard}" : "");
+                   $"\nnamecard: {NameCard}";
         }
 
         public string ToXml() => ToXml("用户信息");
@@ -257,7 +257,7 @@ namespace tianlang
                       $"初中: {Junior}\n" +
                       $"入学年份: {Enrollment}\n" +
                       $"年级: {Grade}" +
-                      (C.IsMember(QQ) ? $"\n群名片: {NameCard}" : "") +
+                      $"\n群名片: {NameCard}" +
                        "</summary>" +
                        "<hr />" +
                       $"<summary>甜狼 Ver.{C.version}</summary>" +

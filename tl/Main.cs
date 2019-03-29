@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 
 namespace tianlang
 {
-    public struct Main
+    public class Main
     {
 
         [DllExport(ExportName = nameof(IR_Event), CallingConvention = CallingConvention.StdCall)]
@@ -31,24 +31,24 @@ namespace tianlang
                 {
                     case 12001:
                         C.AllocConsole();
-                        string user = Environment.UserName;
-                        if (user == "Administrator")
-                        {
-                            C.isTest = false;
-                            Console.WriteLine("生产模式");
-                        }
-                        else if (user == "c")
-                        {
-                            C.isTest = true;
-                            Console.WriteLine("测试模式");
-                        }
-                        else
-                        {
-                            Environment.Exit(233);
-                        }
+                        //string user = Environment.UserName;
+                        //if (user == "Administrator")
+                        //{
+                        //    C.isTest = false;
+                        //    Console.WriteLine("生产模式");
+                        //}
+                        //else if (user == "c")
+                        //{
+                        //    C.isTest = true;
+                        //    Console.WriteLine("测试模式");
+                        //}
+                        //else
+                        //{
+                        //    Environment.Exit(233);
+                        //}
                         Console.Title = $"甜狼 Ver.{C.version} 输出窗口 {(C.isTest ? "测试模式" : "生产模式")}";
                         Db.Connect();
-                        Lingxiao.StartSrv();
+                        //Lingxiao.StartSrv();
                     //case 1101: //登录成功
                     //    switch (RobotQQ)
                     //    {
@@ -83,10 +83,10 @@ namespace tianlang
                     case 101: //加狼为好友
                         IRQQApi.Api_HandleEvent(C.W, 101, TigObjF, "", 10, "");
                         break;
-                    case 105: //收door文件
-                        //{"filename":"Visual Studio 2017.lnk","filesize":"1.45 KB","filelink":"http://182.254.8.40/ftn_handler/953bc1b9487188f694d56bccdd7833657b202c7aac8c7406c7863d4a6295d4e70203c2d249fa4b66e7367c95e7fa00696e4ed6443bea65ce621defcd5197373a"}
-                        CMS.FileEnter(TigObjF, Msg);
-                        break;
+                    //case 105: //收door文件
+                    //    //{"filename":"Visual Studio 2017.lnk","filesize":"1.45 KB","filelink":"http://182.254.8.40/ftn_handler/953bc1b9487188f694d56bccdd7833657b202c7aac8c7406c7863d4a6295d4e70203c2d249fa4b66e7367c95e7fa00696e4ed6443bea65ce621defcd5197373a"}
+                    //    CMS.FileEnter(TigObjF, Msg);
+                    //    break;
                     case 1: //好友
                     case 4: //群临时
                     case 5: //讨论组临时
@@ -106,8 +106,8 @@ namespace tianlang
                         }
                         else if (status == Status.infoSetup)
                             InfoSetup.Enter(QQ, Msg);
-                        else if (!C.isTest && status == Status.clubMan)
-                            new ClubMan(QQ, Msg);
+                        //else if (!C.isTest && status == Status.clubMan)
+                        //    new ClubMan(QQ, Msg);
                         //else if (status == Status.showPic)
                         //{
                         //    if (Msg.IndexOf("[IR:pic=") > -1)
@@ -130,17 +130,17 @@ namespace tianlang
                         //    C.SetStatus(QQ, Status.showPic);
                         //    S.P(QQ, "请发送图片，回复 cancel 取消");
                         //}
-                        else if(QQ == "839827911" && Msg.IndexOf("[IR:pic=") > -1)
-                        {
-                            string link = IRQQApi.Api_GetPicLink(C.W, 2, QQ, Msg);
-                            S.P(QQ, link);
-                        }
-                        else if (QQ == "839827911" && Msg.StartsWith("ismember"))
-                        {
-                            Msg = Msg.GetRight("ismember").Trim();
-                            S.P(QQ, C.IsMember(Msg).ToString());
-                            //S.P(QQ, IRQQApi.Api_GetGroupChatLv(C.w, G.major, Msg).ToString());
-                        }
+                        //else if(QQ == "839827911" && Msg.IndexOf("[IR:pic=") > -1)
+                        //{
+                        //    string link = IRQQApi.Api_GetPicLink(C.W, 2, QQ, Msg);
+                        //    S.P(QQ, link);
+                        //}
+                        //else if (QQ == "839827911" && Msg.StartsWith("ismember"))
+                        //{
+                        //    Msg = Msg.GetRight("ismember").Trim();
+                        //    S.P(QQ, C.IsMember(Msg).ToString());
+                        //    //S.P(QQ, IRQQApi.Api_GetGroupChatLv(C.w, G.major, Msg).ToString());
+                        //}
                         else
                             S.P(QQ, "无法处理的消息");
                         break;
@@ -164,30 +164,30 @@ namespace tianlang
                             IRQQApi.Api_SendXML(C.W, 1, 2, G.test, G.test, Msg, 0);
                         else if (C.isTest) //测试模式
                         {
-                            if (MsgFrom == G.test)
-                                try
-                                {
-                                    if (Msg == "list")
-                                        S.Test(Marshal.PtrToStringAnsi(IRQQApi.Api_GetGroupMemberList_B(C.W, G.test)));
-                                    else if (Msg == "lqq")
-                                    {
-                                        List<GroupMember> list = C.GetMembers(G.test);
-                                        string rmsg = "";
-                                        foreach (GroupMember m in list)
-                                            rmsg += m.uin + '\n';
-                                        S.Test(rmsg);
-                                    }
-                                    else if (Msg == "enroll")
-                                    {
-                                        ClubMan.Import(G.test, "test");
-                                    }
-                                    Repeater.Enter(Msg);
-                                    new Si(Msg);
-                                }
-                                catch (Exception e)
-                                {
-                                    S.Test(e.Message);
-                                }
+                            //if (MsgFrom == G.test)
+                            //    try
+                            //    {
+                            //        if (Msg == "list")
+                            //            S.Test(Marshal.PtrToStringAnsi(IRQQApi.Api_GetGroupMemberList_B(C.W, G.test)));
+                            //        else if (Msg == "lqq")
+                            //        {
+                            //            List<GroupMember> list = C.GetMembers(G.test);
+                            //            string rmsg = "";
+                            //            foreach (GroupMember m in list)
+                            //                rmsg += m.uin + '\n';
+                            //            S.Test(rmsg);
+                            //        }
+                            //        else if (Msg == "enroll")
+                            //        {
+                            //            ClubMan.Import(G.test, "test");
+                            //        }
+                            //        Repeater.Enter(Msg);
+                            //        new Si(Msg);
+                            //    }
+                            //    catch (Exception e)
+                            //    {
+                            //        S.Test(e.Message);
+                            //    }
                         }
                         else //生产模式
                         {
@@ -200,9 +200,9 @@ namespace tianlang
                             //}
                             if (MsgFrom == G.major)
                             {
-                                if (Msg.IndexOf("收到福袋") >- 1)
-                                    new AntiFukubukuro(TigObjF);
-                                else
+                                //if (Msg.IndexOf("收到福袋") >- 1)
+                                //    new AntiFukubukuro(TigObjF);
+                                //else
                                     Repeater.Enter(Msg);
                             }
                             else if (MsgFrom == G.si)
@@ -213,13 +213,13 @@ namespace tianlang
                             //{
 
                             //}
-                            else if (Msg == "enroll")
-                            {
-                                if (C.GetMaster(MsgFrom) == TigObjF)
-                                    new ClubMan(MsgFrom);
-                                else
-                                    S.Group(MsgFrom, "只有群主可以使用此功能");
-                            }
+                            //else if (Msg == "enroll")
+                            //{
+                            //    if (C.GetMaster(MsgFrom) == TigObjF)
+                            //        new ClubMan(MsgFrom);
+                            //    else
+                            //        S.Group(MsgFrom, "只有群主可以使用此功能");
+                            //}
                         }
                         break;
                 }

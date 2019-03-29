@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace tianlang
 {
-    public struct Si
+    public class Si
     {
         /// <summary>
         /// 回复

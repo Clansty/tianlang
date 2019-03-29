@@ -4,7 +4,7 @@ using System.Data.SqlClient;
 
 namespace tianlang
 {
-    public struct InfoSetup
+    public class InfoSetup
     {
 
 
@@ -115,16 +115,16 @@ namespace tianlang
             SubStep subStep = GetSubStep(QQ);
             User u = new User(QQ);
 
-
-            switch (step)
-            {
-                case Step.asMember:
-                    AsMember();
-                    break;
-                case Step.nonMember:
-                    NonMember();
-                    break;
-            }
+            AsMember();
+            //switch (step)
+            //{
+            //    case Step.asMember:
+            //        AsMember();
+            //        break;
+            //    case Step.nonMember:
+            //        NonMember();
+            //        break;
+            //}
 
             void AsMember()
             {
@@ -237,97 +237,97 @@ namespace tianlang
 
                 void R(string rmsg) => S.P(QQ, rmsg, false);
             }
-            void NonMember()
-            {
-                const string step2 = "请回复你的昵称，也就是显示名字";
-                const string step3 = "请告诉我你的姓名";
+            //void NonMember()
+            //{
+            //    const string step2 = "请回复你的昵称，也就是显示名字";
+            //    const string step3 = "请告诉我你的姓名";
 
-                if (msg == "上一步")
-                {
-                    if ((int)subStep > 1)
-                        subStep--;
-                    else
-                        R(cantGoBack);
-                    switch (step)
-                    {
-                        case Step.asMember:
-                            switch (subStep)
-                            {
-                                case SubStep.grade:
-                                    R(step1);
-                                    break;
-                                case SubStep.nick:
-                                    R(step2);
-                                    break;
-                            }
-                            break;
-                    }
-                    CommitSubStep();
-                    return;
-                }
-                if (msg == "重新开始")
-                {
-                    subStep = SubStep.grade;
-                    R(step1);
-                    CommitSubStep();
-                    return;
-                }
+            //    if (msg == "上一步")
+            //    {
+            //        if ((int)subStep > 1)
+            //            subStep--;
+            //        else
+            //            R(cantGoBack);
+            //        switch (step)
+            //        {
+            //            case Step.asMember:
+            //                switch (subStep)
+            //                {
+            //                    case SubStep.grade:
+            //                        R(step1);
+            //                        break;
+            //                    case SubStep.nick:
+            //                        R(step2);
+            //                        break;
+            //                }
+            //                break;
+            //        }
+            //        CommitSubStep();
+            //        return;
+            //    }
+            //    if (msg == "重新开始")
+            //    {
+            //        subStep = SubStep.grade;
+            //        R(step1);
+            //        CommitSubStep();
+            //        return;
+            //    }
 
 
-                switch (subStep)
-                {
-                    // 年级步骤
-                    case SubStep.grade:
-                        u.Fill(msg);
-                        if (u.Grade == "")
-                        {
-                            S.Si("信息向导异常\n" +
-                                $"QQ: {QQ}\n" +
-                                $"在 step 1 发送: {msg}");
-                            R("回复格式不正确，必须包含年级哦");
-                            R(step1);
-                        }
-                        else
-                        {
-                            string r = $"年级: {u.Grade}";
-                            if (u.Class != 0)
-                                r = r + $"\n班级: {u.Class}";
-                            r = r + "\n校区: " + (u.Branch ? "金阊" : "本部");
-                            r = r + "\n如果判断错误，可以说上一步";
-                            R(r);
-                            Commit("class", u.Class.ToString());
-                            Commit("enrollment", u.Enrollment.ToString());
-                            Commit("branch", u.Branch ? "1" : "0");
-                            subStep = SubStep.nick;
-                            CommitSubStep();
-                            R(step2);
-                        }
-                        break;
-                    // 昵称步骤
-                    case SubStep.nick:
-                        Commit("nick", $"'{msg}'");
-                        File.WriteAllText("C:\\inetpub\\api\\username\\" + u.Uid.ToString(), msg);
-                        subStep = SubStep.name;
-                        CommitSubStep();
-                        R(step3);
-                        break;
-                    // 姓名步骤
-                    case SubStep.name:
-                        R("目前我们需要的信息就这么多，OK 了");
-                        Commit("name", $"'{msg}'");
-                        subStep = SubStep.no;
-                        CommitSubStep();
-                        C.SetStatus(QQ, Status.no);
-                        if (!C.IsMember(QQ))
-                            R("你还没有加入<跨年级大群>哦\n" +
-                              "赶快来和小伙伴们创造更多快乐，还有各种福利等着你[Next]" +
-                              "[IR:pic=C:\\Users\\Administrator\\Pictures\\qr.jpg]");
-                        u = new User(QQ);
-                        Si.R(u.ToXml("数据库更新"));
-                        break;
-                }
-                void R(string rmsg) => S.P(QQ, rmsg, true);
-            }
+            //    switch (subStep)
+            //    {
+            //        // 年级步骤
+            //        case SubStep.grade:
+            //            u.Fill(msg);
+            //            if (u.Grade == "")
+            //            {
+            //                S.Si("信息向导异常\n" +
+            //                    $"QQ: {QQ}\n" +
+            //                    $"在 step 1 发送: {msg}");
+            //                R("回复格式不正确，必须包含年级哦");
+            //                R(step1);
+            //            }
+            //            else
+            //            {
+            //                string r = $"年级: {u.Grade}";
+            //                if (u.Class != 0)
+            //                    r = r + $"\n班级: {u.Class}";
+            //                r = r + "\n校区: " + (u.Branch ? "金阊" : "本部");
+            //                r = r + "\n如果判断错误，可以说上一步";
+            //                R(r);
+            //                Commit("class", u.Class.ToString());
+            //                Commit("enrollment", u.Enrollment.ToString());
+            //                Commit("branch", u.Branch ? "1" : "0");
+            //                subStep = SubStep.nick;
+            //                CommitSubStep();
+            //                R(step2);
+            //            }
+            //            break;
+            //        // 昵称步骤
+            //        case SubStep.nick:
+            //            Commit("nick", $"'{msg}'");
+            //            File.WriteAllText("C:\\inetpub\\api\\username\\" + u.Uid.ToString(), msg);
+            //            subStep = SubStep.name;
+            //            CommitSubStep();
+            //            R(step3);
+            //            break;
+            //        // 姓名步骤
+            //        case SubStep.name:
+            //            R("目前我们需要的信息就这么多，OK 了");
+            //            Commit("name", $"'{msg}'");
+            //            subStep = SubStep.no;
+            //            CommitSubStep();
+            //            C.SetStatus(QQ, Status.no);
+            //            if (!C.IsMember(QQ))
+            //                R("你还没有加入<跨年级大群>哦\n" +
+            //                  "赶快来和小伙伴们创造更多快乐，还有各种福利等着你[Next]" +
+            //                  "[IR:pic=C:\\Users\\Administrator\\Pictures\\qr.jpg]");
+            //            u = new User(QQ);
+            //            Si.R(u.ToXml("数据库更新"));
+            //            break;
+            //    }
+            //    void R(string rmsg) => S.P(QQ, rmsg, true);
+            //}
 
             //void R(string rmsg) => S.P(QQ, rmsg, false);
             void Commit(string key, string value) => Db.Exec($"UPDATE user_info SET {key}={value} WHERE uid={u.Uid}");
