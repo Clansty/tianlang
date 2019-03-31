@@ -205,6 +205,16 @@ namespace tianlang
                                 //else
                                     Repeater.Enter(Msg);
                             }
+                            else if(MsgFrom == "117076933")
+                            {
+                                if (Msg.StartsWith("做室内操"))
+                                {
+                                    Msg = Msg.GetRight("做室内操").Trim();
+                                    WebClient client = new WebClient();
+                                    string result = client.DownloadString($"http://172.100.6.108:9000/{Msg}");
+                                    S.Group("117076933", result.Trim() == "0" ? "成功" : ("失败" + result));
+                                }
+                            }
                             else if (MsgFrom == G.si)
                             {
                                 new Si(Msg);

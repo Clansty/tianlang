@@ -57,9 +57,10 @@ namespace tianlang
          *     开始甜狼 CMS
          * 73: 凌霄希望工程
          * 75: 删删删
+         * 76: 做室内操
          */
 
-        public const int version = 75;
+        public const int version = 76;
         
         public const string wp= "1980853671";
         public const string wt = "2125742312";
