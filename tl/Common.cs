@@ -58,9 +58,10 @@ namespace tianlang
          * 73: 凌霄希望工程
          * 75: 删删删
          * 76: 做室内操
+         * 77: fix
          */
 
-        public const int version = 76;
+        public const int version = 77;
         
         public const string wp= "1980853671";
         public const string wt = "2125742312";

@@ -214,7 +214,7 @@ namespace tianlang
                                    $"Card: {qmp}");
                         }
                         Commit("nick", $"'{msg}'");
-                        File.WriteAllText("C:\\inetpub\\api\\username\\" + u.Uid.ToString(), msg);
+                        //File.WriteAllText("C:\\inetpub\\api\\username\\" + u.Uid.ToString(), msg);
                         subStep = SubStep.name;
                         CommitSubStep();
                         R(step3);
