@@ -11,9 +11,10 @@ namespace Clansty.tianlang
         public const string menu =
             "{\"name\":\"导出名单\",\"function\":\"ExportNames\"}," +
             "{\"name\":\"群名片检查\",\"function\":\"CheckQmps\"}," +
-               "{\"name\":\"群名片检查假\",\"function\":\"TmpQmp\"}," +
-         "{\"name\":\"赞\",\"function\":\"Likes\"}," +
+            "{\"name\":\"群名片检查假\",\"function\":\"TmpQmp\"}," +
+            "{\"name\":\"赞\",\"function\":\"Likes\"}," +
             "{\"name\":\"测试续火\",\"function\":\"Ftest\"}," +
+            "{\"name\":\"测试新版点赞\",\"function\":\"Ftest2\"}," +
             "{\"name\":\"名单入库\",\"function\":\"ExportNamesToDb\"}," +
             "{\"name\":\"推送工具\",\"function\":\"Pushtool\"}"
          ;
@@ -89,6 +90,15 @@ namespace Clansty.tianlang
             new Thread(() =>
             {
                 Fired.Cron(true);
+            }).Start();
+            return 0;
+        }
+        [DllExport(CallingConvention.StdCall)]
+        private static int Ftest2()
+        {
+            new Thread(() =>
+            {
+                Fired.EnLikeNew();
             }).Start();
             return 0;
         }

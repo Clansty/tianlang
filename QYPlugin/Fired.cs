@@ -22,10 +22,10 @@ namespace Clansty.tianlang
                 C.WriteLn(now);
                 return;
             }
-            EnFireNew();
+            EnLikeNew();
         }
 
-        public static void EnFireNew()
+        public static void EnLikeNew()
         {
             HashSet<string> likee = Rds.client.GetAllItemsFromSet("likee");
             HashSet<string> liker = Rds.client.GetAllItemsFromSet("liker");

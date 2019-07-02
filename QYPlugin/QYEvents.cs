@@ -52,6 +52,10 @@ namespace Clansty.tianlang
                     e.Reply($"[LQ:lightappelem,type=1,data={e.Msg.Replace(",", "&#44;")},msg_resid=]");
                 if (e.Msg.StartsWith("[LQ:lightappelem,type=1,data=") && e.Msg.IndexOf(",msg_resid=]") > 0)
                     e.Reply(e.Msg.Between("[LQ:lightappelem,type=1,data=", ",msg_resid=]").Replace("&#44;", ","));
+                if (e.Msg.StartsWith("[LQ:richmsg") && e.Msg.IndexOf("]") > 0)
+                    e.Reply(e.Msg.Trim('[', ']'));
+                if (e.Msg.StartsWith("LQ:richmsg"))
+                    e.Reply($"[{e.Msg}]");
             }
         }
         public static void GroupAdminAdded(GroupAdminChangedArgs e)
