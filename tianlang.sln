@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.156
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clansty.tianlang", "QYPlugin\Clansty.tianlang.csproj", "{FF787E1B-C3DE-4933-9D0F-FA842DB4A0A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clansty.tianlang.Tester", "Clansty.tianlang.Tester\Clansty.tianlang.Tester.csproj", "{0CF22002-9A60-4971-966B-6A91AD9E73CF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FF787E1B-C3DE-4933-9D0F-FA842DB4A0A3}.Debug|x86.ActiveCfg = Debug|x86
+		{FF787E1B-C3DE-4933-9D0F-FA842DB4A0A3}.Debug|x86.Build.0 = Debug|x86
+		{FF787E1B-C3DE-4933-9D0F-FA842DB4A0A3}.Release|x86.ActiveCfg = Release|x86
+		{FF787E1B-C3DE-4933-9D0F-FA842DB4A0A3}.Release|x86.Build.0 = Release|x86
+		{0CF22002-9A60-4971-966B-6A91AD9E73CF}.Debug|x86.ActiveCfg = Debug|x86
+		{0CF22002-9A60-4971-966B-6A91AD9E73CF}.Debug|x86.Build.0 = Debug|x86
+		{0CF22002-9A60-4971-966B-6A91AD9E73CF}.Release|x86.ActiveCfg = Release|x86
+		{0CF22002-9A60-4971-966B-6A91AD9E73CF}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {33360260-DCD6-4E46-B46D-23077E256B31}
+	EndGlobalSection
+EndGlobal
