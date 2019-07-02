@@ -9,7 +9,6 @@ namespace Clansty.tianlang
     {
         public static void Cron(bool test = false)
         {
-            C.WriteLn("fire cron");
             string last = Rds.HGet("fired", "last");
             string now = DateTime.Now.ToShortDateString();
             if (last == now)
@@ -17,21 +16,34 @@ namespace Clansty.tianlang
             if (DateTime.Now.Hour < 5)
                 return;
             Rds.HSet("fired", "last", now);
-            Like(1980853671, "839827911", 50);
-            Like(2125742312, "839827911", 50);
-            Like(3524849039, "839827911", 50);
-            Like(2568291736, "839827911", 50);
-            Like(2568393973, "839827911", 50);
-            Like(2563289279, "839827911", 50);
             if (test)
             {
                 C.WriteLn(last);
                 C.WriteLn(now);
                 return;
             }
-            //EnFire(839827911);
-            //EnLike(839827911);
+            EnFireNew();
         }
+
+        public static void EnFireNew()
+        {
+            HashSet<string> likee = Rds.client.GetAllItemsFromSet("likee");
+            HashSet<string> liker = Rds.client.GetAllItemsFromSet("liker");
+            foreach (string ee in likee)
+            {
+                int tot = 0;
+                foreach (string er in liker)
+                {
+                    (int o, int r) = Like(er, ee, 50);
+                    tot += o;
+                    if (r != 0)
+                        C.WriteLn($"like err {r}: {er} => {ee}", ConsoleColor.Red);
+                }
+                C.WriteLn($"like: {ee} <= {tot}");
+            }
+            C.WriteLn("like done");
+        }
+
 
         public static void EnFire(long w)
         {
@@ -62,6 +74,8 @@ namespace Clansty.tianlang
             }
             C.WriteLn($"done");
         }
+
+        private static (int, int) Like(string w, string i, int c) => Like(long.Parse(w), i, c);
 
         private static (int, int) Like(long w, string i, int c)
         {
