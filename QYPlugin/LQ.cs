@@ -48,6 +48,7 @@ namespace Clansty.tianlang
         /// <param name="str"></param>
         /// <returns></returns>
         public static string Escape(this string str) => str.Replace("&", "&amp;").Replace("[", "&#91;").Replace("]", "&#93;").Replace(",", "&#44;");
+        public static string UnEscape(this string str) => str.Replace("&#91;", "[").Replace("&#93;", "]").Replace("&#44;", ",").Replace("&amp;", "&");
     }
 
 }
