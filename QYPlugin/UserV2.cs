@@ -162,6 +162,8 @@
                         r = "高" + r;
                 else if (Junior)
                     r += "初中";
+                if (r == "初一")
+                    return "高一/2019届初中";
                 return r;
             }
         }

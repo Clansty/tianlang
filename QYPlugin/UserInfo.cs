@@ -36,12 +36,12 @@ namespace Clansty.tianlang
                 m = ParseEnrollment(s.GetLeft("|"));
             if (m > 0)
                 return m;
-            if (s.IndexOf("初三") > -1 || s.IndexOf("高三") > -1 || s.IndexOf("高3") > -1 || s.IndexOf("初3") > -1)
-                return 2017;
             if (s.IndexOf("高二") > -1 || s.IndexOf("高2") > -1)
                 return 2018;
             if (s.IndexOf("高一") > -1 || s.IndexOf("高1") > -1)
                 return 2019;
+            if (s.IndexOf("初三") > -1 || s.IndexOf("高三") > -1 || s.IndexOf("高3") > -1 || s.IndexOf("初3") > -1)
+                return 2017;
             if (s.IndexOf("美高") > -1)
                 return 10001;
             if (s.IndexOf("届") > -1)
@@ -87,8 +87,8 @@ namespace Clansty.tianlang
                 s = s.GetRight("高二").Trim();
             else if (s.IndexOf("高三") > -1)
                 s = s.GetRight("高三").Trim();
-            else if (s.IndexOf("初一") > -1)
-                s = s.GetRight("初一").Trim();
+            else if (s.IndexOf("高一/2019届初中") > -1)
+                s = s.GetRight("高一/2019届初中").Trim();
             else if (s.IndexOf("初二") > -1)
                 s = s.GetRight("初二").Trim();
             else if (s.IndexOf("初三") > -1)
