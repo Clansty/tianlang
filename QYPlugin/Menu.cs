@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
+using Microsoft.VisualBasic;
 
 namespace Clansty.tianlang
 {
@@ -16,6 +17,7 @@ namespace Clansty.tianlang
             "{\"name\":\"测试续火\",\"function\":\"Ftest\"}," +
             "{\"name\":\"测试新版点赞\",\"function\":\"Ftest2\"}," +
             "{\"name\":\"名单入库\",\"function\":\"ExportNamesToDb\"}," +
+            "{\"name\":\"运行命令\",\"function\":\"RunCmd\"}," +
             "{\"name\":\"推送工具\",\"function\":\"Pushtool\"}"
          ;
 
@@ -128,6 +130,32 @@ namespace Clansty.tianlang
             }).Start();
             return 0;
         }
+        [DllExport(CallingConvention.StdCall)]
+        private static int RunCmd()
+        {
+            new Thread(() =>
+            {
+                string e = Interaction.InputBox("*龙门粗口*");
+                try
+                {
+                    string key = (e.GetLeft(" ") == "" ? e : e.GetLeft(" ")).UnEscape().ToLower();
+                    string act = e.GetRight(" ").UnEscape();
+                    if (Cmds.gcmds.ContainsKey(key))
+                    {
+                        GroupCommand m = Cmds.gcmds[key];
+                        C.WriteLn(Cmds.gcmds[key].Func(act), ConsoleColor.White);
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    C.WriteLn(ex.Message, ConsoleColor.Red);
+                }
+
+            }).Start();
+            return 0;
+        }
+
         [DllExport(CallingConvention.StdCall)]
         private static int Pushtool()
         {
