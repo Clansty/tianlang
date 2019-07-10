@@ -19,6 +19,8 @@ namespace Clansty.tianlang
                 grade = u.Enrollment.ToString();
             else
                 grade = "c" + u.Enrollment.ToString();
+            if (grade == "c2019")
+                grade = "2019";
             int.TryParse(Rds.HGet("stats" + date, grade), out int m);
             m++;
             Rds.HSet("stats" + date, grade, m.ToString());
