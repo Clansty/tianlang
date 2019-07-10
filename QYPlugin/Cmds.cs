@@ -186,6 +186,27 @@ namespace Clansty.tianlang
                     return r;
                 }
             },
+            ["stats"] = new GroupCommand()
+            {
+                Description = "查看统计数据",
+                Usage = "stats",
+                IsParamsNeeded = false,
+                Permission = UserType.powerUser,
+                Func = _ =>
+                {
+                    string r = "";
+                    string date = DateTime.Now.ToShortDateString();
+                    Dictionary<string, string> kvps = Rds.client.GetAllEntriesFromHash("stats" + date);
+                    int tot = 0;
+                    foreach (KeyValuePair<string, string> kvp in kvps)
+                    {
+                        r += $"{kvp.Key}: {kvp.Value}\n";
+                        tot += int.Parse(kvp.Value);
+                    }
+                    r += $"合计: {tot}";
+                    return r;
+                }
+            },
         };
         public static void SiEnter(GroupMsgArgs e)
         {
