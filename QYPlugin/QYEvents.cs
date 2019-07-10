@@ -55,7 +55,7 @@ namespace Clansty.tianlang
                 if (e.Msg.StartsWith("[LQ:richmsg") && e.Msg.IndexOf("]") > 0)
                     e.Reply(e.Msg.Trim('[', ']'));
                 if (e.Msg.StartsWith("LQ:richmsg"))
-                    e.Reply($"[{e.Msg}]");
+                    e.Reply($"[{e.Msg.UnEscape()}]");
             }
         }
         public static void GroupAdminAdded(GroupAdminChangedArgs e)

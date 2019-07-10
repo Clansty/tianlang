@@ -191,8 +191,8 @@ namespace Clansty.tianlang
         {
             try
             {
-                string key = (e.Msg.GetLeft(" ") == "" ? e.Msg : e.Msg.GetLeft(" ")).ToLower();
-                string act = e.Msg.GetRight(" ");
+                string key = (e.Msg.GetLeft(" ") == "" ? e.Msg : e.Msg.GetLeft(" ")).UnEscape().ToLower();
+                string act = e.Msg.GetRight(" ").UnEscape();
                 if (gcmds.ContainsKey(key))
                 {
                     GroupCommand m = gcmds[key];
