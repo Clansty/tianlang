@@ -71,7 +71,6 @@
     <Compile Include="Cmds.cs" />
     <Compile Include="Command.cs" />
     <Compile Include="Common.cs" />
-    <Compile Include="EntryPoint.cs" />
     <Compile Include="Fired.cs" />
     <Compile Include="Groups.cs" />
     <Compile Include="Menu.cs" />
