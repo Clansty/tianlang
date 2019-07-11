@@ -18,6 +18,7 @@ namespace Clansty.tianlang
             "{\"name\":\"测试新版点赞\",\"function\":\"Ftest2\"}," +
             "{\"name\":\"名单入库\",\"function\":\"ExportNamesToDb\"}," +
             "{\"name\":\"运行命令\",\"function\":\"RunCmd\"}," +
+            "{\"name\":\"发送测试\",\"function\":\"STest\"}," +
             "{\"name\":\"推送工具\",\"function\":\"Pushtool\"}"
          ;
 
@@ -153,6 +154,13 @@ namespace Clansty.tianlang
                 }
 
             }).Start();
+            return 0;
+        }
+
+        [DllExport(CallingConvention.StdCall)]
+        private static int STest()
+        {
+            new SendTest().Show();
             return 0;
         }
 
