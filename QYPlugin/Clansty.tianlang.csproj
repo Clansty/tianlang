@@ -84,6 +84,12 @@
     </Compile>
     <Compile Include="Args.cs" />
     <Compile Include="Robot.cs" />
+    <Compile Include="SendTest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SendTest.Designer.cs">
+      <DependentUpon>SendTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Structs.cs" />
     <Compile Include="LQ.cs" />
     <Compile Include="Enums.cs" />
@@ -100,11 +106,6 @@
     <Compile Include="UserInfo.cs" />
     <Compile Include="UserType.cs" />
     <Compile Include="UserV2.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Push.resx">
-      <DependentUpon>Push.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
