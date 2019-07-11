@@ -90,6 +90,12 @@
     <Compile Include="SendTest.Designer.cs">
       <DependentUpon>SendTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="ShowMode.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ShowMode.Designer.cs">
+      <DependentUpon>ShowMode.cs</DependentUpon>
+    </Compile>
     <Compile Include="Structs.cs" />
     <Compile Include="LQ.cs" />
     <Compile Include="Enums.cs" />

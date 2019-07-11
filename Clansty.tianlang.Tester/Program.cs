@@ -10,9 +10,7 @@ namespace Clansty.tianlang.Tester
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(Cmds.gcmds["help"].Func);
-
-            Console.ReadLine();
+            new ShowMode().Show();
         }
     }
 }

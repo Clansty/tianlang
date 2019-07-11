@@ -19,6 +19,7 @@ namespace Clansty.tianlang
             "{\"name\":\"名单入库\",\"function\":\"ExportNamesToDb\"}," +
             "{\"name\":\"运行命令\",\"function\":\"RunCmd\"}," +
             "{\"name\":\"发送测试\",\"function\":\"STest\"}," +
+            "{\"name\":\"表演模式\",\"function\":\"SMode\"}," +
             "{\"name\":\"推送工具\",\"function\":\"Pushtool\"}"
          ;
 
@@ -161,6 +162,13 @@ namespace Clansty.tianlang
         private static int STest()
         {
             new SendTest().Show();
+            return 0;
+        }
+
+        [DllExport(CallingConvention.StdCall)]
+        private static int SMode()
+        {
+            new ShowMode().Show();
             return 0;
         }
 
