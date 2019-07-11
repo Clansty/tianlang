@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Clansty.tianlang.Tester
@@ -10,7 +11,7 @@ namespace Clansty.tianlang.Tester
     {
         static void Main(string[] args)
         {
-            new ShowMode().Show();
+            new ShowMode().ShowDialog();
         }
     }
 }
