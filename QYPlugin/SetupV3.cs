@@ -98,7 +98,7 @@ namespace Clansty.tianlang
 
         public static void New(string qq, bool first = false)
         {
-            _ = new User(qq)
+            new User(qq)
             {
                 Status = Status.setup,
                 Step = 1

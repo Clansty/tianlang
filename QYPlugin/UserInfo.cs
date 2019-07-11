@@ -122,6 +122,8 @@ namespace Clansty.tianlang
 
             if (u.Enrollment > 1970 && u.Status == Status.setup)
             {
+                if (u.Step > 1)
+                    return CheckQmpRes.noNeed;
                 u.Status = Status.no;
                 S.Private(u.Uin, Strs.Get("setupSelfSetOK"));
                 S.Si(u.ToXml("新人手动改名片了"));
