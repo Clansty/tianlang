@@ -42,6 +42,7 @@ namespace Clansty.tianlang
             {
                 if (e.Msg.StartsWith("sudo "))
                     Cmds.SudoEnter(e);
+                ShowMode.NewMsg(e);
                 Repeater.Enter(e.Msg);
                 Stats.New(e);
             }
