@@ -1,4 +1,6 @@
-﻿namespace Clansty.tianlang
+﻿using ServiceStack.Redis;
+
+namespace Clansty.tianlang
 {
     class User
     {
@@ -7,15 +9,17 @@
         {
             Uin = uin;
             Rds.SAdd("users", uin);
-            Rds.client.SetEntryInHashIfNotExists("u" + Uin, "name", "");
-            Rds.client.SetEntryInHashIfNotExists("u" + Uin, "nick", "");
-            Rds.client.SetEntryInHashIfNotExists("u" + Uin, "branch", "0");
-            Rds.client.SetEntryInHashIfNotExists("u" + Uin, "junior", "0");
-            Rds.client.SetEntryInHashIfNotExists("u" + Uin, "class", "-1");
-            Rds.client.SetEntryInHashIfNotExists("u" + Uin, "enrollment", "-1");
-            Rds.client.SetEntryInHashIfNotExists("u" + Uin, "step", "-1");
-            Rds.client.SetEntryInHashIfNotExists("u" + Uin, "status", "0");
-            Rds.client.SetEntryInHashIfNotExists("u" + Uin, "role", "0");
+            IRedisClient client = Rds.GetClient();
+            client.SetEntryInHashIfNotExists("u" + Uin, "name", "");
+            client.SetEntryInHashIfNotExists("u" + Uin, "nick", "");
+            client.SetEntryInHashIfNotExists("u" + Uin, "branch", "0");
+            client.SetEntryInHashIfNotExists("u" + Uin, "junior", "0");
+            client.SetEntryInHashIfNotExists("u" + Uin, "class", "-1");
+            client.SetEntryInHashIfNotExists("u" + Uin, "enrollment", "-1");
+            client.SetEntryInHashIfNotExists("u" + Uin, "step", "-1");
+            client.SetEntryInHashIfNotExists("u" + Uin, "status", "0");
+            client.SetEntryInHashIfNotExists("u" + Uin, "role", "0");
+            client.Dispose();
         }
 
         public string Name

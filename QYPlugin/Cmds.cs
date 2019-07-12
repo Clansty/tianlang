@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ServiceStack.Redis;
+using System;
 using System.Collections.Generic;
 
 namespace Clansty.tianlang
@@ -179,10 +180,12 @@ namespace Clansty.tianlang
                 Permission = UserType.powerUser,
                 Func = _ =>
                 {
+                    IRedisClient client = Rds.GetClient();
                     string r = "";
-                    foreach (string cmd in Rds.client.GetHashKeys("strs"))
+                    foreach (string cmd in client.GetHashKeys("strs"))
                         r += cmd + "\n";
                     r = r.Trim();
+                    client.Dispose();
                     return r;
                 }
             },
@@ -196,7 +199,9 @@ namespace Clansty.tianlang
                 {
                     string r = "";
                     string date = DateTime.Now.ToShortDateString();
-                    Dictionary<string, string> kvps = Rds.client.GetAllEntriesFromHash("stats" + date);
+                    IRedisClient client = Rds.GetClient();
+                    Dictionary<string, string> kvps = client.GetAllEntriesFromHash("stats" + date);
+                    client.Dispose();
                     int tot = 0;
                     foreach (KeyValuePair<string, string> kvp in kvps)
                     {

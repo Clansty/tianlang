@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ServiceStack.Redis;
+using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -27,8 +28,10 @@ namespace Clansty.tianlang
 
         public static void EnLikeNew()
         {
-            HashSet<string> likee = Rds.client.GetAllItemsFromSet("likee");
-            HashSet<string> liker = Rds.client.GetAllItemsFromSet("liker");
+            IRedisClient client = Rds.GetClient();
+            HashSet<string> likee = client.GetAllItemsFromSet("likee");
+            HashSet<string> liker = client.GetAllItemsFromSet("liker");
+            client.Dispose();
             foreach (string ee in likee)
             {
                 int tot = 0;
@@ -47,7 +50,9 @@ namespace Clansty.tianlang
 
         public static void EnFire(long w)
         {
-            HashSet<string> s = Rds.client.GetAllItemsFromSet($"fire{w}");
+            IRedisClient client = Rds.GetClient();
+            HashSet<string> s = client.GetAllItemsFromSet($"fire{w}");
+            client.Dispose();
             foreach (string i in s)
             {
                 Sf(w, i, Strs.Get("fire"));
@@ -61,7 +66,9 @@ namespace Clansty.tianlang
 
         public static void EnLike(long w)
         {
-            HashSet<string> s = Rds.client.GetAllItemsFromSet($"like{w}");
+            IRedisClient client = Rds.GetClient();
+            HashSet<string> s = client.GetAllItemsFromSet($"like{w}");
+            client.Dispose();
             foreach (string i in s)
             {
                 (int o, int r) = Like(w, i, 20);

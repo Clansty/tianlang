@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ServiceStack.Redis;
+using System;
 using System.Windows.Forms;
 
 namespace Clansty.tianlang
@@ -23,11 +24,13 @@ namespace Clansty.tianlang
         private void Button2_Click(object sender, EventArgs e)
         {
             textBox1.Text = "";
-            foreach (string i in Rds.client.GetAllItemsFromSet("show"))
+            IRedisClient client = Rds.GetClient();
+            foreach (string i in client.GetAllItemsFromSet("show"))
             {
                 User u = new User(i);
                 textBox1.AppendText($"{u.Nick}({u.Name})\n");
             }
+            client.Dispose();
         }
 
         public static void NewMsg(GroupMsgArgs e)
