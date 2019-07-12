@@ -60,7 +60,8 @@ namespace Clansty.tianlang
                     s = s.GetRight(" ");
                     string keyid = s.GetLeft(" ");
                     s = s.GetRight(" ");
-                    return $"完成，返回值为 {Rds.HSet(hashid, keyid, s)}";
+                    Rds.HSet(hashid, keyid, s);
+                    return $"完成";
                 }
             },
             ["hget"] = new GroupCommand()
