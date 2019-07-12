@@ -40,6 +40,7 @@ namespace Clansty.tianlang
             User u = new User(e.FromQQ);
             if (u.Enrollment != 2019 && allowRecall)
             {
+                S.Si($"{u.ProperNamecard}: {e.Msg}");
                 e.Recall();
                 return;
             }
