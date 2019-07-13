@@ -301,7 +301,7 @@ namespace Clansty.tianlang
                 return ret == 0;
             }
             [DllImport("QYOffer.dll")]
-            private static extern int QY_sendGroupTmpMsg(int authCode, long qqID, long target, long targqq, string msg);
+            public static extern int QY_sendGroupTmpMsg(int authCode, long qqID, long target, long targqq, string msg);
 
         }
 
