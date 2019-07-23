@@ -29,9 +29,9 @@ namespace Clansty.tianlang
                 {
                     if (i.Card.IndexOf(ftxt) > -1)
                     {
-                        Robot.Send.QY_sendGroupTmpMsg(Robot.AuthCode, 2568291736, long.Parse(G.major), long.Parse(i.QQ), pmsg);
+                        Robot.Send.QY_sendGroupTmpMsg(Robot.AuthCode, 2125742312, long.Parse(G.major), long.Parse(i.QQ), pmsg);
                         C.WriteLn($"{i.Card} <-", ConsoleColor.Magenta);
-                        Thread.Sleep(1500);
+                        Thread.Sleep(15000);
                     }
                 }
             }).Start();
