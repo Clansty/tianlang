@@ -191,30 +191,41 @@ namespace Clansty.tianlang
 
         public string ToXml(string title = "用户信息")
         {
-            //TODO: XML要戴帽子
-            return "[LQ:richmsg,type=1,template_1=" +
-                   "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" +
-                  $"<msg serviceID=\"1\" brief=\"{title}\">" +
-                     "<item></item>" +
-                     "<item layout=\"6\">" +
-                      $"<title>{title}</title>" +
-                       "<summary>" +
-                      $"QQ: {Uin}\n" +
-                      $"年级: {Grade}\n" +
-                      $"昵称: {Nick}\n" +
-                      $"姓名: {Name}\n" +
-                      $"校区: {(Branch ? "金阊" : "本部")}\n" +
-                      $"入学年份: {Enrollment}\n" +
-                      $"初中: {Junior}\n" +
-                      $"班级: {Class}\n" +
-                      $"群名片: {Namecard}\n" +
-                      $"ProperNamecard: {ProperNamecard}" +
-                       "</summary>" +
-                       "<hr />" +
-                      $"<summary>甜狼 {C.Version}</summary>" +
-                     "</item>" +
-                   "</msg>" +
-                   ",service_id=0,msg_resid=,rand=0,seq=0,flags=0]";
+            //return "[LQ:richmsg,type=1,template_1=" +
+            //       "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" +
+            //      $"<msg serviceID=\"1\" brief=\"{title}\">" +
+            //         "<item></item>" +
+            //         "<item layout=\"6\">" +
+            //          $"<title>{title}</title>" +
+            //           "<summary>" +
+            //          $"QQ: {Uin}\n" +
+            //          $"年级: {Grade}\n" +
+            //          $"昵称: {Nick}\n" +
+            //          $"姓名: {Name}\n" +
+            //          $"校区: {(Branch ? "金阊" : "本部")}\n" +
+            //          $"入学年份: {Enrollment}\n" +
+            //          $"初中: {Junior}\n" +
+            //          $"班级: {Class}\n" +
+            //          $"群名片: {Namecard}\n" +
+            //          $"ProperNamecard: {ProperNamecard}" +
+            //           "</summary>" +
+            //           "<hr />" +
+            //          $"<summary>甜狼 {C.Version}</summary>" +
+            //         "</item>" +
+            //       "</msg>" +
+            //       ",service_id=0,msg_resid=,rand=0,seq=0,flags=0]";
+            return $"[{title}]\n" +
+                   $"QQ: {Uin}\n" +
+                   $"年级: {Grade}\n" +
+                   $"昵称: {Nick}\n" +
+                   $"姓名: {Name}\n" +
+                   $"校区: {(Branch ? "金阊" : "本部")}\n" +
+                   $"入学年份: {Enrollment}\n" +
+                   $"初中: {Junior}\n" +
+                   $"班级: {Class}\n" +
+                   $"群名片: {Namecard}\n" +
+                   $"ProperNamecard: {ProperNamecard}";
+
         }
     }
 }

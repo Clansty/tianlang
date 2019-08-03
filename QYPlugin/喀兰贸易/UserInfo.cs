@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Clansty.tianlang
 {
@@ -11,11 +12,8 @@ namespace Clansty.tianlang
             t = new System.Timers.Timer(1000 * 60 * 60);
             t.Elapsed += (_, __) =>
             {
-                new Thread(() =>
-                {
-                    Fired.Cron();
-                    CheckAllQmp();
-                }).Start();
+                Fired.CronAsync();
+                CheckAllQmpAsync();
             };
             t.AutoReset = true;
             t.Enabled = true;
@@ -103,42 +101,46 @@ namespace Clansty.tianlang
                 s = s.GetRight("金阊").Trim();
             return s;
         }
-        public static CheckQmpRes CheckQmp(User u)
+        public static async Task<CheckQmpRes> CheckQmpAsync(User u)
         {
-            string card = u.Namecard;
-            if (card.StartsWith("<") && card.IndexOf(">") > -1)
-                card = card.GetRight(">");
-
-            if (card == u.ProperNamecard)
+            return await Task.Run(() =>
             {
-                return CheckQmpRes.noNeed;
-            }
+                string card = u.Namecard;
+                if (card.StartsWith("<") && card.IndexOf(">") > -1)
+                    card = card.GetRight(">");
 
-            u.Nick = ParseNick(card);
-            if (u.Enrollment != 10086 && ParseEnrollment(card) > 1970)
-                u.Enrollment = ParseEnrollment(card);
-            u.Junior = ParseJunior(card);
-            u.Branch = ParseBranch(card);
-
-            if (u.Enrollment > 1970 && u.Status == Status.setup)
-            {
-                if (u.Step > 1)
+                if (card == u.ProperNamecard)
+                {
                     return CheckQmpRes.noNeed;
-                u.Status = Status.no;
-                S.Private(u.Uin, Strs.Get("setupSelfSetOK"));
-                S.Si(u.ToXml("新人手动改名片了"));
-            }
+                }
 
-            if (card == u.ProperNamecard)
-            {
-                C.WriteLn($"{u.Uin} updated", System.ConsoleColor.DarkGreen);
-                return CheckQmpRes.updated;
-            }
+                u.Nick = ParseNick(card);
+                if (u.Enrollment != 10086 && ParseEnrollment(card) > 1970)
+                    u.Enrollment = ParseEnrollment(card);
+                u.Junior = ParseJunior(card);
+                u.Branch = ParseBranch(card);
 
-            u.Namecard = u.ProperNamecard;
+                if (u.Enrollment > 1970 && u.Status == Status.setup)
+                {
+                    if (u.Step > 1)
+                        return CheckQmpRes.noNeed;
+                    u.Status = Status.no;
+                    S.Private(u.Uin, Strs.Get("setupSelfSetOK"));
+                    S.Si(u.ToXml("新人手动改名片了"));
+                }
 
-            C.WriteLn($"{u.Uin} updated", System.ConsoleColor.Yellow);
-            return CheckQmpRes.modified;
+                if (card == u.ProperNamecard)
+                {
+                    C.WriteLn($"{u.Uin} updated", System.ConsoleColor.DarkGreen);
+                    return CheckQmpRes.updated;
+                }
+
+                u.Namecard = u.ProperNamecard;
+
+                C.WriteLn($"{u.Uin} updated", System.ConsoleColor.Yellow);
+                return CheckQmpRes.modified;
+
+            });
         }
         public enum CheckQmpRes
         {
@@ -146,14 +148,14 @@ namespace Clansty.tianlang
             updated,
             modified
         }
-        public static void CheckAllQmp()
+        public static async Task CheckAllQmpAsync()
         {
             C.WriteLn("开始检查群名片");
             List<GroupMember> l = Robot.Group.GetMembers(G.major);
             int n = 0, u = 0, m = 0;
             foreach (GroupMember member in l)
             {
-                CheckQmpRes r = CheckQmp(new User(member.QQ));
+                CheckQmpRes r = await CheckQmpAsync(new User(member.QQ));
                 switch (r)
                 {
                     case CheckQmpRes.modified:

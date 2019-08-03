@@ -3,12 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Clansty.tianlang
 {
     public static class Fired
     {
-        public static void Cron(bool test = false)
+        public static async Task CronAsync(bool test = false)
         {
             string last = Rds.HGet("fired", "last");
             string now = DateTime.Now.ToShortDateString();
@@ -17,16 +18,10 @@ namespace Clansty.tianlang
             if (DateTime.Now.Hour < 5)
                 return;
             Rds.HSet("fired", "last", now);
-            if (test)
-            {
-                C.WriteLn(last);
-                C.WriteLn(now);
-                return;
-            }
-            EnLikeNew();
+            await Task.Run(EnLikeNew);
         }
 
-        public static void EnLikeNew()
+        private static void EnLikeNew()
         {
             IRedisClient client = Rds.GetClient();
             HashSet<string> likee = client.GetAllItemsFromSet("likee");

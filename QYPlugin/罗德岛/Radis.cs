@@ -5,7 +5,6 @@ namespace Clansty.tianlang
 {
     static class Rds
     {
-        public static IRedisClient client => pool.GetClient();
         public static IRedisClient GetClient() => pool.GetClient();
         public static PooledRedisClientManager pool = new PooledRedisClientManager(233, 10, "127.0.0.1:6379");
         public static void HSet(string key, string subkey, string value)

@@ -16,8 +16,11 @@ namespace Clansty.tianlang
     {
         public static void Start()
         {
+            C.AllocConsole();
             Console.Title = $"甜狼 {C.Version}";
+            new Menu().Show();
             UserInfo.InitQmpCheckTask();
+            TG.InitAsync();
         }
         public static void FriendMsg(FriendMsgArgs e)
         {
@@ -42,21 +45,27 @@ namespace Clansty.tianlang
             {
                 if (e.Msg.StartsWith("sudo "))
                     Cmds.SudoEnter(e);
-                ShowMode.NewMsg(e);
                 Repeater.Enter(e.Msg);
                 Stats.New(e);
+            }
+
+            if (e.FromGroup == G.iDE)
+            {
+                Q2TG.IDE(e);
             }
 
             if (e.FromGroup == G.test)
             {
                 if (e.Msg.StartsWith("{") && e.Msg.IndexOf('}') > 0)
                     e.Reply($"[LQ:lightappelem,type=1,data={e.Msg.Replace(",", "&#44;")},msg_resid=]");
-                if (e.Msg.StartsWith("[LQ:lightappelem,type=1,data=") && e.Msg.IndexOf(",msg_resid=]") > 0)
+                else if (e.Msg.StartsWith("[LQ:lightappelem,type=1,data=") && e.Msg.IndexOf(",msg_resid=]") > 0)
                     e.Reply(e.Msg.Between("[LQ:lightappelem,type=1,data=", ",msg_resid=]").Replace("&#44;", ","));
-                if (e.Msg.StartsWith("[LQ:richmsg") && e.Msg.IndexOf("]") > 0)
+                else if (e.Msg.StartsWith("[LQ:richmsg") && e.Msg.IndexOf("]") > 0)
                     e.Reply(e.Msg.Trim('[', ']'));
-                if (e.Msg.StartsWith("LQ:richmsg"))
+                else if (e.Msg.StartsWith("LQ:richmsg"))
                     e.Reply($"[{e.Msg.UnEscape()}]");
+                else
+                    Q2TG.Test(e);
             }
         }
         public static void GroupAdminAdded(GroupAdminChangedArgs e)
@@ -126,7 +135,7 @@ namespace Clansty.tianlang
         {
             if (group == G.major)
             {
-                UserInfo.CheckQmp(new User(member));
+                UserInfo.CheckQmpAsync(new User(member));
             }
         }
     }

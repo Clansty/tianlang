@@ -23,5 +23,7 @@ namespace Clansty.tianlang
         public static void Major(string msg) => Group(G.major, msg);
         public static void Si(string msg) => Group(G.si, msg);
         public static void Test(string msg) => Group(G.test, msg);
+
+        internal static void IDE(string msg) => Group(G.iDE, msg);
     }
 }
