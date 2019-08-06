@@ -180,7 +180,7 @@ namespace Clansty.tianlang
                     r += "金阊";
                 r += Grade;
                 r += " | ";
-                r += Nick;
+                r += Nick == "" ? Robot.GetNick(Uin) : Nick; //如无自定义昵称则用 QQ 昵称
                 return r;
             }
         }

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Text;
 
 // 建议用户不要更改此文件，除非你确信你看得懂这里面所有代码并且你的操作没有问题
 namespace Clansty.tianlang
@@ -635,7 +634,18 @@ namespace Clansty.tianlang
         [DllImport("QYOffer.dll")]
         private static extern int QY_setDelFriend(int authCode, long qqID, long targ);
 
-
+        public static string GetNick(string qq)
+        {
+            string b64 = Marshal.PtrToStringAnsi(QY_getSummaryInfo(AuthCode, LongQQ, long.Parse(qq)));
+            Unpack u = new Unpack(b64);
+            _ = u.NextLong;
+            _ = u.NextInt;
+            string r = u.NextStr;
+            u.Dispose();
+            return r;
+        }
+        [DllImport("QYOffer.dll")]
+        private static extern IntPtr QY_getSummaryInfo(int authCode, long qqID, long targ);
     }
 
 }
