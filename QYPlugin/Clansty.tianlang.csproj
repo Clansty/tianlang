@@ -69,10 +69,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="企鹅物流\Menu.cs">
+    <Compile Include="罗德岛\Menu.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="企鹅物流\Menu.Designer.cs">
+    <Compile Include="罗德岛\Menu.Designer.cs">
       <DependentUpon>Menu.cs</DependentUpon>
     </Compile>
     <Compile Include="喀兰贸易\Cmds.cs" />
@@ -142,7 +142,7 @@
     <Content Include="icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="企鹅物流\Menu.resx">
+    <EmbeddedResource Include="罗德岛\Menu.resx">
       <DependentUpon>Menu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="企鹅物流\Push.resx">
