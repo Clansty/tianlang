@@ -13,6 +13,7 @@ namespace Clansty.tianlang
             client.SetEntryInHashIfNotExists("u" + Uin, "name", "");
             client.SetEntryInHashIfNotExists("u" + Uin, "nick", "");
             client.SetEntryInHashIfNotExists("u" + Uin, "branch", "0");
+            client.SetEntryInHashIfNotExists("u" + Uin, "verified", "0");
             client.SetEntryInHashIfNotExists("u" + Uin, "junior", "0");
             client.SetEntryInHashIfNotExists("u" + Uin, "class", "-1");
             client.SetEntryInHashIfNotExists("u" + Uin, "enrollment", "-1");
@@ -36,6 +37,14 @@ namespace Clansty.tianlang
         {
             get => Get("branch") == "1";
             set => Set("branch", value ? "1" : "0");
+        }
+        /// <summary>
+        /// 标识实名认证成功验证，此时不应该能自己修改姓名
+        /// </summary>
+        public bool Verified
+        {
+            get => Get("verified") == "1";
+            set => Set("verified", value ? "1" : "0");
         }
         public bool Junior
         {
