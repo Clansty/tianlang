@@ -85,6 +85,7 @@
     </Compile>
     <Compile Include="罗德岛\Unpack.cs" />
     <Compile Include="莱茵生命\Common.cs" />
+    <Compile Include="陈的办公室\RealNameVerify.cs" />
     <Compile Include="黑钢国际\Q2TG.cs" />
     <Compile Include="黑钢国际\TG.cs" />
     <Compile Include="龙门\Fired.cs" />
