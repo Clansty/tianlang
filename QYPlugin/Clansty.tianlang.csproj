@@ -69,8 +69,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="陈的办公室\RealNameBindingResult.cs" />
     <Compile Include="陈的办公室\RealNameStatus.cs" />
-    <Compile Include="陈的办公室\RealNameVerify.cs" />
+    <Compile Include="陈的办公室\RealName.cs" />
     <Compile Include="罗德岛\Menu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -87,7 +88,8 @@
     </Compile>
     <Compile Include="罗德岛\Unpack.cs" />
     <Compile Include="莱茵生命\Common.cs" />
-    <Compile Include="陈的办公室\RealNameVerifyResult.cs" />
+    <Compile Include="陈的办公室\RealNameCheckingResult.cs" />
+    <Compile Include="陈的办公室\RealNameVerifingResult.cs" />
     <Compile Include="黑钢国际\Q2TG.cs" />
     <Compile Include="黑钢国际\TG.cs" />
     <Compile Include="龙门\Fired.cs" />

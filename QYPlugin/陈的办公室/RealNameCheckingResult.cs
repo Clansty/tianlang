@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Clansty.tianlang.陈的办公室
+namespace Clansty.tianlang
 {
-    class RealNameVerifyResult
+    class RealNameCheckingResult
     {
-        public RealNameVerifyResult(RealNameStatus rns, string occupiedQQ = null)
+        public RealNameCheckingResult(RealNameStatus rns, string occupiedQQ = null)
         {
             Status = rns;
             OccupiedQQ = occupiedQQ;

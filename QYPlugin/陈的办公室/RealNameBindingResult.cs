@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace Clansty.tianlang
 {
-    enum RealNameStatus
+    enum RealNameBindingResult
     {
-        e2017,
-        e2018,
-        notFound
+        succeed,
+        notFound,
+        occupied,
+        noNeed
     }
 }

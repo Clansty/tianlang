@@ -13,7 +13,6 @@ namespace Clansty.tianlang
             client.SetEntryInHashIfNotExists("u" + Uin, "name", "");
             client.SetEntryInHashIfNotExists("u" + Uin, "nick", "");
             client.SetEntryInHashIfNotExists("u" + Uin, "branch", "0");
-            client.SetEntryInHashIfNotExists("u" + Uin, "verified", "0");
             client.SetEntryInHashIfNotExists("u" + Uin, "junior", "0");
             client.SetEntryInHashIfNotExists("u" + Uin, "class", "-1");
             client.SetEntryInHashIfNotExists("u" + Uin, "enrollment", "-1");
@@ -41,11 +40,34 @@ namespace Clansty.tianlang
         /// <summary>
         /// 标识实名认证成功验证，此时不应该能自己修改姓名
         /// </summary>
-        public bool Verified
+        public bool Verified => VerifyMsg == RealNameVerifingResult.succeed;
+        public RealNameVerifingResult VerifyMsg
         {
-            get => Get("verified") == "1";
-            set => Set("verified", value ? "1" : "0");
+            get
+            {
+                if (Enrollment == 2019)
+                    return RealNameVerifingResult.e2019;
+
+                var chk = RealName.Check(Name);
+                if (chk.Status == RealNameStatus.e2017 && Enrollment != 2017)
+                    return RealNameVerifingResult.unmatch;
+                if (chk.Status == RealNameStatus.e2018 && Enrollment != 2018)
+                    return RealNameVerifingResult.unmatch;
+
+                var bind = RealName.Bind(Uin, Name);
+                if (bind == RealNameBindingResult.noNeed)
+                    return RealNameVerifingResult.succeed;
+                if (bind == RealNameBindingResult.succeed)
+                    return RealNameVerifingResult.succeed;
+                if (bind == RealNameBindingResult.notFound)
+                    return RealNameVerifingResult.notFound;
+                if (bind == RealNameBindingResult.occupied)
+                    return RealNameVerifingResult.occupied;
+
+                return RealNameVerifingResult.wtf;//不可能运行到这里
+            }
         }
+
         public bool Junior
         {
             get => Get("junior") == "1";
