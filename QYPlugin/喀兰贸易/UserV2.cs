@@ -29,7 +29,7 @@ namespace Clansty.tianlang
         }
         public string Nick
         {
-            get => Get("nick");
+            get => Get("nick").Trim();
             set => Set("nick", value);
         }
         public bool Branch
