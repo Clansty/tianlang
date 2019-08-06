@@ -31,7 +31,7 @@ namespace Clansty.tianlang
                     {
                         Robot.Send.QY_sendGroupTmpMsg(Robot.AuthCode, 168375232, long.Parse(G.major), long.Parse(i.QQ), pmsg);
                         C.WriteLn($"{i.Card} <-", ConsoleColor.Magenta);
-                        Thread.Sleep(15000);
+                        Thread.Sleep(60000);
                     }
                 }
             }).Start();
