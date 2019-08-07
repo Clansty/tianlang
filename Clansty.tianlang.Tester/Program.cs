@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ServiceStack.Redis;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,12 +12,12 @@ namespace Clansty.tianlang.Tester
         /// <summary>
         /// 应用程序的主入口点。
         /// </summary>
-        [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new NamesMan());
+            //Application.EnableVisualStyles();
+            //Application.SetCompatibleTextRenderingDefault(false);
+            //Application.Run(new NamesMan());
+            Rds.pool = new PooledRedisClientManager(233, 10, "101.132.178.136:6379");
         }
     }
 }

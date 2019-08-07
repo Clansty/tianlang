@@ -255,9 +255,9 @@ namespace Clansty.tianlang
                    $"初中: {Junior}\n" +
                    $"班级: {Class}\n" +
                    $"群名片: {Namecard}\n" +
-                   $"理想群名片: {ProperNamecard}" +
+                   $"理想群名片: {ProperNamecard}\n" +
                    $"身份: {Role}\n" +
-                   $"实名状态: {VerifyMsg}\n";
+                   $"实名状态: {VerifyMsg}";
 
         }
     }
