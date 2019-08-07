@@ -68,6 +68,7 @@ namespace Clansty.tianlang
                     if (u.Name != "")
                     {
                         FinishWizard();
+                        return;
                     }
                     C.WriteLn($"{u.Uin} 加群向导进入第 3 步", ConsoleColor.Cyan);
                     e.Reply(Strs.Get("setupStep3"));//请告诉我你的姓名，这并不会在群里公开               
