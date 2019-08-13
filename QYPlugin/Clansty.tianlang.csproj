@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Clansty.tianlang</RootNamespace>
-    <AssemblyName>Clansty.tianlang.v3.qyk</AssemblyName>
+    <AssemblyName>RhodesIsland.qyk</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -69,6 +69,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="罗德岛基建\Loading.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="罗德岛基建\Loading.Designer.cs">
+      <DependentUpon>Loading.cs</DependentUpon>
+    </Compile>
+    <Compile Include="罗德岛基建\Siamc.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="罗德岛基建\Siamc.Designer.cs">
+      <DependentUpon>Siamc.cs</DependentUpon>
+    </Compile>
     <Compile Include="陈的办公室\RealNameBindingResult.cs" />
     <Compile Include="陈的办公室\RealNameStatus.cs" />
     <Compile Include="陈的办公室\RealName.cs" />
@@ -155,6 +167,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="喀兰贸易\NamesMan.resx">
       <DependentUpon>NamesMan.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="罗德岛基建\Loading.resx">
+      <DependentUpon>Loading.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="罗德岛基建\Siamc.resx">
+      <DependentUpon>Siamc.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

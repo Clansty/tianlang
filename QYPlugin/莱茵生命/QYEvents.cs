@@ -5,7 +5,7 @@ namespace Clansty.tianlang
     public static class PluginInfo //插件的相关信息
     {
         public const string name = "甜狼 v3"; //名称
-        public const string appid = "Clansty.tianlang.v3"; //标识
+        public const string appid = "RhodesIsland"; //标识
         public const string version = "3.0"; //版本
         public const int versionId = 1; //版本ID
         public const string author = "凌莞"; //作者
@@ -118,12 +118,12 @@ namespace Clansty.tianlang
                     return;
                 }
 
-                if (u.Enrollment > 1970 && enr != u.Enrollment)
-                {
-                    e.Reject("年级与登记的不匹配，请联系管理员");
-                    S.Si(u.ToXml("加群申请已拒绝: 年级与登记的不匹配") + $"\n申请信息: {msg}");
-                    return;
-                }
+                //if (u.Enrollment > 1970 && enr != u.Enrollment)
+                //{
+                //    e.Reject("年级与登记的不匹配，请联系管理员");
+                //    S.Si(u.ToXml("加群申请已拒绝: 年级与登记的不匹配") + $"\n申请信息: {msg}");
+                //    return;
+                //}
 
                 u.Enrollment = enr;
 

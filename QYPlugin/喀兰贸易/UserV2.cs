@@ -45,8 +45,8 @@ namespace Clansty.tianlang
         {
             get
             {
-                if (Enrollment == 2019)
-                    return RealNameVerifingResult.e2019;
+                if (Enrollment != 2017 && Enrollment != 2018)
+                    return RealNameVerifingResult.unsupported;
 
                 var chk = RealName.Check(Name);
                 if (chk.Status == RealNameStatus.e2017 && Enrollment != 2017)

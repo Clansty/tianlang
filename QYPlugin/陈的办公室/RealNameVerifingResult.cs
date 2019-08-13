@@ -15,7 +15,7 @@ namespace Clansty.tianlang
         /// <summary>
         /// 2019 级新生暂时无法进行实名认证
         /// </summary>
-        e2019,
+        unsupported,
         /// <summary>
         /// 该身份尚未进行绑定
         /// </summary>
