@@ -110,6 +110,7 @@ namespace Clansty.tianlang
 
                 var enr = UserInfo.ParseEnrollment(msg.GetLeft(" "));
                 var name = msg.GetRight(" ").Trim();
+                var brh = UserInfo.ParseBranch(msg.GetLeft(" "));
 
                 if (enr < 1970)
                 {
@@ -126,12 +127,20 @@ namespace Clansty.tianlang
                 //}
 
                 u.Enrollment = enr;
+                u.Branch = brh;
 
                 if (enr != 2017 && enr != 2018)
                 {                    
                     u.Name = name;
                     u.Junior = UserInfo.ParseJunior(msg.GetLeft(" "));
                     S.Si(u.ToXml("非高二高三请手动审核"));
+                    return;
+                }
+                if (brh)
+                {
+                    u.Name = name;
+                    u.Junior = UserInfo.ParseJunior(msg.GetLeft(" "));
+                    S.Si(u.ToXml("金阊请手动审核"));
                     return;
                 }
 
