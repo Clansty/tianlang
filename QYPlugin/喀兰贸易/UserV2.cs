@@ -14,7 +14,6 @@ namespace Clansty.tianlang
             client.SetEntryInHashIfNotExists("u" + Uin, "nick", "");
             client.SetEntryInHashIfNotExists("u" + Uin, "branch", "0");
             client.SetEntryInHashIfNotExists("u" + Uin, "junior", "0");
-            client.SetEntryInHashIfNotExists("u" + Uin, "class", "-1");
             client.SetEntryInHashIfNotExists("u" + Uin, "enrollment", "-1");
             client.SetEntryInHashIfNotExists("u" + Uin, "step", "-1");
             client.SetEntryInHashIfNotExists("u" + Uin, "status", "0");
@@ -73,21 +72,15 @@ namespace Clansty.tianlang
             get => Get("junior") == "1";
             set => Set("junior", value ? "1" : "0");
         }
-        public int Class
+        public string Class
         {
             get
             {
-                try
-                {
-                    return int.Parse(Get("class"));
-                }
-                catch
-                {
-                    Class = -1;
-                    return -1;
-                }
+                var c = Rds.HGet("classes", Name);
+                if (c == "")
+                    return "未指定";
+                return c;
             }
-            set => Set("nick", value.ToString());
         }
         public int Enrollment
         {

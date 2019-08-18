@@ -18,6 +18,13 @@ namespace Clansty.tianlang.Tester
             //Application.SetCompatibleTextRenderingDefault(false);
             //Application.Run(new NamesMan());
             Rds.pool = new PooledRedisClientManager(233, 10, "101.132.178.136:6379");
+            var client = Rds.GetClient();
+            var todo = "".Split(',');
+            foreach (var i in todo)
+            {
+
+            }
+            MessageBox.Show("Test");
         }
     }
 }

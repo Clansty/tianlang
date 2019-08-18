@@ -95,8 +95,6 @@ namespace Clansty.tianlang
                 s = s.GetRight("初中").Trim();
             else if (s.IndexOf("届") > -1)
                 s = s.GetRight("届").Trim();
-            else if (s.IndexOf("美高班") > -1)
-                s = s.GetRight("美高班").Trim();
             else if (s.IndexOf("金阊") > -1)
                 s = s.GetRight("金阊").Trim();
             return s;
@@ -115,7 +113,8 @@ namespace Clansty.tianlang
                 }
 
                 u.Nick = ParseNick(card);
-                if (u.Enrollment != 10086 && ParseEnrollment(card) > 1970)
+                // TODO: 只有未定义名片的人能修改年级
+                if (u.Enrollment == 0 || u.Enrollment == -1)
                     u.Enrollment = ParseEnrollment(card);
                 u.Junior = ParseJunior(card);
                 u.Branch = ParseBranch(card);
