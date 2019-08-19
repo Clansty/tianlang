@@ -41,9 +41,9 @@
             this.喀兰贸易ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.喀兰贸易ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.检查群名片ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.准备信息整理ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.乌萨斯学生自治团ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
-            this.准备信息整理ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -125,16 +125,23 @@
             // 喀兰贸易ToolStripMenuItem1
             // 
             this.喀兰贸易ToolStripMenuItem1.Name = "喀兰贸易ToolStripMenuItem1";
-            this.喀兰贸易ToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.喀兰贸易ToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.喀兰贸易ToolStripMenuItem1.Text = "喀兰贸易";
             this.喀兰贸易ToolStripMenuItem1.Click += new System.EventHandler(this.喀兰贸易ToolStripMenuItem1_Click);
             // 
             // 检查群名片ToolStripMenuItem
             // 
             this.检查群名片ToolStripMenuItem.Name = "检查群名片ToolStripMenuItem";
-            this.检查群名片ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.检查群名片ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.检查群名片ToolStripMenuItem.Text = "检查群名片";
             this.检查群名片ToolStripMenuItem.Click += new System.EventHandler(this.检查群名片ToolStripMenuItem_Click);
+            // 
+            // 准备信息整理ToolStripMenuItem
+            // 
+            this.准备信息整理ToolStripMenuItem.Name = "准备信息整理ToolStripMenuItem";
+            this.准备信息整理ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.准备信息整理ToolStripMenuItem.Text = "准备信息整理";
+            this.准备信息整理ToolStripMenuItem.Click += new System.EventHandler(this.准备信息整理ToolStripMenuItem_Click);
             // 
             // 乌萨斯学生自治团ToolStripMenuItem
             // 
@@ -150,19 +157,13 @@
             this.notifyIcon1.Visible = true;
             this.notifyIcon1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.NotifyIcon1_MouseDoubleClick);
             // 
-            // 准备信息整理ToolStripMenuItem
-            // 
-            this.准备信息整理ToolStripMenuItem.Name = "准备信息整理ToolStripMenuItem";
-            this.准备信息整理ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.准备信息整理ToolStripMenuItem.Text = "准备信息整理";
-            this.准备信息整理ToolStripMenuItem.Click += new System.EventHandler(this.准备信息整理ToolStripMenuItem_Click);
-            // 
             // Menu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(413, 38);
+            this.ClientSize = new System.Drawing.Size(413, 26);
             this.Controls.Add(this.menuStrip1);
+            this.Location = new System.Drawing.Point(233, 0);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Menu";
             this.Opacity = 0.8D;

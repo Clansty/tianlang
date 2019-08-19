@@ -27,10 +27,70 @@ namespace Clansty.tianlang
             User u = new User(e.FromQQ);
             if (u.Status == Status.setup)
                 Setup.Enter(e);
-            if (e.Msg == "setup")
+            else if (e.Msg == "setup")
                 Setup.New(e.FromQQ, false);
-            if (e.Msg == "whoami")
+            else if (e.Msg == "whoami")
                 e.Reply(u.ToXml("你的信息"));
+            else if (e.Msg.StartsWith("我叫"))
+            {
+                var name = e.Msg.GetRight("我叫").Trim();
+                if (u.Verified)
+                {
+                    e.Reply(Strs.Get("rnVerified"));//你已经实名认证了，无需再次补填姓名
+                    return;
+                }
+                if (u.VerifyMsg == RealNameVerifingResult.unsupported)
+                {
+                    e.Reply(Strs.Get("rnUnsupported"));
+                    return;
+                }
+                if (u.Branch)
+                {
+                    e.Reply(Strs.Get("rnUnsupported"));
+                    return;
+                }
+
+                var chk = RealName.Check(name);
+
+                if (chk.Status == RealNameStatus.notFound)
+                {
+                    e.Reply(Strs.Get("rnNotFound"));
+                    return;
+                }
+
+                if (chk.OccupiedQQ != null && chk.OccupiedQQ != e.FromQQ)
+                {
+                    e.Reply(Strs.Get("rnOccupied"));
+                    return;
+                }
+
+                if (chk.Status == RealNameStatus.e2017 && u.Enrollment != 2017)
+                {
+                    e.Reply(Strs.Get("rnUnmatch", u.Grade));
+                    return;
+                }
+                if (chk.Status == RealNameStatus.e2018 && u.Enrollment != 2018)
+                {
+                    e.Reply(Strs.Get("rnUnmatch", u.Grade));
+                    return;
+                }
+
+
+                if (chk.OccupiedQQ == null)
+                {
+                    //尝试进行验证
+                    u.Name = name;
+                    if (u.Verified)
+                    {
+                        e.Reply(Strs.Get("rnOK"));
+                        UserInfo.CheckQmpAsync(u);
+                        return;
+                    }
+                    e.Reply(Strs.Get("unexceptedErr", u.VerifyMsg));
+                    return;
+                }
+
+            }
         }
         public static void GroupMsg(GroupMsgArgs e)
         {
@@ -97,14 +157,14 @@ namespace Clansty.tianlang
                 if (u.Role == UserType.blackListed)
                 {
                     e.Reject("blacklisted");
-                    S.Si(u.ToXml("加群申请已拒绝: 黑名单用户"));
+                    S.Si(u.ToXml(Strs.Get("addRejected", Strs.Get("blacklisted"))));
                     return;
                 }
                 // TODO: 实名验证审核
                 if (msg.IndexOf(" ") < 0)
                 {
-                    e.Reject("请按正确格式填写");
-                    S.Si(u.ToXml("加群申请已拒绝: 格式错误"));
+                    e.Reject(Strs.Get("formatIncorrect"));
+                    S.Si(u.ToXml(Strs.Get("addRejected", Strs.Get("formatErr"))));
                     return;
                 }
 
@@ -114,8 +174,8 @@ namespace Clansty.tianlang
 
                 if (enr < 1970)
                 {
-                    e.Reject("年级格式错误");
-                    S.Si(u.ToXml("加群申请已拒绝: 年级格式错误") + $"\n申请信息: {msg}");
+                    e.Reject(Strs.Get("EnrFormatErr"));
+                    S.Si(u.ToXml(Strs.Get("addRejected", Strs.Get("EnrFormatErr"))) + $"\n申请信息: {msg}");
                     return;
                 }
 
