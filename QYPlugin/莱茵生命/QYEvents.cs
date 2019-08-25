@@ -20,7 +20,7 @@ namespace Clansty.tianlang
             Console.Title = $"甜狼 {C.Version}";
             new Menu().Show();
             UserInfo.InitQmpCheckTask();
-            TG.InitAsync();
+            //TG.InitAsync();
         }
         public static void FriendMsg(FriendMsgArgs e)
         {
@@ -109,10 +109,10 @@ namespace Clansty.tianlang
                 Stats.New(e);
             }
 
-            if (e.FromGroup == G.iDE)
-            {
-                Q2TG.IDE(e);
-            }
+            //if (e.FromGroup == G.iDE)
+            //{
+            //    Q2TG.IDE(e);
+            //}
 
             if (e.FromGroup == G.test)
             {
@@ -124,8 +124,8 @@ namespace Clansty.tianlang
                     e.Reply(e.Msg.Trim('[', ']'));
                 else if (e.Msg.StartsWith("LQ:richmsg"))
                     e.Reply($"[{e.Msg.UnEscape()}]");
-                else
-                    Q2TG.Test(e);
+                //else
+                    //Q2TG.Test(e);
             }
         }
         public static void GroupAdminAdded(GroupAdminChangedArgs e)
