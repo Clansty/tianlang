@@ -28,8 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Menu));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.龙门ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.版本ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -43,7 +41,7 @@
             this.检查群名片ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.准备信息整理ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.乌萨斯学生自治团ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -53,7 +51,8 @@
             this.龙门ToolStripMenuItem,
             this.toolStripMenuItem1,
             this.喀兰贸易ToolStripMenuItem,
-            this.乌萨斯学生自治团ToolStripMenuItem});
+            this.乌萨斯学生自治团ToolStripMenuItem,
+            this.toolStripMenuItem2});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(413, 24);
@@ -150,12 +149,12 @@
             this.乌萨斯学生自治团ToolStripMenuItem.Text = "乌萨斯学生自治团";
             this.乌萨斯学生自治团ToolStripMenuItem.Click += new System.EventHandler(this.乌萨斯学生自治团ToolStripMenuItem_Click);
             // 
-            // notifyIcon1
+            // toolStripMenuItem2
             // 
-            this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
-            this.notifyIcon1.Text = "罗德岛";
-            this.notifyIcon1.Visible = true;
-            this.notifyIcon1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.NotifyIcon1_MouseDoubleClick);
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(45, 20);
+            this.toolStripMenuItem2.Text = "基建";
+            this.toolStripMenuItem2.Click += new System.EventHandler(this.ToolStripMenuItem2_Click);
             // 
             // Menu
             // 
@@ -190,7 +189,7 @@
         private System.Windows.Forms.ToolStripMenuItem 确认退出ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 版本ToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.NotifyIcon notifyIcon1;
         private System.Windows.Forms.ToolStripMenuItem 准备信息整理ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
     }
 }

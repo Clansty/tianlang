@@ -148,5 +148,9 @@ namespace Clansty.tianlang
         [DllImport("QYOffer.dll")]
         private static extern IntPtr QY_getGroupMemberList(int authCode, long qqID, long targ);
 
+        private void ToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            new SIAMC.Loading().Show();
+        }
     }
 }

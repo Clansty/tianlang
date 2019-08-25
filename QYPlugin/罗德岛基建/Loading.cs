@@ -33,7 +33,7 @@ namespace Clansty.tianlang.SIAMC
                 Invoke(new Action(() =>
                 {
                     siamc.Show();
-                    Hide();
+                    Dispose();
                 }));
             });
         }
