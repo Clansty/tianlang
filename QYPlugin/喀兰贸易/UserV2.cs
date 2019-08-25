@@ -8,17 +8,20 @@ namespace Clansty.tianlang
         public User(string uin)
         {
             Uin = uin;
-            Rds.SAdd("users", uin);
-            IRedisClient client = Rds.GetClient();
-            client.SetEntryInHashIfNotExists("u" + Uin, "name", "");
-            client.SetEntryInHashIfNotExists("u" + Uin, "nick", "");
-            client.SetEntryInHashIfNotExists("u" + Uin, "branch", "0");
-            client.SetEntryInHashIfNotExists("u" + Uin, "junior", "0");
-            client.SetEntryInHashIfNotExists("u" + Uin, "enrollment", "-1");
-            client.SetEntryInHashIfNotExists("u" + Uin, "step", "-1");
-            client.SetEntryInHashIfNotExists("u" + Uin, "status", "0");
-            client.SetEntryInHashIfNotExists("u" + Uin, "role", "0");
-            client.Dispose();
+            if (!Rds.SContains("users", uin))
+            {
+                Rds.SAdd("users", uin);
+                IRedisClient client = Rds.GetClient();
+                client.SetEntryInHashIfNotExists("u" + Uin, "name", "");
+                client.SetEntryInHashIfNotExists("u" + Uin, "nick", "");
+                client.SetEntryInHashIfNotExists("u" + Uin, "branch", "0");
+                client.SetEntryInHashIfNotExists("u" + Uin, "junior", "0");
+                client.SetEntryInHashIfNotExists("u" + Uin, "enrollment", "-1");
+                client.SetEntryInHashIfNotExists("u" + Uin, "step", "-1");
+                client.SetEntryInHashIfNotExists("u" + Uin, "status", "0");
+                client.SetEntryInHashIfNotExists("u" + Uin, "role", "0");
+                client.Dispose();
+            }
         }
 
         public string Name
