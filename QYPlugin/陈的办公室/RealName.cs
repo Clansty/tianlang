@@ -74,6 +74,8 @@ namespace Clansty.tianlang
                 Rds.HSet("rn2018", name, qq);
             if (chk.Status == RealNameStatus.e2019)
                 Rds.HSet("rn2019", name, qq);
+            if (chk.Status == RealNameStatus.e2019jc)
+                Rds.HSet("rn2019jc", name, qq);
             return RealNameBindingResult.succeed;
         }
     }
