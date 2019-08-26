@@ -100,6 +100,14 @@
             {
                 try
                 {
+                    var chk= RealName.Check(Name);
+                    if (chk.Status == RealNameStatus.e2017)
+                        return 2017;
+                    if (chk.Status == RealNameStatus.e2018)
+                        return 2018;
+                    if (chk.Status == RealNameStatus.e2019 || chk.Status == RealNameStatus.e2019jc)
+                        return 2019;
+
                     return int.Parse(Get("enrollment"));
                 }
                 catch
