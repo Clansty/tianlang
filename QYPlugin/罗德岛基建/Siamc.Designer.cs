@@ -39,6 +39,7 @@
             this.grade = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nick = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.qmp = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.verifyMsg = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.role = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.update = new System.Windows.Forms.DataGridViewButtonColumn();
@@ -59,6 +60,7 @@
             this.grade,
             this.nick,
             this.name,
+            this.qmp,
             this.verifyMsg,
             this.role,
             this.update});
@@ -90,7 +92,7 @@
             // 退出ToolStripMenuItem
             // 
             this.退出ToolStripMenuItem.Name = "退出ToolStripMenuItem";
-            this.退出ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.退出ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.退出ToolStripMenuItem.Text = "退出";
             this.退出ToolStripMenuItem.Click += new System.EventHandler(this.退出ToolStripMenuItem_Click);
             // 
@@ -130,12 +132,17 @@
             // 
             this.nick.HeaderText = "nick";
             this.nick.Name = "nick";
-            this.nick.ReadOnly = true;
             // 
             // name
             // 
             this.name.HeaderText = "name";
             this.name.Name = "name";
+            // 
+            // qmp
+            // 
+            this.qmp.HeaderText = "qmp";
+            this.qmp.Name = "qmp";
+            this.qmp.ReadOnly = true;
             // 
             // verifyMsg
             // 
@@ -186,6 +193,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn grade;
         private System.Windows.Forms.DataGridViewTextBoxColumn nick;
         private System.Windows.Forms.DataGridViewTextBoxColumn name;
+        private System.Windows.Forms.DataGridViewTextBoxColumn qmp;
         private System.Windows.Forms.DataGridViewTextBoxColumn verifyMsg;
         private System.Windows.Forms.DataGridViewTextBoxColumn role;
         private System.Windows.Forms.DataGridViewButtonColumn update;

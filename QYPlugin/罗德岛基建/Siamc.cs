@@ -25,15 +25,18 @@ namespace Clansty.tianlang.SIAMC
 
         private void Data_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.ColumnIndex == 9)
+            if (e.ColumnIndex == 10)
             {
                 var row = data.Rows[e.RowIndex];
-                User u = new User((string)row.Cells[0].Value);
+                User u = new User(row.Cells[0].Value.ToString());
                 u.Branch = (bool)row.Cells[1].Value;
-                u.Enrollment = int.Parse((string)row.Cells[2].Value);
+                u.Enrollment = int.Parse(row.Cells[2].Value.ToString());
                 u.Junior = (bool)row.Cells[3].Value;
-                u.Name = (string)row.Cells[6].Value;
-                row.Cells[7].Value = u.VerifyMsg;
+                u.Name = row.Cells[6].Value.ToString();
+                row.Cells[8].Value = u.VerifyMsg;
+                row.Cells[1].Value = u.Branch;
+                row.Cells[2].Value = u.Enrollment;
+                row.Cells[3].Value = u.Junior;
                 MessageBox.Show("已更新");
             }
         }
