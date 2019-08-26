@@ -26,6 +26,14 @@ namespace Clansty.tianlang
                 else
                     return new RealNameCheckingResult(RealNameStatus.e2019, res);
             }
+            res = Rds.HGet("rn2019jc", name);
+            if (res != "") //金1
+            {
+                if (res == "0")
+                    return new RealNameCheckingResult(RealNameStatus.e2019jc);
+                else
+                    return new RealNameCheckingResult(RealNameStatus.e2019jc, res);
+            }
             res = Rds.HGet("rn2018", name);
             if (res != "") //新高二
             {
