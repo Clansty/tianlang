@@ -18,7 +18,15 @@ namespace Clansty.tianlang
         /// <returns></returns>
         public static RealNameCheckingResult Check (string name)
         {
-            var res = Rds.HGet("rn2018", name);
+            var res = Rds.HGet("rn2019", name);
+            if (res != "") //新高1
+            {
+                if (res == "0")
+                    return new RealNameCheckingResult(RealNameStatus.e2019);
+                else
+                    return new RealNameCheckingResult(RealNameStatus.e2019, res);
+            }
+            res = Rds.HGet("rn2018", name);
             if (res != "") //新高二
             {
                 if (res == "0")
@@ -56,6 +64,8 @@ namespace Clansty.tianlang
                 Rds.HSet("rn2017", name, qq);
             if (chk.Status == RealNameStatus.e2018)
                 Rds.HSet("rn2018", name, qq);
+            if (chk.Status == RealNameStatus.e2019)
+                Rds.HSet("rn2019", name, qq);
             return RealNameBindingResult.succeed;
         }
     }
