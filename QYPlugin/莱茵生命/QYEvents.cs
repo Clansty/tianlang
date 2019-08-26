@@ -44,11 +44,6 @@ namespace Clansty.tianlang
                     e.Reply(Strs.Get("rnUnsupported"));
                     return;
                 }
-                if (u.Branch)
-                {
-                    e.Reply(Strs.Get("rnUnsupported"));
-                    return;
-                }
 
                 var chk = RealName.Check(name);
 
@@ -130,7 +125,7 @@ namespace Clansty.tianlang
                 else if (e.Msg.StartsWith("LQ:richmsg"))
                     e.Reply($"[{e.Msg.UnEscape()}]");
                 //else
-                    //Q2TG.Test(e);
+                //Q2TG.Test(e);
             }
         }
         public static void GroupAdminAdded(GroupAdminChangedArgs e)
@@ -194,14 +189,14 @@ namespace Clansty.tianlang
                 u.Enrollment = enr;
                 u.Branch = brh;
 
-                if (enr != 2017 && enr != 2018)
-                {                    
+                if (enr != 2017 && enr != 2018 && enr != 2019)
+                {
                     u.Name = name;
                     u.Junior = UserInfo.ParseJunior(msg.GetLeft(" "));
-                    S.Si(u.ToXml("非高二高三请手动审核"));
+                    S.Si(u.ToXml("此年级不支持自动审核"));
                     return;
                 }
-                if (brh)
+                if (brh && enr != 2019)
                 {
                     u.Name = name;
                     u.Junior = UserInfo.ParseJunior(msg.GetLeft(" "));
@@ -224,14 +219,14 @@ namespace Clansty.tianlang
 
                 var chk = RealName.Check(name);
 
-                if(chk.Status == RealNameStatus.notFound)
+                if (chk.Status == RealNameStatus.notFound)
                 {
                     e.Reject("查无此人");
                     S.Si(u.ToXml("加群申请已拒绝: 查无此人") + $"\n申请信息: {msg}");
                     return;
                 }
-                
-                if(chk.OccupiedQQ!=null && chk.OccupiedQQ != e.FromQQ)
+
+                if (chk.OccupiedQQ != null && chk.OccupiedQQ != e.FromQQ)
                 {
                     e.Reject("此身份已有一个账户加入，如有疑问请联系管理员");
                     S.Si(u.ToXml("加群申请已拒绝: 此人已存在") + $"\n申请信息: {msg}");
@@ -245,6 +240,12 @@ namespace Clansty.tianlang
                     return;
                 }
                 if (chk.Status == RealNameStatus.e2018 && enr != 2018)
+                {
+                    e.Reject("姓名与年级不匹配，请检查");
+                    S.Si(u.ToXml("加群申请已拒绝: 姓名与年级不匹配") + $"\n申请信息: {msg}");
+                    return;
+                }
+                if (chk.Status == RealNameStatus.e2019 && enr != 2019)
                 {
                     e.Reject("姓名与年级不匹配，请检查");
                     S.Si(u.ToXml("加群申请已拒绝: 姓名与年级不匹配") + $"\n申请信息: {msg}");
