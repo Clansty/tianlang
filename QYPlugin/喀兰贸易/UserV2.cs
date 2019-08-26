@@ -1,6 +1,4 @@
-﻿using ServiceStack.Redis;
-
-namespace Clansty.tianlang
+﻿namespace Clansty.tianlang
 {
     class User
     {
@@ -47,7 +45,9 @@ namespace Clansty.tianlang
         {
             get
             {
-                if (Enrollment != 2017 && Enrollment != 2018 || Branch)
+                if (Enrollment != 2017 && Enrollment != 2018 && Enrollment != 2019)
+                    return RealNameVerifingResult.unsupported;
+                if (Branch && Enrollment != 2019)
                     return RealNameVerifingResult.unsupported;
 
                 var chk = RealName.Check(Name);
@@ -171,9 +171,6 @@ namespace Clansty.tianlang
                     case 2019:
                         r = "一";
                         break;
-                    case 10001:
-                        r = "美高班";
-                        return r;
                     case 10086: //这种情况通过数据库自定义前缀
                         string prefix = Get("prefix");
                         if (prefix == null)
@@ -208,7 +205,7 @@ namespace Clansty.tianlang
                 r += Grade;
                 r += " | ";
                 r += Nick == "" ? Robot.GetNick(Uin) : Nick; //如无自定义昵称则用 QQ 昵称
-                if (VerifyMsg != RealNameVerifingResult.succeed && VerifyMsg != RealNameVerifingResult.unsupported)
+                if (VerifyMsg != RealNameVerifingResult.succeed && VerifyMsg != RealNameVerifingResult.unsupported && Enrollment != 2019)
                     r = "未实名" + r;
                 return r;
             }

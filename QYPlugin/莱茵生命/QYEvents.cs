@@ -74,6 +74,11 @@ namespace Clansty.tianlang
                     e.Reply(Strs.Get("rnUnmatch", u.Grade));
                     return;
                 }
+                if (chk.Status == RealNameStatus.e2019 && u.Enrollment != 2019)
+                {
+                    e.Reply(Strs.Get("rnUnmatch", u.Grade));
+                    return;
+                }
 
 
                 if (chk.OccupiedQQ == null)
