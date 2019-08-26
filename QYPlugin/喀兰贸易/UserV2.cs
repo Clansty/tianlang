@@ -219,7 +219,7 @@ namespace Clansty.tianlang
                 r += Grade;
                 r += " | ";
                 r += Nick == "" ? Robot.GetNick(Uin) : Nick; //如无自定义昵称则用 QQ 昵称
-                if (VerifyMsg != RealNameVerifingResult.succeed && VerifyMsg != RealNameVerifingResult.unsupported && Enrollment != 2019)
+                if (VerifyMsg != RealNameVerifingResult.succeed && VerifyMsg != RealNameVerifingResult.unsupported)
                     r = "未实名" + r;
                 return r;
             }

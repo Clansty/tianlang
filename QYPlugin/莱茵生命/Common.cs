@@ -10,7 +10,7 @@ namespace Clansty.tianlang
 {
     public static class C
     {
-        public const string Version = "3.0.12.1";
+        public const string Version = "3.0.12.2";
 
         public static void Write(string text, ConsoleColor color = ConsoleColor.White)
         {
