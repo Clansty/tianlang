@@ -1,4 +1,6 @@
-﻿namespace Clansty.tianlang
+﻿using ServiceStack.Redis;
+
+namespace Clansty.tianlang
 {
     class User
     {
