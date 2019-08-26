@@ -60,11 +60,6 @@
                     return RealNameVerifingResult.unsupported;
 
                 var chk = RealName.Check(Name);
-                if (chk.Status == RealNameStatus.e2017 && Enrollment != 2017)
-                    return RealNameVerifingResult.unmatch;
-                if (chk.Status == RealNameStatus.e2018 && Enrollment != 2018)
-                    return RealNameVerifingResult.unmatch;
-
                 var bind = RealName.Bind(Uin, Name);
                 if (bind == RealNameBindingResult.noNeed)
                     return RealNameVerifingResult.succeed;
