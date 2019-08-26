@@ -34,7 +34,16 @@
         }
         public bool Branch
         {
-            get => Get("branch") == "1";
+            get
+            {
+                var chk= RealName.Check(Name);
+                if (chk.Status == RealNameStatus.e2019jc)
+                    return true;
+                if (chk.Status != RealNameStatus.notFound)
+                    return false;
+                return Get("branch") == "1";
+            }
+
             set => Set("branch", value ? "1" : "0");
         }
         /// <summary>
