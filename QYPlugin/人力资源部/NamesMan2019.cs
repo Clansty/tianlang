@@ -16,7 +16,6 @@ namespace Clansty.tianlang
         }
 
         int cur = -1;
-        int all = 0;
         User u = null;
         List<GroupMember> lst = GetMembers("872937333");
 
@@ -41,7 +40,7 @@ namespace Clansty.tianlang
         {
             cur++;
             label1.Text = cur.ToString();
-            if (cur >= all)
+            if (cur >= lst.Count)
             {
                 MessageBox.Show("Test");
                 return;
