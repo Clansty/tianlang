@@ -12,6 +12,7 @@ namespace Clansty.tianlang
         string Class { get; }
         int Enrollment { get; }
         string Grade { get; }
+        bool Branch { get; }
         string ToXml(string title);
     }
 }
