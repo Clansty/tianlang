@@ -213,6 +213,19 @@ namespace Clansty.tianlang
                     return r;
                 }
             },
+            ["find"] = new GroupCommand()
+            {
+                Description = "通过姓名查人",
+                Usage = "find [姓名]",
+                IsParamsNeeded = true,
+                Permission = UserType.powerUser,
+                Func = s =>
+                {
+                    s = s.Trim(' ', '\n', '[', ']', '@');
+                    var u = UserInfo.FindUser(s);
+                    return u.ToXml();
+                }
+            },
         };
         public static void SiEnter(GroupMsgArgs e)
         {
