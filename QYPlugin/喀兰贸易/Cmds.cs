@@ -16,7 +16,7 @@ namespace Clansty.tianlang
                 Permission = UserType.powerUser,
                 Func = s =>
                 {
-                    s = s.Trim(' ', '\n');
+                    s = s.Trim(' ', '\n', '[', ']', '@');
                     if ((!ulong.TryParse(s, out _)) || s == "")
                         return "QQ号格式错误";
                     User u = new User(s);
