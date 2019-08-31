@@ -2,7 +2,7 @@
 
 namespace Clansty.tianlang
 {
-    class User
+    class User : INamedUser
     {
         public string Uin { get; }
         public User(string uin)

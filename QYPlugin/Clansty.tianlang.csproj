@@ -69,6 +69,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="人力资源部\INamedUser.cs" />
     <Compile Include="罗德岛基建\Loading.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -92,10 +93,10 @@
     </Compile>
     <Compile Include="喀兰贸易\Cmds.cs" />
     <Compile Include="喀兰贸易\Command.cs" />
-    <Compile Include="喀兰贸易\NamesMan.cs">
+    <Compile Include="人力资源部\NamesMan.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="喀兰贸易\NamesMan.Designer.cs">
+    <Compile Include="人力资源部\NamesMan.Designer.cs">
       <DependentUpon>NamesMan.cs</DependentUpon>
     </Compile>
     <Compile Include="罗德岛\Unpack.cs" />
@@ -134,9 +135,9 @@
     <Compile Include="喀兰贸易\Status.cs" />
     <Compile Include="罗德岛\StringHelper.cs" />
     <Compile Include="罗德岛\Strs.cs" />
-    <Compile Include="喀兰贸易\UserInfo.cs" />
-    <Compile Include="喀兰贸易\UserType.cs" />
-    <Compile Include="喀兰贸易\UserV2.cs" />
+    <Compile Include="人力资源部\UserInfo.cs" />
+    <Compile Include="人力资源部\UserType.cs" />
+    <Compile Include="人力资源部\UserV2.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
@@ -165,7 +166,7 @@
     <EmbeddedResource Include="企鹅物流\Push.resx">
       <DependentUpon>Push.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="喀兰贸易\NamesMan.resx">
+    <EmbeddedResource Include="人力资源部\NamesMan.resx">
       <DependentUpon>NamesMan.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="罗德岛基建\Loading.resx">
