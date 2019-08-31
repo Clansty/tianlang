@@ -70,6 +70,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="人力资源部\INamedUser.cs" />
+    <Compile Include="人力资源部\NamesMan2019.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="人力资源部\NamesMan2019.Designer.cs">
+      <DependentUpon>NamesMan2019.cs</DependentUpon>
+    </Compile>
     <Compile Include="人力资源部\UnRegUser.cs" />
     <Compile Include="罗德岛基建\Loading.cs">
       <SubType>Form</SubType>
@@ -155,6 +161,9 @@
     <Content Include="icon.ico" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="人力资源部\NamesMan2019.resx">
+      <DependentUpon>NamesMan2019.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="罗德岛\Menu.resx">
       <DependentUpon>Menu.cs</DependentUpon>
     </EmbeddedResource>

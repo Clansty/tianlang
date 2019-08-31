@@ -43,10 +43,11 @@
             this.乌萨斯学生自治团ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.全库ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.全群ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripMenuItem();
-            this.全群ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.信息整理ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -121,7 +122,8 @@
             this.喀兰贸易ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.喀兰贸易ToolStripMenuItem1,
             this.检查群名片ToolStripMenuItem,
-            this.准备信息整理ToolStripMenuItem});
+            this.准备信息整理ToolStripMenuItem,
+            this.信息整理ToolStripMenuItem});
             this.喀兰贸易ToolStripMenuItem.Name = "喀兰贸易ToolStripMenuItem";
             this.喀兰贸易ToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
             this.喀兰贸易ToolStripMenuItem.Text = "喀兰贸易";
@@ -129,21 +131,21 @@
             // 喀兰贸易ToolStripMenuItem1
             // 
             this.喀兰贸易ToolStripMenuItem1.Name = "喀兰贸易ToolStripMenuItem1";
-            this.喀兰贸易ToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.喀兰贸易ToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.喀兰贸易ToolStripMenuItem1.Text = "喀兰贸易";
             this.喀兰贸易ToolStripMenuItem1.Click += new System.EventHandler(this.喀兰贸易ToolStripMenuItem1_Click);
             // 
             // 检查群名片ToolStripMenuItem
             // 
             this.检查群名片ToolStripMenuItem.Name = "检查群名片ToolStripMenuItem";
-            this.检查群名片ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.检查群名片ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.检查群名片ToolStripMenuItem.Text = "检查群名片";
             this.检查群名片ToolStripMenuItem.Click += new System.EventHandler(this.检查群名片ToolStripMenuItem_Click);
             // 
             // 准备信息整理ToolStripMenuItem
             // 
             this.准备信息整理ToolStripMenuItem.Name = "准备信息整理ToolStripMenuItem";
-            this.准备信息整理ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.准备信息整理ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.准备信息整理ToolStripMenuItem.Text = "准备信息整理";
             this.准备信息整理ToolStripMenuItem.Click += new System.EventHandler(this.准备信息整理ToolStripMenuItem_Click);
             // 
@@ -169,37 +171,44 @@
             // 全库ToolStripMenuItem
             // 
             this.全库ToolStripMenuItem.Name = "全库ToolStripMenuItem";
-            this.全库ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.全库ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.全库ToolStripMenuItem.Text = "全库";
             this.全库ToolStripMenuItem.Click += new System.EventHandler(this.全库ToolStripMenuItem_Click);
+            // 
+            // 全群ToolStripMenuItem
+            // 
+            this.全群ToolStripMenuItem.Name = "全群ToolStripMenuItem";
+            this.全群ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.全群ToolStripMenuItem.Text = "全群";
+            this.全群ToolStripMenuItem.Click += new System.EventHandler(this.全群ToolStripMenuItem_Click);
             // 
             // toolStripMenuItem4
             // 
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(100, 22);
             this.toolStripMenuItem4.Text = "2019";
             this.toolStripMenuItem4.Click += new System.EventHandler(this.ToolStripMenuItem4_Click);
             // 
             // toolStripMenuItem5
             // 
             this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(100, 22);
             this.toolStripMenuItem5.Text = "2018";
             this.toolStripMenuItem5.Click += new System.EventHandler(this.ToolStripMenuItem5_Click);
             // 
             // toolStripMenuItem6
             // 
             this.toolStripMenuItem6.Name = "toolStripMenuItem6";
-            this.toolStripMenuItem6.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem6.Size = new System.Drawing.Size(100, 22);
             this.toolStripMenuItem6.Text = "2017";
             this.toolStripMenuItem6.Click += new System.EventHandler(this.ToolStripMenuItem6_Click);
             // 
-            // 全群ToolStripMenuItem
+            // 信息整理ToolStripMenuItem
             // 
-            this.全群ToolStripMenuItem.Name = "全群ToolStripMenuItem";
-            this.全群ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.全群ToolStripMenuItem.Text = "全群";
-            this.全群ToolStripMenuItem.Click += new System.EventHandler(this.全群ToolStripMenuItem_Click);
+            this.信息整理ToolStripMenuItem.Name = "信息整理ToolStripMenuItem";
+            this.信息整理ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.信息整理ToolStripMenuItem.Text = "2019信息整理";
+            this.信息整理ToolStripMenuItem.Click += new System.EventHandler(this.信息整理ToolStripMenuItem_Click);
             // 
             // Menu
             // 
@@ -241,5 +250,6 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem5;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem6;
+        private System.Windows.Forms.ToolStripMenuItem 信息整理ToolStripMenuItem;
     }
 }
