@@ -171,5 +171,14 @@ namespace Clansty.tianlang
             }
             C.WriteLn($"noneed{n}, updated{u}, modified{m}");
         }
+        public static INamedUser FindUser(string name)
+        {
+            var chk = RealName.Check(name);
+            if (chk.Status == RealNameStatus.notFound)
+                throw new System.Exception("找不到此人");
+            if (chk.OccupiedQQ is null)
+                return new UnRegUser(name);
+            return new User(chk.OccupiedQQ);
+        }
     }
 }
