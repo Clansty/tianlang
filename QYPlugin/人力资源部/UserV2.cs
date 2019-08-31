@@ -31,7 +31,7 @@ namespace Clansty.tianlang
         }
         public string Nick
         {
-            get => Get("nick").Trim();
+            get => Get("nick").Trim() == "" ? Robot.GetNick(Uin) : Get("nick").Trim();
             set => Set("nick", value);
         }
         public bool Branch
@@ -218,7 +218,7 @@ namespace Clansty.tianlang
                     r += "金阊";
                 r += Grade;
                 r += " | ";
-                r += Nick == "" ? Robot.GetNick(Uin) : Nick; //如无自定义昵称则用 QQ 昵称
+                r += Nick; //如无自定义昵称则用 QQ 昵称
                 if (VerifyMsg != RealNameVerifingResult.succeed && VerifyMsg != RealNameVerifingResult.unsupported)
                     r = "未实名" + r;
                 return r;
