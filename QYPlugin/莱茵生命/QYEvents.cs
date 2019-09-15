@@ -163,11 +163,41 @@ namespace Clansty.tianlang
                     S.Si(u.ToXml(Strs.Get("addRejected", Strs.Get("blacklisted"))));
                     return;
                 }
-                // TODO: 实名验证审核
+
                 if (msg.IndexOf(" ") < 0)
                 {
+                    //TODO 只填了姓名，但是姓名找得到可以同意
+                    if (u.Verified && u.Name == msg)
+                    {
+                        e.Accept();
+                        S.Si(u.ToXml("加群申请已同意: 已实名用户"));
+                        return;
+                    }
+                    var chk2 = RealName.Check(msg);
+                    if (chk2.OccupiedQQ != null && chk2.OccupiedQQ != e.FromQQ && chk2.Status != RealNameStatus.notFound)
+                    {
+                        e.Reject("此身份已有一个账户加入，如有疑问请联系管理员");
+                        S.Si(u.ToXml("加群申请已拒绝: 此人已存在") + $"\n申请信息: {msg}");
+                        return;
+                    }
+                    if (chk2.OccupiedQQ == null && chk2.Status != RealNameStatus.notFound)
+                    {
+                        //尝试进行验证
+                        u.Name = msg;
+                        if (u.Verified)
+                        {
+                            e.Accept();
+                            S.Si(u.ToXml("加群申请已同意: 实名认证成功"));
+                            return;
+                        }
+                        var err = u.VerifyMsg;
+                        e.Reject("玄学错误，请联系管理员");
+                        S.Si(u.ToXml("加群申请已拒绝: 玄学错误，此错误不应该由本段代码处理") + $"\n申请信息: {msg}\n未预期的错误: {err}");
+                        return;
+                    }
+
                     e.Reject(Strs.Get("formatIncorrect"));
-                    S.Si(u.ToXml(Strs.Get("addRejected", Strs.Get("formatErr"))));
+                    S.Si(u.ToXml(Strs.Get("addRejected", Strs.Get("formatErr"))) + $"\n申请信息: {msg}");
                     return;
                 }
 
