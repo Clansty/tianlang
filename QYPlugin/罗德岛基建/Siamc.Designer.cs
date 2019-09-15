@@ -39,7 +39,7 @@
             this.grade = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nick = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.qmp = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cls = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.verifyMsg = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.role = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.update = new System.Windows.Forms.DataGridViewButtonColumn();
@@ -60,7 +60,7 @@
             this.grade,
             this.nick,
             this.name,
-            this.qmp,
+            this.cls,
             this.verifyMsg,
             this.role,
             this.update});
@@ -138,11 +138,11 @@
             this.name.HeaderText = "name";
             this.name.Name = "name";
             // 
-            // qmp
+            // cls
             // 
-            this.qmp.HeaderText = "qmp";
-            this.qmp.Name = "qmp";
-            this.qmp.ReadOnly = true;
+            this.cls.HeaderText = "class";
+            this.cls.Name = "cls";
+            this.cls.ReadOnly = true;
             // 
             // verifyMsg
             // 
@@ -193,7 +193,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn grade;
         private System.Windows.Forms.DataGridViewTextBoxColumn nick;
         private System.Windows.Forms.DataGridViewTextBoxColumn name;
-        private System.Windows.Forms.DataGridViewTextBoxColumn qmp;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cls;
         private System.Windows.Forms.DataGridViewTextBoxColumn verifyMsg;
         private System.Windows.Forms.DataGridViewTextBoxColumn role;
         private System.Windows.Forms.DataGridViewButtonColumn update;
