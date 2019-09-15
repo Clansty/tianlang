@@ -99,11 +99,12 @@ namespace Clansty.tianlang
                 s = s.GetRight("金阊").Trim();
             return s;
         }
-        public static async Task<CheckQmpRes> CheckQmpAsync(User u)
+        public static async Task<CheckQmpRes> CheckQmpAsync(User u, string card = null)
         {
             return await Task.Run(() =>
             {
-                string card = u.Namecard;
+                if (card is null)
+                    card = u.Namecard;
                 if (card.StartsWith("<") && card.IndexOf(">") > -1)
                     card = card.GetRight(">");
 
@@ -136,7 +137,7 @@ namespace Clansty.tianlang
 
                 u.Namecard = u.ProperNamecard;
 
-                C.WriteLn($"{u.Uin} updated", System.ConsoleColor.Yellow);
+                C.WriteLn($"{u.Uin} modified", System.ConsoleColor.Yellow);
                 return CheckQmpRes.modified;
 
             });
@@ -154,7 +155,7 @@ namespace Clansty.tianlang
             int n = 0, u = 0, m = 0;
             foreach (GroupMember member in l)
             {
-                CheckQmpRes r = await CheckQmpAsync(new User(member.QQ));
+                CheckQmpRes r = await CheckQmpAsync(new User(member.QQ), member.Card);
                 switch (r)
                 {
                     case CheckQmpRes.modified:
