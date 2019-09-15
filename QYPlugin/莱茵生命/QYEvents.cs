@@ -30,7 +30,10 @@ namespace Clansty.tianlang
             else if (e.Msg == "setup")
                 Setup.New(e.FromQQ, false);
             else if (e.Msg == "whoami")
+            {
+                UserInfo.CheckQmpAsync(u);
                 e.Reply(u.ToXml("你的信息"));
+            }
             else if (e.Msg.StartsWith("我叫"))
             {
                 var name = e.Msg.GetRight("我叫").Trim();
@@ -83,13 +86,12 @@ namespace Clansty.tianlang
                     if (u.Verified)
                     {
                         e.Reply(Strs.Get("rnOK"));
-                        UserInfo.CheckQmpAsync(u);
                         return;
                     }
                     e.Reply(Strs.Get("unexceptedErr", u.VerifyMsg));
                     return;
                 }
-
+                UserInfo.CheckQmpAsync(u);
             }
         }
         public static void GroupMsg(GroupMsgArgs e)
@@ -103,6 +105,7 @@ namespace Clansty.tianlang
 
             if (e.FromGroup == G.major)
             {
+                UserInfo.CheckQmpAsync(new User(e.FromQQ), e.Card);
                 if (e.Msg.StartsWith("sudo "))
                     Cmds.SudoEnter(e);
                 Repeater.Enter(e.Msg);
