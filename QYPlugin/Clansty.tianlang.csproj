@@ -100,12 +100,6 @@
     </Compile>
     <Compile Include="喀兰贸易\Cmds.cs" />
     <Compile Include="喀兰贸易\Command.cs" />
-    <Compile Include="人力资源部\NamesMan.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="人力资源部\NamesMan.Designer.cs">
-      <DependentUpon>NamesMan.cs</DependentUpon>
-    </Compile>
     <Compile Include="罗德岛\Unpack.cs" />
     <Compile Include="莱茵生命\Common.cs" />
     <Compile Include="陈的办公室\RealNameCheckingResult.cs" />
@@ -167,9 +161,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="企鹅物流\Push.resx">
       <DependentUpon>Push.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="人力资源部\NamesMan.resx">
-      <DependentUpon>NamesMan.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="罗德岛基建\Loading.resx">
       <DependentUpon>Loading.cs</DependentUpon>
