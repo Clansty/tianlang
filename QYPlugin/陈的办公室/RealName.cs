@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Clansty.tianlang
+﻿namespace Clansty.tianlang
 {
     /// <summary>
     /// 龙门近卫局时刻关注安全情况
@@ -16,41 +10,28 @@ namespace Clansty.tianlang
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public static RealNameCheckingResult Check (string name)
+        public static RealNameCheckingResult Check(string name)
         {
             var res = Rds.HGet("rn2019", name);
             if (res != "") //新高1
-            {
-                if (res == "0")
-                    return new RealNameCheckingResult(RealNameStatus.e2019);
-                else
-                    return new RealNameCheckingResult(RealNameStatus.e2019, res);
-            }
+                return ret(RealNameStatus.e2019);
             res = Rds.HGet("rn2019jc", name);
             if (res != "") //金1
-            {
-                if (res == "0")
-                    return new RealNameCheckingResult(RealNameStatus.e2019jc);
-                else
-                    return new RealNameCheckingResult(RealNameStatus.e2019jc, res);
-            }
+                return ret(RealNameStatus.e2019jc);
             res = Rds.HGet("rn2018", name);
             if (res != "") //新高二
-            {
-                if (res == "0")
-                    return new RealNameCheckingResult(RealNameStatus.e2018);
-                else
-                    return new RealNameCheckingResult(RealNameStatus.e2018, res);
-            }
+                return ret(RealNameStatus.e2018);
             res = Rds.HGet("rn2017", name);
-            if (res != "") //新高三
+            if (res != "") //新高三\
+                return ret(RealNameStatus.e2017);
+            return new RealNameCheckingResult(RealNameStatus.notFound);
+            RealNameCheckingResult ret(RealNameStatus r)
             {
                 if (res == "0")
-                    return new RealNameCheckingResult(RealNameStatus.e2017);
+                    return new RealNameCheckingResult(r);
                 else
-                    return new RealNameCheckingResult(RealNameStatus.e2017, res);
+                    return new RealNameCheckingResult(r, res);
             }
-            return new RealNameCheckingResult(RealNameStatus.notFound);
         }
 
         /// <summary>
@@ -59,7 +40,7 @@ namespace Clansty.tianlang
         /// <param name="qq"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public static RealNameBindingResult Bind(string qq,string name)
+        public static RealNameBindingResult Bind(string qq, string name)
         {
             var chk = Check(name);
             if (chk.Status == RealNameStatus.notFound)

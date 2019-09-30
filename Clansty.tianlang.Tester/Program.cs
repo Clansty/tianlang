@@ -22,7 +22,8 @@ namespace Clansty.tianlang.Tester
             var todo = "".Split(',');
             foreach (var i in todo)
             {
-
+                client.SetEntryInHashIfNotExists("rn2019", i, "0");
+                client.SetEntryInHash("classes", i, "AP (12)");
             }
             MessageBox.Show("Test");
         }
