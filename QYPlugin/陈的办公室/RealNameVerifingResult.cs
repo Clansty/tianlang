@@ -17,15 +17,11 @@ namespace Clansty.tianlang
         /// </summary>
         unsupported,
         /// <summary>
-        /// 该身份尚未进行绑定
-        /// </summary>
-        notBinded,
-        /// <summary>
         /// 该身份已被占用
         /// </summary>
         occupied,
         /// <summary>
-        /// 姓名与年级无法对应
+        /// 姓名与年级无法对应（已弃用）
         /// </summary>
         unmatch,
         /// <summary>

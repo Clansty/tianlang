@@ -12,7 +12,8 @@
         /// <returns></returns>
         public static RealNameCheckingResult Check(string name)
         {
-            var res = Rds.HGet("rn2019", name);
+            var 
+            res = Rds.HGet("rn2019", name);
             if (res != "") //新高1
                 return ret(RealNameStatus.e2019);
             res = Rds.HGet("rn2019jc", name);
@@ -21,6 +22,9 @@
             res = Rds.HGet("rn2018", name);
             if (res != "") //新高二
                 return ret(RealNameStatus.e2018);
+            res = Rds.HGet("rn2018jc", name);
+            if (res != "") //新高二
+                return ret(RealNameStatus.e2018jc);
             res = Rds.HGet("rn2017", name);
             if (res != "") //新高三\
                 return ret(RealNameStatus.e2017);
@@ -53,6 +57,8 @@
                 Rds.HSet("rn2017", name, qq);
             if (chk.Status == RealNameStatus.e2018)
                 Rds.HSet("rn2018", name, qq);
+            if (chk.Status == RealNameStatus.e2018jc)
+                Rds.HSet("rn2018jc", name, qq);
             if (chk.Status == RealNameStatus.e2019)
                 Rds.HSet("rn2019", name, qq);
             if (chk.Status == RealNameStatus.e2019jc)
