@@ -160,7 +160,13 @@ namespace Clansty.tianlang
                 if (u.Role == UserType.blackListed)
                 {
                     e.Reject("blacklisted");
-                    S.Si(u.ToXml(Strs.Get("addRejected", Strs.Get("blacklisted"))));
+                    S.Si(u.ToXml(Strs.Get("addRejected", Strs.Get("blacklisted"))) + $"\n申请信息: {msg}");
+                    return;
+                }
+                if (Rds.SContains("knownUsers", e.FromQQ))
+                {
+                    e.Accept();
+                    S.Si(u.ToXml("加群申请已同意: 白名单用户") + $"\n申请信息: {msg}");
                     return;
                 }
 
@@ -170,7 +176,7 @@ namespace Clansty.tianlang
                     if (u.Verified && u.Name == msg)
                     {
                         e.Accept();
-                        S.Si(u.ToXml("加群申请已同意: 已实名用户"));
+                        S.Si(u.ToXml("加群申请已同意: 已实名用户") + $"\n申请信息: {msg}");
                         return;
                     }
                     var chk2 = RealName.Check(msg);
@@ -187,7 +193,7 @@ namespace Clansty.tianlang
                         if (u.Verified)
                         {
                             e.Accept();
-                            S.Si(u.ToXml("加群申请已同意: 实名认证成功"));
+                            S.Si(u.ToXml("加群申请已同意: 实名认证成功") + $"\n申请信息: {msg}");
                             return;
                         }
                         var err = u.VerifyMsg;
@@ -203,7 +209,6 @@ namespace Clansty.tianlang
 
                 var enr = UserInfo.ParseEnrollment(msg.GetLeft(" "));
                 var name = msg.GetRight(" ").Trim();
-                var brh = UserInfo.ParseBranch(msg.GetLeft(" "));
 
                 if (enr < 1970)
                 {
@@ -212,28 +217,13 @@ namespace Clansty.tianlang
                     return;
                 }
 
-                //if (u.Enrollment > 1970 && enr != u.Enrollment)
-                //{
-                //    e.Reject("年级与登记的不匹配，请联系管理员");
-                //    S.Si(u.ToXml("加群申请已拒绝: 年级与登记的不匹配") + $"\n申请信息: {msg}");
-                //    return;
-                //}
-
                 u.Enrollment = enr;
-                u.Branch = brh;
 
                 if (enr != 2017 && enr != 2018 && enr != 2019)
                 {
                     u.Name = name;
                     u.Junior = UserInfo.ParseJunior(msg.GetLeft(" "));
-                    S.Si(u.ToXml("此年级不支持自动审核"));
-                    return;
-                }
-                if (brh && enr != 2019)
-                {
-                    u.Name = name;
-                    u.Junior = UserInfo.ParseJunior(msg.GetLeft(" "));
-                    S.Si(u.ToXml("金阊请手动审核"));
+                    S.Si(u.ToXml("此年级不支持自动审核") + $"\n申请信息: {msg}");
                     return;
                 }
 
@@ -246,7 +236,7 @@ namespace Clansty.tianlang
                         return;
                     }
                     e.Accept();
-                    S.Si(u.ToXml("加群申请已同意: 已实名用户"));
+                    S.Si(u.ToXml("加群申请已同意: 已实名用户") + $"\n申请信息: {msg}");
                     return;
                 }
 
@@ -278,6 +268,12 @@ namespace Clansty.tianlang
                     S.Si(u.ToXml("加群申请已拒绝: 姓名与年级不匹配") + $"\n申请信息: {msg}");
                     return;
                 }
+                if (chk.Status == RealNameStatus.e2018jc && enr != 2018)
+                {
+                    e.Reject("姓名与年级不匹配，请检查");
+                    S.Si(u.ToXml("加群申请已拒绝: 姓名与年级不匹配") + $"\n申请信息: {msg}");
+                    return;
+                }
                 if (chk.Status == RealNameStatus.e2019 && enr != 2019)
                 {
                     e.Reject("姓名与年级不匹配，请检查");
@@ -300,7 +296,7 @@ namespace Clansty.tianlang
                     if (u.Verified)
                     {
                         e.Accept();
-                        S.Si(u.ToXml("加群申请已同意: 实名认证成功"));
+                        S.Si(u.ToXml("加群申请已同意: 实名认证成功") + $"\n申请信息: {msg}");
                         return;
                     }
                     var err = u.VerifyMsg;
@@ -309,12 +305,6 @@ namespace Clansty.tianlang
                     return;
                 }
 
-                if (Rds.SContains("knownUsers", e.FromQQ))
-                {
-                    e.Accept();
-                    S.Si(u.ToXml("加群申请已同意: 已知用户"));
-                    return;
-                }
                 S.Si(u.ToXml("申请用户信息"));
             }
         }
