@@ -2,7 +2,7 @@
 
 namespace Clansty.tianlang
 {
-    static class Setup
+    static class SetupV3
     {
         public static void Enter(FriendMsgArgs e)
         {
@@ -40,7 +40,6 @@ namespace Clansty.tianlang
             {
                 case 1:
                     int g = UserInfo.ParseEnrollment(m);
-                    bool j = UserInfo.ParseBranch(m);
                     if (g < 1970)
                     {
                         C.WriteLn($"setup step1 异常，{u.Uin} 发 {m}", ConsoleColor.Yellow);
@@ -52,12 +51,10 @@ namespace Clansty.tianlang
                         return;
                     }
                     u.Enrollment = g;
-                    u.Branch = j;
                     u.Junior = UserInfo.ParseJunior(m);
                     u.Step = 2;
                     C.WriteLn($"{u.Uin} 加群向导进入第 2 步", ConsoleColor.Cyan);
-                    e.Reply($"校区: {(j ? "金阊" : "本部")}\n" +
-                            $"年级: {u.Grade}\n" +
+                    e.Reply($"年级: {u.Grade}\n" +
                              "如有判断错误，可以说<上一步>");
                     e.Reply(Strs.Get("setupStep2"));//请回复你想在群内使用的昵称，昵称中不需要包含年级
                     return;

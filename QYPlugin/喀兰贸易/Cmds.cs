@@ -20,6 +20,7 @@ namespace Clansty.tianlang
                     if ((!ulong.TryParse(s, out _)) || s == "")
                         return "QQ号格式错误";
                     User u = new User(s);
+                    UserInfo.CheckQmpAsync(u);
                     return u.ToXml();
                 }
             },
