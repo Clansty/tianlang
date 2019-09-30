@@ -67,7 +67,6 @@ namespace Clansty.tianlang
                 return true;
             return false;
         }
-        public static bool ParseBranch(string s) => s.IndexOf("金阊") > -1;
         public static string ParseNick(string s)
         {
             if (s == null || s == "")
@@ -118,7 +117,6 @@ namespace Clansty.tianlang
                 if (u.Enrollment == 0 || u.Enrollment == -1)
                     u.Enrollment = ParseEnrollment(card);
                 u.Junior = ParseJunior(card);
-                u.Branch = ParseBranch(card);
 
                 if (u.Enrollment > 1970 && u.Status == Status.setup)
                 {

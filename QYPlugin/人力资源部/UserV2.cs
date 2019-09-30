@@ -14,7 +14,6 @@ namespace Clansty.tianlang
                 IRedisClient client = Rds.GetClient();
                 client.SetEntryInHashIfNotExists("u" + Uin, "name", "");
                 client.SetEntryInHashIfNotExists("u" + Uin, "nick", "");
-                client.SetEntryInHashIfNotExists("u" + Uin, "branch", "0");
                 client.SetEntryInHashIfNotExists("u" + Uin, "junior", "0");
                 client.SetEntryInHashIfNotExists("u" + Uin, "enrollment", "-1");
                 client.SetEntryInHashIfNotExists("u" + Uin, "step", "-1");
@@ -38,30 +37,23 @@ namespace Clansty.tianlang
         {
             get
             {
-                var chk= RealName.Check(Name);
-                if (chk.Status == RealNameStatus.e2019jc)
+                var chk = RealName.Check(Name);
+                if (chk.Status == RealNameStatus.e2019jc || chk.Status == RealNameStatus.e2018jc)
                     return true;
-                if (chk.Status != RealNameStatus.notFound)
-                    return false;
-                return Get("branch") == "1";
+                return false;
             }
-
-            set => Set("branch", value ? "1" : "0");
         }
         /// <summary>
         /// 标识实名认证成功验证，此时不应该能自己修改姓名
         /// </summary>
-        public bool Verified => VerifyMsg == RealNameVerifingResult.succeed;
+        public bool Verified => VerifyMsg == RealNameVerifingResult.succeed || VerifyMsg == RealNameVerifingResult.unsupported;
         public RealNameVerifingResult VerifyMsg
         {
             get
             {
                 if (Enrollment != 2017 && Enrollment != 2018 && Enrollment != 2019)
                     return RealNameVerifingResult.unsupported;
-                if (Branch && Enrollment != 2019)
-                    return RealNameVerifingResult.unsupported;
 
-                var chk = RealName.Check(Name);
                 var bind = RealName.Bind(Uin, Name);
                 if (bind == RealNameBindingResult.noNeed)
                     return RealNameVerifingResult.succeed;
@@ -81,26 +73,17 @@ namespace Clansty.tianlang
             get => Get("junior") == "1";
             set => Set("junior", value ? "1" : "0");
         }
-        public string Class
-        {
-            get
-            {
-                var c = Rds.HGet("classes", Name);
-                if (c == "")
-                    return "未指定";
-                return c;
-            }
-        }
+        public string Class => Rds.HGet("classes", Name);
         public int Enrollment
         {
             get
             {
                 try
                 {
-                    var chk= RealName.Check(Name);
+                    var chk = RealName.Check(Name);
                     if (chk.Status == RealNameStatus.e2017)
                         return 2017;
-                    if (chk.Status == RealNameStatus.e2018)
+                    if (chk.Status == RealNameStatus.e2018 || chk.Status == RealNameStatus.e2018jc)
                         return 2018;
                     if (chk.Status == RealNameStatus.e2019 || chk.Status == RealNameStatus.e2019jc)
                         return 2019;
@@ -219,7 +202,7 @@ namespace Clansty.tianlang
                 r += Grade;
                 r += " | ";
                 r += Nick; //如无自定义昵称则用 QQ 昵称
-                if (VerifyMsg != RealNameVerifingResult.succeed && VerifyMsg != RealNameVerifingResult.unsupported)
+                if (!Verified)
                     r = "未实名" + r;
                 return r;
             }
