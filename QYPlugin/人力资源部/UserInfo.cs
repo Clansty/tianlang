@@ -118,15 +118,6 @@ namespace Clansty.tianlang
                     u.Enrollment = ParseEnrollment(card);
                 u.Junior = ParseJunior(card);
 
-                if (u.Enrollment > 1970 && u.Status == Status.setup)
-                {
-                    if (u.Step > 1)
-                        return CheckQmpRes.noNeed;
-                    u.Status = Status.no;
-                    S.Private(u.Uin, Strs.Get("setupSelfSetOK"));
-                    S.Si(u.ToXml("新人手动改名片了"));
-                }
-
                 if (card == u.ProperNamecard)
                 {
                     C.WriteLn($"{u.Uin} updated", System.ConsoleColor.DarkGreen);
