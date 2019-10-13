@@ -17,7 +17,8 @@ namespace Clansty.tianlang
             u.Step = 1;
             S.Private(qq, Strs.Get("setupGreetingIntr")); //你好，我是甜狼，本群的人工智能管理
             S.Private(qq, "为了保证本群的安全与秩序，请告诉我你的真实姓名来验证你的身份，这并不会在群里公开");
-            S.Major(Strs.Get("setupGroupWelcome", qq)); //欢迎新人 [@{0}]，请注意我给你发送的私聊消息哦~
+            if (first)
+                S.Major(Strs.Get("setupGroupWelcome", qq)); //欢迎新人 [@{0}]，请注意我给你发送的私聊消息哦~
             C.WriteLn($"{qq} 加群向导启动 first = {first}", ConsoleColor.Cyan);
         }
         public static void Enter(FriendMsgArgs e)
