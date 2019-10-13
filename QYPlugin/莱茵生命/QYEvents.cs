@@ -27,8 +27,6 @@ namespace Clansty.tianlang
             User u = new User(e.FromQQ);
             if (u.Status == Status.setup)
                 Setup.Enter(e);
-            else if (e.Msg == "setup")
-                Setup.New(e.FromQQ, false);
             else if (e.Msg == "whoami")
             {
                 UserInfo.CheckQmpAsync(u);
