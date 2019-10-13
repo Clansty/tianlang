@@ -33,7 +33,7 @@ namespace Clansty.tianlang
                 e.Reply(u.ToXml("你的信息"));
             }
             else if (e.Msg.StartsWith("我叫"))
-            {
+            {//here, to line 93 handles manual name-filling event
                 var name = e.Msg.GetRight("我叫").Trim();
                 if (u.Verified)
                 {
@@ -83,14 +83,16 @@ namespace Clansty.tianlang
                     u.Name = name;
                     if (u.Verified)
                     {
-                        e.Reply(Strs.Get("rnOK"));
+                        e.Reply(Strs.Get("rnOK"));// here set succeeded
+                        //update in 3.0.14.2 notice the administration
+                        S.Si(u.ToXml("旧人补填姓名成功"));
                         return;
                     }
                     e.Reply(Strs.Get("unexceptedErr", u.VerifyMsg));
                     return;
                 }
                 UserInfo.CheckQmpAsync(u);
-            }
+            }// end manual name-filling handling
         }
         public static void GroupMsg(GroupMsgArgs e)
         {
