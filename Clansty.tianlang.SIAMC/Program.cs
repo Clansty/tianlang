@@ -18,7 +18,7 @@ namespace Clansty.tianlang.SIAMC
             Rds.pool = new PooledRedisClientManager(233, 10, "101.132.178.136:6379");
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Loading());
+            Application.Run(new Loading(0));
         }
     }
 }

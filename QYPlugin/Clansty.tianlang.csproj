@@ -179,6 +179,9 @@
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup>
     <DllExportIdent>337EA74C-F47E-4FDE-A8C1-88AF23A0A11F</DllExportIdent>
     <DllExportMetaLibName>DllExport.dll</DllExportMetaLibName>
     <DllExportNamespace>System.Runtime.InteropServices</DllExportNamespace>

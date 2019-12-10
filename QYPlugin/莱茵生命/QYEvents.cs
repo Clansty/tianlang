@@ -173,7 +173,7 @@ namespace Clansty.tianlang
                 if (msg.IndexOf(" ") < 0)
                 {
                     //TODO 只填了姓名，但是姓名找得到可以同意
-                    if (u.Verified && u.Name == msg)
+                    if (u.VerifyMsg == RealNameVerifingResult.succeed && u.Name == msg)
                     {
                         e.Accept();
                         S.Si(u.ToXml("加群申请已同意: 已实名用户") + $"\n申请信息: {msg}");
