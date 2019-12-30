@@ -237,20 +237,34 @@ namespace Clansty.tianlang
             //         "</item>" +
             //       "</msg>" +
             //       ",service_id=0,msg_resid=,rand=0,seq=0,flags=0]";
-            return $"[{title}]\n" +
-                   $"QQ: {Uin}\n" +
-                   $"年级: {Grade}\n" +
-                   $"昵称: {Nick}\n" +
-                   $"姓名: {Name}\n" +
-                   $"校区: {(Branch ? "金阊" : "本部")}\n" +
-                   $"入学年份: {Enrollment}\n" +
-                   $"初中: {Junior}\n" +
-                   $"班级: {Class}\n" +
-                   $"群名片: {Namecard}\n" +
-                   $"理想群名片: {ProperNamecard}\n" +
-                   $"身份: {Role}\n" +
-                   $"实名状态: {VerifyMsg}";
-
+            var ret =  $"[{title}]\n" +
+                       $"QQ: {Uin}\n" +
+                       $"年级: {Grade}\n" +
+                       $"昵称: {Nick}\n" +
+                       $"姓名: {Name}\n" +
+                       $"校区: {(Branch ? "金阊" : "本部")}\n" +
+                       $"入学年份: {Enrollment}\n" +
+                       $"初中: {Junior}\n" +
+                       $"班级: {Class}\n" +
+                       $"群名片: {Namecard}\n" +
+                       $"理想群名片: {ProperNamecard}\n" +
+                       $"身份: {Role}\n" +
+                       $"实名状态: {VerifyMsg}";
+            //test for new struct for real name related information 191230
+            using (var client = Rds.GetClient())
+            {
+                var ht = client.GetAllEntriesFromHash($"name{Name}");
+                if (ht.Count > 0)
+                {
+                    ret += "\n--新版用户信息 Beta--";
+                    foreach (var kvp in ht)
+                    {
+                        ret += $"\n{kvp.Key}: {kvp.Value}";
+                    }
+                }
+            }
+            //TODO: i will transfer real-name check info to the new struct soon
+            return ret;
         }
     }
 }

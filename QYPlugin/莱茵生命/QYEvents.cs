@@ -109,6 +109,12 @@ namespace Clansty.tianlang
                 if (e.Msg.StartsWith("sudo "))
                     Cmds.SudoEnter(e);
                 Repeater.Enter(e.Msg);
+                //Stats of msgs per user for election 20191230
+                using (var client = Rds.GetClient())
+                {
+                    client.AddItemToSortedSet("elec", e.FromQQ);
+                }
+                //ends
                 Stats.New(e);
             }
 
