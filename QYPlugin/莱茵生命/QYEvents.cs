@@ -112,7 +112,7 @@ namespace Clansty.tianlang
                 //Stats of msgs per user for election 20191230
                 using (var client = Rds.GetClient())
                 {
-                    client.AddItemToSortedSet("elec", e.FromQQ);
+                    client.IncrementItemInSortedSet("elec", e.FromQQ, 1);
                 }
                 //ends
                 Stats.New(e);
