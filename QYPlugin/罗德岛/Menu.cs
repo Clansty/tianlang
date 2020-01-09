@@ -174,9 +174,5 @@ namespace Clansty.tianlang
             new SIAMC.Loading(2017).Show();
         }
 
-        private void 信息整理ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            new NamesMan2019().Show();
-        }
     }
 }
