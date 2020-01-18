@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\baban\.Rider2019.2\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\baban\.Rider2019.2\system\resharper-host\local\Transient\ReSharperHost\v192\SolutionCaches\_tianlang.-1619829923.00" t="ExcludeRecursive" />
+    <e p="C:\Users\baban\RiderProjects\Clansty.tianlang" t="IncludeFlat">
+      <e p="Clansty.tianlang.SIAMC" t="IncludeRecursive">
+        <e p="App.config" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Clansty.tianlang.SIAMC.csproj" t="IncludeRecursive" />
+        <e p="obj" t="ExcludeRecursive" />
+        <e p="packages.config" t="Include" />
+        <e p="Program.cs" t="Include" />
+        <e p="Properties" t="Include">
+          <e p="AssemblyInfo.cs" t="Include" />
+          <e p="Resources.Designer.cs" t="Include" />
+          <e p="Resources.resx" t="Include" />
+          <e p="Settings.Designer.cs" t="Include" />
+          <e p="Settings.settings" t="Include" />
+        </e>
+      </e>
+      <e p="Clansty.tianlang.Tester" t="IncludeRecursive">
+        <e p="App.config" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Clansty.tianlang.Tester.csproj" t="IncludeRecursive" />
+        <e p="obj" t="ExcludeRecursive" />
+        <e p="packages.config" t="Include" />
+        <e p="Program.cs" t="Include" />
+        <e p="Properties" t="Include">
+          <e p="AssemblyInfo.cs" t="Include" />
+          <e p="Resources.Designer.cs" t="Include" />
+          <e p="Resources.resx" t="Include" />
+          <e p="Settings.Designer.cs" t="Include" />
+          <e p="Settings.settings" t="Include" />
+        </e>
+      </e>
+      <e p="dist" t="ExcludeRecursive" />
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="QYPlugin" t="IncludeRecursive">
+        <e p="Clansty.tianlang.csproj" t="IncludeRecursive" />
+        <e p="icon.ico" t="Include" />
+        <e p="obj" t="ExcludeRecursive" />
+        <e p="Properties" t="Include" />
+        <e p="人力资源部" t="Include">
+          <e p="INamedUser.cs" t="Include" />
+          <e p="UnRegUser.cs" t="Include" />
+          <e p="UserInfo.cs" t="Include" />
+          <e p="UserType.cs" t="Include" />
+          <e p="UserV3.cs" t="Include" />
+        </e>
+        <e p="企鹅物流" t="Include">
+          <e p="Push.cs" t="Include" />
+          <e p="Push.Designer.cs" t="Include" />
+          <e p="Push.resx" t="Include" />
+          <e p="SendTest.cs" t="Include" />
+          <e p="SendTest.Designer.cs" t="Include" />
+        </e>
+        <e p="喀兰贸易" t="Include">
+          <e p="Cmds.cs" t="Include" />
+          <e p="Command.cs" t="Include" />
+          <e p="SetupV3.cs" t="Include" />
+          <e p="SetupV4.cs" t="Include" />
+          <e p="Stats.cs" t="Include" />
+          <e p="Status.cs" t="Include" />
+        </e>
+        <e p="罗德岛" t="Include">
+          <e p="Args.cs" t="Include" />
+          <e p="AssemblyInfo.cs" t="Include" />
+          <e p="Enums.cs" t="Include" />
+          <e p="Groups.cs" t="Include" />
+          <e p="LQ.cs" t="Include" />
+          <e p="Menu.cs" t="Include" />
+          <e p="Menu.Designer.cs" t="Include" />
+          <e p="Menu.resx" t="Include" />
+          <e p="Radis.cs" t="Include" />
+          <e p="Robot.cs" t="Include" />
+          <e p="Send.cs" t="Include" />
+          <e p="StringHelper.cs" t="Include" />
+          <e p="Strs.cs" t="Include" />
+          <e p="Structs.cs" t="Include" />
+          <e p="Unpack.cs" t="Include" />
+        </e>
+        <e p="罗德岛基建" t="Include">
+          <e p="Loading.cs" t="Include" />
+          <e p="Loading.Designer.cs" t="Include" />
+          <e p="Loading.resx" t="Include" />
+          <e p="Siamc.cs" t="Include" />
+          <e p="Siamc.Designer.cs" t="Include" />
+          <e p="Siamc.resx" t="Include" />
+        </e>
+        <e p="莱茵生命" t="Include">
+          <e p="Common.cs" t="Include" />
+          <e p="QYEvents.cs" t="Include" />
+        </e>
+        <e p="陈的办公室" t="Include">
+          <e p="RealName.cs" t="Include" />
+          <e p="RealNameBindingResult.cs" t="Include" />
+          <e p="RealNameCheckingResult.cs" t="Include" />
+          <e p="RealNameStatus.cs" t="Include" />
+          <e p="RealNameVerifingResult.cs" t="Include" />
+        </e>
+        <e p="龙门" t="Include">
+          <e p="Fired.cs" t="Include" />
+          <e p="Netease.cs" t="Include" />
+          <e p="Repeater.cs" t="Include" />
+        </e>
+      </e>
+      <e p="tianlang.sln" t="IncludeFlat" />
+    </e>
+  </component>
+</project>

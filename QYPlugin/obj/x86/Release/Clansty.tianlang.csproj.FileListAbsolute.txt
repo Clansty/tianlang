@@ -1,0 +1,10 @@
+C:\Users\baban\RiderProjects\Clansty.tianlang\dist\RhodesIsland.qyk.dll
+C:\Users\baban\RiderProjects\Clansty.tianlang\QYPlugin\obj\x86\Release\Clansty.tianlang.csprojAssemblyReference.cache
+C:\Users\baban\RiderProjects\Clansty.tianlang\QYPlugin\obj\x86\Release\Clansty.tianlang.NamesMan2019.resources
+C:\Users\baban\RiderProjects\Clansty.tianlang\QYPlugin\obj\x86\Release\Clansty.tianlang.Menu.resources
+C:\Users\baban\RiderProjects\Clansty.tianlang\QYPlugin\obj\x86\Release\Clansty.tianlang.Push.resources
+C:\Users\baban\RiderProjects\Clansty.tianlang\QYPlugin\obj\x86\Release\Clansty.tianlang.SIAMC.Loading.resources
+C:\Users\baban\RiderProjects\Clansty.tianlang\QYPlugin\obj\x86\Release\Clansty.tianlang.SIAMC.Siamc.resources
+C:\Users\baban\RiderProjects\Clansty.tianlang\QYPlugin\obj\x86\Release\Clansty.tianlang.csproj.GenerateResource.cache
+C:\Users\baban\RiderProjects\Clansty.tianlang\QYPlugin\obj\x86\Release\Clansty.tianlang.csproj.CopyComplete
+C:\Users\baban\RiderProjects\Clansty.tianlang\QYPlugin\obj\x86\Release\RhodesIsland.qyk.dll
