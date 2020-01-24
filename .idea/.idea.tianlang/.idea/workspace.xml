@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="97e5636b-167f-45d5-8968-9911c1c22a6a" name="Default Changelist" comment="" />
+    <list default="true" id="97e5636b-167f-45d5-8968-9911c1c22a6a" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.tianlang/.idea/.name" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.tianlang/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.tianlang/.idea/contentModel.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.tianlang/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.tianlang/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QYPlugin/obj/Clansty.tianlang.csproj.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/QYPlugin/obj/Clansty.tianlang.csproj.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QYPlugin/obj/Clansty.tianlang.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/QYPlugin/obj/Clansty.tianlang.csproj.nuget.dgspec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QYPlugin/obj/Clansty.tianlang.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/QYPlugin/obj/Clansty.tianlang.csproj.nuget.g.props" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QYPlugin/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/QYPlugin/obj/project.assets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tianlang.sln" beforeDir="false" afterPath="$PROJECT_DIR$/tianlang.sln" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -14,10 +23,11 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/QYPlugin/莱茵生命/Common.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/QYPlugin/莱茵生命/QYEvents.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/QYPlugin/人力资源部/UserV3.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Clansty.tianlang.SIAMC/Program.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/QYPlugin/罗德岛/Radis.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Clansty.tianlang.Tester/Program.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/QYPlugin/人力资源部/UserInfo.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/QYPlugin/人力资源部/UserV3.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/QYPlugin/罗德岛/Radis.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/QYPlugin/罗德岛/Menu.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
@@ -45,7 +55,7 @@
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Language Defaults" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -118,6 +128,7 @@
       <workItem from="1578146172810" duration="268000" />
       <workItem from="1578477251916" duration="1023000" />
       <workItem from="1578563403761" duration="759000" />
+      <workItem from="1579848484338" duration="847000" />
     </task>
     <task id="LOCAL-00001" summary="审核 bug 修复">
       <created>1575971808549</created>
