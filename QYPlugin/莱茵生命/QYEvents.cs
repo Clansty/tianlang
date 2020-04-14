@@ -97,8 +97,8 @@ namespace Clansty.tianlang
         public static void GroupMsg(GroupMsgArgs e)
         {
             // 网易云点歌
-            if (e.Msg.StartsWith("点歌"))
-                Netease.Start(e);
+            //if (e.Msg.StartsWith("点歌"))
+            //    Netease.Start(e);
 
             if (e.FromGroup == G.si)
                 Cmds.SiEnter(e);
@@ -262,36 +262,36 @@ namespace Clansty.tianlang
                     return;
                 }
 
-                if (chk.Status == RealNameStatus.e2017 && enr != 2017)
-                {
-                    e.Reject("姓名与年级不匹配，请检查");
-                    S.Si(u.ToXml("加群申请已拒绝: 姓名与年级不匹配") + $"\n申请信息: {msg}");
-                    return;
-                }
-                if (chk.Status == RealNameStatus.e2018 && enr != 2018)
-                {
-                    e.Reject("姓名与年级不匹配，请检查");
-                    S.Si(u.ToXml("加群申请已拒绝: 姓名与年级不匹配") + $"\n申请信息: {msg}");
-                    return;
-                }
-                if (chk.Status == RealNameStatus.e2018jc && enr != 2018)
-                {
-                    e.Reject("姓名与年级不匹配，请检查");
-                    S.Si(u.ToXml("加群申请已拒绝: 姓名与年级不匹配") + $"\n申请信息: {msg}");
-                    return;
-                }
-                if (chk.Status == RealNameStatus.e2019 && enr != 2019)
-                {
-                    e.Reject("姓名与年级不匹配，请检查");
-                    S.Si(u.ToXml("加群申请已拒绝: 姓名与年级不匹配") + $"\n申请信息: {msg}");
-                    return;
-                }
-                if (chk.Status == RealNameStatus.e2019jc && enr != 2019)
-                {
-                    e.Reject("姓名与年级不匹配，请检查");
-                    S.Si(u.ToXml("加群申请已拒绝: 姓名与年级不匹配") + $"\n申请信息: {msg}");
-                    return;
-                }
+                //if (chk.Status == RealNameStatus.e2017 && enr != 2017)
+                //{
+                //    e.Reject("姓名与年级不匹配，请检查");
+                //    S.Si(u.ToXml("加群申请已拒绝: 姓名与年级不匹配") + $"\n申请信息: {msg}");
+                //    return;
+                //}
+                //if (chk.Status == RealNameStatus.e2018 && enr != 2018)
+                //{
+                //    e.Reject("姓名与年级不匹配，请检查");
+                //    S.Si(u.ToXml("加群申请已拒绝: 姓名与年级不匹配") + $"\n申请信息: {msg}");
+                //    return;
+                //}
+                //if (chk.Status == RealNameStatus.e2018jc && enr != 2018)
+                //{
+                //    e.Reject("姓名与年级不匹配，请检查");
+                //    S.Si(u.ToXml("加群申请已拒绝: 姓名与年级不匹配") + $"\n申请信息: {msg}");
+                //    return;
+                //}
+                //if (chk.Status == RealNameStatus.e2019 && enr != 2019)
+                //{
+                //    e.Reject("姓名与年级不匹配，请检查");
+                //    S.Si(u.ToXml("加群申请已拒绝: 姓名与年级不匹配") + $"\n申请信息: {msg}");
+                //    return;
+                //}
+                //if (chk.Status == RealNameStatus.e2019jc && enr != 2019)
+                //{
+                //    e.Reject("姓名与年级不匹配，请检查");
+                //    S.Si(u.ToXml("加群申请已拒绝: 姓名与年级不匹配") + $"\n申请信息: {msg}");
+                //    return;
+                //}
 
 
                 if (chk.OccupiedQQ == null)

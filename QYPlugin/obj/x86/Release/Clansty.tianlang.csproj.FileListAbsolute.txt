@@ -8,3 +8,13 @@ C:\Users\baban\RiderProjects\Clansty.tianlang\QYPlugin\obj\x86\Release\Clansty.t
 C:\Users\baban\RiderProjects\Clansty.tianlang\QYPlugin\obj\x86\Release\Clansty.tianlang.csproj.GenerateResource.cache
 C:\Users\baban\RiderProjects\Clansty.tianlang\QYPlugin\obj\x86\Release\Clansty.tianlang.csproj.CopyComplete
 C:\Users\baban\RiderProjects\Clansty.tianlang\QYPlugin\obj\x86\Release\RhodesIsland.qyk.dll
+D:\clansty-work\Clansty.tianlang\dist\RhodesIsland.qyk.dll
+D:\clansty-work\Clansty.tianlang\QYPlugin\obj\x86\Release\Clansty.tianlang.csprojAssemblyReference.cache
+D:\clansty-work\Clansty.tianlang\QYPlugin\obj\x86\Release\Clansty.tianlang.Menu.resources
+D:\clansty-work\Clansty.tianlang\QYPlugin\obj\x86\Release\Clansty.tianlang.Push.resources
+D:\clansty-work\Clansty.tianlang\QYPlugin\obj\x86\Release\Clansty.tianlang.SIAMC.Loading.resources
+D:\clansty-work\Clansty.tianlang\QYPlugin\obj\x86\Release\Clansty.tianlang.SIAMC.Siamc.resources
+D:\clansty-work\Clansty.tianlang\QYPlugin\obj\x86\Release\Clansty.tianlang.csproj.GenerateResource.cache
+D:\clansty-work\Clansty.tianlang\QYPlugin\obj\x86\Release\Clansty.tianlang.csproj.CoreCompileInputs.cache
+D:\clansty-work\Clansty.tianlang\QYPlugin\obj\x86\Release\Clansty.tianlang.csproj.CopyComplete
+D:\clansty-work\Clansty.tianlang\QYPlugin\obj\x86\Release\RhodesIsland.qyk.dll

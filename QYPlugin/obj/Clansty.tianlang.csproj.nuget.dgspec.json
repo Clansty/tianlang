@@ -1,26 +1,28 @@
 {
   "format": 1,
   "restore": {
-    "/home/l/Documents/Projects/tianlang/QYPlugin/Clansty.tianlang.csproj": {}
+    "D:\\clansty-work\\Clansty.tianlang\\QYPlugin\\Clansty.tianlang.csproj": {}
   },
   "projects": {
-    "/home/l/Documents/Projects/tianlang/QYPlugin/Clansty.tianlang.csproj": {
+    "D:\\clansty-work\\Clansty.tianlang\\QYPlugin\\Clansty.tianlang.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/l/Documents/Projects/tianlang/QYPlugin/Clansty.tianlang.csproj",
+        "projectUniqueName": "D:\\clansty-work\\Clansty.tianlang\\QYPlugin\\Clansty.tianlang.csproj",
         "projectName": "Clansty.tianlang",
-        "projectPath": "/home/l/Documents/Projects/tianlang/QYPlugin/Clansty.tianlang.csproj",
-        "packagesPath": "/home/l/.nuget/packages/",
-        "outputPath": "/home/l/Documents/Projects/tianlang/QYPlugin/obj/",
+        "projectPath": "D:\\clansty-work\\Clansty.tianlang\\QYPlugin\\Clansty.tianlang.csproj",
+        "packagesPath": "C:\\Users\\class8\\.nuget\\packages\\",
+        "outputPath": "D:\\clansty-work\\Clansty.tianlang\\QYPlugin\\obj\\",
         "projectStyle": "PackageReference",
         "skipContentFileWrite": true,
         "configFilePaths": [
-          "/home/l/.config/NuGet/NuGet.Config"
+          "C:\\Users\\class8\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net472"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
