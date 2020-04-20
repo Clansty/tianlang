@@ -1,4 +1,7 @@
-﻿using System;
+﻿using ServiceStack.Redis;
+using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace Clansty.tianlang
 {
@@ -125,6 +128,28 @@ namespace Clansty.tianlang
 
             if (e.FromGroup == G.test)
             {
+                if (e.Msg == "ping")
+                {
+                    IRedisClient client = Rds.GetClient();
+                    HashSet<string> liker = client.GetAllItemsFromSet("liker");
+                    client.Dispose();
+                    foreach (string er in liker)
+                    {
+                        Sg(er, G.test, "pong");
+                    }
+
+                    bool Sg(string qq, string group, string msg)
+                    {
+                        bool res = long.TryParse(group, out long targ);
+                        if (!res)
+                            return false;
+                        int ret = QY_sendGroupMsg(Robot.AuthCode, long.Parse(qq), targ, msg);
+                        return ret == 0;
+                    }
+
+    }
+
+
                 if (e.Msg.StartsWith("{") && e.Msg.IndexOf('}') > 0)
                     e.Reply($"[LQ:lightappelem,type=1,data={e.Msg.Replace(",", "&#44;")},msg_resid=]");
                 else if (e.Msg.StartsWith("[LQ:lightappelem,type=1,data=") && e.Msg.IndexOf(",msg_resid=]") > 0)
@@ -137,6 +162,9 @@ namespace Clansty.tianlang
                 //Q2TG.Test(e);
             }
         }
+        [DllImport("QYOffer.dll")]
+        static extern int QY_sendGroupMsg(int authCode, long qqID, long target, string msg);
+
         public static void GroupAdminAdded(GroupAdminChangedArgs e)
         {
 
@@ -340,8 +368,8 @@ namespace Clansty.tianlang
                     tip = Strs.Get($"setupTipAll");//给所有人的广告位
                     if (tip != "")
                         S.Private(member, tip); //目前是这个：【西花园事务所】是江苏省苏州第十中学校学生自建生活服务平台，添加【西花园事务所】为特别关心，可以第一时间收到最新消息 
-                    //S.Private(member, u.ToXml("欢迎回来"));
-                    //S.Private(member, Strs.Get("welcomeBack"));//"如果以上信息有误，你可以回复 <setup> 来重新设置"
+                                                //S.Private(member, u.ToXml("欢迎回来"));
+                                                //S.Private(member, Strs.Get("welcomeBack"));//"如果以上信息有误，你可以回复 <setup> 来重新设置"
                     S.Si(u.ToXml("数据库存在此人信息，新人向导跳过"));
                     return;
                 }

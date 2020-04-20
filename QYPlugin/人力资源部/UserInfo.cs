@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -14,6 +17,7 @@ namespace Clansty.tianlang
             {
                 Fired.CronAsync();
                 CheckAllQmpAsync();
+                Task.Run(SendEng);
             };
             t.AutoReset = true;
             t.Enabled = true;
@@ -169,6 +173,76 @@ namespace Clansty.tianlang
             if (chk.OccupiedQQ is null)
                 return new UnRegUser(name);
             return new User(chk.OccupiedQQ);
+        }
+
+        private static void SendEng()
+        {
+            var d = DateTime.Now;
+            var m = d.Month - 1;
+            var month = "err";
+            switch (m)
+            {
+                case 0:
+                    month = "Jan";
+                    break;
+                case 1:
+                    month = "Feb";
+                    break;
+                case 2:
+                    month = "Mar";
+                    break;
+                case 3:
+                    month = "Apr";
+                    break;
+                case 4:
+                    month = "May";
+                    break;
+                case 5:
+                    month = "Jun";
+                    break;
+                case 6:
+                    month = "Jul";
+                    break;
+                case 7:
+                    month = "Aug";
+                    break;
+                case 8:
+                    month = "Sept";
+                    break;
+                case 9:
+                    month = "Oct";
+                    break;
+                case 10:
+                    month = "Nov";
+                    break;
+                case 11:
+                    month = "Dec";
+                    break;
+            }
+
+            var dt = $"{d.Month}.{d.Day}";
+            var loc = @"S:\群组资料库\英语\" + month + @"\" + dt;
+            if (Directory.Exists(loc))
+            {
+                if (File.Exists(@"S:\群组资料库\英语\uploadRecord\" + dt))
+                {
+                    return;
+                }
+
+                File.Create(@"S:\群组资料库\英语\uploadRecord\" + dt).Close();
+
+                var z = new Process();
+                z.StartInfo.FileName = @"C:\Program Files\7-Zip\7z.exe";
+                z.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                z.StartInfo.Arguments = "a " + @"C:\Users\Administrator\Desktop\engUpTmp\" + dt + ".7z " + loc;
+                z.Start();
+                z.WaitForExit();
+                z.Close();
+                z.Dispose();
+
+                Robot.Group.UploadFile("117076933", @"C:\Users\Administrator\Desktop\engUpTmp\" + dt + ".7z");
+                C.WriteLn("咱发英语了", ConsoleColor.Cyan);
+            }
         }
     }
 }
