@@ -1,7 +1,18 @@
 module.exports = {
-  type: "http",
-  port: 8080,
-  server: "http://localhost:5700",
+  type: "ws",
+  server: "ws://101.132.178.136:5700",
+  secret: "asdfasdf",
+  token: "asdfasdf",
   plugins: [
-  ]
+    "common"
+  ],
+  database: {
+    mysql: {
+      host: 'cdb-pi7fvpvu.cd.tencentcdb.com',
+      port: 10058,
+      user: 'root',
+      password: 't00rrooT',
+      database: 'tianlang_dev',
+    },
+  },
 }
