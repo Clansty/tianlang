@@ -1,5 +1,7 @@
 var groups = {
-    test: 828390342
+    test: 828390342,
+    major: null,
+    console: null
 }
 if (global.dev) {
     groups.major = 670526569;

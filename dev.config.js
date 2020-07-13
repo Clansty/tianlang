@@ -1,4 +1,4 @@
-global.dev=true;
+global.dev = true;
 const groups = require('./groups.js');
 module.exports = {
   type: "ws",
@@ -6,6 +6,7 @@ module.exports = {
   secret: "asdfasdf",
   token: "asdfasdf",
   plugins: [
+    '.'
   ],
   database: {
     mysql: {
