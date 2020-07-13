@@ -1,4 +1,5 @@
-const group = require('./groups.json');
+global.dev=true;
+const groups = require('./groups.js');
 module.exports = {
   type: "ws",
   server: "ws://101.132.178.136:5700",

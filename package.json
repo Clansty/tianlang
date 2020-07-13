@@ -4,9 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "koishi start",
-    "dev": "koishi start dev.config.js --debug"
+    "test": "koishi start dev.config.js --debug",
+    "start": "koishi start"
   },
   "repository": {
     "type": "git",
