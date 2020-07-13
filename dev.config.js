@@ -1,10 +1,10 @@
+const group = require('./groups.json');
 module.exports = {
   type: "ws",
   server: "ws://101.132.178.136:5700",
   secret: "asdfasdf",
   token: "asdfasdf",
   plugins: [
-    "common"
   ],
   database: {
     mysql: {
