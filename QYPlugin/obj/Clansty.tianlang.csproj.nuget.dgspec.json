@@ -1,21 +1,21 @@
 {
   "format": 1,
   "restore": {
-    "D:\\clansty-work\\Clansty.tianlang\\QYPlugin\\Clansty.tianlang.csproj": {}
+    "C:\\Users\\clans\\Source\\Repos\\Clansty\\tianlang\\QYPlugin\\Clansty.tianlang.csproj": {}
   },
   "projects": {
-    "D:\\clansty-work\\Clansty.tianlang\\QYPlugin\\Clansty.tianlang.csproj": {
+    "C:\\Users\\clans\\Source\\Repos\\Clansty\\tianlang\\QYPlugin\\Clansty.tianlang.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\clansty-work\\Clansty.tianlang\\QYPlugin\\Clansty.tianlang.csproj",
+        "projectUniqueName": "C:\\Users\\clans\\Source\\Repos\\Clansty\\tianlang\\QYPlugin\\Clansty.tianlang.csproj",
         "projectName": "Clansty.tianlang",
-        "projectPath": "D:\\clansty-work\\Clansty.tianlang\\QYPlugin\\Clansty.tianlang.csproj",
-        "packagesPath": "C:\\Users\\class8\\.nuget\\packages\\",
-        "outputPath": "D:\\clansty-work\\Clansty.tianlang\\QYPlugin\\obj\\",
+        "projectPath": "C:\\Users\\clans\\Source\\Repos\\Clansty\\tianlang\\QYPlugin\\Clansty.tianlang.csproj",
+        "packagesPath": "C:\\Users\\clans\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\clans\\Source\\Repos\\Clansty\\tianlang\\QYPlugin\\obj\\",
         "projectStyle": "PackageReference",
         "skipContentFileWrite": true,
         "configFilePaths": [
-          "C:\\Users\\class8\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\clans\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

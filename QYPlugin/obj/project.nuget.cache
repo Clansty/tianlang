@@ -1,18 +1,18 @@
 {
   "version": 2,
-  "dgSpecHash": "Q2tWVqVCTP8dnwyaX6acLR+1sxD+Th9R7U+VvidzvQLjee2R7/4g1eHC0r4QnSsppvMJqu0wjI3k0TK9gA9tmQ==",
+  "dgSpecHash": "pDD2DAN1W4lJUUKBth+rLjEsHd8oDw50ILdA+/UH9BRsjgbl5+yGivHZD2dttRRNnz2WMkM5BRMDLnBprkDlDw==",
   "success": true,
-  "projectFilePath": "D:\\clansty-work\\Clansty.tianlang\\QYPlugin\\Clansty.tianlang.csproj",
+  "projectFilePath": "C:\\Users\\clans\\Source\\Repos\\Clansty\\tianlang\\QYPlugin\\Clansty.tianlang.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\class8\\.nuget\\packages\\newtonsoft.json\\12.0.2\\newtonsoft.json.12.0.2.nupkg.sha512",
-    "C:\\Users\\class8\\.nuget\\packages\\servicestack.common\\5.5.0\\servicestack.common.5.5.0.nupkg.sha512",
-    "C:\\Users\\class8\\.nuget\\packages\\servicestack.interfaces\\5.5.0\\servicestack.interfaces.5.5.0.nupkg.sha512",
-    "C:\\Users\\class8\\.nuget\\packages\\servicestack.redis\\5.5.0\\servicestack.redis.5.5.0.nupkg.sha512",
-    "C:\\Users\\class8\\.nuget\\packages\\servicestack.text\\5.5.0\\servicestack.text.5.5.0.nupkg.sha512",
-    "C:\\Users\\class8\\.nuget\\packages\\system.buffers\\4.4.0\\system.buffers.4.4.0.nupkg.sha512",
-    "C:\\Users\\class8\\.nuget\\packages\\system.memory\\4.5.2\\system.memory.4.5.2.nupkg.sha512",
-    "C:\\Users\\class8\\.nuget\\packages\\system.numerics.vectors\\4.4.0\\system.numerics.vectors.4.4.0.nupkg.sha512",
-    "C:\\Users\\class8\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\4.5.2\\system.runtime.compilerservices.unsafe.4.5.2.nupkg.sha512"
+    "C:\\Users\\clans\\.nuget\\packages\\newtonsoft.json\\12.0.2\\newtonsoft.json.12.0.2.nupkg.sha512",
+    "C:\\Users\\clans\\.nuget\\packages\\servicestack.common\\5.5.0\\servicestack.common.5.5.0.nupkg.sha512",
+    "C:\\Users\\clans\\.nuget\\packages\\servicestack.interfaces\\5.5.0\\servicestack.interfaces.5.5.0.nupkg.sha512",
+    "C:\\Users\\clans\\.nuget\\packages\\servicestack.redis\\5.5.0\\servicestack.redis.5.5.0.nupkg.sha512",
+    "C:\\Users\\clans\\.nuget\\packages\\servicestack.text\\5.5.0\\servicestack.text.5.5.0.nupkg.sha512",
+    "C:\\Users\\clans\\.nuget\\packages\\system.buffers\\4.4.0\\system.buffers.4.4.0.nupkg.sha512",
+    "C:\\Users\\clans\\.nuget\\packages\\system.memory\\4.5.2\\system.memory.4.5.2.nupkg.sha512",
+    "C:\\Users\\clans\\.nuget\\packages\\system.numerics.vectors\\4.4.0\\system.numerics.vectors.4.4.0.nupkg.sha512",
+    "C:\\Users\\clans\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\4.5.2\\system.runtime.compilerservices.unsafe.4.5.2.nupkg.sha512"
   ],
   "logs": []
 }

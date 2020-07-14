@@ -159,13 +159,13 @@ namespace Clansty.tianlang
                 bool graduated = false;
                 switch (Enrollment)
                 {
-                    case 2017:
+                    case 2018:
                         r = "三";
                         break;
-                    case 2018:
+                    case 2019:
                         r = "二";
                         break;
-                    case 2019:
+                    case 2020:
                         r = "一";
                         break;
                     case 10086: //这种情况通过数据库自定义前缀
@@ -188,7 +188,9 @@ namespace Clansty.tianlang
                 else if (Junior)
                     r += "初中";
                 if (r == "初一")
-                    return "高一/2019届初中";
+                    return "高一/2020届初中";
+                if (r == "初二")
+                    return "高二/2019届初中";
                 return r;
             }
         }
