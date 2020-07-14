@@ -1,0 +1,17 @@
+C:\Users\clans\source\repos\Clansty\tianlang\tlcs\tlcs\bin\Debug\netcoreapp3.1\tlcs.exe
+C:\Users\clans\source\repos\Clansty\tianlang\tlcs\tlcs\obj\Debug\netcoreapp3.1\tlcs.csprojAssemblyReference.cache
+C:\Users\clans\source\repos\Clansty\tianlang\tlcs\tlcs\obj\Debug\netcoreapp3.1\tlcs.AssemblyInfoInputs.cache
+C:\Users\clans\source\repos\Clansty\tianlang\tlcs\tlcs\obj\Debug\netcoreapp3.1\tlcs.AssemblyInfo.cs
+C:\Users\clans\source\repos\Clansty\tianlang\tlcs\tlcs\bin\Debug\netcoreapp3.1\tlcs.deps.json
+C:\Users\clans\source\repos\Clansty\tianlang\tlcs\tlcs\bin\Debug\netcoreapp3.1\tlcs.runtimeconfig.json
+C:\Users\clans\source\repos\Clansty\tianlang\tlcs\tlcs\bin\Debug\netcoreapp3.1\tlcs.runtimeconfig.dev.json
+C:\Users\clans\source\repos\Clansty\tianlang\tlcs\tlcs\bin\Debug\netcoreapp3.1\tlcs.dll
+C:\Users\clans\source\repos\Clansty\tianlang\tlcs\tlcs\bin\Debug\netcoreapp3.1\tlcs.pdb
+C:\Users\clans\source\repos\Clansty\tianlang\tlcs\tlcs\bin\Debug\netcoreapp3.1\cqhttp.Cyan.dll
+C:\Users\clans\source\repos\Clansty\tianlang\tlcs\tlcs\bin\Debug\netcoreapp3.1\Fleck.dll
+C:\Users\clans\source\repos\Clansty\tianlang\tlcs\tlcs\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+C:\Users\clans\source\repos\Clansty\tianlang\tlcs\tlcs\obj\Debug\netcoreapp3.1\tlcs.csproj.CoreCompileInputs.cache
+C:\Users\clans\source\repos\Clansty\tianlang\tlcs\tlcs\obj\Debug\netcoreapp3.1\tlcs.csproj.CopyComplete
+C:\Users\clans\source\repos\Clansty\tianlang\tlcs\tlcs\obj\Debug\netcoreapp3.1\tlcs.dll
+C:\Users\clans\source\repos\Clansty\tianlang\tlcs\tlcs\obj\Debug\netcoreapp3.1\tlcs.pdb
+C:\Users\clans\source\repos\Clansty\tianlang\tlcs\tlcs\obj\Debug\netcoreapp3.1\tlcs.genruntimeconfig.cache

@@ -1,0 +1,167 @@
+{
+  "version": 3,
+  "targets": {
+    ".NETCoreApp,Version=v3.1": {
+      "cqhttp.Cyan/2.2.0": {
+        "type": "package",
+        "dependencies": {
+          "Fleck": "1.1.0",
+          "Newtonsoft.Json": "12.0.3"
+        },
+        "compile": {
+          "lib/netcoreapp3.1/cqhttp.Cyan.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/cqhttp.Cyan.dll": {}
+        }
+      },
+      "Fleck/1.1.0": {
+        "type": "package",
+        "compile": {
+          "lib/netcoreapp2.0/Fleck.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp2.0/Fleck.dll": {}
+        }
+      },
+      "Newtonsoft.Json/12.0.3": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "cqhttp.Cyan/2.2.0": {
+      "sha512": "8UVRxde1kE9czCPVA+18GUrDxlo831ffQH5y1Eb18d5452ERhumra48uVy8CAITt+ilwQ8g3QllAhlKT1InGeA==",
+      "type": "package",
+      "path": "cqhttp.cyan/2.2.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "cqhttp.cyan.2.2.0.nupkg.sha512",
+        "cqhttp.cyan.nuspec",
+        "lib/netcoreapp2.1/cqhttp.Cyan.dll",
+        "lib/netcoreapp2.1/cqhttp.Cyan.xml",
+        "lib/netcoreapp3.1/cqhttp.Cyan.dll",
+        "lib/netcoreapp3.1/cqhttp.Cyan.xml"
+      ]
+    },
+    "Fleck/1.1.0": {
+      "sha512": "X33W1PqRciRmh8Q23klEv3CiRS681IUJj/Ldlgi96lSfq1Uaux3l1qNewRDboiUxnHfoNtcIhFMIhc9AJ4cw6g==",
+      "type": "package",
+      "path": "fleck/1.1.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "fleck.1.1.0.nupkg.sha512",
+        "fleck.nuspec",
+        "lib/net40/Fleck.dll",
+        "lib/net45/Fleck.dll",
+        "lib/netcoreapp2.0/Fleck.dll",
+        "lib/netstandard2.0/Fleck.dll"
+      ]
+    },
+    "Newtonsoft.Json/12.0.3": {
+      "sha512": "6mgjfnRB4jKMlzHSl+VD+oUc1IebOZabkbyWj2RiTgWwYPPuaK1H97G1sHqGwPlS5npiF5Q0OrxN1wni2n5QWg==",
+      "type": "package",
+      "path": "newtonsoft.json/12.0.3",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.md",
+        "lib/net20/Newtonsoft.Json.dll",
+        "lib/net20/Newtonsoft.Json.xml",
+        "lib/net35/Newtonsoft.Json.dll",
+        "lib/net35/Newtonsoft.Json.xml",
+        "lib/net40/Newtonsoft.Json.dll",
+        "lib/net40/Newtonsoft.Json.xml",
+        "lib/net45/Newtonsoft.Json.dll",
+        "lib/net45/Newtonsoft.Json.xml",
+        "lib/netstandard1.0/Newtonsoft.Json.dll",
+        "lib/netstandard1.0/Newtonsoft.Json.xml",
+        "lib/netstandard1.3/Newtonsoft.Json.dll",
+        "lib/netstandard1.3/Newtonsoft.Json.xml",
+        "lib/netstandard2.0/Newtonsoft.Json.dll",
+        "lib/netstandard2.0/Newtonsoft.Json.xml",
+        "lib/portable-net40+sl5+win8+wp8+wpa81/Newtonsoft.Json.dll",
+        "lib/portable-net40+sl5+win8+wp8+wpa81/Newtonsoft.Json.xml",
+        "lib/portable-net45+win8+wp8+wpa81/Newtonsoft.Json.dll",
+        "lib/portable-net45+win8+wp8+wpa81/Newtonsoft.Json.xml",
+        "newtonsoft.json.12.0.3.nupkg.sha512",
+        "newtonsoft.json.nuspec",
+        "packageIcon.png"
+      ]
+    }
+  },
+  "projectFileDependencyGroups": {
+    ".NETCoreApp,Version=v3.1": [
+      "cqhttp.Cyan >= 2.2.0"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\clans\\.nuget\\packages\\": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "C:\\Users\\clans\\source\\repos\\Clansty\\tianlang\\tlcs\\tlcs\\tlcs.csproj",
+      "projectName": "tlcs",
+      "projectPath": "C:\\Users\\clans\\source\\repos\\Clansty\\tianlang\\tlcs\\tlcs\\tlcs.csproj",
+      "packagesPath": "C:\\Users\\clans\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\clans\\source\\repos\\Clansty\\tianlang\\tlcs\\tlcs\\obj\\",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "C:\\Users\\clans\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+      ],
+      "originalTargetFrameworks": [
+        "netcoreapp3.1"
+      ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "projectReferences": {}
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      }
+    },
+    "frameworks": {
+      "netcoreapp3.1": {
+        "dependencies": {
+          "cqhttp.Cyan": {
+            "target": "Package",
+            "version": "[2.2.0, )"
+          }
+        },
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.301\\RuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}
