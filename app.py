@@ -4,7 +4,7 @@ from os import path
 import db
 import groups
 
-# db.init()
+db.init()
 groups.init(True)
 nonebot.init(config)
 nonebot.load_plugins('cmds', 'cmds')
