@@ -1,6 +1,6 @@
 from nonebot import message_preprocessor, NoneBot, aiocqhttp
 from nonebot.plugin import PluginManager
-import groups
+import groups, send
 
 global last
 global times
@@ -20,10 +20,10 @@ async def _(bot: NoneBot, event: aiocqhttp.Event, plugin_manager: PluginManager)
         if(times == 4):
             times = 1
             if(last == dd):
-                await bot.send_group_msg(group_id=groups.test, message=dg)
+                send.test(dg)
                 last = dg
             else:
-                await bot.send_group_msg(group_id=groups.test, message=dd)
+                send.test(dd)
                 last = dd
     else:
         times = 1
