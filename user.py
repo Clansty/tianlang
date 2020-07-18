@@ -11,7 +11,7 @@ class User:
     def get(self, *rows:str):
         from db import db
         cursor=db.cursor()
-        sql=f"FROM user SELECT {' '.join(rows)} WHERE id = {self.uin}"
+        sql=f"SELECT {','.join(rows)} FROM user WHERE id = {self.uin}"
         cursor.execute(sql)
         results=cursor.fetchall()
         if(len(results)==0):

@@ -35,6 +35,8 @@ if(__name__ == "__main__"):
         await FMHandler(app,usr,message)
 
     async def FMHandler(app:Mirai, usr, msg):
-        print(User(usr).uin)
+        u=User(usr)
+        print(u.get('name'))
+        print(u.get('name', 'nick'))
 
     app.run()
