@@ -3,6 +3,7 @@ import asyncio
 import db
 import groups
 import appmgr
+from user import User
 
 
 qq = 2981882373  # 字段 qq 的值
@@ -20,17 +21,20 @@ if(__name__ == "__main__"):
     appmgr.init(app)
 
     @app.receiver("GroupMessage")
-    async def GMHandler(app: Mirai, group: Group, member: Member, message: GroupMessage):
+    async def _(app: Mirai, group: Group, member: Member, message: GroupMessage):
         if(group.id == groups.major):
             import repeater
             await repeater.handle(message.toString())
 
     @app.receiver("TempMessage")
-    async def TMHandler(app: Mirai, group: Group, member: Member, message: TempMessage):
-        pass
+    async def _(app: Mirai, group: Group, usr: Member, message: TempMessage):
+        await FMHandler(app,usr,message)
 
     @app.receiver("FriendMessage")
-    async def FMHandler(app: Mirai, friend: Friend, message: FriendMessage):
-        pass
+    async def _(app: Mirai, usr: Friend, message: FriendMessage):
+        await FMHandler(app,usr,message)
+
+    async def FMHandler(app:Mirai, usr, msg):
+        print(User(usr).uin)
 
     app.run()
