@@ -1,8 +1,8 @@
 import pymysql
-global my
+global db
 def init():
-    global my
-    my = pymysql.connect(
+    global db
+    db = pymysql.connect(
         host="cdb-pi7fvpvu.cd.tencentcdb.com",
         port=10058,
         user="root",
@@ -10,6 +10,3 @@ def init():
         db="tianlang_dev")
     print('db connected')
     
-def getdb():
-    global my
-    return my

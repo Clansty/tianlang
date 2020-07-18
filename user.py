@@ -8,4 +8,13 @@ class User:
         else:
             self.uin=user
     
-    
+    def get(self, *rows:str):
+        from db import db
+        cursor=db.cursor()
+        sql=f"FROM user SELECT {' '.join(rows)} WHERE id = {self.uin}"
+        cursor.execute(sql)
+        results=cursor.fetchall()
+        if(len(results)==0):
+            raise Exception('no such user')
+        else:
+            return(results[0])
