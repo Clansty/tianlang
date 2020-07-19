@@ -1,4 +1,5 @@
 ﻿using Mirai_CSharp.Utility.JsonConverters;
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 #pragma warning disable CA1819 // Properties should not return arrays
@@ -15,6 +16,9 @@ namespace Mirai_CSharp.Models
         [JsonConverter(typeof(IMessageBaseArrayConverter))]
         [JsonPropertyName("messageChain")]
         IMessageBase[] Chain { get; }
+        [JsonConverter(typeof(IMessageBaseArrayConverter))]
+        [JsonPropertyName("rawMessage")]
+        string Raw { get=> string.Join(null, (IEnumerable<IMessageBase>)Chain); }
     }
 
     public abstract class CommonMessageEventArgs : ICommonMessageEventArgs

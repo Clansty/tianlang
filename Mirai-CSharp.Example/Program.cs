@@ -19,6 +19,7 @@ namespace Mirai_CSharp.Tianlang
             // 你也可以一个个绑定事件。比如 session.GroupMessageEvt += plugin.GroupMessage;
             // 手动绑定事件后不要再调用AddPlugin, 否则可能导致重复调用
             //session.AddPlugin(plugin);
+            session.AddPlugin(new GroupMessageHandler());
             // 使用上边提供的信息异步连接到 mirai-api-http
             await session.ConnectAsync(options, C.Self); // 自己填机器人QQ号
             while (true)

@@ -9,9 +9,10 @@ namespace Mirai_CSharp.Tianlang
 {
     class GroupMessageHandler : IGroupMessage
     {
-        public async Task<bool> GroupMessage(MiraiHttpSession session, IGroupMessageEventArgs)
+        public async Task<bool> GroupMessage(MiraiHttpSession session, IGroupMessageEventArgs e)
         {
-
+            Console.WriteLine(e.Raw);
+            Repeater.Enter(string.Join(null, e.Raw));
             return false;
         }
     }

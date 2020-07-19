@@ -1,4 +1,4 @@
-﻿namespace Clansty.tianlang
+﻿namespace Mirai_CSharp.Tianlang
 {
     public static class StringHelper
     {
