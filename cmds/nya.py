@@ -5,7 +5,7 @@ async def run(usr, arg:str):
     try:
         t=int(arg)
         r=""
-        for i in range(t):
+        for _ in range(t):
             r+="nya "
         r=r.strip()
         if(r):
