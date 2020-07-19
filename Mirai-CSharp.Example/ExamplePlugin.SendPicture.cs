@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 
 #pragma warning disable IDE0051 // 删除未使用的私有成员
-namespace Mirai_CSharp.Example
+namespace Mirai_CSharp.Tianlang
 {
     public partial class ExamplePlugin
     {

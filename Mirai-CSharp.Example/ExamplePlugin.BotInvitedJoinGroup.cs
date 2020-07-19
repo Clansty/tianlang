@@ -1,7 +1,7 @@
 ﻿using Mirai_CSharp.Models;
 using System.Threading.Tasks;
 
-namespace Mirai_CSharp.Example
+namespace Mirai_CSharp.Tianlang
 {
     public partial class ExamplePlugin
     {
