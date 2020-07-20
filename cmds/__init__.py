@@ -6,7 +6,7 @@ async def praseCommand(usr, msg:str):
     msg=msg.split(maxsplit=1)
     if(os.path.exists(f"cmds/{msg[0]}.py")):
         cmd=imp(f"cmds.{msg[0]}")
-        if(msg.__len__()==1):
+        if(len(msg)==1):
             arg=None
         else:
             arg=msg[1]
