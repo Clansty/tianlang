@@ -4,6 +4,7 @@ import groups
 from appmgr import app
 from user import User
 from cmds import praseCommand
+from db import db
 
 if(__name__ == "__main__"):
 

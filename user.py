@@ -83,7 +83,9 @@ class User:
             cursor=db.cursor()
             cursor.execute(sql)
             al=cursor.fetchall()
-            return f"qq: {self.uin}\nenrollment: {al[0][0]}\nbranch: {al[0][1]}\njunior: {al[0][2]}\nname: {al[0][3]}\nclass: {al[0][4]}"
+            return f"qq: {self.uin}\nenrollment: {al[0][0]}\nbranch: {al[0][1]}\njunior: {al[0][2]}\nname: {al[0][3]}\nclass: {al[0][4]}\ngrade: {self.getGrade()}"
+        tr=self.get('enrollment','name')
+        return f"qq: {self.uin}\nenrollment: {tr[0]}\nname: {tr[1]}\ngrade: {self.getGrade()}"
   
     def getJunior(self) -> str:
         return self.getP('junior')
