@@ -1,6 +1,5 @@
 from mirai import Mirai, Plain, MessageChain, Friend, Group, Member, FriendMessage, GroupMessage, TempMessage, Image
 import asyncio
-import db
 import groups
 from appmgr import app
 from user import User
@@ -9,7 +8,6 @@ from cmds import praseCommand
 if(__name__ == "__main__"):
 
     groups.init(True)
-    db.init()
 
     @app.receiver("GroupMessage")
     async def _(group: Group, member: Member, message: GroupMessage):

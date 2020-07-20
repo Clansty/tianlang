@@ -1,3 +1,6 @@
+class UserNotFound(Exception):
+    pass
+
 class User:
     uin: int
 
@@ -9,6 +12,14 @@ class User:
             self.uin = user.id
         else:
             self.uin = user
+            
+        from db import db
+        cursor= db.cursor()
+        sql=f"SELECT id FROM user WHERE id={self.uin}"
+        cursor.execute(sql)
+        al=cursor.fetchall()
+        if len(al)==0:
+            raise UserNotFound()
 
     def get(self, *rows: str):
         from db import db
@@ -40,3 +51,14 @@ class User:
         except Exception as err:
             db.rollback()
             print(f"err: {err.__str__()}")
+            
+    def getEnrollment(self) -> int:
+        #TODO 先尝试绑定
+        sql=f"SELECT person.enrollment FROM person,user WHERE user.bind=person.id and user.id={self.uin}"
+        from db import db
+        cursor=db.cursor()
+        cursor.execute(sql)
+        al=cursor.fetchall()
+        if len(al)==1:
+            return al[0][0]
+        return self.get('enrollment')[0]
