@@ -31,6 +31,14 @@ class User:
         cursor.execute(sql)
         results = cursor.fetchall()
         return(results[0])
+    
+    def getP(self, *rows: str):
+        from db import db
+        cursor = db.cursor()
+        sql = f"SELECT person.{',person.'.join(rows)} FROM person,user WHERE user.bind=person.id and user.id={self.uin}"
+        cursor.execute(sql)
+        results = cursor.fetchall()
+        return(results[0])
 
     def set(self, **kvps):
         mod = ""
@@ -78,7 +86,31 @@ class User:
             return f"qq: {self.uin}\nenrollment: {al[0][0]}\nbranch: {al[0][1]}\njunior: {al[0][2]}\nname: {al[0][3]}\nclass: {al[0][4]}"
   
     def getJunior(self) -> str:
-        pass #todo
+        return self.getP('junior')
     
     def getGrade(self) -> str:
-        pass #todo
+        # enr=2020,junior=true -> 高一/2020届初中
+        # enr=2017,junior=true -> 2020届初中
+        enr=self.getEnrollment()
+        res=self.check()
+        t=""
+        jun=False
+        if res[1]==0:
+            jun=self.getJunior()
+        if enr==2018:
+            t+="高三"
+        if enr==2019:
+            t+="高二"
+        if enr==2020:
+            t+="高一"
+        # 各种物种
+        if 2000<enr<2018:
+            #已毕业
+            if jun:
+                return f"{enr+3}届初中"
+            else:
+                return f"{enr+3}届"
+        #双重身份
+        if jun:
+            return(f"{t}/{enr}届初中")
+        return t
