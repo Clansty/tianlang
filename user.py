@@ -4,7 +4,7 @@ class UserNotFound(Exception):
 class User:
     uin: int
 
-    def __init__(self, user):
+    def __init__(self, user, new:bool=False):
         from mirai import Friend, Member
         if type(user) == Friend:
             self.uin = user.id
@@ -19,7 +19,10 @@ class User:
         cursor.execute(sql)
         al=cursor.fetchall()
         if len(al)==0:
-            raise UserNotFound()
+            if not new:
+                raise UserNotFound()
+            sql=f"INSERT INTO user (id) VALUES ({self.uin})"
+            cursor.execute(sql)
 
     def get(self, *rows: str):
         from db import db
@@ -27,10 +30,7 @@ class User:
         sql = f"SELECT {','.join(rows)} FROM user WHERE id = {self.uin}"
         cursor.execute(sql)
         results = cursor.fetchall()
-        if len(results) == 0:
-            raise Exception('no such user')
-        else:
-            return(results[0])
+        return(results[0])
 
     def set(self, **kvps):
         mod = ""
@@ -62,3 +62,23 @@ class User:
         if len(al)==1:
             return al[0][0]
         return self.get('enrollment')[0]
+    
+    def check(self) -> (bool,int):
+        from realname import check
+        return check(self)
+    
+    def __repr__(self):
+        res=self.check()
+        if res[1]==0:
+            sql=f"SELECT person.enrollment,person.branch,person.junior,person.name,person.class FROM person,user WHERE user.bind=person.id and user.id={self.uin}"
+            from db import db
+            cursor=db.cursor()
+            cursor.execute(sql)
+            al=cursor.fetchall()
+            return f"qq: {self.uin}\nenrollment: {al[0][0]}\nbranch: {al[0][1]}\njunior: {al[0][2]}\nname: {al[0][3]}\nclass: {al[0][4]}"
+  
+    def getJunior(self) -> str:
+        pass #todo
+    
+    def getGrade(self) -> str:
+        pass #todo
