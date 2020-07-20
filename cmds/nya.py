@@ -1,4 +1,6 @@
-import send
+desc='nya nya nya!'
+args=True
+
 async def run(usr, arg:str):
     if(not arg):
         arg='0'
@@ -9,9 +11,9 @@ async def run(usr, arg:str):
             r+="nya "
         r=r.strip()
         if(r):
-            await send.console(r)
+            return r
         else:
-            await send.console('nya?')
+            return 'nya?'
     except Exception as e:
-        await send.console(f"nya {e.__str__()}?")
+        return f"nya {e.__str__()}?"
 
