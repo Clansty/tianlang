@@ -50,3 +50,29 @@ def junior(s: str)->bool:
     if '|' in s:
         return junior(s.partition('|')[0].strip())
     return "初中" in s or "初三" in s or "初3" in s
+def nick(s: str) -> int:
+    s = s.strip()
+    if s == None or s == "":
+        return 0
+    # 去除多彩群名片标记
+    if s.startswith('<') and '>' in s:
+        s = s.partition('>')[2].strip()  # 文本取右边
+    s = s.replace("丨", " | ") #gun
+    s = s.replace("｜", " | ") #全角
+    if '|' in s:
+        return s.rpartition('|')[2].strip()
+    if '初中' in s:
+        return s.rpartition('初中')[2].strip()
+    if '高三' in s:
+        return s.rpartition('高三')[2].strip()
+    if '高二' in s:
+        return s.rpartition('高二')[2].strip()
+    if '高一' in s:
+        return s.rpartition('高一')[2].strip()
+    if '级' in s:
+        return s.rpartition('级')[2].strip()
+    if '届' in s:
+        return s.rpartition('届')[2].strip()
+    if '金阊' in s:
+        return s.rpartition('金阊')[2].strip()
+    return s
