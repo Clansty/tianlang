@@ -41,3 +41,12 @@ def enrollment(s: str) -> int:
     if s>2000:
         return s-3
     return 0
+def junior(s: str)->bool:
+    s = s.strip()
+    if s == None or s == "":
+        return False
+    s = s.replace("丨", " | ") #gun
+    s = s.replace("｜", " | ") #全角
+    if '|' in s:
+        return junior(s.partition('|')[0].strip())
+    return "初中" in s or "初三" in s or "初3" in s

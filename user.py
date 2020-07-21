@@ -88,7 +88,11 @@ class User:
         return f"qq: {self.uin}\nenrollment: {tr[0]}\nname: {tr[1]}\ngrade: {self.getGrade()}"
   
     def getJunior(self) -> str:
-        return self.getP('junior')
+        #?有毛病，现在这种写法无法实现双重身份，所以初中就写在 user 表里
+        if self.check()[1]==0:
+            if self.getP('junior')[0]:
+                return True
+        return self.get('junior')[0]
     
     def getGrade(self) -> str:
         # enr=2020,junior=true -> 高一/2020届初中
