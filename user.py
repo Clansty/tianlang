@@ -1,3 +1,6 @@
+from appmgr import app
+import groups, prase
+
 class UserNotFound(Exception):
     pass
 
@@ -110,6 +113,8 @@ class User:
         if enr==2020:
             t+="高一"
         # 各种物种
+        if enr <2001:
+            return '未知'
         if 2000<enr<2018:
             #已毕业
             if jun:
@@ -120,3 +125,28 @@ class User:
         if jun:
             return(f"{t}/{enr}届初中")
         return t
+    
+    async def getNamecard(self):
+        return (await app.memberInfo(groups.major, self.uin)).name
+    
+    async def setNamecard(self):
+        from mirai import MemberChangeableSetting
+        mcs=MemberChangeableSetting()
+        mcs.modify(name=await self.properNamecard())
+        await app.changeMemberInfo(groups.major, self.uin, MemberChangeableSetting())
+    
+    async def properNamecard(self):
+        #TODO poweruser
+        chk=self.check()
+        branch=False
+        r=''
+        if not chk[0]:
+            r+="未实名"
+        if chk[1]==0:
+            branch=self.getP('branch')[0]
+        if branch:
+            r+="金阊"
+        r+=self.getGrade()
+        r+=' | '
+        r+=prase.nick(await self.getNamecard())
+        return r
