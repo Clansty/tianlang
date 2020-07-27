@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "pDD2DAN1W4lJUUKBth+rLjEsHd8oDw50ILdA+/UH9BRsjgbl5+yGivHZD2dttRRNnz2WMkM5BRMDLnBprkDlDw==",
+  "dgSpecHash": "1iyhlYgbW9Z1ySIRZ8GD76c2X07xBdE4xbw7sa1DsCljQByFwPk7zFfF/m8D3Y/GJprYtSOlS+C6k8abXjOESg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\clans\\Source\\Repos\\Clansty\\tianlang\\QYPlugin\\Clansty.tianlang.csproj",
+  "projectFilePath": "C:\\Users\\clans\\source\\repos\\Clansty\\tianlang - 副本\\QYPlugin\\Clansty.tianlang.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\clans\\.nuget\\packages\\newtonsoft.json\\12.0.2\\newtonsoft.json.12.0.2.nupkg.sha512",
     "C:\\Users\\clans\\.nuget\\packages\\servicestack.common\\5.5.0\\servicestack.common.5.5.0.nupkg.sha512",

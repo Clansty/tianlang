@@ -338,8 +338,8 @@ namespace Clansty.tianlang
                 isok = long.TryParse(member, out long m);
                 if (!isok)
                     return false;
-                //XXX: 要封也是测试服
-                return QY_setModifyGroupMemberCard(AuthCode, 168375232, t, m, name) == 0;
+                //XXX: 要封也是测试服    没有这个
+                return QY_setModifyGroupMemberCard(AuthCode, LongQQ, t, m, name) == 0;
             }
             [DllImport("QYOffer.dll")]
             private static extern int QY_setModifyGroupMemberCard(int authCode, long qqID, long targ, long s, string a);

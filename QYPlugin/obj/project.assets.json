@@ -670,11 +670,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\clans\\Source\\Repos\\Clansty\\tianlang\\QYPlugin\\Clansty.tianlang.csproj",
+      "projectUniqueName": "C:\\Users\\clans\\source\\repos\\Clansty\\tianlang - 副本\\QYPlugin\\Clansty.tianlang.csproj",
       "projectName": "Clansty.tianlang",
-      "projectPath": "C:\\Users\\clans\\Source\\Repos\\Clansty\\tianlang\\QYPlugin\\Clansty.tianlang.csproj",
+      "projectPath": "C:\\Users\\clans\\source\\repos\\Clansty\\tianlang - 副本\\QYPlugin\\Clansty.tianlang.csproj",
       "packagesPath": "C:\\Users\\clans\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\clans\\Source\\Repos\\Clansty\\tianlang\\QYPlugin\\obj\\",
+      "outputPath": "C:\\Users\\clans\\source\\repos\\Clansty\\tianlang - 副本\\QYPlugin\\obj\\",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
       "configFilePaths": [
