@@ -83,6 +83,7 @@ namespace Clansty.tianlang
                 string tip = Strs.Get($"setupTip{u.Enrollment}");//根据年级来分的提示
                 if (tip != "")
                     e.Reply(tip); //你是高一的，建议同时加入 2018 级新高一年级群 //??2019级新生即将来临?敬请期待??? 
+                //TODO 
                 tip = Strs.Get($"setupTipAll");//给所有人的广告位
                 if (tip != "")
                     e.Reply(tip); //目前是这个：【西花园事务所】是江苏省苏州第十中学校学生自建生活服务平台，添加【西花园事务所】为特别关心，可以第一时间收到最新消息 
