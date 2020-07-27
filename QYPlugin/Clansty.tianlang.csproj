@@ -125,7 +125,6 @@
     <Compile Include="龙门\Repeater.cs" />
     <Compile Include="罗德岛\Send.cs" />
     <Compile Include="喀兰贸易\SetupV3.cs" />
-    <Compile Include="喀兰贸易\Stats.cs" />
     <Compile Include="喀兰贸易\Status.cs" />
     <Compile Include="罗德岛\StringHelper.cs" />
     <Compile Include="罗德岛\Strs.cs" />
