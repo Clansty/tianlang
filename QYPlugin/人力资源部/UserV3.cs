@@ -209,7 +209,7 @@ namespace Clansty.tianlang
                 return r;
             }
         }
-        internal bool IsFresh => Enrollment < 1970 || Nick == "";
+        internal bool IsFresh => Name == ""; //紧急 fix
 
         public string Get(string key) => Rds.HGet("u" + Uin, key);
         public void Set(string key, string value) => Rds.HSet("u" + Uin, key, value);

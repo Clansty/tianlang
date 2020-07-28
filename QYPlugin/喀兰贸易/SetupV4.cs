@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ServiceStack.Script;
+using System;
 
 namespace Clansty.tianlang
 {
@@ -24,11 +25,11 @@ namespace Clansty.tianlang
         public static void Enter(FriendMsgArgs e)
         {
             User u = new User(e.FromQQ);
-            string m = e.Msg;
+            string m = e.Msg.Trim();
 
             switch (u.Step)
             {
-                case 2:
+                case 2:// input grade
                     int g = UserInfo.ParseEnrollment(m);
                     if (g < 1970)
                     {
@@ -50,7 +51,21 @@ namespace Clansty.tianlang
                     }
                     FinishWizard();
                     return;
-                case 1:
+                case 1://input name
+                    foreach (var i in m.ToCharArray())
+                    {
+                        if (i<0x4100 || i>0x9fbb)
+                        {
+                            //不是汉字
+                            e.Reply(Strs.Get("nameVerifyFailed"));
+                            return;
+                        }
+                    }
+                    if(m.Length>4 || m.Length < 2)
+                    {
+                        e.Reply(Strs.Get("nameVerifyFailed"));
+                        return;
+                    }
                     u.Name = m;
                     if (u.VerifyMsg == RealNameVerifingResult.succeed)
                     {
