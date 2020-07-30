@@ -18,7 +18,7 @@ namespace Clansty.tianlang
             if (DateTime.Now.Hour < 5)
                 return;
             Rds.HSet("fired", "last", now);
-            await Task.Run(EnLikeNew);
+            await Task.Run(new Action(EnLikeNew));
         }
 
         private static void EnLikeNew()

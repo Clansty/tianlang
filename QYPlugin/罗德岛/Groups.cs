@@ -12,6 +12,6 @@ namespace Clansty.tianlang
         public const string si = "690696283";
         public const string test = "828390342";
         public const string iDE = "342975953";
-        public const string C8 = "117076933";
+        public const string g2020 = "1132458399";
     }
 }

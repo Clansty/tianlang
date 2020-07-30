@@ -210,35 +210,13 @@ namespace Clansty.tianlang
             }
         }
         internal bool IsFresh => Name == ""; //紧急 fix
+        public bool IsMember => MemberList.major.Contains(Uin);
 
         public string Get(string key) => Rds.HGet("u" + Uin, key);
         public void Set(string key, string value) => Rds.HSet("u" + Uin, key, value);
 
         public string ToXml(string title = "用户信息")
         {
-            //return "[LQ:richmsg,type=1,template_1=" +
-            //       "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" +
-            //      $"<msg serviceID=\"1\" brief=\"{title}\">" +
-            //         "<item></item>" +
-            //         "<item layout=\"6\">" +
-            //          $"<title>{title}</title>" +
-            //           "<summary>" +
-            //          $"QQ: {Uin}\n" +
-            //          $"年级: {Grade}\n" +
-            //          $"昵称: {Nick}\n" +
-            //          $"姓名: {Name}\n" +
-            //          $"校区: {(Branch ? "金阊" : "本部")}\n" +
-            //          $"入学年份: {Enrollment}\n" +
-            //          $"初中: {Junior}\n" +
-            //          $"班级: {Class}\n" +
-            //          $"群名片: {Namecard}\n" +
-            //          $"ProperNamecard: {ProperNamecard}" +
-            //           "</summary>" +
-            //           "<hr />" +
-            //          $"<summary>甜狼 {C.Version}</summary>" +
-            //         "</item>" +
-            //       "</msg>" +
-            //       ",service_id=0,msg_resid=,rand=0,seq=0,flags=0]";
             var ret =  $"[{title}]\n" +
                        $"QQ: {Uin}\n" +
                        $"年级: {Grade}\n" +
@@ -250,6 +228,7 @@ namespace Clansty.tianlang
                        $"班级: {Class}\n" +
                        $"群名片: {Namecard}\n" +
                        $"理想群名片: {ProperNamecard}\n" +
+                       $"IsMember: {IsMember}\n" +
                        $"身份: {Role}\n" +
                        $"实名状态: {VerifyMsg}";
             //test for new struct for real name related information 191230

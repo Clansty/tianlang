@@ -70,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="人力资源部\INamedUser.cs" />
+    <Compile Include="人力资源部\MemberList.cs" />
     <Compile Include="人力资源部\UnRegUser.cs" />
     <Compile Include="喀兰贸易\SetupV4.cs" />
     <Compile Include="罗德岛基建\Loading.cs">
