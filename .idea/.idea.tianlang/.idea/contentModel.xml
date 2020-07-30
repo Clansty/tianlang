@@ -19,6 +19,7 @@
           <e p="Settings.settings" t="Include" />
         </e>
       </e>
+      <e p="dist" t="ExcludeRecursive" />
       <e p="packages" t="ExcludeRecursive" />
       <e p="QYPlugin" t="IncludeRecursive">
         <e p="Clansty.tianlang.csproj" t="IncludeRecursive" />

@@ -2,14 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="97e5636b-167f-45d5-8968-9911c1c22a6a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.tianlang/.idea/.name" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.tianlang/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.tianlang/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.tianlang/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.tianlang/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QYPlugin/obj/Clansty.tianlang.csproj.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/QYPlugin/obj/Clansty.tianlang.csproj.nuget.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QYPlugin/obj/Clansty.tianlang.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/QYPlugin/obj/Clansty.tianlang.csproj.nuget.dgspec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QYPlugin/obj/Clansty.tianlang.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/QYPlugin/obj/Clansty.tianlang.csproj.nuget.g.props" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QYPlugin/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/QYPlugin/obj/project.assets.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tianlang.sln" beforeDir="false" afterPath="$PROJECT_DIR$/tianlang.sln" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/tianlang/v16/.suo" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/tianlang/v16/.suo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Clansty.tianlang.Tester/bin/x86/Debug/RhodesIsland.qyk.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Clansty.tianlang.Tester/bin/x86/Debug/RhodesIsland.qyk.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Clansty.tianlang.Tester/bin/x86/Debug/RhodesIsland.qyk.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Clansty.tianlang.Tester/bin/x86/Debug/RhodesIsland.qyk.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Clansty.tianlang.Tester/obj/x86/Release/Clansty.tianlang.Tester.csprojAssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Clansty.tianlang.Tester/obj/x86/Release/Clansty.tianlang.Tester.csprojAssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QYPlugin/obj/x86/Debug/Clansty.tianlang.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/QYPlugin/obj/x86/Debug/Clansty.tianlang.csproj.CoreCompileInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QYPlugin/obj/x86/Debug/Clansty.tianlang.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/QYPlugin/obj/x86/Debug/Clansty.tianlang.csproj.FileListAbsolute.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QYPlugin/obj/x86/Debug/Clansty.tianlang.csproj.GenerateResource.cache" beforeDir="false" afterPath="$PROJECT_DIR$/QYPlugin/obj/x86/Debug/Clansty.tianlang.csproj.GenerateResource.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QYPlugin/obj/x86/Debug/RhodesIsland.qyk.dll" beforeDir="false" afterPath="$PROJECT_DIR$/QYPlugin/obj/x86/Debug/RhodesIsland.qyk.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QYPlugin/obj/x86/Debug/RhodesIsland.qyk.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/QYPlugin/obj/x86/Debug/RhodesIsland.qyk.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QYPlugin/obj/x86/Release/Clansty.tianlang.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/QYPlugin/obj/x86/Release/Clansty.tianlang.csproj.CoreCompileInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QYPlugin/obj/x86/Release/Clansty.tianlang.csproj.GenerateResource.cache" beforeDir="false" afterPath="$PROJECT_DIR$/QYPlugin/obj/x86/Release/Clansty.tianlang.csproj.GenerateResource.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QYPlugin/obj/x86/Release/Clansty.tianlang.csprojAssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/QYPlugin/obj/x86/Release/Clansty.tianlang.csprojAssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QYPlugin/obj/x86/Release/RhodesIsland.qyk.dll" beforeDir="false" afterPath="$PROJECT_DIR$/QYPlugin/obj/x86/Release/RhodesIsland.qyk.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QYPlugin/莱茵生命/Common.cs" beforeDir="false" afterPath="$PROJECT_DIR$/QYPlugin/莱茵生命/Common.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/RhodesIsland.qyk.dll" beforeDir="false" afterPath="$PROJECT_DIR$/dist/RhodesIsland.qyk.dll" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,6 +33,7 @@
     <setting file="file://$PROJECT_DIR$/QYPlugin/龙门/Fired.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/QYPlugin/人力资源部/UserV3.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/QYPlugin/人力资源部/UserInfo.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/QYPlugin/罗德岛/AssemblyInfo.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/QYPlugin/罗德岛/Radis.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/QYPlugin/莱茵生命/Common.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/QYPlugin/罗德岛/Menu.cs" root0="FORCE_HIGHLIGHTING" />
@@ -37,10 +47,10 @@
         <option value="$PROJECT_DIR$/QYPlugin/罗德岛/Radis.cs" />
         <option value="$PROJECT_DIR$/QYPlugin/人力资源部/UserV2.cs" />
         <option value="$PROJECT_DIR$/QYPlugin/莱茵生命/QYEvents.cs" />
-        <option value="$PROJECT_DIR$/QYPlugin/莱茵生命/Common.cs" />
         <option value="$PROJECT_DIR$/Clansty.tianlang.Tester/Program.cs" />
         <option value="$PROJECT_DIR$/QYPlugin/罗德岛/Menu.cs" />
         <option value="$PROJECT_DIR$/QYPlugin/龙门/Fired.cs" />
+        <option value="$PROJECT_DIR$/QYPlugin/莱茵生命/Common.cs" />
       </list>
     </option>
   </component>
@@ -62,7 +72,7 @@
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.C#" />
+    <property name="settings.editor.selected.configurable" value="preferences.toDoOptions" />
   </component>
   <component name="RunManager" selected=".NET Project.Clansty.tianlang.Tester">
     <configuration name="Clansty.tianlang.Tester" type="DotNetProject" factoryName=".NET Project" temporary="true">
@@ -126,6 +136,7 @@
       <workItem from="1579848484338" duration="847000" />
       <workItem from="1596077913243" duration="609000" />
       <workItem from="1596101912426" duration="362000" />
+      <workItem from="1596102516840" duration="762000" />
     </task>
     <task id="LOCAL-00001" summary="审核 bug 修复">
       <created>1575971808549</created>
@@ -188,10 +199,10 @@
       <screen x="0" y="0" width="1620" height="1040" />
     </state>
     <state x="676" y="382" key="#Notifications/0.0.1620.1040@0.0.1620.1040" timestamp="1596101918205" />
-    <state x="315" y="146" key="SettingsEditor" timestamp="1596102131221">
+    <state x="315" y="146" key="SettingsEditor" timestamp="1596102812247">
       <screen x="0" y="0" width="1620" height="1040" />
     </state>
-    <state x="315" y="146" key="SettingsEditor/0.0.1620.1040@0.0.1620.1040" timestamp="1596102131221" />
+    <state x="315" y="146" key="SettingsEditor/0.0.1620.1040@0.0.1620.1040" timestamp="1596102812247" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
