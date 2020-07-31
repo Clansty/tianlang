@@ -26,7 +26,7 @@ namespace Native.Core
 			unityContainer.RegisterType<IGroupMessage, GroupMsgEvent>("群消息处理");
 			unityContainer.RegisterType<IGroupAddRequest, JoinGroupRequestEvent>("群添加请求处理");
 			unityContainer.RegisterType<IPrivateMessage, PrivateMsgEvent>("私聊消息处理");
-			unityContainer.RegisterType<ICQStartup, ICQStartup>("酷Q启动事件");
+			unityContainer.RegisterType<ICQStartup, StartupEvent>("酷Q启动事件");
 		}
 	}
 }
