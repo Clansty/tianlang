@@ -1,5 +1,4 @@
 ﻿using Native.Sdk.Cqp.Model;
-using ServiceStack.Redis;
 
 namespace Clansty.tianlang
 {
@@ -158,7 +157,12 @@ namespace Clansty.tianlang
         }
         public string Namecard
         {
-            get => C.CQApi.GetGroupMemberInfo(G.major, LongUin).Card;
+            get
+            {
+                var info = C.CQApi.GetGroupMemberInfo(G.major, LongUin);
+                return info is null ? "" : info.Card;
+            }
+
             set => C.CQApi.SetGroupMemberVisitingCard(G.major, LongUin, value);
         }
         public Status Status
@@ -259,7 +263,7 @@ namespace Clansty.tianlang
 
         public string ToXml(string title = "用户信息")
         {
-            var ret =  $"[{title}]\n" +
+            var ret = $"[{title}]\n" +
                        $"QQ: {Uin}\n" +
                        $"年级: {Grade}\n" +
                        $"昵称: {Nick}\n" +
