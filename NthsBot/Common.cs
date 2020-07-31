@@ -4,7 +4,6 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Clansty.tianlang
 {
@@ -17,7 +16,7 @@ namespace Clansty.tianlang
          * 新生群后台实名实现
          */
         
-        public const string Version = "3.0.17.5";//20200730
+        public const string Version = "3.1.17.5";//20200731
 
         public static void Write(string text, ConsoleColor color = ConsoleColor.White)
         {
@@ -32,7 +31,5 @@ namespace Clansty.tianlang
             Console.ForegroundColor = ConsoleColor.White;
         }
 
-        [DllImport("kernel32.dll")]
-        public static extern bool AllocConsole();
     }
 }

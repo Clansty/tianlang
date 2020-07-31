@@ -1,7 +1,7 @@
 ﻿using Ac682.Hyperai.Clients.Mirai;
+using Clansty.tianlang;
 using Hyperai.Serialization;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Console;
 using System;
 
 namespace NthsBot
@@ -10,6 +10,7 @@ namespace NthsBot
     {
         static void Main(string[] args)
         {
+            Console.Title = $"甜狼 {C.Version}";
             var options = new MiraiClientOptions()
             {
                 AuthKey = "QwQQAQOwO",
@@ -22,7 +23,7 @@ namespace NthsBot
             }); 
             var client = new MiraiClient(options, loggerFactory.CreateLogger<MiraiClient>(), new HyperCodeFormatter());
             client.Connect();
-
+            UserInfo.InitQmpCheckTask();
             while (true)
             {
                 var input = Console.ReadLine();
