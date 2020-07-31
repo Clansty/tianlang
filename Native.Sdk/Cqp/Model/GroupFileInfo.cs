@@ -82,7 +82,7 @@ namespace Native.Sdk.Cqp.Model
 		/// <returns>表示当前对象的字符串</returns>
 		public override string ToString ()
 		{
-			StringBuilder builder = new StringBuilder ();
+			var builder = new StringBuilder ();
 			builder.AppendFormat ("BusId: {0}{1}", this.Id, Environment.NewLine);
 			builder.AppendFormat ("文件名: {0}{1}", this.FileName, Environment.NewLine);
 			builder.AppendFormat ("文件ID: {0}{1}", this.FileId, Environment.NewLine);

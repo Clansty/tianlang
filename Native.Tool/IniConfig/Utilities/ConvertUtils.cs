@@ -22,44 +22,44 @@ namespace Native.Tool.IniConfig.Utilities
 				return (BigInteger)value;
 			}
 
-			string value2 = value as string;
+			var value2 = value as string;
 			if (value2 != null)
 			{
 				return BigInteger.Parse (value2, CultureInfo.InvariantCulture);
 			}
 			if (value is float)
 			{
-				float value3 = (float)value;
+				var value3 = (float)value;
 				return new BigInteger (value3);
 			}
 			if (value is double)
 			{
-				double value4 = (double)value;
+				var value4 = (double)value;
 				return new BigInteger (value4);
 			}
 			if (value is decimal)
 			{
-				decimal value5 = (decimal)value;
+				var value5 = (decimal)value;
 				return new BigInteger (value5);
 			}
 			if (value is int)
 			{
-				int value6 = (int)value;
+				var value6 = (int)value;
 				return new BigInteger (value6);
 			}
 			if (value is long)
 			{
-				long value7 = (long)value;
+				var value7 = (long)value;
 				return new BigInteger (value7);
 			}
 			if (value is uint)
 			{
-				uint value8 = (uint)value;
+				var value8 = (uint)value;
 				return new BigInteger (value8);
 			}
 			if (value is ulong)
 			{
-				ulong value9 = (ulong)value;
+				var value9 = (ulong)value;
 				return new BigInteger (value9);
 			}
 			byte[] value10;

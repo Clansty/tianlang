@@ -16,7 +16,7 @@ namespace Clansty.tianlang
                         "点歌 <歌名>", true);
             else
             {
-                Song s = GetSong(name);
+                var s = GetSong(name);
                 C.WriteLn(s.ToJson());
                 e.Reply(s.ToJson(), false);
             }
@@ -104,11 +104,11 @@ namespace Clansty.tianlang
         //}
         public static string GetWebText(string url)
         {
-            WebRequest request = WebRequest.Create(url);
-            WebResponse response = request.GetResponse();
-            Stream datastream = response.GetResponseStream();
-            StreamReader reader = new StreamReader(datastream, Encoding.UTF8);
-            string result = reader.ReadToEnd();
+            var request = WebRequest.Create(url);
+            var response = request.GetResponse();
+            var datastream = response.GetResponseStream();
+            var reader = new StreamReader(datastream, Encoding.UTF8);
+            var result = reader.ReadToEnd();
             reader.Close();
             datastream.Close();
             response.Close();
@@ -116,10 +116,10 @@ namespace Clansty.tianlang
         }
         private static Song GetSong(string name)
         {
-            Song s = new Song();
+            var s = new Song();
             try
             {
-                string r = GetWebText($"https://v1.itooi.cn/netease/search?keyword={name}&type=song&pageSize=1");
+                var r = GetWebText($"https://v1.itooi.cn/netease/search?keyword={name}&type=song&pageSize=1");
                 s.id = r.Between("\"id\":", ",");
                 s.name = r.LastBetween("\"name\":\"", "\"");
                 s.pic = $"https://v1.itooi.cn/netease/pic?id={s.id}";

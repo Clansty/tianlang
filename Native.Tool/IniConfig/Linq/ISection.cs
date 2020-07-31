@@ -123,23 +123,23 @@ namespace Native.Tool.IniConfig.Linq
 				return defaultValue;
 			}
 
-			IValue iValue = this[key];
+			var iValue = this[key];
 			if (iValue is T)
 			{
-				T result = (T)(iValue.Value);
+				var result = (T)(iValue.Value);
 				if (typeof(T) != typeof(IComparable) && typeof(T) != typeof(IFormattable))
 				{
 					return result;
 				}
 			}
 
-			object objValue = iValue.Value;
+			var objValue = iValue.Value;
 			if (objValue is T)
 			{
 				return (T)objValue;
 			}
 
-			Type type = typeof (T);
+			var type = typeof (T);
 			if (ReflectionUtils.IsNullableType(type))
 			{
 				if (objValue == null)

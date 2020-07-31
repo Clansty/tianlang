@@ -93,8 +93,8 @@ namespace Native.Sdk.Cqp.Model
 		/// <returns>表示当前对象的字符串</returns>
 		public override string ToString ()
 		{
-			StringBuilder builder = new StringBuilder ();
-			foreach (FriendInfo item in this)
+			var builder = new StringBuilder ();
+			foreach (var item in this)
 			{
 				builder.AppendFormat ("QQ: {0}{1}", item.QQ.Id, Environment.NewLine);
 				builder.AppendFormat ("\t昵称: {0}{1}", item.Nick, Environment.NewLine);
@@ -125,8 +125,8 @@ namespace Native.Sdk.Cqp.Model
 				this._list = new List<FriendInfo> ();
 			}
 
-			int count = reader.ReadInt32_Ex ();
-			for (int i = 0; i < count; i++)
+			var count = reader.ReadInt32_Ex ();
+			for (var i = 0; i < count; i++)
 			{
 				if (reader.Length () <= 0)
 				{

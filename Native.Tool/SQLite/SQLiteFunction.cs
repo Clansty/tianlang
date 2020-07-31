@@ -171,7 +171,7 @@ namespace System.Data.SQLite
 
                 IDisposable disp;
 
-                foreach (KeyValuePair<IntPtr, AggregateData> kv in _contextDataList)
+                foreach (var kv in _contextDataList)
                 {
                     disp = kv.Value._data as IDisposable;
                     if (disp != null)
@@ -304,15 +304,15 @@ namespace System.Data.SQLite
     /// <returns>An object array of the arguments once they've been converted to .NET values</returns>
     internal object[] ConvertParams(int nArgs, IntPtr argsptr)
     {
-      object[] parms = new object[nArgs];
+      var parms = new object[nArgs];
 #if !PLATFORM_COMPACTFRAMEWORK
-      IntPtr[] argint = new IntPtr[nArgs];
+      var argint = new IntPtr[nArgs];
 #else
       int[] argint = new int[nArgs];
 #endif
       Marshal.Copy(argsptr, argint, 0, nArgs);
 
-      for (int n = 0; n < nArgs; n++)
+      for (var n = 0; n < nArgs; n++)
       {
         switch (_base.GetParamValueType((IntPtr)argint[n]))
         {
@@ -360,7 +360,7 @@ namespace System.Data.SQLite
         return;
       }
 
-      Type t = returnValue.GetType();
+      var t = returnValue.GetType();
       if (t == typeof(DateTime))
       {
         _base.ReturnText(context, _base.ToString((DateTime)returnValue));
@@ -368,7 +368,7 @@ namespace System.Data.SQLite
       }
       else
       {
-        Exception r = returnValue as Exception;
+        var r = returnValue as Exception;
 
         if (r != null)
         {
@@ -543,7 +543,7 @@ namespace System.Data.SQLite
 
             if (_base != null)
             {
-                IntPtr nAux = _base.AggregateContext(context);
+                var nAux = _base.AggregateContext(context);
 
                 if ((_contextDataList != null) &&
                     !_contextDataList.TryGetValue(nAux, out data))
@@ -599,7 +599,7 @@ namespace System.Data.SQLite
 
             if (_base != null)
             {
-                IntPtr n = _base.AggregateContext(context);
+                var n = _base.AggregateContext(context);
                 AggregateData aggData;
 
                 if ((_contextDataList != null) &&
@@ -617,7 +617,7 @@ namespace System.Data.SQLite
             }
             finally
             {
-                IDisposable disp = obj as IDisposable;
+                var disp = obj as IDisposable;
                 if (disp != null) disp.Dispose(); /* throw */
             }
         }
@@ -661,21 +661,21 @@ namespace System.Data.SQLite
           return;
 
         SQLiteFunctionAttribute at;
-        System.Reflection.Assembly[] arAssemblies = System.AppDomain.CurrentDomain.GetAssemblies();
-        int w = arAssemblies.Length;
-        System.Reflection.AssemblyName sqlite = System.Reflection.Assembly.GetExecutingAssembly().GetName();
+        var arAssemblies = System.AppDomain.CurrentDomain.GetAssemblies();
+        var w = arAssemblies.Length;
+        var sqlite = System.Reflection.Assembly.GetExecutingAssembly().GetName();
 
-        for (int n = 0; n < w; n++)
+        for (var n = 0; n < w; n++)
         {
           Type[] arTypes;
-          bool found = false;
+          var found = false;
           System.Reflection.AssemblyName[] references;
           try
           {
             // Inspect only assemblies that reference SQLite
             references = arAssemblies[n].GetReferencedAssemblies();
-            int t = references.Length;
-            for (int z = 0; z < t; z++)
+            var t = references.Length;
+            for (var z = 0; z < t; z++)
             {
               if (references[z].Name == sqlite.Name)
               {
@@ -694,14 +694,14 @@ namespace System.Data.SQLite
             arTypes = e.Types;
           }
 
-          int v = arTypes.Length;
-          for (int x = 0; x < v; x++)
+          var v = arTypes.Length;
+          for (var x = 0; x < v; x++)
           {
             if (arTypes[x] == null) continue;
 
-            object[] arAtt = arTypes[x].GetCustomAttributes(typeof(SQLiteFunctionAttribute), false);
-            int u = arAtt.Length;
-            for (int y = 0; y < u; y++)
+            var arAtt = arTypes[x].GetCustomAttributes(typeof(SQLiteFunctionAttribute), false);
+            var u = arAtt.Length;
+            for (var y = 0; y < u; y++)
             {
               at = arAtt[y] as SQLiteFunctionAttribute;
               if (at != null)
@@ -726,12 +726,12 @@ namespace System.Data.SQLite
     /// <param name="typ">The type of the function to register</param>
     public static void RegisterFunction(Type typ)
     {
-        object[] arAtt = typ.GetCustomAttributes(
+        var arAtt = typ.GetCustomAttributes(
             typeof(SQLiteFunctionAttribute), false);
 
-        for (int y = 0; y < arAtt.Length; y++)
+        for (var y = 0; y < arAtt.Length; y++)
         {
-            SQLiteFunctionAttribute at = arAtt[y] as SQLiteFunctionAttribute;
+            var at = arAtt[y] as SQLiteFunctionAttribute;
 
             if (at == null)
                 continue;
@@ -782,7 +782,7 @@ namespace System.Data.SQLite
         Delegate callback2
         )
     {
-        SQLiteFunctionAttribute at = new SQLiteFunctionAttribute(
+        var at = new SQLiteFunctionAttribute(
             name, argumentCount, functionType);
 
         at.InstanceType = instanceType;
@@ -815,7 +815,7 @@ namespace System.Data.SQLite
 
         if (_registeredFunctions.TryGetValue(at, out oldValue))
         {
-            IDisposable disposable = oldValue as IDisposable;
+            var disposable = oldValue as IDisposable;
 
             if (disposable != null)
             {
@@ -900,10 +900,10 @@ namespace System.Data.SQLite
         IDictionary<SQLiteFunctionAttribute, SQLiteFunction> lFunctions =
             new Dictionary<SQLiteFunctionAttribute, SQLiteFunction>();
 
-        foreach (KeyValuePair<SQLiteFunctionAttribute, object> pair
+        foreach (var pair
                 in _registeredFunctions)
         {
-            SQLiteFunctionAttribute pr = pair.Key;
+            var pr = pair.Key;
 
             if (pr == null)
                 continue;
@@ -944,20 +944,20 @@ namespace System.Data.SQLite
         if (sqlbase == null)
             return false;
 
-        IDictionary<SQLiteFunctionAttribute, SQLiteFunction> lFunctions =
+        var lFunctions =
             sqlbase.Functions;
 
         if (lFunctions == null)
             return false;
 
-        bool result = true;
+        var result = true;
 
         if (registered)
         {
-            foreach (KeyValuePair<SQLiteFunctionAttribute, object> pair
+            foreach (var pair
                     in _registeredFunctions)
             {
-                SQLiteFunctionAttribute pr = pair.Key;
+                var pr = pair.Key;
 
                 if (pr == null)
                     continue;
@@ -982,15 +982,15 @@ namespace System.Data.SQLite
             lFunctions = new Dictionary<SQLiteFunctionAttribute, SQLiteFunction>(
                 lFunctions);
 
-            foreach (KeyValuePair<SQLiteFunctionAttribute, SQLiteFunction> pair
+            foreach (var pair
                     in lFunctions)
             {
-                SQLiteFunctionAttribute pr = pair.Key;
+                var pr = pair.Key;
 
                 if (pr == null)
                     continue;
 
-                SQLiteFunction f = pair.Value;
+                var f = pair.Value;
 
                 if ((f != null) &&
                     UnbindFunction(sqlbase, pr, f, flags))
@@ -1042,7 +1042,7 @@ namespace System.Data.SQLite
         if (function == null)
             throw new ArgumentNullException("function");
 
-        FunctionType functionType = functionAttribute.FuncType;
+        var functionType = functionAttribute.FuncType;
 
         function._base = sqliteBase;
         function._flags = flags;
@@ -1062,11 +1062,11 @@ namespace System.Data.SQLite
         function._CompareFunc16 = (functionType == FunctionType.Collation) ?
             new SQLiteCollation(function.CompareCallback16) : null;
 
-        string name = functionAttribute.Name;
+        var name = functionAttribute.Name;
 
         if (functionType != FunctionType.Collation)
         {
-            bool needCollSeq = (function is SQLiteFunctionEx);
+            var needCollSeq = (function is SQLiteFunctionEx);
 
             sqliteBase.CreateFunction(
                 name, functionAttribute.Arguments, needCollSeq,
@@ -1116,12 +1116,12 @@ namespace System.Data.SQLite
         if (function == null)
             throw new ArgumentNullException("function");
 
-        FunctionType functionType = functionAttribute.FuncType;
-        string name = functionAttribute.Name;
+        var functionType = functionAttribute.FuncType;
+        var name = functionAttribute.Name;
 
         if (functionType != FunctionType.Collation)
         {
-            bool needCollSeq = (function is SQLiteFunctionEx);
+            var needCollSeq = (function is SQLiteFunctionEx);
 
             return sqliteBase.CreateFunction(
                 name, functionAttribute.Arguments, needCollSeq,
@@ -1340,7 +1340,7 @@ namespace System.Data.SQLite
           bool earlyBound
           )
       {
-          object[] newArgs = new object[] { "Invoke", args };
+          var newArgs = new object[] { "Invoke", args };
 
           if (!earlyBound)
               newArgs = new object[] { newArgs }; // WRAP
@@ -1380,7 +1380,7 @@ namespace System.Data.SQLite
           bool earlyBound
           )
       {
-          object[] newArgs = new object[] {
+          var newArgs = new object[] {
               "Step", args, stepNumber, contextData
           };
 
@@ -1454,7 +1454,7 @@ namespace System.Data.SQLite
           bool earlyBound
           )
       {
-          object[] newArgs = new object[] { "Final", contextData };
+          var newArgs = new object[] { "Final", contextData };
 
           if (!earlyBound)
               newArgs = new object[] { newArgs }; // WRAP
@@ -1488,7 +1488,7 @@ namespace System.Data.SQLite
           bool earlyBound
           )
       {
-          object[] newArgs = new object[] { "Compare", param1, param2 };
+          var newArgs = new object[] { "Compare", param1, param2 };
 
           if (!earlyBound)
               newArgs = new object[] { newArgs }; // WRAP
@@ -1554,7 +1554,7 @@ namespace System.Data.SQLite
                   NoCallbackError, "Invoke"));
           }
 
-          SQLiteInvokeDelegate invokeDelegate =
+          var invokeDelegate =
               callback1 as SQLiteInvokeDelegate;
 
           if (invokeDelegate != null)
@@ -1604,7 +1604,7 @@ namespace System.Data.SQLite
                   NoCallbackError, "Step"));
           }
 
-          SQLiteStepDelegate stepDelegate = callback1 as SQLiteStepDelegate;
+          var stepDelegate = callback1 as SQLiteStepDelegate;
 
           if (stepDelegate != null)
           {
@@ -1614,7 +1614,7 @@ namespace System.Data.SQLite
           else
           {
 #if !PLATFORM_COMPACTFRAMEWORK
-              object[] newArgs = GetStepArgs(
+              var newArgs = GetStepArgs(
                   args, stepNumber, contextData, false);
 
               /* IGNORED */
@@ -1653,7 +1653,7 @@ namespace System.Data.SQLite
                   NoCallbackError, "Final"));
           }
 
-          SQLiteFinalDelegate finalDelegate = callback2 as SQLiteFinalDelegate;
+          var finalDelegate = callback2 as SQLiteFinalDelegate;
 
           if (finalDelegate != null)
           {
@@ -1703,7 +1703,7 @@ namespace System.Data.SQLite
                   NoCallbackError, "Compare"));
           }
 
-          SQLiteCompareDelegate compareDelegate =
+          var compareDelegate =
               callback1 as SQLiteCompareDelegate;
 
           if (compareDelegate != null)
@@ -1714,7 +1714,7 @@ namespace System.Data.SQLite
           else
           {
 #if !PLATFORM_COMPACTFRAMEWORK
-              object result = callback1.DynamicInvoke(GetCompareArgs(
+              var result = callback1.DynamicInvoke(GetCompareArgs(
                   param1, param2, false)); /* throw */
 
               if (result is int)

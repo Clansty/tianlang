@@ -813,15 +813,15 @@ namespace System.Data.SQLite
             if (statement != IntPtr.Zero)
                 return;
 
-            IntPtr pSql = IntPtr.Zero;
+            var pSql = IntPtr.Zero;
 
             try
             {
-                int nSql = 0;
+                var nSql = 0;
 
                 pSql = SQLiteString.Utf8IntPtrFromString(LockNopSql, ref nSql);
 
-                IntPtr pRemain = IntPtr.Zero;
+                var pRemain = IntPtr.Zero;
 
 #if !SQLITE_STANDARD
                 int nRemain = 0;
@@ -832,9 +832,9 @@ namespace System.Data.SQLite
                     ref nRemain);
 #else
 #if USE_PREPARE_V2
-                string functionName = "sqlite3_prepare_v2";
+                var functionName = "sqlite3_prepare_v2";
 
-                SQLiteErrorCode rc = UnsafeNativeMethods.sqlite3_prepare_v2(
+                var rc = UnsafeNativeMethods.sqlite3_prepare_v2(
                     GetIntPtr(), pSql, nSql, ref statement, ref pRemain);
 #else
                 string functionName = "sqlite3_prepare";
@@ -878,9 +878,9 @@ namespace System.Data.SQLite
             SQLiteErrorCode rc = UnsafeNativeMethods.sqlite3_finalize_interop(
                 statement);
 #else
-            string functionName = "sqlite3_finalize";
+            var functionName = "sqlite3_finalize";
 
-            SQLiteErrorCode rc = UnsafeNativeMethods.sqlite3_finalize(
+            var rc = UnsafeNativeMethods.sqlite3_finalize(
                 statement);
 #endif
 
@@ -1104,7 +1104,7 @@ namespace System.Data.SQLite
             CheckDisposed();
             CheckHandle();
 
-            SQLiteErrorCode rc = UnsafeNativeMethods.sqlite3changeset_next(
+            var rc = UnsafeNativeMethods.sqlite3changeset_next(
                 iterator);
 
             switch (rc)
@@ -1321,19 +1321,19 @@ namespace System.Data.SQLite
             SQLiteSessionHelpers.CheckRawData(rawData);
 
             SQLiteMemoryChangeSetIterator result = null;
-            IntPtr pData = IntPtr.Zero;
-            IntPtr iterator = IntPtr.Zero;
+            var pData = IntPtr.Zero;
+            var iterator = IntPtr.Zero;
 
             try
             {
-                int nData = 0;
+                var nData = 0;
 
                 pData = SQLiteBytes.ToIntPtr(rawData, ref nData);
 
                 if (pData == IntPtr.Zero)
                     throw new SQLiteException(SQLiteErrorCode.NoMem, null);
 
-                SQLiteErrorCode rc = UnsafeNativeMethods.sqlite3changeset_start(
+                var rc = UnsafeNativeMethods.sqlite3changeset_start(
                     ref iterator, nData, pData);
 
                 if (rc != SQLiteErrorCode.Ok)
@@ -1389,19 +1389,19 @@ namespace System.Data.SQLite
             SQLiteSessionHelpers.CheckRawData(rawData);
 
             SQLiteMemoryChangeSetIterator result = null;
-            IntPtr pData = IntPtr.Zero;
-            IntPtr iterator = IntPtr.Zero;
+            var pData = IntPtr.Zero;
+            var iterator = IntPtr.Zero;
 
             try
             {
-                int nData = 0;
+                var nData = 0;
 
                 pData = SQLiteBytes.ToIntPtr(rawData, ref nData);
 
                 if (pData == IntPtr.Zero)
                     throw new SQLiteException(SQLiteErrorCode.NoMem, null);
 
-                SQLiteErrorCode rc = UnsafeNativeMethods.sqlite3changeset_start_v2(
+                var rc = UnsafeNativeMethods.sqlite3changeset_start_v2(
                     ref iterator, nData, pData, flags);
 
                 if (rc != SQLiteErrorCode.Ok)
@@ -1582,13 +1582,13 @@ namespace System.Data.SQLite
 
             SQLiteStreamAdapter streamAdapter = null;
             SQLiteStreamChangeSetIterator result = null;
-            IntPtr iterator = IntPtr.Zero;
+            var iterator = IntPtr.Zero;
 
             try
             {
                 streamAdapter = new SQLiteStreamAdapter(stream, connectionFlags);
 
-                SQLiteErrorCode rc = UnsafeNativeMethods.sqlite3changeset_start_strm(
+                var rc = UnsafeNativeMethods.sqlite3changeset_start_strm(
                     ref iterator, streamAdapter.GetInputDelegate(), IntPtr.Zero);
 
                 if (rc != SQLiteErrorCode.Ok)
@@ -1653,13 +1653,13 @@ namespace System.Data.SQLite
 
             SQLiteStreamAdapter streamAdapter = null;
             SQLiteStreamChangeSetIterator result = null;
-            IntPtr iterator = IntPtr.Zero;
+            var iterator = IntPtr.Zero;
 
             try
             {
                 streamAdapter = new SQLiteStreamAdapter(stream, connectionFlags);
 
-                SQLiteErrorCode rc = UnsafeNativeMethods.sqlite3changeset_start_v2_strm(
+                var rc = UnsafeNativeMethods.sqlite3changeset_start_v2_strm(
                     ref iterator, streamAdapter.GetInputDelegate(), IntPtr.Zero,
                     startFlags);
 
@@ -1908,15 +1908,15 @@ namespace System.Data.SQLite
         {
             try
             {
-                Stream localStream = stream;
+                var localStream = stream;
 
                 if (localStream == null)
                     return SQLiteErrorCode.Misuse;
 
                 if (nData > 0)
                 {
-                    byte[] bytes = new byte[nData];
-                    int nRead = localStream.Read(bytes, 0, nData);
+                    var bytes = new byte[nData];
+                    var nRead = localStream.Read(bytes, 0, nData);
 
                     if ((nRead > 0) && (pData != IntPtr.Zero))
                         Marshal.Copy(bytes, 0, pData, nRead);
@@ -1980,14 +1980,14 @@ namespace System.Data.SQLite
         {
             try
             {
-                Stream localStream = stream;
+                var localStream = stream;
 
                 if (localStream == null)
                     return SQLiteErrorCode.Misuse;
 
                 if (nData > 0)
                 {
-                    byte[] bytes = new byte[nData];
+                    var bytes = new byte[nData];
 
                     if (pData != IntPtr.Zero)
                         Marshal.Copy(pData, bytes, 0, nData);
@@ -2188,10 +2188,10 @@ namespace System.Data.SQLite
             if (streamAdapters == null)
                 return;
 
-            foreach (KeyValuePair<Stream, SQLiteStreamAdapter> pair
+            foreach (var pair
                     in streamAdapters)
             {
-                SQLiteStreamAdapter streamAdapter = pair.Value;
+                var streamAdapter = pair.Value;
 
                 if (streamAdapter == null)
                     continue;
@@ -2402,7 +2402,7 @@ namespace System.Data.SQLite
             if (changeGroup != IntPtr.Zero)
                 return;
 
-            SQLiteErrorCode rc = UnsafeNativeMethods.sqlite3changegroup_new(
+            var rc = UnsafeNativeMethods.sqlite3changegroup_new(
                 ref changeGroup);
 
             if (rc != SQLiteErrorCode.Ok)
@@ -2469,15 +2469,15 @@ namespace System.Data.SQLite
 
             SQLiteSessionHelpers.CheckRawData(rawData);
 
-            IntPtr pData = IntPtr.Zero;
+            var pData = IntPtr.Zero;
 
             try
             {
-                int nData = 0;
+                var nData = 0;
 
                 pData = SQLiteBytes.ToIntPtr(rawData, ref nData);
 
-                SQLiteErrorCode rc = UnsafeNativeMethods.sqlite3changegroup_add(
+                var rc = UnsafeNativeMethods.sqlite3changegroup_add(
                     changeGroup, nData, pData);
 
                 if (rc != SQLiteErrorCode.Ok)
@@ -2514,7 +2514,7 @@ namespace System.Data.SQLite
             if (stream == null)
                 throw new ArgumentNullException("stream");
 
-            SQLiteStreamAdapter streamAdapter = GetStreamAdapter(stream);
+            var streamAdapter = GetStreamAdapter(stream);
 
             if (streamAdapter == null)
             {
@@ -2522,7 +2522,7 @@ namespace System.Data.SQLite
                     "could not get or create adapter for input stream");
             }
 
-            SQLiteErrorCode rc = UnsafeNativeMethods.sqlite3changegroup_add_strm(
+            var rc = UnsafeNativeMethods.sqlite3changegroup_add_strm(
                 changeGroup, streamAdapter.GetInputDelegate(), IntPtr.Zero);
 
             if (rc != SQLiteErrorCode.Ok)
@@ -2546,13 +2546,13 @@ namespace System.Data.SQLite
             CheckDisposed();
             CheckHandle();
 
-            IntPtr pData = IntPtr.Zero;
+            var pData = IntPtr.Zero;
 
             try
             {
-                int nData = 0;
+                var nData = 0;
 
-                SQLiteErrorCode rc = UnsafeNativeMethods.sqlite3changegroup_output(
+                var rc = UnsafeNativeMethods.sqlite3changegroup_output(
                     changeGroup, ref nData, ref pData);
 
                 if (rc != SQLiteErrorCode.Ok)
@@ -2590,7 +2590,7 @@ namespace System.Data.SQLite
             if (stream == null)
                 throw new ArgumentNullException("stream");
 
-            SQLiteStreamAdapter streamAdapter = GetStreamAdapter(stream);
+            var streamAdapter = GetStreamAdapter(stream);
 
             if (streamAdapter == null)
             {
@@ -2598,7 +2598,7 @@ namespace System.Data.SQLite
                     "could not get or create adapter for output stream");
             }
 
-            SQLiteErrorCode rc = UnsafeNativeMethods.sqlite3changegroup_output_strm(
+            var rc = UnsafeNativeMethods.sqlite3changegroup_output_strm(
                 changeGroup, streamAdapter.GetOutputDelegate(), IntPtr.Zero);
 
             if (rc != SQLiteErrorCode.Ok)
@@ -3128,13 +3128,13 @@ namespace System.Data.SQLite
             CheckDisposed();
             CheckHandle();
 
-            IntPtr pData = IntPtr.Zero;
+            var pData = IntPtr.Zero;
 
             try
             {
-                int nData = 0;
+                var nData = 0;
 
-                SQLiteErrorCode rc = UnsafeNativeMethods.sqlite3session_changeset(
+                var rc = UnsafeNativeMethods.sqlite3session_changeset(
                     session, ref nData, ref pData);
 
                 if (rc != SQLiteErrorCode.Ok)
@@ -3172,7 +3172,7 @@ namespace System.Data.SQLite
             if (stream == null)
                 throw new ArgumentNullException("stream");
 
-            SQLiteStreamAdapter streamAdapter = GetStreamAdapter(stream);
+            var streamAdapter = GetStreamAdapter(stream);
 
             if (streamAdapter == null)
             {
@@ -3180,7 +3180,7 @@ namespace System.Data.SQLite
                     "could not get or create adapter for output stream");
             }
 
-            SQLiteErrorCode rc = UnsafeNativeMethods.sqlite3session_changeset_strm(
+            var rc = UnsafeNativeMethods.sqlite3session_changeset_strm(
                 session, streamAdapter.GetOutputDelegate(), IntPtr.Zero);
 
             if (rc != SQLiteErrorCode.Ok)
@@ -3204,13 +3204,13 @@ namespace System.Data.SQLite
             CheckDisposed();
             CheckHandle();
 
-            IntPtr pData = IntPtr.Zero;
+            var pData = IntPtr.Zero;
 
             try
             {
-                int nData = 0;
+                var nData = 0;
 
-                SQLiteErrorCode rc = UnsafeNativeMethods.sqlite3session_patchset(
+                var rc = UnsafeNativeMethods.sqlite3session_patchset(
                     session, ref nData, ref pData);
 
                 if (rc != SQLiteErrorCode.Ok)
@@ -3248,7 +3248,7 @@ namespace System.Data.SQLite
             if (stream == null)
                 throw new ArgumentNullException("stream");
 
-            SQLiteStreamAdapter streamAdapter = GetStreamAdapter(stream);
+            var streamAdapter = GetStreamAdapter(stream);
 
             if (streamAdapter == null)
             {
@@ -3256,7 +3256,7 @@ namespace System.Data.SQLite
                     "could not get or create adapter for output stream");
             }
 
-            SQLiteErrorCode rc = UnsafeNativeMethods.sqlite3session_patchset_strm(
+            var rc = UnsafeNativeMethods.sqlite3session_patchset_strm(
                 session, streamAdapter.GetOutputDelegate(), IntPtr.Zero);
 
             if (rc != SQLiteErrorCode.Ok)
@@ -3292,7 +3292,7 @@ namespace System.Data.SQLite
             if (tableName == null)
                 throw new ArgumentNullException("tableName");
 
-            IntPtr pError = IntPtr.Zero;
+            var pError = IntPtr.Zero;
 
             try
             {
@@ -3577,7 +3577,7 @@ namespace System.Data.SQLite
             {
                 try
                 {
-                    ISQLiteChangeSetMetadataItem item = CreateMetadataItem(
+                    var item = CreateMetadataItem(
                         iterator);
 
                     if (item == null)
@@ -3794,18 +3794,18 @@ namespace System.Data.SQLite
 
             SQLiteSessionHelpers.CheckRawData(rawData);
 
-            IntPtr pInData = IntPtr.Zero;
-            IntPtr pOutData = IntPtr.Zero;
+            var pInData = IntPtr.Zero;
+            var pOutData = IntPtr.Zero;
 
             try
             {
-                int nInData = 0;
+                var nInData = 0;
 
                 pInData = SQLiteBytes.ToIntPtr(rawData, ref nInData);
 
-                int nOutData = 0;
+                var nOutData = 0;
 
-                SQLiteErrorCode rc = UnsafeNativeMethods.sqlite3changeset_invert(
+                var rc = UnsafeNativeMethods.sqlite3changeset_invert(
                     nInData, pInData, ref nOutData, ref pOutData);
 
                 if (rc != SQLiteErrorCode.Ok)
@@ -3853,7 +3853,7 @@ namespace System.Data.SQLite
 
             SQLiteSessionHelpers.CheckRawData(rawData);
 
-            SQLiteMemoryChangeSet memoryChangeSet =
+            var memoryChangeSet =
                 changeSet as SQLiteMemoryChangeSet;
 
             if (memoryChangeSet == null)
@@ -3864,24 +3864,24 @@ namespace System.Data.SQLite
 
             SQLiteSessionHelpers.CheckRawData(memoryChangeSet.rawData);
 
-            IntPtr pInData1 = IntPtr.Zero;
-            IntPtr pInData2 = IntPtr.Zero;
-            IntPtr pOutData = IntPtr.Zero;
+            var pInData1 = IntPtr.Zero;
+            var pInData2 = IntPtr.Zero;
+            var pOutData = IntPtr.Zero;
 
             try
             {
-                int nInData1 = 0;
+                var nInData1 = 0;
 
                 pInData1 = SQLiteBytes.ToIntPtr(rawData, ref nInData1);
 
-                int nInData2 = 0;
+                var nInData2 = 0;
 
                 pInData2 = SQLiteBytes.ToIntPtr(
                     memoryChangeSet.rawData, ref nInData2);
 
-                int nOutData = 0;
+                var nOutData = 0;
 
-                SQLiteErrorCode rc = UnsafeNativeMethods.sqlite3changeset_concat(
+                var rc = UnsafeNativeMethods.sqlite3changeset_concat(
                     nInData1, pInData1, nInData2, pInData2, ref nOutData,
                     ref pOutData);
 
@@ -3971,21 +3971,21 @@ namespace System.Data.SQLite
             if (conflictCallback == null)
                 throw new ArgumentNullException("conflictCallback");
 
-            UnsafeNativeMethods.xSessionFilter xFilter = GetDelegate(
+            var xFilter = GetDelegate(
                 tableFilterCallback, clientData);
 
-            UnsafeNativeMethods.xSessionConflict xConflict = GetDelegate(
+            var xConflict = GetDelegate(
                 conflictCallback, clientData);
 
-            IntPtr pData = IntPtr.Zero;
+            var pData = IntPtr.Zero;
 
             try
             {
-                int nData = 0;
+                var nData = 0;
 
                 pData = SQLiteBytes.ToIntPtr(rawData, ref nData);
 
-                SQLiteErrorCode rc = UnsafeNativeMethods.sqlite3changeset_apply(
+                var rc = UnsafeNativeMethods.sqlite3changeset_apply(
                     GetIntPtr(), nData, pData, xFilter, xConflict, IntPtr.Zero);
 
                 if (rc != SQLiteErrorCode.Ok)
@@ -4301,7 +4301,7 @@ namespace System.Data.SQLite
             CheckInputStream();
             CheckOutputStream();
 
-            SQLiteErrorCode rc = UnsafeNativeMethods.sqlite3changeset_invert_strm(
+            var rc = UnsafeNativeMethods.sqlite3changeset_invert_strm(
                 inputStreamAdapter.GetInputDelegate(), IntPtr.Zero,
                 outputStreamAdapter.GetOutputDelegate(), IntPtr.Zero);
 
@@ -4332,7 +4332,7 @@ namespace System.Data.SQLite
             CheckInputStream();
             CheckOutputStream();
 
-            SQLiteStreamChangeSet streamChangeSet =
+            var streamChangeSet =
                 changeSet as SQLiteStreamChangeSet;
 
             if (streamChangeSet == null)
@@ -4343,7 +4343,7 @@ namespace System.Data.SQLite
 
             streamChangeSet.CheckInputStream();
 
-            SQLiteErrorCode rc = UnsafeNativeMethods.sqlite3changeset_concat_strm(
+            var rc = UnsafeNativeMethods.sqlite3changeset_concat_strm(
                 inputStreamAdapter.GetInputDelegate(), IntPtr.Zero,
                 streamChangeSet.inputStreamAdapter.GetInputDelegate(),
                 IntPtr.Zero, outputStreamAdapter.GetOutputDelegate(),
@@ -4410,13 +4410,13 @@ namespace System.Data.SQLite
             if (conflictCallback == null)
                 throw new ArgumentNullException("conflictCallback");
 
-            UnsafeNativeMethods.xSessionFilter xFilter = GetDelegate(
+            var xFilter = GetDelegate(
                 tableFilterCallback, clientData);
 
-            UnsafeNativeMethods.xSessionConflict xConflict = GetDelegate(
+            var xConflict = GetDelegate(
                 conflictCallback, clientData);
 
-            SQLiteErrorCode rc = UnsafeNativeMethods.sqlite3changeset_apply_strm(
+            var rc = UnsafeNativeMethods.sqlite3changeset_apply_strm(
                 GetIntPtr(), inputStreamAdapter.GetInputDelegate(), IntPtr.Zero,
                 xFilter, xConflict, IntPtr.Zero);
 
@@ -5145,12 +5145,12 @@ namespace System.Data.SQLite
             {
                 CheckIterator();
 
-                IntPtr pTblName = IntPtr.Zero;
-                SQLiteAuthorizerActionCode op = SQLiteAuthorizerActionCode.None;
-                int bIndirect = 0;
-                int nColumns = 0;
+                var pTblName = IntPtr.Zero;
+                var op = SQLiteAuthorizerActionCode.None;
+                var bIndirect = 0;
+                var nColumns = 0;
 
-                SQLiteErrorCode rc = UnsafeNativeMethods.sqlite3changeset_op(
+                var rc = UnsafeNativeMethods.sqlite3changeset_op(
                     iterator.GetIntPtr(), ref pTblName, ref nColumns, ref op,
                     ref bIndirect);
 
@@ -5177,10 +5177,10 @@ namespace System.Data.SQLite
             {
                 CheckIterator();
 
-                IntPtr pPrimaryKeys = IntPtr.Zero;
-                int nColumns = 0;
+                var pPrimaryKeys = IntPtr.Zero;
+                var nColumns = 0;
 
-                SQLiteErrorCode rc = UnsafeNativeMethods.sqlite3changeset_pk(
+                var rc = UnsafeNativeMethods.sqlite3changeset_pk(
                     iterator.GetIntPtr(), ref pPrimaryKeys, ref nColumns);
 
                 if (rc != SQLiteErrorCode.Ok)
@@ -5192,7 +5192,7 @@ namespace System.Data.SQLite
                 {
                     primaryKeyColumns = new bool[nColumns];
 
-                    for (int index = 0; index < bytes.Length; index++)
+                    for (var index = 0; index < bytes.Length; index++)
                         primaryKeyColumns[index] = (bytes[index] != 0);
                 }
             }
@@ -5211,9 +5211,9 @@ namespace System.Data.SQLite
             {
                 CheckIterator();
 
-                int conflicts = 0;
+                var conflicts = 0;
 
-                SQLiteErrorCode rc =
+                var rc =
                     UnsafeNativeMethods.sqlite3changeset_fk_conflicts(
                         iterator.GetIntPtr(), ref conflicts);
 
@@ -5406,9 +5406,9 @@ namespace System.Data.SQLite
             CheckDisposed();
             CheckIterator();
 
-            IntPtr pValue = IntPtr.Zero;
+            var pValue = IntPtr.Zero;
 
-            SQLiteErrorCode rc = UnsafeNativeMethods.sqlite3changeset_old(
+            var rc = UnsafeNativeMethods.sqlite3changeset_old(
                 iterator.GetIntPtr(), columnIndex, ref pValue);
 
             return SQLiteValue.FromIntPtr(pValue);
@@ -5437,9 +5437,9 @@ namespace System.Data.SQLite
             CheckDisposed();
             CheckIterator();
 
-            IntPtr pValue = IntPtr.Zero;
+            var pValue = IntPtr.Zero;
 
-            SQLiteErrorCode rc = UnsafeNativeMethods.sqlite3changeset_new(
+            var rc = UnsafeNativeMethods.sqlite3changeset_new(
                 iterator.GetIntPtr(), columnIndex, ref pValue);
 
             return SQLiteValue.FromIntPtr(pValue);
@@ -5468,9 +5468,9 @@ namespace System.Data.SQLite
             CheckDisposed();
             CheckIterator();
 
-            IntPtr pValue = IntPtr.Zero;
+            var pValue = IntPtr.Zero;
 
-            SQLiteErrorCode rc = UnsafeNativeMethods.sqlite3changeset_conflict(
+            var rc = UnsafeNativeMethods.sqlite3changeset_conflict(
                 iterator.GetIntPtr(), columnIndex, ref pValue);
 
             return SQLiteValue.FromIntPtr(pValue);

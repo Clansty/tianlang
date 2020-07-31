@@ -93,7 +93,7 @@ namespace System.Data.SQLite
 
             if (_cnn._transactionLevel - 1 == 0)
             {
-                using (SQLiteCommand cmd = _cnn.CreateCommand())
+                using (var cmd = _cnn.CreateCommand())
                 {
                     cmd.CommandText = "COMMIT;";
                     cmd.ExecuteNonQuery();
@@ -118,7 +118,7 @@ namespace System.Data.SQLite
             {
                 try
                 {
-                    using (SQLiteCommand cmd = _cnn.CreateCommand())
+                    using (var cmd = _cnn.CreateCommand())
                     {
                         if (!deferredLock)
                             cmd.CommandText = "BEGIN IMMEDIATE;";
@@ -151,13 +151,13 @@ namespace System.Data.SQLite
             bool throwError
             )
         {
-            SQLiteConnection cnn = Interlocked.Exchange(ref _cnn, null);
+            var cnn = Interlocked.Exchange(ref _cnn, null);
 
             if (cnn != null)
             {
                 try
                 {
-                    using (SQLiteCommand cmd = cnn.CreateCommand())
+                    using (var cmd = cnn.CreateCommand())
                     {
                         cmd.CommandText = "ROLLBACK;";
                         cmd.ExecuteNonQuery();

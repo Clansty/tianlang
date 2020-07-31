@@ -22,9 +22,9 @@ namespace Native.Sdk.Cqp.Expand
 		/// <returns></returns>
 		public static DateTime ToDateTime (this int unixTime)
 		{
-			DateTime dtStart = TimeZone.CurrentTimeZone.ToLocalTime (new DateTime (1970, 1, 1));
-			TimeSpan toNow = new TimeSpan (long.Parse (string.Format ("{0}0000000", unixTime)));
-			DateTime daTime = dtStart.Add (toNow);
+			var dtStart = TimeZone.CurrentTimeZone.ToLocalTime (new DateTime (1970, 1, 1));
+			var toNow = new TimeSpan (long.Parse (string.Format ("{0}0000000", unixTime)));
+			var daTime = dtStart.Add (toNow);
 			return daTime;
 		}
 
@@ -41,7 +41,7 @@ namespace Native.Sdk.Cqp.Expand
 				encoding = Encoding.Default;
 			}
 			
-			byte[] buffer = encoding.GetBytes (source);
+			var buffer = encoding.GetBytes (source);
 			return GCHandle.Alloc (buffer, GCHandleType.Pinned);
 		}
 
@@ -58,12 +58,12 @@ namespace Native.Sdk.Cqp.Expand
 				encoding = Encoding.Default;
 			}
 
-			int len = Kernel32.LstrlenA (strPtr);   //获取指针中数据的长度
+			var len = Kernel32.LstrlenA (strPtr);   //获取指针中数据的长度
 			if (len == 0)
 			{
 				return string.Empty;
 			}
-			byte[] buffer = new byte[len];
+			var buffer = new byte[len];
 			Marshal.Copy (strPtr, buffer, 0, len);
 			return encoding.GetString (buffer);
 		}
@@ -76,15 +76,15 @@ namespace Native.Sdk.Cqp.Expand
 		/// <returns>可发送的字符串</returns>
 		public static string ToSendString (this object[] objects)
 		{
-			StringBuilder builder = new StringBuilder ();
-			for (int i = 0; i < objects.Length; i++)
+			var builder = new StringBuilder ();
+			for (var i = 0; i < objects.Length; i++)
 			{
 				if (objects[i] == null)
 				{
 					throw new ArgumentNullException ("objects", string.Format ("第 {0} 个成员为 null", i));
 				}
 
-				IToSendString sendString = objects[i] as IToSendString;
+				var sendString = objects[i] as IToSendString;
 				if (sendString != null)
 				{
 					builder.Append (sendString.ToSendString ());
@@ -109,8 +109,8 @@ namespace Native.Sdk.Cqp.Expand
 				return string.Empty;
 			}
 
-			FieldInfo fieldInfo = value.GetType ().GetField (value.ToString ());
-			DescriptionAttribute attribute = fieldInfo.GetCustomAttribute<DescriptionAttribute> (false);
+			var fieldInfo = value.GetType ().GetField (value.ToString ());
+			var attribute = fieldInfo.GetCustomAttribute<DescriptionAttribute> (false);
 			return attribute.Description;
 		}
 	}

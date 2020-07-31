@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Native.Sdk.Cqp;
 
 namespace Clansty.tianlang
 {
@@ -12,12 +13,14 @@ namespace Clansty.tianlang
     {
         /*
          * TODO:
+         * 號碼全用 long
          * 新生群名片标准化
          * 检测是否成员来决定是否推荐大群/新生群
          * 新生群后台实名实现
          */
         
-        public const string Version = "3.0.17.5";//20200730
+        public const string Version = "3.1.17.5";//20200731
+        public static CQApi CQApi = null;
 
         public static void Write(string text, ConsoleColor color = ConsoleColor.White)
         {

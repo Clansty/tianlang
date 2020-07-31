@@ -136,7 +136,7 @@ namespace Native.Sdk.Cqp.Model
 		/// <returns>表示当前对象的字符串</returns>
 		public override string ToString ()
 		{
-			StringBuilder builder = new StringBuilder ();
+			var builder = new StringBuilder ();
 			builder.AppendFormat ("群: {0}{1}", this.Group.Id, Environment.NewLine);
 			builder.AppendFormat ("QQ: {0}{1}", this.QQ.Id, Environment.NewLine);
 			builder.AppendFormat ("昵称: {0}{1}", this.Nick, Environment.NewLine);
@@ -188,7 +188,7 @@ namespace Native.Sdk.Cqp.Model
 			this.MemberType = (QQGroupMemberType)reader.ReadInt32_Ex ();
 			this.IsBadRecord = reader.ReadInt32_Ex () == 1;
 			this.ExclusiveTitle = reader.ReadString_Ex (CQApi.DefaultEncoding);
-			int expTime = reader.ReadInt32_Ex ();
+			var expTime = reader.ReadInt32_Ex ();
 			if (expTime == -1)
 			{
 				this.ExclusiveTitleExpirationTime = null;

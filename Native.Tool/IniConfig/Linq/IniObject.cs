@@ -55,7 +55,7 @@ namespace Native.Tool.IniConfig.Linq
 			{
 				try
 				{
-					IniSection section = this.Where (temp => temp.Name.CompareTo (name) == 0).First ();
+					var section = this.Where (temp => temp.Name.CompareTo (name) == 0).First ();
 					this[this.IndexOf (section)] = value;
 				}
 				catch (ArgumentNullException ex)
@@ -148,10 +148,10 @@ namespace Native.Tool.IniConfig.Linq
 
 			using (TextWriter textWriter = new StreamWriter (fileUri.GetComponents (UriComponents.Path, UriFormat.Unescaped), false, this.Encoding))
 			{
-				foreach (IniSection section in this)
+				foreach (var section in this)
 				{
 					textWriter.WriteLine ("[{0}]", section.Name);
-					foreach (KeyValuePair<string, IniValue> pair in section)
+					foreach (var pair in section)
 					{
 						textWriter.WriteLine ("{0}={1}", pair.Key, pair.Value);
 					}
@@ -209,7 +209,7 @@ namespace Native.Tool.IniConfig.Linq
 			//解释 Ini 文件
 			using (TextReader textReader = new StreamReader (fileUri.GetComponents (UriComponents.Path, UriFormat.Unescaped), encoding))
 			{
-				IniObject iObj = ParseIni (textReader);
+				var iObj = ParseIni (textReader);
 				iObj.Path = fileUri;
 				return iObj;
 			}
@@ -240,7 +240,7 @@ namespace Native.Tool.IniConfig.Linq
 			if (!fileUri.IsAbsoluteUri)
 			{
 				// 处理原始字符串
-				StringBuilder urlBuilder = new StringBuilder (fileUri.OriginalString);
+				var urlBuilder = new StringBuilder (fileUri.OriginalString);
 				urlBuilder.Replace ("/", "\\");
 				while (urlBuilder[0] == '\\')
 				{
@@ -262,14 +262,14 @@ namespace Native.Tool.IniConfig.Linq
 		/// <returns></returns>
 		private static IniObject ParseIni (TextReader textReader)
 		{
-			IniObject iniObj = new IniObject ();
+			var iniObj = new IniObject ();
 			IniSection iniSect = null;
 			while (textReader.Peek () != -1)
 			{
-				string line = textReader.ReadLine ();
+				var line = textReader.ReadLine ();
 				if (string.IsNullOrEmpty (line) == false && Regices[2].IsMatch (line) == false)     //跳过空行和注释
 				{
-					Match match = Regices[0].Match (line);
+					var match = Regices[0].Match (line);
 					if (match.Success)
 					{
 						iniSect = new IniSection (match.Groups[1].Value);
@@ -295,13 +295,13 @@ namespace Native.Tool.IniConfig.Linq
 		/// <returns></returns>
 		public override string ToString ()
 		{
-			StringBuilder iniString = new StringBuilder ();
+			var iniString = new StringBuilder ();
 			using (TextWriter textWriter = new StringWriter (iniString))
 			{
-				foreach (IniSection section in this)
+				foreach (var section in this)
 				{
 					textWriter.WriteLine ("[{0}]", section.Name.Trim ());
-					foreach (KeyValuePair<string, IniValue> pair in section)
+					foreach (var pair in section)
 					{
 						textWriter.WriteLine ("{0}={1}", pair.Key.Trim (), pair.Value.Value.Trim ());
 					}

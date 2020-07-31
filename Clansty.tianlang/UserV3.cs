@@ -1,4 +1,5 @@
-﻿using ServiceStack.Redis;
+﻿using Native.Sdk.Cqp.Model;
+using ServiceStack.Redis;
 
 namespace Clansty.tianlang
 {
@@ -11,7 +12,43 @@ namespace Clansty.tianlang
             if (!Rds.SContains("users", uin))
             {
                 Rds.SAdd("users", uin);
-                IRedisClient client = Rds.GetClient();
+                var client = Rds.GetClient();
+                client.SetEntryInHashIfNotExists("u" + Uin, "name", "");
+                client.SetEntryInHashIfNotExists("u" + Uin, "nick", "");
+                client.SetEntryInHashIfNotExists("u" + Uin, "junior", "0");
+                client.SetEntryInHashIfNotExists("u" + Uin, "enrollment", "-1");
+                client.SetEntryInHashIfNotExists("u" + Uin, "step", "-1");
+                client.SetEntryInHashIfNotExists("u" + Uin, "status", "0");
+                client.SetEntryInHashIfNotExists("u" + Uin, "role", "0");
+                client.Dispose();
+            }
+        }
+
+        public User(long longuin)
+        {
+            Uin = longuin.ToString();
+            if (!Rds.SContains("users", Uin))
+            {
+                Rds.SAdd("users", Uin);
+                var client = Rds.GetClient();
+                client.SetEntryInHashIfNotExists("u" + Uin, "name", "");
+                client.SetEntryInHashIfNotExists("u" + Uin, "nick", "");
+                client.SetEntryInHashIfNotExists("u" + Uin, "junior", "0");
+                client.SetEntryInHashIfNotExists("u" + Uin, "enrollment", "-1");
+                client.SetEntryInHashIfNotExists("u" + Uin, "step", "-1");
+                client.SetEntryInHashIfNotExists("u" + Uin, "status", "0");
+                client.SetEntryInHashIfNotExists("u" + Uin, "role", "0");
+                client.Dispose();
+            }
+        }
+
+        public User(QQ eFromQq)
+        {
+            Uin = eFromQq;
+            if (!Rds.SContains("users", Uin))
+            {
+                Rds.SAdd("users", Uin);
+                var client = Rds.GetClient();
                 client.SetEntryInHashIfNotExists("u" + Uin, "name", "");
                 client.SetEntryInHashIfNotExists("u" + Uin, "nick", "");
                 client.SetEntryInHashIfNotExists("u" + Uin, "junior", "0");
@@ -156,7 +193,7 @@ namespace Clansty.tianlang
             get
             {
                 string r;
-                bool graduated = false;
+                var graduated = false;
                 switch (Enrollment)
                 {
                     case 2018:
@@ -169,7 +206,7 @@ namespace Clansty.tianlang
                         r = "一";
                         break;
                     case 10086: //这种情况通过数据库自定义前缀
-                        string prefix = Get("prefix");
+                        var prefix = Get("prefix");
                         if (prefix == null)
                             prefix = "";
                         return prefix;
@@ -198,7 +235,7 @@ namespace Clansty.tianlang
         {
             get
             {
-                string r = Role == UserType.powerUser ? "A管理员 " : "";
+                var r = Role == UserType.powerUser ? "A管理员 " : "";
                 if (Branch)
                     r += "金阊";
                 r += Grade;

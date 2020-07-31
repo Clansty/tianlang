@@ -135,13 +135,13 @@ namespace Native.Tool.IniConfig.Linq
 				return false;
 			}
 
-			for (int i = 0; i < objA.Count; i++)
+			for (var i = 0; i < objA.Count; i++)
 			{
-				string keyA = objA.Keys.ElementAt (i);
-				string KeyB = objB.Keys.ElementAt (i);
+				var keyA = objA.Keys.ElementAt (i);
+				var KeyB = objB.Keys.ElementAt (i);
 
-				TValue valueA = objA.Values.ElementAt (i);
-				TValue valueB = objB.Values.ElementAt (i);
+				var valueA = objA.Values.ElementAt (i);
+				var valueB = objB.Values.ElementAt (i);
 
 				if (!(keyA.Equals (KeyB) && object.Equals (valueA, valueB)))
 				{
@@ -258,8 +258,8 @@ namespace Native.Tool.IniConfig.Linq
 				throw new ArgumentException ("源 IContainer 中的元素数量大于从 arrayIndex 到目标数组末尾的可用空间");
 			}
 
-			int num = 0;
-			foreach (KeyValuePair<string, TValue> item in this._sortedList)
+			var num = 0;
+			foreach (var item in this._sortedList)
 			{
 				array[arrayIndex + num] = item;
 				num++;
@@ -344,8 +344,8 @@ namespace Native.Tool.IniConfig.Linq
 		/// <returns>表示当前对象的字符串</returns>
 		public override string ToString ()
 		{
-			StringBuilder builder = new StringBuilder ();
-			foreach (KeyValuePair<string, TValue> item in this)
+			var builder = new StringBuilder ();
+			foreach (var item in this)
 			{
 				builder.Append (item.Key);
 				builder.Append ("=");

@@ -320,13 +320,13 @@ namespace Native.Tool.IniConfig.Linq
 				return defaultValue;
 			}
 
-			object objValue = this.Value;
+			var objValue = this.Value;
 			if (objValue is T)
 			{
 				return (T)objValue;
 			}
 
-			Type type = typeof (T);
+			var type = typeof (T);
 			if (ReflectionUtils.IsNullableType (type))
 			{
 				if (objValue == null)
@@ -357,7 +357,7 @@ namespace Native.Tool.IniConfig.Linq
 				return 1;
 			}
 
-			IValue value = obj as IValue;
+			var value = obj as IValue;
 			if (value != null)
 			{
 				return IValue.Compare (this, value);
@@ -831,67 +831,67 @@ namespace Native.Tool.IniConfig.Linq
 			{
 				case IValueType.String:
 					{
-						string strA = Convert.ToString (valueA._value, CultureInfo.InvariantCulture);
-						string strB = Convert.ToString (valueB._value, CultureInfo.InvariantCulture);
+						var strA = Convert.ToString (valueA._value, CultureInfo.InvariantCulture);
+						var strB = Convert.ToString (valueB._value, CultureInfo.InvariantCulture);
 						return string.CompareOrdinal (strA, strB);
 					}
 				case IValueType.Integer:
 					{
 						if (valueA._value is BigInteger)
 						{
-							BigInteger numA = (BigInteger)valueA._value;
+							var numA = (BigInteger)valueA._value;
 							return IValue.CompareBigInteger (numA, valueB._value);
 						}
 						if (valueB._value is BigInteger)
 						{
-							BigInteger numB = (BigInteger)valueB._value;
+							var numB = (BigInteger)valueB._value;
 							return -IValue.CompareBigInteger (numB, valueA._value);
 						}
 						if (valueA._value is ulong || valueB._value is ulong || valueA._value is decimal || valueB._value is decimal)
 						{
-							decimal decimalA = Convert.ToDecimal (valueA._value, CultureInfo.InvariantCulture);
-							decimal decimalB = Convert.ToDecimal (valueB._value, CultureInfo.InvariantCulture);
+							var decimalA = Convert.ToDecimal (valueA._value, CultureInfo.InvariantCulture);
+							var decimalB = Convert.ToDecimal (valueB._value, CultureInfo.InvariantCulture);
 							return decimalA.CompareTo (decimalB);
 						}
 						if (valueA._value is float || valueB._value is float || valueA._value is double || valueB._value is double)
 						{
 							return IValue.CompareFloat (valueA._value, valueB._value);
 						}
-						long l1 = Convert.ToInt64 (valueA._value, CultureInfo.InvariantCulture);
-						long l2 = Convert.ToInt64 (valueB._value, CultureInfo.InvariantCulture);
+						var l1 = Convert.ToInt64 (valueA._value, CultureInfo.InvariantCulture);
+						var l2 = Convert.ToInt64 (valueB._value, CultureInfo.InvariantCulture);
 						return l1.CompareTo (l2);
 					}
 				case IValueType.Float:
 					{
 						if (valueA._value is BigInteger)
 						{
-							BigInteger numA = (BigInteger)valueA._value;
+							var numA = (BigInteger)valueA._value;
 							return IValue.CompareBigInteger (numA, valueB._value);
 						}
 						if (valueB._value is BigInteger)
 						{
-							BigInteger numB = (BigInteger)valueB._value;
+							var numB = (BigInteger)valueB._value;
 							return -IValue.CompareBigInteger (numB, valueA._value);
 						}
 						if (valueA._value is ulong || valueB._value is ulong || valueA._value is decimal || valueB._value is decimal)
 						{
-							decimal decimalA = Convert.ToDecimal (valueA._value, CultureInfo.InvariantCulture);
-							decimal decimalB = Convert.ToDecimal (valueB._value, CultureInfo.InvariantCulture);
+							var decimalA = Convert.ToDecimal (valueA._value, CultureInfo.InvariantCulture);
+							var decimalB = Convert.ToDecimal (valueB._value, CultureInfo.InvariantCulture);
 							return decimalA.CompareTo (decimalB);
 						}
 						return IValue.CompareFloat (valueA._value, valueB._value);
 					}
 				case IValueType.Boolean:
 					{
-						bool b1 = Convert.ToBoolean (valueA._value, CultureInfo.InvariantCulture);
-						bool b2 = Convert.ToBoolean (valueB._value, CultureInfo.InvariantCulture);
+						var b1 = Convert.ToBoolean (valueA._value, CultureInfo.InvariantCulture);
+						var b2 = Convert.ToBoolean (valueB._value, CultureInfo.InvariantCulture);
 						return b1.CompareTo (b2);
 					}
 				case IValueType.DateTime:
 					{
 						if (valueA._value is DateTime)
 						{
-							DateTime dtA = (DateTime)valueA._value;
+							var dtA = (DateTime)valueA._value;
 							DateTime dtB;
 							if (valueB._value is DateTimeOffset)
 							{
@@ -903,7 +903,7 @@ namespace Native.Tool.IniConfig.Linq
 							}
 							return dtA.CompareTo (dtB);
 						}
-						DateTimeOffset offsetA = (DateTimeOffset)valueA._value;
+						var offsetA = (DateTimeOffset)valueA._value;
 						DateTimeOffset offsetB;
 						if (valueB._value is DateTimeOffset)
 						{
@@ -921,14 +921,14 @@ namespace Native.Tool.IniConfig.Linq
 						{
 							throw new ArgumentException ("对象必须是 TimeSpan 类型");
 						}
-						TimeSpan span1 = (TimeSpan)valueA._value;
-						TimeSpan span2 = (TimeSpan)valueB._value;
+						var span1 = (TimeSpan)valueA._value;
+						var span2 = (TimeSpan)valueB._value;
 						return span1.CompareTo (span2);
 					}
 				case IValueType.Bytes:
 					{
-						byte[] bytesA = valueA._value as byte[];
-						byte[] bytesB = valueB._value as byte[];
+						var bytesA = valueA._value as byte[];
+						var bytesB = valueB._value as byte[];
 						if (bytesB == null)
 						{
 							throw new ArgumentException ("对象必须是 byte[] 类型");
@@ -937,8 +937,8 @@ namespace Native.Tool.IniConfig.Linq
 					}
 				case IValueType.Uri:
 					{
-						Uri uriA = (Uri)valueA._value;
-						Uri uriB = valueB._value as Uri;
+						var uriA = (Uri)valueA._value;
+						var uriB = valueB._value as Uri;
 						if (uriB == null)
 						{
 							throw new ArgumentException ("对象必须是 Uri 类型");
@@ -951,8 +951,8 @@ namespace Native.Tool.IniConfig.Linq
 						{
 							throw new ArgumentException ("对象必须是 Guid 类型");
 						}
-						Guid guidA = (Guid)valueA._value;
-						Guid guidB = (Guid)valueB._value;
+						var guidA = (Guid)valueA._value;
+						var guidB = (Guid)valueB._value;
 						return guidA.CompareTo (guidB);
 					}
 			}
@@ -968,19 +968,19 @@ namespace Native.Tool.IniConfig.Linq
 		/// <returns>一个 32 位带符号整数，指示两个比较数之间的关系。</returns>
 		private static int CompareBigInteger (BigInteger intA, object objB)
 		{
-			int num = intA.CompareTo (ConvertUtils.ToBigInteger (objB));
+			var num = intA.CompareTo (ConvertUtils.ToBigInteger (objB));
 			if (num != 0)
 			{
 				return num;
 			}
 			if (objB is decimal)
 			{
-				decimal num2 = (decimal)objB;
+				var num2 = (decimal)objB;
 				return 0m.CompareTo (Math.Abs (num2 - Math.Truncate (num2)));
 			}
 			if (objB is double || objB is float)
 			{
-				double num3 = Convert.ToDouble (objB, CultureInfo.InvariantCulture);
+				var num3 = Convert.ToDouble (objB, CultureInfo.InvariantCulture);
 				return 0d.CompareTo (Math.Abs (num3 - Math.Truncate (num3)));
 			}
 			return num;
@@ -993,8 +993,8 @@ namespace Native.Tool.IniConfig.Linq
 		/// <returns>一个 32 位带符号整数，指示两个比较数之间的关系。</returns>
 		private static int CompareFloat (object v1, object v2)
 		{
-			double d = Convert.ToDouble (v1, CultureInfo.InvariantCulture);
-			double num = Convert.ToDouble (v2, CultureInfo.InvariantCulture);
+			var d = Convert.ToDouble (v1, CultureInfo.InvariantCulture);
+			var num = Convert.ToDouble (v2, CultureInfo.InvariantCulture);
 			if (MathUtils.ApproxEquals (d, num))
 			{
 				return 0;
@@ -1306,7 +1306,7 @@ namespace Native.Tool.IniConfig.Linq
 		/// <param name="value">转换的 <see cref="IValue"/> 对象</param>
 		public static implicit operator bool (IValue value)
 		{
-			object ivalue = value._value;
+			var ivalue = value._value;
 			if (ivalue == null || !IValue.IsConvert (value._valueType, IValue.ConvertBooleanTypes, false))
 			{
 				throw new ArgumentException (string.Format ("无法将 {0} 转换为 Boolean", ivalue.GetType ().Name));
@@ -1314,7 +1314,7 @@ namespace Native.Tool.IniConfig.Linq
 
 			if (ivalue is BigInteger)
 			{
-				BigInteger value2 = (BigInteger)ivalue;
+				var value2 = (BigInteger)ivalue;
 				return Convert.ToBoolean ((int)ivalue);
 			}
 
@@ -1326,7 +1326,7 @@ namespace Native.Tool.IniConfig.Linq
 		/// <param name="value">转换的 <see cref="IValue"/> 对象</param>
 		public static implicit operator sbyte (IValue value)
 		{
-			object ivalue = value._value;
+			var ivalue = value._value;
 			if (ivalue == null || !IValue.IsConvert (value._valueType, IValue.ConvertNumberTypes, false))
 			{
 				throw new ArgumentException (string.Format ("无法将 {0} 转换为 SByte", ivalue.GetType ().Name));
@@ -1334,7 +1334,7 @@ namespace Native.Tool.IniConfig.Linq
 
 			if (ivalue is BigInteger)
 			{
-				BigInteger value2 = (BigInteger)ivalue;
+				var value2 = (BigInteger)ivalue;
 				return (sbyte)value2;
 			}
 
@@ -1346,7 +1346,7 @@ namespace Native.Tool.IniConfig.Linq
 		/// <param name="value">转换的 <see cref="IValue"/> 对象</param>
 		public static implicit operator byte (IValue value)
 		{
-			object ivalue = value._value;
+			var ivalue = value._value;
 			if (ivalue == null || !IValue.IsConvert (value._valueType, IValue.ConvertNumberTypes, false))
 			{
 				throw new ArgumentException (string.Format ("无法将 {0} 转换为 Byte", value._value.GetType ().Name));
@@ -1354,7 +1354,7 @@ namespace Native.Tool.IniConfig.Linq
 
 			if (ivalue is BigInteger)
 			{
-				BigInteger value2 = (BigInteger)ivalue;
+				var value2 = (BigInteger)ivalue;
 				return (byte)value2;
 			}
 
@@ -1366,7 +1366,7 @@ namespace Native.Tool.IniConfig.Linq
 		/// <param name="value">转换的 <see cref="IValue"/> 对象</param>
 		public static implicit operator char (IValue value)
 		{
-			object ivalue = value._value;
+			var ivalue = value._value;
 			if (ivalue == null || !IValue.IsConvert (value._valueType, IValue.ConvertCharTypes, false))
 			{
 				throw new ArgumentException (string.Format ("无法将 {0} 转换为 Char", value._value.GetType ().Name));
@@ -1374,7 +1374,7 @@ namespace Native.Tool.IniConfig.Linq
 
 			if (ivalue is BigInteger)
 			{
-				BigInteger value2 = (BigInteger)ivalue;
+				var value2 = (BigInteger)ivalue;
 				return (char)(ushort)value2;
 			}
 
@@ -1386,7 +1386,7 @@ namespace Native.Tool.IniConfig.Linq
 		/// <param name="value">转换的 <see cref="IValue"/> 对象</param>
 		public static implicit operator short (IValue value)
 		{
-			object ivalue = value._value;
+			var ivalue = value._value;
 			if (ivalue == null || !IValue.IsConvert (value._valueType, IValue.ConvertNumberTypes, false))
 			{
 				throw new ArgumentException (string.Format ("无法将 {0} 转换为 Int16", value._value.GetType ().Name));
@@ -1394,7 +1394,7 @@ namespace Native.Tool.IniConfig.Linq
 
 			if (ivalue is BigInteger)
 			{
-				BigInteger value2 = (BigInteger)ivalue;
+				var value2 = (BigInteger)ivalue;
 				return (short)value2;
 			}
 
@@ -1406,7 +1406,7 @@ namespace Native.Tool.IniConfig.Linq
 		/// <param name="value">转换的 <see cref="IValue"/> 对象</param>
 		public static implicit operator ushort (IValue value)
 		{
-			object ivalue = value._value;
+			var ivalue = value._value;
 			if (ivalue == null || !IValue.IsConvert (value._valueType, IValue.ConvertNumberTypes, false))
 			{
 				throw new ArgumentException (string.Format ("无法将 {0} 转换为 UInt16", value._value.GetType ().Name));
@@ -1414,7 +1414,7 @@ namespace Native.Tool.IniConfig.Linq
 
 			if (ivalue is BigInteger)
 			{
-				BigInteger value2 = (BigInteger)ivalue;
+				var value2 = (BigInteger)ivalue;
 				return (ushort)value2;
 			}
 
@@ -1426,7 +1426,7 @@ namespace Native.Tool.IniConfig.Linq
 		/// <param name="value">转换的 <see cref="IValue"/> 对象</param>
 		public static implicit operator int (IValue value)
 		{
-			object ivalue = value._value;
+			var ivalue = value._value;
 			if (ivalue == null || !IValue.IsConvert (value._valueType, IValue.ConvertNumberTypes, false))
 			{
 				throw new ArgumentException (string.Format ("无法将 {0} 转换为 Int32", value._value.GetType ().Name));
@@ -1434,7 +1434,7 @@ namespace Native.Tool.IniConfig.Linq
 
 			if (ivalue is BigInteger)
 			{
-				BigInteger value2 = (BigInteger)ivalue;
+				var value2 = (BigInteger)ivalue;
 				return (int)value2;
 			}
 
@@ -1446,7 +1446,7 @@ namespace Native.Tool.IniConfig.Linq
 		/// <param name="value">转换的 <see cref="IValue"/> 对象</param>
 		public static implicit operator uint (IValue value)
 		{
-			object ivalue = value._value;
+			var ivalue = value._value;
 			if (ivalue == null || !IValue.IsConvert (value._valueType, IValue.ConvertNumberTypes, false))
 			{
 				throw new ArgumentException (string.Format ("无法将 {0} 转换为 UInt32", value._value.GetType ().Name));
@@ -1454,7 +1454,7 @@ namespace Native.Tool.IniConfig.Linq
 
 			if (ivalue is BigInteger)
 			{
-				BigInteger value2 = (BigInteger)ivalue;
+				var value2 = (BigInteger)ivalue;
 				return (uint)value2;
 			}
 
@@ -1466,7 +1466,7 @@ namespace Native.Tool.IniConfig.Linq
 		/// <param name="value">转换的 <see cref="IValue"/> 对象</param>
 		public static implicit operator long (IValue value)
 		{
-			object ivalue = value._value;
+			var ivalue = value._value;
 			if (ivalue == null || !IValue.IsConvert (value._valueType, IValue.ConvertNumberTypes, false))
 			{
 				throw new ArgumentException (string.Format ("无法将 {0} 转换为 Int64", value._value.GetType ().Name));
@@ -1474,7 +1474,7 @@ namespace Native.Tool.IniConfig.Linq
 
 			if (ivalue is BigInteger)
 			{
-				BigInteger value2 = (BigInteger)ivalue;
+				var value2 = (BigInteger)ivalue;
 				return (long)value2;
 			}
 
@@ -1486,7 +1486,7 @@ namespace Native.Tool.IniConfig.Linq
 		/// <param name="value">转换的 <see cref="IValue"/> 对象</param>
 		public static implicit operator ulong (IValue value)
 		{
-			object ivalue = value._value;
+			var ivalue = value._value;
 			if (ivalue == null || !IValue.IsConvert (value._valueType, IValue.ConvertNumberTypes, false))
 			{
 				throw new ArgumentException (string.Format ("无法将 {0} 转换为 UInt64", value._value.GetType ().Name));
@@ -1494,7 +1494,7 @@ namespace Native.Tool.IniConfig.Linq
 
 			if (ivalue is BigInteger)
 			{
-				BigInteger value2 = (BigInteger)ivalue;
+				var value2 = (BigInteger)ivalue;
 				return (ulong)value2;
 			}
 
@@ -1506,7 +1506,7 @@ namespace Native.Tool.IniConfig.Linq
 		/// <param name="value">转换的 <see cref="IValue"/> 对象</param>
 		public static implicit operator float (IValue value)
 		{
-			object ivalue = value._value;
+			var ivalue = value._value;
 			if (ivalue == null || !IValue.IsConvert (value._valueType, IValue.ConvertNumberTypes, false))
 			{
 				throw new ArgumentException (string.Format ("无法将 {0} 转换为 Single", value._value.GetType ().Name));
@@ -1514,7 +1514,7 @@ namespace Native.Tool.IniConfig.Linq
 
 			if (ivalue is BigInteger)
 			{
-				BigInteger value2 = (BigInteger)ivalue;
+				var value2 = (BigInteger)ivalue;
 				return (float)value2;
 			}
 
@@ -1526,7 +1526,7 @@ namespace Native.Tool.IniConfig.Linq
 		/// <param name="value">转换的 <see cref="IValue"/> 对象</param>
 		public static implicit operator double (IValue value)
 		{
-			object ivalue = value._value;
+			var ivalue = value._value;
 			if (ivalue == null || !IValue.IsConvert (value._valueType, IValue.ConvertNumberTypes, false))
 			{
 				throw new ArgumentException (string.Format ("无法将 {0} 转换为 Double", value._value.GetType ().Name));
@@ -1534,7 +1534,7 @@ namespace Native.Tool.IniConfig.Linq
 
 			if (ivalue is BigInteger)
 			{
-				BigInteger value2 = (BigInteger)ivalue;
+				var value2 = (BigInteger)ivalue;
 				return (double)value2;
 			}
 
@@ -1546,7 +1546,7 @@ namespace Native.Tool.IniConfig.Linq
 		/// <param name="value">转换的 <see cref="IValue"/> 对象</param>
 		public static implicit operator decimal (IValue value)
 		{
-			object ivalue = value._value;
+			var ivalue = value._value;
 			if (ivalue == null || !IValue.IsConvert (value._valueType, IValue.ConvertNumberTypes, false))
 			{
 				throw new ArgumentException (string.Format ("无法将 {0} 转换为 Decimal", value._value.GetType ().Name));
@@ -1554,7 +1554,7 @@ namespace Native.Tool.IniConfig.Linq
 
 			if (ivalue is BigInteger)
 			{
-				BigInteger value2 = (BigInteger)ivalue;
+				var value2 = (BigInteger)ivalue;
 				return (decimal)value2;
 			}
 
@@ -1566,7 +1566,7 @@ namespace Native.Tool.IniConfig.Linq
 		/// <param name="value">转换的 <see cref="IValue"/> 对象</param>
 		public static implicit operator DateTime (IValue value)
 		{
-			object ivalue = value._value;
+			var ivalue = value._value;
 			if (ivalue == null || !IValue.IsConvert (value._valueType, IValue.ConvertDateTimeTypes, false))
 			{
 				throw new ArgumentException (string.Format ("无法将 {0} 转换为 DateTime", value._value.GetType ().Name));
@@ -1585,7 +1585,7 @@ namespace Native.Tool.IniConfig.Linq
 		/// <param name="value">转换的 <see cref="IValue"/> 对象</param>
 		public static implicit operator DateTimeOffset (IValue value)
 		{
-			object ivalue = value._value;
+			var ivalue = value._value;
 			if (ivalue == null || !IValue.IsConvert (value._valueType, IValue.ConvertDateTimeTypes, false))
 			{
 				throw new ArgumentException (string.Format ("无法将 {0} 转换为 DateTimeOffset", value._value.GetType ().Name));
@@ -1596,7 +1596,7 @@ namespace Native.Tool.IniConfig.Linq
 				return (DateTimeOffset)ivalue;
 			}
 
-			string input = ivalue as string;
+			var input = ivalue as string;
 			if (input != null)
 			{
 				return DateTimeOffset.Parse (input, CultureInfo.InvariantCulture);
@@ -1610,7 +1610,7 @@ namespace Native.Tool.IniConfig.Linq
 		/// <param name="value">转换的 <see cref="IValue"/> 对象</param>
 		public static implicit operator TimeSpan (IValue value)
 		{
-			object ivalue = value._value;
+			var ivalue = value._value;
 			if (ivalue == null || !IValue.IsConvert (value._valueType, IValue.ConvertTimeSpanTypes, false))
 			{
 				throw new ArgumentException (string.Format ("无法将 {0} 转换为 TimeSpan", value._value.GetType ().Name));
@@ -1634,7 +1634,7 @@ namespace Native.Tool.IniConfig.Linq
 				return null;
 			}
 
-			object ivalue = value._value;
+			var ivalue = value._value;
 			if (ivalue == null || !IValue.IsConvert (value._valueType, IValue.ConvertBytesTypes, false))
 			{
 				throw new ArgumentException (string.Format ("无法将 {0} 转换为 byte[]", value._value.GetType ().Name));
@@ -1650,7 +1650,7 @@ namespace Native.Tool.IniConfig.Linq
 				return ((BigInteger)ivalue).ToByteArray ();
 			}
 
-			byte[] result = ivalue as byte[];
+			var result = ivalue as byte[];
 			if (result != null)
 			{
 				return result;
@@ -1669,7 +1669,7 @@ namespace Native.Tool.IniConfig.Linq
 				return null;
 			}
 
-			object ivalue = value._value;
+			var ivalue = value._value;
 			if (!IValue.IsConvert (value._valueType, IValue.ConvertStringTypes, true))
 			{
 				throw new ArgumentException (string.Format ("无法将 {0} 转换为 String", value._value.GetType ().Name));
@@ -1680,7 +1680,7 @@ namespace Native.Tool.IniConfig.Linq
 				return null;
 			}
 
-			byte[] inArray = ivalue as byte[];
+			var inArray = ivalue as byte[];
 			if (inArray != null)
 			{
 				return Convert.ToBase64String (inArray);
@@ -1699,13 +1699,13 @@ namespace Native.Tool.IniConfig.Linq
 		/// <param name="value">转换的 <see cref="IValue"/> 对象</param>
 		public static implicit operator Guid (IValue value)
 		{
-			object ivalue = value._value;
+			var ivalue = value._value;
 			if (ivalue == null || !IValue.IsConvert (value._valueType, IValue.ConvertGuidTypes, false))
 			{
 				throw new ArgumentException (string.Format ("无法将 {0} 转换为 Guid", value._value.GetType ().Name));
 			}
 
-			byte[] inArray = ivalue as byte[];
+			var inArray = ivalue as byte[];
 			if (inArray != null)
 			{
 				return new Guid (inArray);
@@ -1729,7 +1729,7 @@ namespace Native.Tool.IniConfig.Linq
 				return null;
 			}
 
-			object ivalue = value._value;
+			var ivalue = value._value;
 			if (!IValue.IsConvert (value._valueType, IValue.ConvertUirTypes, true))
 			{
 				throw new ArgumentException (string.Format ("无法将 {0} 转换为 Uri", value._value.GetType ().Name));
@@ -1740,7 +1740,7 @@ namespace Native.Tool.IniConfig.Linq
 				return null;
 			}
 
-			Uri result = ivalue as Uri;
+			var result = ivalue as Uri;
 			if (result == null)
 			{
 				return new Uri (Convert.ToString (ivalue, CultureInfo.InvariantCulture), UriKind.RelativeOrAbsolute);

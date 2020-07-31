@@ -35,7 +35,7 @@ namespace Native.Sdk.Cqp.EventArgs
 		/// <returns>表示当前对象的字符串</returns>
 		public override string ToString ()
 		{
-			StringBuilder builder = new StringBuilder ();
+			var builder = new StringBuilder ();
 			builder.AppendLine (string.Format ("ID: {0}", this.Id));
 			builder.AppendLine (string.Format ("名称: {0}", this.Name));
 			builder.AppendLine (string.Format ("标题: {0}", this.Title));

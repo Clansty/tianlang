@@ -600,7 +600,7 @@ namespace System.Data.SQLite
         {
             CheckDisposed();
 
-            SQLiteVirtualTableCursorEnumerator enumeratorCursor =
+            var enumeratorCursor =
                 cursor as SQLiteVirtualTableCursorEnumerator;
 
             if (enumeratorCursor == null)
@@ -642,7 +642,7 @@ namespace System.Data.SQLite
         {
             CheckDisposed();
 
-            SQLiteVirtualTableCursorEnumerator enumeratorCursor =
+            var enumeratorCursor =
                 cursor as SQLiteVirtualTableCursorEnumerator;
 
             if (enumeratorCursor == null)
@@ -675,7 +675,7 @@ namespace System.Data.SQLite
         {
             CheckDisposed();
 
-            SQLiteVirtualTableCursorEnumerator enumeratorCursor =
+            var enumeratorCursor =
                 cursor as SQLiteVirtualTableCursorEnumerator;
 
             if (enumeratorCursor == null)
@@ -708,7 +708,7 @@ namespace System.Data.SQLite
         {
             CheckDisposed();
 
-            SQLiteVirtualTableCursorEnumerator enumeratorCursor =
+            var enumeratorCursor =
                 cursor as SQLiteVirtualTableCursorEnumerator;
 
             if (enumeratorCursor == null)
@@ -745,7 +745,7 @@ namespace System.Data.SQLite
         {
             CheckDisposed();
 
-            SQLiteVirtualTableCursorEnumerator enumeratorCursor =
+            var enumeratorCursor =
                 cursor as SQLiteVirtualTableCursorEnumerator;
 
             if (enumeratorCursor == null)
@@ -788,7 +788,7 @@ namespace System.Data.SQLite
         {
             CheckDisposed();
 
-            SQLiteVirtualTableCursorEnumerator enumeratorCursor =
+            var enumeratorCursor =
                 cursor as SQLiteVirtualTableCursorEnumerator;
 
             if (enumeratorCursor == null)
@@ -1183,7 +1183,7 @@ namespace System.Data.SQLite.Generic
         {
             CheckDisposed();
 
-            SQLiteVirtualTableCursorEnumerator<T> enumeratorCursor =
+            var enumeratorCursor =
                 cursor as SQLiteVirtualTableCursorEnumerator<T>;
 
             if (enumeratorCursor == null)
@@ -1195,7 +1195,7 @@ namespace System.Data.SQLite.Generic
             if (enumeratorCursor.EndOfEnumerator)
                 return CursorEndOfEnumeratorError(cursor);
 
-            T current = ((IEnumerator<T>)enumeratorCursor).Current;
+            var current = ((IEnumerator<T>)enumeratorCursor).Current;
 
             if (current != null)
                 context.SetString(GetStringFromObject(cursor, current));

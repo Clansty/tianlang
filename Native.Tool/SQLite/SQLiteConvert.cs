@@ -204,7 +204,7 @@ namespace System.Data.SQLite
     {
       if (sourceText == null) return null;
       Byte[] byteArray;
-      int nlen = _utf8.GetByteCount(sourceText) + 1;
+      var nlen = _utf8.GetByteCount(sourceText) + 1;
 
       byteArray = new byte[nlen];
       nlen = _utf8.GetBytes(sourceText, 0, sourceText.Length, byteArray, 0);
@@ -257,7 +257,7 @@ namespace System.Data.SQLite
         if (nativestringlen == 0) return String.Empty;
       }
 
-      byte[] byteArray = new byte[nativestringlen];
+      var byteArray = new byte[nativestringlen];
 
       Marshal.Copy(nativestring, byteArray, 0, nativestringlen);
 
@@ -435,7 +435,7 @@ namespace System.Data.SQLite
         sd = si / 1000.0M;
         si = (int)sd;
 
-        int millisecond = (int)((sd - si) * 1000.0M);
+        var millisecond = (int)((sd - si) * 1000.0M);
 
         sd -= si;
 
@@ -449,11 +449,11 @@ namespace System.Data.SQLite
         minute = si / 60;
         sd += si - minute * 60;
 
-        int second = (int)sd;
+        var second = (int)sd;
 
         try
         {
-            DateTime minValue = DateTime.MinValue;
+            var minValue = DateTime.MinValue;
 
             return new DateTime(
                 minValue.Year, minValue.Month, minValue.Day,
@@ -733,9 +733,9 @@ namespace System.Data.SQLite
         DateTimeKind kind
         )
     {
-        long jd = DoubleToJd(julianDay);
-        DateTime dateTimeYMD = computeYMD(jd, null);
-        DateTime dateTimeHMS = computeHMS(jd, null);
+        var jd = DoubleToJd(julianDay);
+        var dateTimeYMD = computeYMD(jd, null);
+        var dateTimeHMS = computeHMS(jd, null);
 
         return new DateTime(
             dateTimeYMD.Year, dateTimeYMD.Month, dateTimeYMD.Day,
@@ -915,10 +915,10 @@ namespace System.Data.SQLite
     /// <returns>A string array of the split up elements</returns>
     public static string[] Split(string source, char separator)
     {
-      char[] toks = new char[2] { QuoteChar, separator };
-      char[] quot = new char[1] { QuoteChar };
-      int n = 0;
-      List<string> ls = new List<string>();
+      var toks = new char[2] { QuoteChar, separator };
+      var quot = new char[1] { QuoteChar };
+      var n = 0;
+      var ls = new List<string>();
       string s;
 
       while (source.Length > 0)
@@ -956,7 +956,7 @@ namespace System.Data.SQLite
         ls.Add(s);
       }
 
-      string[] ar = new string[ls.Count];
+      var ar = new string[ls.Count];
       ls.CopyTo(ar, 0);
 
       return ar;
@@ -1015,20 +1015,20 @@ namespace System.Data.SQLite
             return null;
         }
 
-        int length = value.Length;
+        var length = value.Length;
 
         if (length == 0)
             return new string[0];
 
-        List<string> list = new List<string>();
-        StringBuilder element = new StringBuilder();
-        int index = 0;
-        bool escape = false;
-        bool quote = false;
+        var list = new List<string>();
+        var element = new StringBuilder();
+        var index = 0;
+        var escape = false;
+        var quote = false;
 
         while (index < length)
         {
-            char character = value[index++];
+            var character = value[index++];
 
             if (escape)
             {
@@ -1120,7 +1120,7 @@ namespace System.Data.SQLite
         if (obj is string)
             return (string)obj; /* identity */
 
-        IConvertible convertible = obj as IConvertible;
+        var convertible = obj as IConvertible;
 
         if (convertible != null)
             return convertible.ToString(provider);
@@ -1157,7 +1157,7 @@ namespace System.Data.SQLite
         if (obj == null)
             return false;
 
-        TypeCode typeCode = Type.GetTypeCode(obj.GetType());
+        var typeCode = Type.GetTypeCode(obj.GetType());
 
         switch (typeCode)
         {
@@ -1309,7 +1309,7 @@ namespace System.Data.SQLite
     /// <returns>The corresponding (closest match) DbType</returns>
     internal static DbType TypeToDbType(Type typ)
     {
-      TypeCode tc = Type.GetTypeCode(typ);
+      var tc = Type.GetTypeCode(typ);
       if (tc == TypeCode.Object)
       {
         if (typ == typeof(byte[])) return DbType.Binary;
@@ -1468,7 +1468,7 @@ namespace System.Data.SQLite
         SQLiteConnection connection
         )
     {
-        SQLiteConnectionFlags flags = (connection != null) ?
+        var flags = (connection != null) ?
             connection.Flags : SQLiteConnectionFlags.None;
 
         if (HelperMethods.HasFlags(
@@ -1477,7 +1477,7 @@ namespace System.Data.SQLite
             return FallbackDefaultTypeName;
         }
 
-        string name = "Use_SQLiteConvert_DefaultTypeName";
+        var name = "Use_SQLiteConvert_DefaultTypeName";
         object value = null;
         string @default = null;
 
@@ -1581,7 +1581,7 @@ namespace System.Data.SQLite
 
             if (HelperMethods.HasFlags(flags, SQLiteConnectionFlags.UseConnectionTypes))
             {
-                SQLiteDbTypeMap connectionTypeNames = connection._typeNames;
+                var connectionTypeNames = connection._typeNames;
 
                 if (connectionTypeNames != null)
                 {
@@ -1694,7 +1694,7 @@ namespace System.Data.SQLite
         SQLiteConnectionFlags flags
         )
     {
-      TypeCode tc = Type.GetTypeCode(typ);
+      var tc = Type.GetTypeCode(typ);
       if (tc == TypeCode.Object)
       {
         if (typ == typeof(byte[]) || typ == typeof(Guid))
@@ -1884,7 +1884,7 @@ namespace System.Data.SQLite
         SQLiteConnection connection
         )
     {
-        SQLiteConnectionFlags flags = (connection != null) ?
+        var flags = (connection != null) ?
             connection.Flags : SQLiteConnectionFlags.None;
 
         if (HelperMethods.HasFlags(
@@ -1893,8 +1893,8 @@ namespace System.Data.SQLite
             return FallbackDefaultDbType;
         }
 
-        bool found = false;
-        string name = "Use_SQLiteConvert_DefaultDbType";
+        var found = false;
+        var name = "Use_SQLiteConvert_DefaultDbType";
         object value = null;
         string @default = null;
 
@@ -2085,7 +2085,7 @@ namespace System.Data.SQLite
 
         try
         {
-            DateTime dateTimeValue = convert.ToDateTime(text);
+            var dateTimeValue = convert.ToDateTime(text);
 
             if (String.Equals(
                     convert.ToString(dateTimeValue),
@@ -2125,7 +2125,7 @@ namespace System.Data.SQLite
 
             if (HelperMethods.HasFlags(flags, SQLiteConnectionFlags.UseConnectionTypes))
             {
-                SQLiteDbTypeMap connectionTypeNames = connection._typeNames;
+                var connectionTypeNames = connection._typeNames;
 
                 if (connectionTypeNames != null)
                 {
@@ -2139,7 +2139,7 @@ namespace System.Data.SQLite
                         }
                         else
                         {
-                            int index = typeName.IndexOf('(');
+                            var index = typeName.IndexOf('(');
 
                             if ((index > 0) &&
                                 connectionTypeNames.TryGetValue(typeName.Substring(0, index).TrimEnd(), out value))
@@ -2182,7 +2182,7 @@ namespace System.Data.SQLite
                 }
                 else
                 {
-                    int index = typeName.IndexOf('(');
+                    var index = typeName.IndexOf('(');
 
                     if ((index > 0) &&
                         _typeNames.TryGetValue(typeName.Substring(0, index).TrimEnd(), out value))
@@ -2872,7 +2872,7 @@ namespace System.Data.SQLite
       #region System.Collections.Generic.Dictionary "Overrides"
       public new int Clear()
       {
-          int result = 0;
+          var result = 0;
 
           if (reverse != null)
           {
@@ -2897,7 +2897,7 @@ namespace System.Data.SQLite
           if (collection == null)
               throw new ArgumentNullException("collection");
 
-          foreach (SQLiteDbTypeMapping item in collection)
+          foreach (var item in collection)
               Add(item);
       }
 

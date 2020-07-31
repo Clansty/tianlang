@@ -107,7 +107,7 @@ namespace System.Data.SQLite
 
             if (_beginLevel == 0)
             {
-                using (SQLiteCommand cmd = _cnn.CreateCommand())
+                using (var cmd = _cnn.CreateCommand())
                 {
                     cmd.CommandText = "COMMIT;";
                     cmd.ExecuteNonQuery();
@@ -118,7 +118,7 @@ namespace System.Data.SQLite
             }
             else
             {
-                using (SQLiteCommand cmd = _cnn.CreateCommand())
+                using (var cmd = _cnn.CreateCommand())
                 {
                     if (String.IsNullOrEmpty(_savePointName))
                         throw new SQLiteException("Cannot commit, unknown SAVEPOINT");
@@ -151,7 +151,7 @@ namespace System.Data.SQLite
             {
                 try
                 {
-                    using (SQLiteCommand cmd = _cnn.CreateCommand())
+                    using (var cmd = _cnn.CreateCommand())
                     {
                         if (!deferredLock)
                             cmd.CommandText = "BEGIN IMMEDIATE;";
@@ -175,7 +175,7 @@ namespace System.Data.SQLite
             {
                 try
                 {
-                    using (SQLiteCommand cmd = _cnn.CreateCommand())
+                    using (var cmd = _cnn.CreateCommand())
                     {
                         _savePointName = GetSavePointName();
 
@@ -208,7 +208,7 @@ namespace System.Data.SQLite
         /// </param>
         protected override void IssueRollback(bool throwError)
         {
-            SQLiteConnection cnn = Interlocked.Exchange(ref _cnn, null);
+            var cnn = Interlocked.Exchange(ref _cnn, null);
 
             if (cnn != null)
             {
@@ -216,7 +216,7 @@ namespace System.Data.SQLite
                 {
                     try
                     {
-                        using (SQLiteCommand cmd = cnn.CreateCommand())
+                        using (var cmd = cnn.CreateCommand())
                         {
                             cmd.CommandText = "ROLLBACK;";
                             cmd.ExecuteNonQuery();
@@ -234,7 +234,7 @@ namespace System.Data.SQLite
                 {
                     try
                     {
-                        using (SQLiteCommand cmd = cnn.CreateCommand())
+                        using (var cmd = cnn.CreateCommand())
                         {
                             if (String.IsNullOrEmpty(_savePointName))
                                 throw new SQLiteException("Cannot rollback, unknown SAVEPOINT");
@@ -267,7 +267,7 @@ namespace System.Data.SQLite
         /// </returns>
         private string GetSavePointName()
         {
-            int sequence = ++_cnn._transactionSequence;
+            var sequence = ++_cnn._transactionSequence;
 
             return String.Format(
                 "sqlite_dotnet_savepoint_{0}", sequence);

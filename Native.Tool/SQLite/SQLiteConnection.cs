@@ -1827,15 +1827,15 @@ namespace System.Data.SQLite
         Open();
 
         // Reattach all attached databases from the existing connection
-        using (DataTable tbl = connection.GetSchema("Catalogs"))
+        using (var tbl = connection.GetSchema("Catalogs"))
         {
           foreach (DataRow row in tbl.Rows)
           {
-            string str = row[0].ToString();
+            var str = row[0].ToString();
 
             if (!IsDefaultCatalogName(str) && !IsTemporaryCatalogName(str))
             {
-              using (SQLiteCommand cmd = CreateCommand())
+              using (var cmd = CreateCommand())
               {
                 cmd.CommandText = HelperMethods.StringFormat(CultureInfo.InvariantCulture, "ATTACH DATABASE '{0}' AS [{1}]", row[1], row[0]);
                 cmd.ExecuteNonQuery();
@@ -1866,12 +1866,12 @@ namespace System.Data.SQLite
         if (connection == null)
             throw new ArgumentNullException("connection");
 
-        SQLite3 sqlite3 = connection._sql as SQLite3;
+        var sqlite3 = connection._sql as SQLite3;
 
         if (sqlite3 == null)
             throw new InvalidOperationException("Connection has no wrapper");
 
-        SQLiteConnectionHandle handle = sqlite3._sql;
+        var handle = sqlite3._sql;
 
         if (handle == null)
             throw new InvalidOperationException("Connection has an invalid handle.");
@@ -2063,7 +2063,7 @@ namespace System.Data.SQLite
         if (sourceName == null)
             throw new ArgumentNullException("sourceName");
 
-        SQLiteBase sqliteBase = _sql;
+        var sqliteBase = _sql;
 
         if (sqliteBase == null)
             throw new InvalidOperationException(
@@ -2076,7 +2076,7 @@ namespace System.Data.SQLite
             backup = sqliteBase.InitializeBackup(
                 destination, destinationName, sourceName); /* throw */
 
-            bool retry = false;
+            var retry = false;
 
             while (sqliteBase.StepBackup(backup, pages, ref retry)) /* throw */
             {
@@ -2142,7 +2142,7 @@ namespace System.Data.SQLite
     {
         CheckDisposed();
 
-        int result = -1; /* NO SETTINGS */
+        var result = -1; /* NO SETTINGS */
 
         if (_cachedSettings != null)
         {
@@ -2225,7 +2225,7 @@ namespace System.Data.SQLite
     {
         CheckDisposed();
 
-        int result = -1; /* NO MAPPINGS */
+        var result = -1; /* NO MAPPINGS */
 
         if (_typeNames != null)
             result = _typeNames.Clear();
@@ -2251,9 +2251,9 @@ namespace System.Data.SQLite
         {
             result = new Dictionary<string, object>(_typeNames.Count, _typeNames.Comparer);
 
-            foreach (KeyValuePair<string, SQLiteDbTypeMapping> pair in _typeNames)
+            foreach (var pair in _typeNames)
             {
-                SQLiteDbTypeMapping mapping = pair.Value;
+                var mapping = pair.Value;
 
                 object typeName = null; /* System.String */
                 object dataType = null; /* System.Data.DbType */
@@ -2309,7 +2309,7 @@ namespace System.Data.SQLite
         if (typeName == null)
             throw new ArgumentNullException("typeName");
 
-        int result = -1; /* NO MAPPINGS */
+        var result = -1; /* NO MAPPINGS */
 
         if (_typeNames != null)
         {
@@ -2341,7 +2341,7 @@ namespace System.Data.SQLite
     {
         CheckDisposed();
 
-        int result = -1; /* NO CALLBACKS */
+        var result = -1; /* NO CALLBACKS */
 
         if (_typeCallbacks != null)
         {
@@ -2559,12 +2559,12 @@ namespace System.Data.SQLite
         if (connection._connectionState != ConnectionState.Open)
             throw new InvalidOperationException("The connection is not open.");
 
-        SQLite3 sql = connection._sql as SQLite3;
+        var sql = connection._sql as SQLite3;
 
         if (sql == null)
             throw new InvalidOperationException("The connection handle wrapper is null.");
 
-        SQLiteConnectionHandle handle = sql._sql;
+        var handle = sql._sql;
 
         if (handle == null)
             throw new InvalidOperationException("The connection handle is null.");
@@ -2676,12 +2676,12 @@ namespace System.Data.SQLite
         if (value.IndexOfAny(SQLiteConvert.SpecialChars) == -1)
             return value;
 
-        int length = value.Length;
-        StringBuilder builder = new StringBuilder(length);
+        var length = value.Length;
+        var builder = new StringBuilder(length);
 
-        for (int index = 0; index < length; index++)
+        for (var index = 0; index < length; index++)
         {
-            char character = value[index];
+            var character = value[index];
 
             switch (character)
             {
@@ -2744,9 +2744,9 @@ namespace System.Data.SQLite
         )
     {
         if (opts == null) return null;
-        StringBuilder builder = new StringBuilder();
+        var builder = new StringBuilder();
 
-        foreach (KeyValuePair<string, string> pair in opts)
+        foreach (var pair in opts)
         {
 #if NET_COMPACT_20
             builder.Append(HelperMethods.StringFormat(
@@ -2778,17 +2778,17 @@ namespace System.Data.SQLite
             typeof(SQLiteDateFormats), FindKey(opts, "DateTimeFormat",
             DefaultDateTimeFormat.ToString()), true);
 
-        SQLiteDateFormats dateFormat = (enumValue is SQLiteDateFormats) ?
+        var dateFormat = (enumValue is SQLiteDateFormats) ?
             (SQLiteDateFormats)enumValue : DefaultDateTimeFormat;
 
         enumValue = TryParseEnum(
             typeof(DateTimeKind), FindKey(opts, "DateTimeKind",
             DefaultDateTimeKind.ToString()), true);
 
-        DateTimeKind kind = (enumValue is DateTimeKind) ?
+        var kind = (enumValue is DateTimeKind) ?
             (DateTimeKind)enumValue : DefaultDateTimeKind;
 
-        string dateTimeFormat = FindKey(opts, "DateTimeFormatString",
+        var dateTimeFormat = FindKey(opts, "DateTimeFormatString",
             DefaultDateTimeFormatString);
 
         //
@@ -2926,7 +2926,7 @@ namespace System.Data.SQLite
     /// <param name="databaseFileName">The file to create</param>
     static public void CreateFile(string databaseFileName)
     {
-      FileStream fs = File.Create(databaseFileName);
+      var fs = File.Create(databaseFileName);
       fs.Close();
     }
 
@@ -2943,13 +2943,13 @@ namespace System.Data.SQLite
         ref StateChangeEventArgs eventArgs
         )
     {
-        ConnectionState oldState = _connectionState;
+        var oldState = _connectionState;
 
         _connectionState = newState;
 
         if ((StateChange != null) && (newState != oldState))
         {
-            StateChangeEventArgs localEventArgs =
+            var localEventArgs =
                 new StateChangeEventArgs(oldState, newState);
 
             StateChange(this, localEventArgs);
@@ -3111,7 +3111,7 @@ namespace System.Data.SQLite
 #if !PLATFORM_COMPACTFRAMEWORK
         lock (_enlistmentSyncRoot) /* TRANSACTIONAL */
         {
-          SQLiteEnlistment enlistment = _enlistment;
+          var enlistment = _enlistment;
           _enlistment = null;
 
           if (enlistment != null)
@@ -3119,7 +3119,7 @@ namespace System.Data.SQLite
             // If the connection is enlisted in a transaction scope and the scope is still active,
             // we cannot truly shut down this connection until the scope has completed.  Therefore make a
             // hidden connection temporarily to hold open the connection until the scope has completed.
-            SQLiteConnection cnn = new SQLiteConnection();
+            var cnn = new SQLiteConnection();
 
 #if DEBUG
             cnn._debugString = HelperMethods.StringFormat(
@@ -3136,7 +3136,7 @@ namespace System.Data.SQLite
             cnn._connectionState = _connectionState;
             cnn._version = _version;
 
-            SQLiteTransaction transaction = enlistment._transaction;
+            var transaction = enlistment._transaction;
 
             if (transaction != null)
                 transaction._cnn = cnn;
@@ -3455,7 +3455,7 @@ namespace System.Data.SQLite
         SQLiteConnection connection
         )
     {
-        string name = "No_SQLiteConnectionNewParser";
+        var name = "No_SQLiteConnectionNewParser";
         object value;
 
         if ((connection != null) &&
@@ -3527,9 +3527,9 @@ namespace System.Data.SQLite
         bool allowNameOnly
         )
     {
-      string s = connectionString;
+      var s = connectionString;
       int n;
-      SortedList<string, string> ls = new SortedList<string, string>(StringComparer.OrdinalIgnoreCase);
+      var ls = new SortedList<string, string>(StringComparer.OrdinalIgnoreCase);
 
       // First split into semi-colon delimited values.
       string error = null;
@@ -3548,7 +3548,7 @@ namespace System.Data.SQLite
               error : "could not split connection string into properties"));
       }
 
-      int x = (arParts != null) ? arParts.Length : 0;
+      var x = (arParts != null) ? arParts.Length : 0;
       // For each semi-colon piece, split into key and value pairs by the presence of the = sign
       for (n = 0; n < x; n++)
       {
@@ -3560,7 +3560,7 @@ namespace System.Data.SQLite
         if (arParts[n].Length == 0)
           continue;
 
-        int indexOf = arParts[n].IndexOf(SQLiteConvert.ValueChar);
+        var indexOf = arParts[n].IndexOf(SQLiteConvert.ValueChar);
 
         if (indexOf != -1)
           ls.Add(UnwrapString(arParts[n].Substring(0, indexOf).Trim()), UnwrapString(arParts[n].Substring(indexOf + 1).Trim()));
@@ -3599,17 +3599,17 @@ namespace System.Data.SQLite
         )
     {
 #if !PLATFORM_COMPACTFRAMEWORK
-        DbConnectionStringBuilder connectionStringBuilder
+        var connectionStringBuilder
             = new DbConnectionStringBuilder();
 
         connectionStringBuilder.ConnectionString = connectionString; /* throw */
 
-        SortedList<string, string> result =
+        var result =
             new SortedList<string, string>(StringComparer.OrdinalIgnoreCase);
 
         foreach (string keyName in connectionStringBuilder.Keys)
         {
-            object value = connectionStringBuilder[keyName];
+            var value = connectionStringBuilder[keyName];
             string keyValue = null;
 
             if (value is string)
@@ -3677,7 +3677,7 @@ namespace System.Data.SQLite
             else if (transaction == null)
                 throw new ArgumentNullException("Unable to enlist in transaction, it is null");
 
-            bool strictEnlistment = HelperMethods.HasFlags(
+            var strictEnlistment = HelperMethods.HasFlags(
                 _flags, SQLiteConnectionFlags.StrictEnlistment);
 
             _enlistment = new SQLiteEnlistment(this, transaction,
@@ -3770,7 +3770,7 @@ namespace System.Data.SQLite
                 sleepMilliseconds = defaultMilliseconds;
         }
 
-        DateTime start = DateTime.UtcNow;
+        var start = DateTime.UtcNow;
 
         while (true)
         {
@@ -3780,7 +3780,7 @@ namespace System.Data.SQLite
             //       same as the enlistment not being reset yet.  Both will
             //       advance toward the timeout.
             //
-            bool locked = Monitor.TryEnter(_enlistmentSyncRoot);
+            var locked = Monitor.TryEnter(_enlistmentSyncRoot);
 
             try
             {
@@ -3823,13 +3823,13 @@ namespace System.Data.SQLite
             // NOTE: How much time has elapsed since we first starting
             //       waiting?
             //
-            DateTime now = DateTime.UtcNow;
-            TimeSpan elapsed = now.Subtract(start);
+            var now = DateTime.UtcNow;
+            var elapsed = now.Subtract(start);
 
             //
             // NOTE: Are we done wait?
             //
-            double totalMilliseconds = elapsed.TotalMilliseconds;
+            var totalMilliseconds = elapsed.TotalMilliseconds;
 
             if ((totalMilliseconds < 0) || /* Time went backward? */
                 (totalMilliseconds >= (double)timeoutMilliseconds))
@@ -3989,7 +3989,7 @@ namespace System.Data.SQLite
             throw new SQLiteException("Loading extensions is disabled for this database connection.");
         }
 
-        SQLiteErrorCode rc = _sql.SetConfigurationOption(option, value);
+        var rc = _sql.SetConfigurationOption(option, value);
 
         if (rc != SQLiteErrorCode.Ok)
             throw new SQLiteException(rc, null);
@@ -4125,11 +4125,11 @@ namespace System.Data.SQLite
         if (array == null)
             return null;
 
-        StringBuilder result = new StringBuilder();
+        var result = new StringBuilder();
 
-        int length = array.Length;
+        var length = array.Length;
 
-        for (int index = 0; index < length; index++)
+        for (var index = 0; index < length; index++)
 #if NET_COMPACT_20
             result.Append(HelperMethods.StringFormat(
                 CultureInfo.InvariantCulture,
@@ -4174,11 +4174,11 @@ namespace System.Data.SQLite
             return null;
         }
 
-        byte[] result = new byte[text.Length / 2];
+        var result = new byte[text.Length / 2];
 
-        for (int index = 0; index < text.Length; index += 2)
+        for (var index = 0; index < text.Length; index += 2)
         {
-            string value = text.Substring(index, 2);
+            var value = text.Substring(index, 2);
 
             if (!TryParseByte(value,
                     NumberStyles.HexNumber, out result[index / 2]))
@@ -4206,7 +4206,7 @@ namespace System.Data.SQLite
     /// </returns>
     private bool GetDefaultPooling()
     {
-        bool result = DefaultPooling;
+        var result = DefaultPooling;
 
         if (result) /* NOTE: True branch not reached in the default build. */
         {
@@ -4285,10 +4285,10 @@ namespace System.Data.SQLite
 
       Close();
 
-      SortedList<string, string> opts = ParseConnectionString(
+      var opts = ParseConnectionString(
           this, _connectionString, _parseViaFramework, false);
 
-      object enumValue = TryParseEnum(typeof(SQLiteConnectionFlags), FindKey(opts, "Flags", null), true);
+      var enumValue = TryParseEnum(typeof(SQLiteConnectionFlags), FindKey(opts, "Flags", null), true);
 
       //
       // BUGFIX: Always preserve the pre-existing instance flags.  This is OK
@@ -4302,22 +4302,22 @@ namespace System.Data.SQLite
       //         by default.  If they are different now, they must have been
       //         manually set by the application.
       //
-      bool noDefaultFlags = SQLiteConvert.ToBoolean(FindKey(opts, "NoDefaultFlags", DefaultNoDefaultFlags.ToString()));
+      var noDefaultFlags = SQLiteConvert.ToBoolean(FindKey(opts, "NoDefaultFlags", DefaultNoDefaultFlags.ToString()));
 
       if (enumValue is SQLiteConnectionFlags)
           _flags |= (SQLiteConnectionFlags)enumValue;
       else if (!noDefaultFlags)
           _flags |= DefaultFlags;
 
-      bool noSharedFlags = SQLiteConvert.ToBoolean(FindKey(opts, "NoSharedFlags", DefaultNoSharedFlags.ToString()));
+      var noSharedFlags = SQLiteConvert.ToBoolean(FindKey(opts, "NoSharedFlags", DefaultNoSharedFlags.ToString()));
       if (!noSharedFlags) { lock (_syncRoot) { _flags |= _sharedFlags; } }
 
 #if INTEROP_CODEC || INTEROP_INCLUDE_SEE
-      bool hidePassword = HelperMethods.HasFlags(_flags, SQLiteConnectionFlags.HidePassword);
+      var hidePassword = HelperMethods.HasFlags(_flags, SQLiteConnectionFlags.HidePassword);
 #endif
 
-      SortedList<string, string> eventArgOpts = opts;
-      string eventArgConnectionString = _connectionString;
+      var eventArgOpts = opts;
+      var eventArgConnectionString = _connectionString;
 
 #if INTEROP_CODEC || INTEROP_INCLUDE_SEE
       if (hidePassword)
@@ -4325,7 +4325,7 @@ namespace System.Data.SQLite
           eventArgOpts = new SortedList<string, string>(
               StringComparer.OrdinalIgnoreCase);
 
-          foreach (KeyValuePair<string, string> pair in opts)
+          foreach (var pair in opts)
           {
               if (String.Equals(
                     pair.Key, "Password",
@@ -4370,9 +4370,9 @@ namespace System.Data.SQLite
       _vfsName = FindKey(opts, "VfsName", DefaultVfsName);
 
 #if !NET_COMPACT_20 && TRACE_WARNING
-      bool uri = false;
+      var uri = false;
 #endif
-      bool fullUri = false;
+      var fullUri = false;
       string fileName;
 
       if (Convert.ToInt32(FindKey(opts, "Version", SQLiteConvert.ToString(DefaultVersion)), CultureInfo.InvariantCulture) != DefaultVersion)
@@ -4429,7 +4429,7 @@ namespace System.Data.SQLite
         }
       }
 
-      bool isMemory = (String.Compare(fileName, MemoryFileName, StringComparison.OrdinalIgnoreCase) == 0);
+      var isMemory = (String.Compare(fileName, MemoryFileName, StringComparison.OrdinalIgnoreCase) == 0);
 
 #if !NET_COMPACT_20 && TRACE_WARNING
       if (HelperMethods.HasFlags(_flags, SQLiteConnectionFlags.TraceWarning))
@@ -4458,15 +4458,15 @@ namespace System.Data.SQLite
           if (fileName.StartsWith("./") || fileName.StartsWith(".\\"))
             fileName = Path.GetDirectoryName(Assembly.GetCallingAssembly().GetName().CodeBase) + fileName.Substring(1);
 #endif
-          bool toFullPath = SQLiteConvert.ToBoolean(FindKey(opts, "ToFullPath", DefaultToFullPath.ToString()));
+          var toFullPath = SQLiteConvert.ToBoolean(FindKey(opts, "ToFullPath", DefaultToFullPath.ToString()));
           fileName = ExpandFileName(fileName, toFullPath);
         }
       }
 
       try
       {
-        bool usePooling = SQLiteConvert.ToBoolean(FindKey(opts, "Pooling", GetDefaultPooling().ToString()));
-        int maxPoolSize = Convert.ToInt32(FindKey(opts, "Max Pool Size", SQLiteConvert.ToString(DefaultMaxPoolSize)), CultureInfo.InvariantCulture);
+        var usePooling = SQLiteConvert.ToBoolean(FindKey(opts, "Pooling", GetDefaultPooling().ToString()));
+        var maxPoolSize = Convert.ToInt32(FindKey(opts, "Max Pool Size", SQLiteConvert.ToString(DefaultMaxPoolSize)), CultureInfo.InvariantCulture);
 
         _defaultTimeout = Convert.ToInt32(FindKey(opts, "Default Timeout", SQLiteConvert.ToString(DefaultConnectionTimeout)), CultureInfo.InvariantCulture);
         _busyTimeout = Convert.ToInt32(FindKey(opts, "BusyTimeout", SQLiteConvert.ToString(DefaultBusyTimeout)), CultureInfo.InvariantCulture);
@@ -4492,7 +4492,7 @@ namespace System.Data.SQLite
             SetupSQLiteBase(opts);
         }
 
-        SQLiteOpenFlagsEnum flags = SQLiteOpenFlagsEnum.None;
+        var flags = SQLiteOpenFlagsEnum.None;
 
         if (!SQLiteConvert.ToBoolean(FindKey(opts, "FailIfMissing", DefaultFailIfMissing.ToString())))
           flags |= SQLiteOpenFlagsEnum.Create;
@@ -4516,12 +4516,12 @@ namespace System.Data.SQLite
         _binaryGuid = SQLiteConvert.ToBoolean(FindKey(opts, "BinaryGUID", DefaultBinaryGUID.ToString()));
 
 #if INTEROP_CODEC || INTEROP_INCLUDE_SEE
-        string hexPassword = FindKey(opts, "HexPassword", DefaultHexPassword);
+        var hexPassword = FindKey(opts, "HexPassword", DefaultHexPassword);
 
         if (hexPassword != null)
         {
             string error = null;
-            byte[] hexPasswordBytes = FromHexString(hexPassword, ref error);
+            var hexPasswordBytes = FromHexString(hexPassword, ref error);
 
             if (hexPasswordBytes == null)
             {
@@ -4535,11 +4535,11 @@ namespace System.Data.SQLite
         }
         else
         {
-            string password = FindKey(opts, "Password", DefaultPassword);
+            var password = FindKey(opts, "Password", DefaultPassword);
 
             if (password != null)
             {
-                byte[] passwordBytes = UTF8Encoding.UTF8.GetBytes(
+                var passwordBytes = UTF8Encoding.UTF8.GetBytes(
                     password); /* throw */
 
                 _sql.SetPassword(passwordBytes);
@@ -4588,7 +4588,7 @@ namespace System.Data.SQLite
 
         _version++;
 
-        ConnectionState oldstate = _connectionState;
+        var oldstate = _connectionState;
         _connectionState = ConnectionState.Open;
 
         try
@@ -4601,7 +4601,7 @@ namespace System.Data.SQLite
 
           if (boolValue)
           {
-              using (SQLiteCommand cmd = CreateCommand())
+              using (var cmd = CreateCommand())
               {
                   if (_busyTimeout != DefaultBusyTimeout)
                   {
@@ -4658,7 +4658,7 @@ namespace System.Data.SQLite
                   enumValue = TryParseEnum(typeof(SQLiteJournalModeEnum), strValue, true);
                   if (!(enumValue is SQLiteJournalModeEnum) || ((SQLiteJournalModeEnum)enumValue != DefaultJournalMode))
                   {
-                      string pragmaStr = "PRAGMA journal_mode={0}";
+                      var pragmaStr = "PRAGMA journal_mode={0}";
 
 #if INTEROP_INCLUDE_ZIPVFS
                       if (useZipVfs)
@@ -4703,7 +4703,7 @@ namespace System.Data.SQLite
             _sql.SetRollbackHook(_rollbackCallback);
 
 #if !PLATFORM_COMPACTFRAMEWORK
-          System.Transactions.Transaction transaction = Transactions.Transaction.Current;
+          var transaction = Transactions.Transaction.Current;
 
           if (transaction != null &&
               SQLiteConvert.ToBoolean(FindKey(opts, "Enlist", DefaultEnlist.ToString())))
@@ -5072,7 +5072,7 @@ namespace System.Data.SQLite
         if (_sql == null)
             throw new InvalidOperationException("Database connection not valid for releasing memory.");
 
-        SQLiteErrorCode rc = _sql.ReleaseMemory();
+        var rc = _sql.ReleaseMemory();
 
         if (rc != SQLiteErrorCode.Ok)
         {
@@ -5240,7 +5240,7 @@ namespace System.Data.SQLite
 
             if (_assembly.IsDefined(typeof(AssemblySourceIdAttribute), false))
             {
-                AssemblySourceIdAttribute attribute =
+                var attribute =
                     (AssemblySourceIdAttribute)_assembly.GetCustomAttributes(
                         typeof(AssemblySourceIdAttribute), false)[0];
 
@@ -5251,7 +5251,7 @@ namespace System.Data.SQLite
 
             if (_assembly.IsDefined(typeof(AssemblySourceTimeStampAttribute), false))
             {
-                AssemblySourceTimeStampAttribute attribute =
+                var attribute =
                     (AssemblySourceTimeStampAttribute)_assembly.GetCustomAttributes(
                         typeof(AssemblySourceTimeStampAttribute), false)[0];
 
@@ -5349,7 +5349,7 @@ namespace System.Data.SQLite
     {
         get
         {
-            string name = "DefaultFlags_SQLiteConnection";
+            var name = "DefaultFlags_SQLiteConnection";
             object value;
 
             if (!TryGetLastCachedSetting(name, null, out value))
@@ -5361,7 +5361,7 @@ namespace System.Data.SQLite
             if (value == null)
                 return FallbackDefaultFlags;
 
-            object enumValue = TryParseEnum(
+            var enumValue = TryParseEnum(
                 typeof(SQLiteConnectionFlags), value.ToString(), true);
 
             if (enumValue is SQLiteConnectionFlags)
@@ -5416,7 +5416,7 @@ namespace System.Data.SQLite
             throw new InvalidOperationException("Database connection not valid for shutdown.");
 
         _sql.Close(false); /* NOTE: MUST be closed before shutdown. */
-        SQLiteErrorCode rc = _sql.Shutdown();
+        var rc = _sql.Shutdown();
 
 #if !NET_COMPACT_20 && TRACE_CONNECTION
         if (rc != SQLiteErrorCode.Ok)
@@ -5445,7 +5445,7 @@ namespace System.Data.SQLite
         bool noThrow
         )
     {
-        SQLiteErrorCode rc = SQLite3.StaticShutdown(directories);
+        var rc = SQLite3.StaticShutdown(directories);
 
         if (rc != SQLiteErrorCode.Ok)
         {
@@ -5523,7 +5523,7 @@ namespace System.Data.SQLite
 
         if (!String.IsNullOrEmpty(newPassword))
         {
-            byte[] newPasswordBytes = UTF8Encoding.UTF8.GetBytes(
+            var newPasswordBytes = UTF8Encoding.UTF8.GetBytes(
                 newPassword); /* throw */
 
             ChangePassword(newPasswordBytes);
@@ -5563,7 +5563,7 @@ namespace System.Data.SQLite
 
         if (!String.IsNullOrEmpty(databasePassword))
         {
-            byte[] databasePasswordBytes = UTF8Encoding.UTF8.GetBytes(
+            var databasePasswordBytes = UTF8Encoding.UTF8.GetBytes(
                 databasePassword); /* throw */
 
             SetPassword(databasePasswordBytes);
@@ -5620,7 +5620,7 @@ namespace System.Data.SQLite
                 "Database must be opened before changing the AV retry parameters.");
 
         SQLiteErrorCode rc;
-        IntPtr pArg = IntPtr.Zero;
+        var pArg = IntPtr.Zero;
 
         try
         {
@@ -5664,7 +5664,7 @@ namespace System.Data.SQLite
             throw new InvalidOperationException(
                 "Database must be opened before changing the chunk size.");
 
-        IntPtr pArg = IntPtr.Zero;
+        var pArg = IntPtr.Zero;
 
         try
         {
@@ -5702,7 +5702,7 @@ namespace System.Data.SQLite
             return value;
         }
 
-        int length = value.Length;
+        var length = value.Length;
 
         if ((value[0] == SQLiteConvert.QuoteChar) &&
             (value[length - 1] == SQLiteConvert.QuoteChar))
@@ -5744,7 +5744,7 @@ namespace System.Data.SQLite
         string result = Path.GetDirectoryName(
             Assembly.GetCallingAssembly().GetName().CodeBase);
 #else
-        string result = AppDomain.CurrentDomain.GetData(
+        var result = AppDomain.CurrentDomain.GetData(
             "DataDirectory") as string;
 
         if (String.IsNullOrEmpty(result))
@@ -5770,7 +5770,7 @@ namespace System.Data.SQLite
 
         if (sourceFile.StartsWith(_dataDirectory, StringComparison.OrdinalIgnoreCase))
         {
-            string dataDirectory = GetDataDirectory();
+            var dataDirectory = GetDataDirectory();
 
             if (sourceFile.Length > _dataDirectory.Length)
             {
@@ -5892,7 +5892,7 @@ namespace System.Data.SQLite
       if (_connectionState != ConnectionState.Open)
         throw new InvalidOperationException();
 
-      string[] parms = new string[5];
+      var parms = new string[5];
 
       if (restrictionValues == null) restrictionValues = new string[0];
       restrictionValues.CopyTo(parms, 0);
@@ -5932,7 +5932,7 @@ namespace System.Data.SQLite
 
     private static DataTable Schema_ReservedWords()
     {
-      DataTable tbl = new DataTable("ReservedWords");
+      var tbl = new DataTable("ReservedWords");
 
       tbl.Locale = CultureInfo.InvariantCulture;
       tbl.Columns.Add("ReservedWord", typeof(string));
@@ -5941,7 +5941,7 @@ namespace System.Data.SQLite
 
       tbl.BeginLoadData();
       DataRow row;
-      foreach (string word in SR.Keywords.Split(new char[] { ',' }))
+      foreach (var word in SR.Keywords.Split(new char[] { ',' }))
       {
         row = tbl.NewRow();
         row[0] = word;
@@ -5960,7 +5960,7 @@ namespace System.Data.SQLite
     /// <returns>DataTable</returns>
     private static DataTable Schema_MetaDataCollections()
     {
-      DataTable tbl = new DataTable("MetaDataCollections");
+      var tbl = new DataTable("MetaDataCollections");
 
       tbl.Locale = CultureInfo.InvariantCulture;
       tbl.Columns.Add("CollectionName", typeof(string));
@@ -5969,7 +5969,7 @@ namespace System.Data.SQLite
 
       tbl.BeginLoadData();
 
-      StringReader reader = new StringReader(SR.MetaDataCollections);
+      var reader = new StringReader(SR.MetaDataCollections);
       tbl.ReadXml(reader);
       reader.Close();
 
@@ -5985,7 +5985,7 @@ namespace System.Data.SQLite
     /// <returns>DataTable</returns>
     private DataTable Schema_DataSourceInformation()
     {
-      DataTable tbl = new DataTable("DataSourceInformation");
+      var tbl = new DataTable("DataSourceInformation");
       DataRow row;
 
       tbl.Locale = CultureInfo.InvariantCulture;
@@ -6046,7 +6046,7 @@ namespace System.Data.SQLite
     /// <returns>DataTable</returns>
     private DataTable Schema_Columns(string strCatalog, string strTable, string strColumn)
     {
-      DataTable tbl = new DataTable("Columns");
+      var tbl = new DataTable("Columns");
       DataRow row;
 
       tbl.Locale = CultureInfo.InvariantCulture;
@@ -6086,10 +6086,10 @@ namespace System.Data.SQLite
 
       if (String.IsNullOrEmpty(strCatalog)) strCatalog = GetDefaultCatalogName();
 
-      string master = GetMasterTableName(IsTemporaryCatalogName(strCatalog));
+      var master = GetMasterTableName(IsTemporaryCatalogName(strCatalog));
 
-      using (SQLiteCommand cmdTables = new SQLiteCommand(HelperMethods.StringFormat(CultureInfo.InvariantCulture, "SELECT * FROM [{0}].[{1}] WHERE [type] LIKE 'table' OR [type] LIKE 'view'", strCatalog, master), this))
-      using (SQLiteDataReader rdTables = cmdTables.ExecuteReader())
+      using (var cmdTables = new SQLiteCommand(HelperMethods.StringFormat(CultureInfo.InvariantCulture, "SELECT * FROM [{0}].[{1}] WHERE [type] LIKE 'table' OR [type] LIKE 'view'", strCatalog, master), this))
+      using (var rdTables = cmdTables.ExecuteReader())
       {
         while (rdTables.Read())
         {
@@ -6097,9 +6097,9 @@ namespace System.Data.SQLite
           {
             try
             {
-              using (SQLiteCommand cmd = new SQLiteCommand(HelperMethods.StringFormat(CultureInfo.InvariantCulture, "SELECT * FROM [{0}].[{1}]", strCatalog, rdTables.GetString(2)), this))
-              using (SQLiteDataReader rd = (SQLiteDataReader)cmd.ExecuteReader(CommandBehavior.SchemaOnly))
-              using (DataTable tblSchema = rd.GetSchemaTable(true, true))
+              using (var cmd = new SQLiteCommand(HelperMethods.StringFormat(CultureInfo.InvariantCulture, "SELECT * FROM [{0}].[{1}]", strCatalog, rdTables.GetString(2)), this))
+              using (var rd = (SQLiteDataReader)cmd.ExecuteReader(CommandBehavior.SchemaOnly))
+              using (var tblSchema = rd.GetSchemaTable(true, true))
               {
                 foreach (DataRow schemaRow in tblSchema.Rows)
                 {
@@ -6152,9 +6152,9 @@ namespace System.Data.SQLite
     /// <returns>DataTable</returns>
     private DataTable Schema_Indexes(string strCatalog, string strTable, string strIndex)
     {
-      DataTable tbl = new DataTable("Indexes");
+      var tbl = new DataTable("Indexes");
       DataRow row;
-      List<int> primaryKeys = new List<int>();
+      var primaryKeys = new List<int>();
       bool maybeRowId;
 
       tbl.Locale = CultureInfo.InvariantCulture;
@@ -6189,10 +6189,10 @@ namespace System.Data.SQLite
 
       if (String.IsNullOrEmpty(strCatalog)) strCatalog = GetDefaultCatalogName();
 
-      string master = GetMasterTableName(IsTemporaryCatalogName(strCatalog));
+      var master = GetMasterTableName(IsTemporaryCatalogName(strCatalog));
 
-      using (SQLiteCommand cmdTables = new SQLiteCommand(HelperMethods.StringFormat(CultureInfo.InvariantCulture, "SELECT * FROM [{0}].[{1}] WHERE [type] LIKE 'table'", strCatalog, master), this))
-      using (SQLiteDataReader rdTables = cmdTables.ExecuteReader())
+      using (var cmdTables = new SQLiteCommand(HelperMethods.StringFormat(CultureInfo.InvariantCulture, "SELECT * FROM [{0}].[{1}] WHERE [type] LIKE 'table'", strCatalog, master), this))
+      using (var rdTables = cmdTables.ExecuteReader())
       {
         while (rdTables.Read())
         {
@@ -6204,8 +6204,8 @@ namespace System.Data.SQLite
             // Such indexes are not listed in the indexes list but count as indexes just the same.
             try
             {
-              using (SQLiteCommand cmdTable = new SQLiteCommand(HelperMethods.StringFormat(CultureInfo.InvariantCulture, "PRAGMA [{0}].table_info([{1}])", strCatalog, rdTables.GetString(2)), this))
-              using (SQLiteDataReader rdTable = cmdTable.ExecuteReader())
+              using (var cmdTable = new SQLiteCommand(HelperMethods.StringFormat(CultureInfo.InvariantCulture, "PRAGMA [{0}].table_info([{1}])", strCatalog, rdTables.GetString(2)), this))
+              using (var rdTable = cmdTable.ExecuteReader())
               {
                 while (rdTable.Read())
                 {
@@ -6246,8 +6246,8 @@ namespace System.Data.SQLite
             // Now fetch all the rest of the indexes.
             try
             {
-              using (SQLiteCommand cmd = new SQLiteCommand(HelperMethods.StringFormat(CultureInfo.InvariantCulture, "PRAGMA [{0}].index_list([{1}])", strCatalog, rdTables.GetString(2)), this))
-              using (SQLiteDataReader rd = (SQLiteDataReader)cmd.ExecuteReader())
+              using (var cmd = new SQLiteCommand(HelperMethods.StringFormat(CultureInfo.InvariantCulture, "PRAGMA [{0}].index_list([{1}])", strCatalog, rdTables.GetString(2)), this))
+              using (var rd = (SQLiteDataReader)cmd.ExecuteReader())
               {
                 while (rd.Read())
                 {
@@ -6264,8 +6264,8 @@ namespace System.Data.SQLite
                     row["PRIMARY_KEY"] = false;
 
                     // get the index definition
-                    using (SQLiteCommand cmdIndexes = new SQLiteCommand(HelperMethods.StringFormat(CultureInfo.InvariantCulture, "SELECT * FROM [{0}].[{2}] WHERE [type] LIKE 'index' AND [name] LIKE '{1}'", strCatalog, rd.GetString(1).Replace("'", "''"), master), this))
-                    using (SQLiteDataReader rdIndexes = cmdIndexes.ExecuteReader())
+                    using (var cmdIndexes = new SQLiteCommand(HelperMethods.StringFormat(CultureInfo.InvariantCulture, "SELECT * FROM [{0}].[{2}] WHERE [type] LIKE 'index' AND [name] LIKE '{1}'", strCatalog, rd.GetString(1).Replace("'", "''"), master), this))
+                    using (var rdIndexes = cmdIndexes.ExecuteReader())
                     {
                       while (rdIndexes.Read())
                       {
@@ -6280,10 +6280,10 @@ namespace System.Data.SQLite
                     // primary key, and all the columns in the given index match the primary key columns
                     if (primaryKeys.Count > 0 && rd.GetString(1).StartsWith("sqlite_autoindex_" + rdTables.GetString(2), StringComparison.InvariantCultureIgnoreCase) == true)
                     {
-                      using (SQLiteCommand cmdDetails = new SQLiteCommand(HelperMethods.StringFormat(CultureInfo.InvariantCulture, "PRAGMA [{0}].index_info([{1}])", strCatalog, rd.GetString(1)), this))
-                      using (SQLiteDataReader rdDetails = cmdDetails.ExecuteReader())
+                      using (var cmdDetails = new SQLiteCommand(HelperMethods.StringFormat(CultureInfo.InvariantCulture, "PRAGMA [{0}].index_info([{1}])", strCatalog, rd.GetString(1)), this))
+                      using (var rdDetails = cmdDetails.ExecuteReader())
                       {
-                        int nMatches = 0;
+                        var nMatches = 0;
                         while (rdDetails.Read())
                         {
                           if (primaryKeys.Contains(rdDetails.GetInt32(1)) == false)
@@ -6321,7 +6321,7 @@ namespace System.Data.SQLite
 
     private DataTable Schema_Triggers(string catalog, string table, string triggerName)
     {
-      DataTable tbl = new DataTable("Triggers");
+      var tbl = new DataTable("Triggers");
       DataRow row;
 
       tbl.Locale = CultureInfo.InvariantCulture;
@@ -6335,10 +6335,10 @@ namespace System.Data.SQLite
 
       if (String.IsNullOrEmpty(table)) table = null;
       if (String.IsNullOrEmpty(catalog)) catalog = GetDefaultCatalogName();
-      string master = GetMasterTableName(IsTemporaryCatalogName(catalog));
+      var master = GetMasterTableName(IsTemporaryCatalogName(catalog));
 
-      using (SQLiteCommand cmd = new SQLiteCommand(HelperMethods.StringFormat(CultureInfo.InvariantCulture, "SELECT [type], [name], [tbl_name], [rootpage], [sql], [rowid] FROM [{0}].[{1}] WHERE [type] LIKE 'trigger'", catalog, master), this))
-      using (SQLiteDataReader rd = (SQLiteDataReader)cmd.ExecuteReader())
+      using (var cmd = new SQLiteCommand(HelperMethods.StringFormat(CultureInfo.InvariantCulture, "SELECT [type], [name], [tbl_name], [rootpage], [sql], [rowid] FROM [{0}].[{1}] WHERE [type] LIKE 'trigger'", catalog, master), this))
+      using (var rd = (SQLiteDataReader)cmd.ExecuteReader())
       {
         while (rd.Read())
         {
@@ -6374,7 +6374,7 @@ namespace System.Data.SQLite
     /// <returns>DataTable</returns>
     private DataTable Schema_Tables(string strCatalog, string strTable, string strType)
     {
-      DataTable tbl = new DataTable("Tables");
+      var tbl = new DataTable("Tables");
       DataRow row;
       string strItem;
 
@@ -6390,10 +6390,10 @@ namespace System.Data.SQLite
 
       if (String.IsNullOrEmpty(strCatalog)) strCatalog = GetDefaultCatalogName();
 
-      string master = GetMasterTableName(IsTemporaryCatalogName(strCatalog));
+      var master = GetMasterTableName(IsTemporaryCatalogName(strCatalog));
 
-      using (SQLiteCommand cmd = new SQLiteCommand(HelperMethods.StringFormat(CultureInfo.InvariantCulture, "SELECT [type], [name], [tbl_name], [rootpage], [sql], [rowid] FROM [{0}].[{1}] WHERE [type] LIKE 'table'", strCatalog, master), this))
-      using (SQLiteDataReader rd = (SQLiteDataReader)cmd.ExecuteReader())
+      using (var cmd = new SQLiteCommand(HelperMethods.StringFormat(CultureInfo.InvariantCulture, "SELECT [type], [name], [tbl_name], [rootpage], [sql], [rowid] FROM [{0}].[{1}] WHERE [type] LIKE 'table'", strCatalog, master), this))
+      using (var rd = (SQLiteDataReader)cmd.ExecuteReader())
       {
         while (rd.Read())
         {
@@ -6436,7 +6436,7 @@ namespace System.Data.SQLite
     /// <returns>DataTable</returns>
     private DataTable Schema_Views(string strCatalog, string strView)
     {
-      DataTable tbl = new DataTable("Views");
+      var tbl = new DataTable("Views");
       DataRow row;
       string strItem;
       int nPos;
@@ -6456,10 +6456,10 @@ namespace System.Data.SQLite
 
       if (String.IsNullOrEmpty(strCatalog)) strCatalog = GetDefaultCatalogName();
 
-      string master = GetMasterTableName(IsTemporaryCatalogName(strCatalog));
+      var master = GetMasterTableName(IsTemporaryCatalogName(strCatalog));
 
-      using (SQLiteCommand cmd = new SQLiteCommand(HelperMethods.StringFormat(CultureInfo.InvariantCulture, "SELECT * FROM [{0}].[{1}] WHERE [type] LIKE 'view'", strCatalog, master), this))
-      using (SQLiteDataReader rd = (SQLiteDataReader)cmd.ExecuteReader())
+      using (var cmd = new SQLiteCommand(HelperMethods.StringFormat(CultureInfo.InvariantCulture, "SELECT * FROM [{0}].[{1}] WHERE [type] LIKE 'view'", strCatalog, master), this))
+      using (var rd = (SQLiteDataReader)cmd.ExecuteReader())
       {
         while (rd.Read())
         {
@@ -6497,7 +6497,7 @@ namespace System.Data.SQLite
     /// <returns>DataTable</returns>
     private DataTable Schema_Catalogs(string strCatalog)
     {
-      DataTable tbl = new DataTable("Catalogs");
+      var tbl = new DataTable("Catalogs");
       DataRow row;
 
       tbl.Locale = CultureInfo.InvariantCulture;
@@ -6507,8 +6507,8 @@ namespace System.Data.SQLite
 
       tbl.BeginLoadData();
 
-      using (SQLiteCommand cmd = new SQLiteCommand("PRAGMA database_list", this))
-      using (SQLiteDataReader rd = (SQLiteDataReader)cmd.ExecuteReader())
+      using (var cmd = new SQLiteCommand("PRAGMA database_list", this))
+      using (var rd = (SQLiteDataReader)cmd.ExecuteReader())
       {
         while (rd.Read())
         {
@@ -6534,7 +6534,7 @@ namespace System.Data.SQLite
 
     private DataTable Schema_DataTypes()
     {
-      DataTable tbl = new DataTable("DataTypes");
+      var tbl = new DataTable("DataTypes");
 
       tbl.Locale = CultureInfo.InvariantCulture;
       tbl.Columns.Add("TypeName", typeof(String));
@@ -6562,7 +6562,7 @@ namespace System.Data.SQLite
 
       tbl.BeginLoadData();
 
-      StringReader reader = new StringReader(SR.DataTypes);
+      var reader = new StringReader(SR.DataTypes);
       tbl.ReadXml(reader);
       reader.Close();
 
@@ -6582,9 +6582,9 @@ namespace System.Data.SQLite
     /// <returns>A DataTable containing the results</returns>
     private DataTable Schema_IndexColumns(string strCatalog, string strTable, string strIndex, string strColumn)
     {
-      DataTable tbl = new DataTable("IndexColumns");
+      var tbl = new DataTable("IndexColumns");
       DataRow row;
-      List<KeyValuePair<int, string>> primaryKeys = new List<KeyValuePair<int, string>>();
+      var primaryKeys = new List<KeyValuePair<int, string>>();
       bool maybeRowId;
 
       tbl.Locale = CultureInfo.InvariantCulture;
@@ -6603,12 +6603,12 @@ namespace System.Data.SQLite
 
       if (String.IsNullOrEmpty(strCatalog)) strCatalog = GetDefaultCatalogName();
 
-      string master = GetMasterTableName(IsTemporaryCatalogName(strCatalog));
+      var master = GetMasterTableName(IsTemporaryCatalogName(strCatalog));
 
       tbl.BeginLoadData();
 
-      using (SQLiteCommand cmdTables = new SQLiteCommand(HelperMethods.StringFormat(CultureInfo.InvariantCulture, "SELECT * FROM [{0}].[{1}] WHERE [type] LIKE 'table'", strCatalog, master), this))
-      using (SQLiteDataReader rdTables = cmdTables.ExecuteReader())
+      using (var cmdTables = new SQLiteCommand(HelperMethods.StringFormat(CultureInfo.InvariantCulture, "SELECT * FROM [{0}].[{1}] WHERE [type] LIKE 'table'", strCatalog, master), this))
+      using (var rdTables = cmdTables.ExecuteReader())
       {
         while (rdTables.Read())
         {
@@ -6618,8 +6618,8 @@ namespace System.Data.SQLite
           {
             try
             {
-              using (SQLiteCommand cmdTable = new SQLiteCommand(HelperMethods.StringFormat(CultureInfo.InvariantCulture, "PRAGMA [{0}].table_info([{1}])", strCatalog, rdTables.GetString(2)), this))
-              using (SQLiteDataReader rdTable = cmdTable.ExecuteReader())
+              using (var cmdTable = new SQLiteCommand(HelperMethods.StringFormat(CultureInfo.InvariantCulture, "PRAGMA [{0}].table_info([{1}])", strCatalog, rdTables.GetString(2)), this))
+              using (var rdTable = cmdTable.ExecuteReader())
               {
                 while (rdTable.Read())
                 {
@@ -6655,22 +6655,22 @@ namespace System.Data.SQLite
                 tbl.Rows.Add(row);
             }
 
-            using (SQLiteCommand cmdIndexes = new SQLiteCommand(HelperMethods.StringFormat(CultureInfo.InvariantCulture, "SELECT * FROM [{0}].[{2}] WHERE [type] LIKE 'index' AND [tbl_name] LIKE '{1}'", strCatalog, rdTables.GetString(2).Replace("'", "''"), master), this))
-            using (SQLiteDataReader rdIndexes = cmdIndexes.ExecuteReader())
+            using (var cmdIndexes = new SQLiteCommand(HelperMethods.StringFormat(CultureInfo.InvariantCulture, "SELECT * FROM [{0}].[{2}] WHERE [type] LIKE 'index' AND [tbl_name] LIKE '{1}'", strCatalog, rdTables.GetString(2).Replace("'", "''"), master), this))
+            using (var rdIndexes = cmdIndexes.ExecuteReader())
             {
               while (rdIndexes.Read())
               {
-                int ordinal = 0;
+                var ordinal = 0;
                 if (String.IsNullOrEmpty(strIndex) || String.Compare(strIndex, rdIndexes.GetString(1), StringComparison.OrdinalIgnoreCase) == 0)
                 {
                   try
                   {
-                    using (SQLiteCommand cmdIndex = new SQLiteCommand(HelperMethods.StringFormat(CultureInfo.InvariantCulture, "PRAGMA [{0}].index_info([{1}])", strCatalog, rdIndexes.GetString(1)), this))
-                    using (SQLiteDataReader rdIndex = cmdIndex.ExecuteReader())
+                    using (var cmdIndex = new SQLiteCommand(HelperMethods.StringFormat(CultureInfo.InvariantCulture, "PRAGMA [{0}].index_info([{1}])", strCatalog, rdIndexes.GetString(1)), this))
+                    using (var rdIndex = cmdIndex.ExecuteReader())
                     {
                       while (rdIndex.Read())
                       {
-                        string columnName = rdIndex.IsDBNull(2) ? null : rdIndex.GetString(2);
+                        var columnName = rdIndex.IsDBNull(2) ? null : rdIndex.GetString(2);
 
                         row = tbl.NewRow();
                         row["CONSTRAINT_CATALOG"] = strCatalog;
@@ -6682,8 +6682,8 @@ namespace System.Data.SQLite
                         row["ORDINAL_POSITION"] = ordinal; // rdIndex.GetInt32(1);
 
                         string collationSequence = null;
-                        int sortMode = 0;
-                        int onError = 0;
+                        var sortMode = 0;
+                        var onError = 0;
 
                         if (columnName != null)
                           _sql.GetIndexColumnExtendedInfo(strCatalog, rdIndexes.GetString(1), columnName, ref sortMode, ref onError, ref collationSequence);
@@ -6726,7 +6726,7 @@ namespace System.Data.SQLite
     /// <returns>A DataTable containing the results</returns>
     private DataTable Schema_ViewColumns(string strCatalog, string strView, string strColumn)
     {
-      DataTable tbl = new DataTable("ViewColumns");
+      var tbl = new DataTable("ViewColumns");
       DataRow row;
       string strSql;
       int n;
@@ -6765,18 +6765,18 @@ namespace System.Data.SQLite
 
       if (String.IsNullOrEmpty(strCatalog)) strCatalog = GetDefaultCatalogName();
 
-      string master = GetMasterTableName(IsTemporaryCatalogName(strCatalog));
+      var master = GetMasterTableName(IsTemporaryCatalogName(strCatalog));
 
       tbl.BeginLoadData();
 
-      using (SQLiteCommand cmdViews = new SQLiteCommand(HelperMethods.StringFormat(CultureInfo.InvariantCulture, "SELECT * FROM [{0}].[{1}] WHERE [type] LIKE 'view'", strCatalog, master), this))
-      using (SQLiteDataReader rdViews = cmdViews.ExecuteReader())
+      using (var cmdViews = new SQLiteCommand(HelperMethods.StringFormat(CultureInfo.InvariantCulture, "SELECT * FROM [{0}].[{1}] WHERE [type] LIKE 'view'", strCatalog, master), this))
+      using (var rdViews = cmdViews.ExecuteReader())
       {
         while (rdViews.Read())
         {
           if (String.IsNullOrEmpty(strView) || String.Compare(strView, rdViews.GetString(2), StringComparison.OrdinalIgnoreCase) == 0)
           {
-            using (SQLiteCommand cmdViewSelect = new SQLiteCommand(HelperMethods.StringFormat(CultureInfo.InvariantCulture, "SELECT * FROM [{0}].[{1}]", strCatalog, rdViews.GetString(2)), this))
+            using (var cmdViewSelect = new SQLiteCommand(HelperMethods.StringFormat(CultureInfo.InvariantCulture, "SELECT * FROM [{0}].[{1}]", strCatalog, rdViews.GetString(2)), this))
             {
               strSql = rdViews.GetString(4).Replace('\r', ' ').Replace('\n', ' ').Replace('\t', ' ');
               n = CultureInfo.InvariantCulture.CompareInfo.IndexOf(strSql, " AS ", CompareOptions.IgnoreCase);
@@ -6785,11 +6785,11 @@ namespace System.Data.SQLite
 
               strSql = strSql.Substring(n + 4);
 
-              using (SQLiteCommand cmd = new SQLiteCommand(strSql, this))
-              using (SQLiteDataReader rdViewSelect = cmdViewSelect.ExecuteReader(CommandBehavior.SchemaOnly))
-              using (SQLiteDataReader rd = (SQLiteDataReader)cmd.ExecuteReader(CommandBehavior.SchemaOnly))
-              using (DataTable tblSchemaView = rdViewSelect.GetSchemaTable(false, false))
-              using (DataTable tblSchema = rd.GetSchemaTable(false, false))
+              using (var cmd = new SQLiteCommand(strSql, this))
+              using (var rdViewSelect = cmdViewSelect.ExecuteReader(CommandBehavior.SchemaOnly))
+              using (var rd = (SQLiteDataReader)cmd.ExecuteReader(CommandBehavior.SchemaOnly))
+              using (var tblSchemaView = rdViewSelect.GetSchemaTable(false, false))
+              using (var tblSchema = rd.GetSchemaTable(false, false))
               {
                 for (n = 0; n < tblSchema.Rows.Count; n++)
                 {
@@ -6844,7 +6844,7 @@ namespace System.Data.SQLite
     /// <returns>A DataTable with the results of the query</returns>
     private DataTable Schema_ForeignKeys(string strCatalog, string strTable, string strKeyName)
     {
-      DataTable tbl = new DataTable("ForeignKeys");
+      var tbl = new DataTable("ForeignKeys");
       DataRow row;
 
       tbl.Locale = CultureInfo.InvariantCulture;
@@ -6870,12 +6870,12 @@ namespace System.Data.SQLite
 
       if (String.IsNullOrEmpty(strCatalog)) strCatalog = GetDefaultCatalogName();
 
-      string master = GetMasterTableName(IsTemporaryCatalogName(strCatalog));
+      var master = GetMasterTableName(IsTemporaryCatalogName(strCatalog));
 
       tbl.BeginLoadData();
 
-      using (SQLiteCommand cmdTables = new SQLiteCommand(HelperMethods.StringFormat(CultureInfo.InvariantCulture, "SELECT * FROM [{0}].[{1}] WHERE [type] LIKE 'table'", strCatalog, master), this))
-      using (SQLiteDataReader rdTables = cmdTables.ExecuteReader())
+      using (var cmdTables = new SQLiteCommand(HelperMethods.StringFormat(CultureInfo.InvariantCulture, "SELECT * FROM [{0}].[{1}] WHERE [type] LIKE 'table'", strCatalog, master), this))
+      using (var rdTables = cmdTables.ExecuteReader())
       {
         while (rdTables.Read())
         {
@@ -6883,9 +6883,9 @@ namespace System.Data.SQLite
           {
             try
             {
-              using (SQLiteCommandBuilder builder = new SQLiteCommandBuilder())
-              using (SQLiteCommand cmdKey = new SQLiteCommand(HelperMethods.StringFormat(CultureInfo.InvariantCulture, "PRAGMA [{0}].foreign_key_list([{1}])", strCatalog, rdTables.GetString(2)), this))
-              using (SQLiteDataReader rdKey = cmdKey.ExecuteReader())
+              using (var builder = new SQLiteCommandBuilder())
+              using (var cmdKey = new SQLiteCommand(HelperMethods.StringFormat(CultureInfo.InvariantCulture, "PRAGMA [{0}].foreign_key_list([{1}])", strCatalog, rdTables.GetString(2)), this))
+              using (var rdKey = cmdKey.ExecuteReader())
               {
                 while (rdKey.Read())
                 {
@@ -7029,7 +7029,7 @@ namespace System.Data.SQLite
     {
         try
         {
-            ProgressEventArgs eventArgs = new ProgressEventArgs(
+            var eventArgs = new ProgressEventArgs(
                 pUserData, SQLiteProgressReturnCode.Continue);
 
             if (_progressHandler != null)
@@ -7079,7 +7079,7 @@ namespace System.Data.SQLite
     {
         try
         {
-            AuthorizerEventArgs eventArgs = new AuthorizerEventArgs(pUserData, actionCode,
+            var eventArgs = new AuthorizerEventArgs(pUserData, actionCode,
                 SQLiteBase.UTF8ToString(pArgument1, -1), SQLiteBase.UTF8ToString(pArgument2, -1),
                 SQLiteBase.UTF8ToString(pDatabase, -1), SQLiteBase.UTF8ToString(pAuthContext, -1),
                 SQLiteAuthorizerReturnCode.Ok);
@@ -7281,7 +7281,7 @@ namespace System.Data.SQLite
     {
         try
         {
-            CommitEventArgs e = new CommitEventArgs();
+            var e = new CommitEventArgs();
 
             if (_commitHandler != null)
                 _commitHandler(this, e);

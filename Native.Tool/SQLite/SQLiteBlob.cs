@@ -77,7 +77,7 @@ namespace System.Data.SQLite
             if (dataReader == null)
                 throw new ArgumentNullException("dataReader");
 
-            long? rowId = dataReader.GetRowId(i);
+            var rowId = dataReader.GetRowId(i);
 
             if (rowId == null)
                 throw new InvalidOperationException("No RowId is available");
@@ -129,12 +129,12 @@ namespace System.Data.SQLite
             if (connection == null)
                 throw new ArgumentNullException("connection");
 
-            SQLite3 sqlite3 = connection._sql as SQLite3;
+            var sqlite3 = connection._sql as SQLite3;
 
             if (sqlite3 == null)
                 throw new InvalidOperationException("Connection has no wrapper");
 
-            SQLiteConnectionHandle handle = sqlite3._sql;
+            var handle = sqlite3._sql;
 
             if (handle == null)
                 throw new InvalidOperationException("Connection has an invalid handle.");
@@ -147,9 +147,9 @@ namespace System.Data.SQLite
             }
             finally /* NOTE: Thread.Abort() protection. */
             {
-                IntPtr ptrBlob = IntPtr.Zero;
+                var ptrBlob = IntPtr.Zero;
 
-                SQLiteErrorCode rc = UnsafeNativeMethods.sqlite3_blob_open(
+                var rc = UnsafeNativeMethods.sqlite3_blob_open(
                     handle, SQLiteConvert.ToUTF8(databaseName),
                     SQLiteConvert.ToUTF8(tableName), SQLiteConvert.ToUTF8(
                     columnName), rowId, readOnly ? 0 : 1, ref ptrBlob);
@@ -237,7 +237,7 @@ namespace System.Data.SQLite
             CheckDisposed();
             CheckOpen();
 
-            SQLiteErrorCode rc = UnsafeNativeMethods.sqlite3_blob_reopen(
+            var rc = UnsafeNativeMethods.sqlite3_blob_reopen(
                 _sqlite_blob, rowId);
 
             if (rc != SQLiteErrorCode.Ok)
@@ -289,7 +289,7 @@ namespace System.Data.SQLite
             CheckOpen();
             VerifyParameters(buffer, count, offset);
 
-            SQLiteErrorCode rc = UnsafeNativeMethods.sqlite3_blob_read(
+            var rc = UnsafeNativeMethods.sqlite3_blob_read(
                 _sqlite_blob, buffer, count, offset);
 
             if (rc != SQLiteErrorCode.Ok)
@@ -322,7 +322,7 @@ namespace System.Data.SQLite
             CheckOpen();
             VerifyParameters(buffer, count, offset);
 
-            SQLiteErrorCode rc = UnsafeNativeMethods.sqlite3_blob_write(
+            var rc = UnsafeNativeMethods.sqlite3_blob_write(
                 _sqlite_blob, buffer, count, offset);
 
             if (rc != SQLiteErrorCode.Ok)

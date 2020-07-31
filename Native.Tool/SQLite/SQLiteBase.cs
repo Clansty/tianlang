@@ -679,7 +679,7 @@ namespace System.Data.SQLite
         if (_errorMessages == null)
             return null;
 
-        int index = (int)(rc & SQLiteErrorCode.NonExtendedMask);
+        var index = (int)(rc & SQLiteErrorCode.NonExtendedMask);
 
         if ((index < 0) || (index >= _errorMessages.Length))
             index = (int)SQLiteErrorCode.Error; /* Make into generic error. */
@@ -744,7 +744,7 @@ namespace System.Data.SQLite
 #if !SQLITE_STANDARD
                 SQLiteErrorCode n = UnsafeNativeMethods.sqlite3_backup_finish_interop(backup);
 #else
-                SQLiteErrorCode n = UnsafeNativeMethods.sqlite3_backup_finish(backup);
+                var n = UnsafeNativeMethods.sqlite3_backup_finish(backup);
 #endif
                 if (n != SQLiteErrorCode.Ok) throw new SQLiteException(n, null);
             }
@@ -770,7 +770,7 @@ namespace System.Data.SQLite
 #if !SQLITE_STANDARD
                 SQLiteErrorCode n = UnsafeNativeMethods.sqlite3_blob_close_interop(blob);
 #else
-                SQLiteErrorCode n = UnsafeNativeMethods.sqlite3_blob_close(blob);
+                var n = UnsafeNativeMethods.sqlite3_blob_close(blob);
 #endif
                 if (n != SQLiteErrorCode.Ok) throw new SQLiteException(n, null);
             }
@@ -796,7 +796,7 @@ namespace System.Data.SQLite
 #if !SQLITE_STANDARD
                 SQLiteErrorCode n = UnsafeNativeMethods.sqlite3_finalize_interop(stmt);
 #else
-                SQLiteErrorCode n = UnsafeNativeMethods.sqlite3_finalize(stmt);
+                var n = UnsafeNativeMethods.sqlite3_finalize(stmt);
 #endif
                 if (n != SQLiteErrorCode.Ok) throw new SQLiteException(n, null);
             }
@@ -824,7 +824,7 @@ namespace System.Data.SQLite
 #else
                 ResetConnection(hdl, db, false);
 
-                SQLiteErrorCode n = UnsafeNativeMethods.sqlite3_close(db);
+                var n = UnsafeNativeMethods.sqlite3_close(db);
 #endif
                 if (n != SQLiteErrorCode.Ok) throw new SQLiteException(n, GetLastError(hdl, db));
             }
@@ -853,7 +853,7 @@ namespace System.Data.SQLite
 #else
                 ResetConnection(hdl, db, false);
 
-                SQLiteErrorCode n = UnsafeNativeMethods.sqlite3_close_v2(db);
+                var n = UnsafeNativeMethods.sqlite3_close_v2(db);
 #endif
                 if (n != SQLiteErrorCode.Ok) throw new SQLiteException(n, GetLastError(hdl, db));
             }
@@ -865,7 +865,7 @@ namespace System.Data.SQLite
     {
         if ((hdl == null) || (db == IntPtr.Zero)) return false;
 
-        bool result = false;
+        var result = false;
 
         try
         {
@@ -887,7 +887,7 @@ namespace System.Data.SQLite
 
                 if (!hdl.IsInvalid && !hdl.IsClosed)
                 {
-                    IntPtr stmt = IntPtr.Zero;
+                    var stmt = IntPtr.Zero;
                     SQLiteErrorCode n;
 
                     do
@@ -936,7 +936,7 @@ namespace System.Data.SQLite
     {
         if ((hdl == null) || (db == IntPtr.Zero)) return false;
 
-        bool result = false;
+        var result = false;
 
         try
         {

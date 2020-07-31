@@ -112,7 +112,7 @@ namespace Native.Sdk.Cqp.Model
 		/// <returns>表示当前对象的字符串</returns>
 		public override string ToString ()
 		{
-			StringBuilder builder = new StringBuilder ();
+			var builder = new StringBuilder ();
 			builder.AppendLine (string.Format ("数据: {0}", this.Value != null ? this.Value : string.Empty));
 			builder.AppendLine (string.Format ("单位: {0}", this.Unit != null ? this.Value : string.Empty));
 			builder.AppendFormat ("颜色: {0}", this.TextColor.GetDescription ());
@@ -124,7 +124,7 @@ namespace Native.Sdk.Cqp.Model
 		/// <returns>用于发送的字符串</returns>
 		public string ToSendString ()
 		{
-			using (BinaryWriter writer = new BinaryWriter (new MemoryStream ()))
+			using (var writer = new BinaryWriter (new MemoryStream ()))
 			{
 				writer.Write_Ex (Convert.ToString (this.Value));
 				writer.Write_Ex (this.Unit);

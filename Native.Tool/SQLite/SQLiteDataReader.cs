@@ -269,7 +269,7 @@ namespace System.Data.SQLite
       if (_version == 0)
         throw new SQLiteException("Execution was aborted by the user");
 
-      SQLiteConnection connection = _command.Connection;
+      var connection = _command.Connection;
 
       if (connection._version != _version || connection.State != ConnectionState.Open)
         throw new InvalidOperationException("Connection was closed, statement was terminated");
@@ -394,7 +394,7 @@ namespace System.Data.SQLite
         if (HelperMethods.HasFlags(_flags, SQLiteConnectionFlags.NoVerifyTypeAffinity))
             return TypeAffinity.None;
 
-        TypeAffinity affinity = GetSQLiteType(_flags, i).Affinity;
+        var affinity = GetSQLiteType(_flags, i).Affinity;
 
         switch (affinity)
         {
@@ -455,17 +455,17 @@ namespace System.Data.SQLite
         )
     {
         complete = false;
-        SQLiteConnectionFlags oldFlags = _flags;
+        var oldFlags = _flags;
         _flags &= ~SQLiteConnectionFlags.UseConnectionReadValueCallbacks;
 
         try
         {
-            string typeName = GetDataTypeName(index);
+            var typeName = GetDataTypeName(index);
 
             if (typeName == null)
                 return;
 
-            SQLiteConnection connection = GetConnection(this);
+            var connection = GetConnection(this);
 
             if (connection == null)
                 return;
@@ -478,12 +478,12 @@ namespace System.Data.SQLite
                 return;
             }
 
-            SQLiteReadValueCallback callback = callbacks.ReadValueCallback;
+            var callback = callbacks.ReadValueCallback;
 
             if (callback == null)
                 return;
 
-            object userData = callbacks.ReadValueUserData;
+            var userData = callbacks.ReadValueUserData;
 
             callback(
                 _activeStatement._sql, this, oldFlags, eventArgs, typeName,
@@ -519,9 +519,9 @@ namespace System.Data.SQLite
         if (_keyInfo == null)
             return null;
 
-        string databaseName = GetDatabaseName(i);
-        string tableName = GetTableName(i);
-        int iRowId = _keyInfo.GetRowIdIndex(databaseName, tableName);
+        var databaseName = GetDatabaseName(i);
+        var tableName = GetTableName(i);
+        var iRowId = _keyInfo.GetRowIdIndex(databaseName, tableName);
 
         if (iRowId != -1)
             return GetInt64(iRowId);
@@ -549,7 +549,7 @@ namespace System.Data.SQLite
 
         if (HelperMethods.HasFlags(_flags, SQLiteConnectionFlags.UseConnectionReadValueCallbacks))
         {
-            SQLiteDataReaderValue value = new SQLiteDataReaderValue();
+            var value = new SQLiteDataReaderValue();
             bool complete;
 
             InvokeReadValueCallback(i, new SQLiteReadValueEventArgs(
@@ -578,7 +578,7 @@ namespace System.Data.SQLite
 
         if (HelperMethods.HasFlags(_flags, SQLiteConnectionFlags.UseConnectionReadValueCallbacks))
         {
-            SQLiteDataReaderValue value = new SQLiteDataReaderValue();
+            var value = new SQLiteDataReaderValue();
             bool complete;
 
             InvokeReadValueCallback(i, new SQLiteReadValueEventArgs(
@@ -612,7 +612,7 @@ namespace System.Data.SQLite
 
         if (HelperMethods.HasFlags(_flags, SQLiteConnectionFlags.UseConnectionReadValueCallbacks))
         {
-            SQLiteDataReaderValue value = new SQLiteDataReaderValue();
+            var value = new SQLiteDataReaderValue();
             bool complete;
 
             InvokeReadValueCallback(i, new SQLiteReadValueEventArgs(
@@ -653,10 +653,10 @@ namespace System.Data.SQLite
 
         if (HelperMethods.HasFlags(_flags, SQLiteConnectionFlags.UseConnectionReadValueCallbacks))
         {
-            SQLiteReadArrayEventArgs eventArgs = new SQLiteReadArrayEventArgs(
+            var eventArgs = new SQLiteReadArrayEventArgs(
                 fieldOffset, buffer, bufferoffset, length);
 
-            SQLiteDataReaderValue value = new SQLiteDataReaderValue();
+            var value = new SQLiteDataReaderValue();
             bool complete;
 
             InvokeReadValueCallback(i, new SQLiteReadValueEventArgs(
@@ -664,7 +664,7 @@ namespace System.Data.SQLite
 
             if (complete)
             {
-                byte[] bytes = value.BytesValue;
+                var bytes = value.BytesValue;
 
                 if (bytes != null)
                 {
@@ -706,7 +706,7 @@ namespace System.Data.SQLite
 
         if (HelperMethods.HasFlags(_flags, SQLiteConnectionFlags.UseConnectionReadValueCallbacks))
         {
-            SQLiteDataReaderValue value = new SQLiteDataReaderValue();
+            var value = new SQLiteDataReaderValue();
             bool complete;
 
             InvokeReadValueCallback(i, new SQLiteReadValueEventArgs(
@@ -747,10 +747,10 @@ namespace System.Data.SQLite
 
         if (HelperMethods.HasFlags(_flags, SQLiteConnectionFlags.UseConnectionReadValueCallbacks))
         {
-            SQLiteReadArrayEventArgs eventArgs = new SQLiteReadArrayEventArgs(
+            var eventArgs = new SQLiteReadArrayEventArgs(
                 fieldoffset, buffer, bufferoffset, length);
 
-            SQLiteDataReaderValue value = new SQLiteDataReaderValue();
+            var value = new SQLiteDataReaderValue();
             bool complete;
 
             InvokeReadValueCallback(i, new SQLiteReadValueEventArgs(
@@ -758,7 +758,7 @@ namespace System.Data.SQLite
 
             if (complete)
             {
-                char[] chars = value.CharsValue;
+                var chars = value.CharsValue;
 
                 if (chars != null)
                 {
@@ -802,7 +802,7 @@ namespace System.Data.SQLite
         if (i >= PrivateVisibleFieldCount && _keyInfo != null)
             return _keyInfo.GetDataTypeName(i - PrivateVisibleFieldCount);
 
-        TypeAffinity affin = TypeAffinity.Uninitialized;
+        var affin = TypeAffinity.Uninitialized;
         return _activeStatement._sql.ColumnType(_activeStatement, i, ref affin);
     }
 
@@ -818,7 +818,7 @@ namespace System.Data.SQLite
 
         if (HelperMethods.HasFlags(_flags, SQLiteConnectionFlags.UseConnectionReadValueCallbacks))
         {
-            SQLiteDataReaderValue value = new SQLiteDataReaderValue();
+            var value = new SQLiteDataReaderValue();
             bool complete;
 
             InvokeReadValueCallback(i, new SQLiteReadValueEventArgs(
@@ -852,7 +852,7 @@ namespace System.Data.SQLite
 
         if (HelperMethods.HasFlags(_flags, SQLiteConnectionFlags.UseConnectionReadValueCallbacks))
         {
-            SQLiteDataReaderValue value = new SQLiteDataReaderValue();
+            var value = new SQLiteDataReaderValue();
             bool complete;
 
             InvokeReadValueCallback(i, new SQLiteReadValueEventArgs(
@@ -872,7 +872,7 @@ namespace System.Data.SQLite
 
         VerifyType(i, DbType.Decimal);
 
-        CultureInfo cultureInfo = CultureInfo.CurrentCulture;
+        var cultureInfo = CultureInfo.CurrentCulture;
 
         if (HelperMethods.HasFlags(_flags, SQLiteConnectionFlags.GetInvariantDecimal))
             cultureInfo = CultureInfo.InvariantCulture;
@@ -892,7 +892,7 @@ namespace System.Data.SQLite
 
         if (HelperMethods.HasFlags(_flags, SQLiteConnectionFlags.UseConnectionReadValueCallbacks))
         {
-            SQLiteDataReaderValue value = new SQLiteDataReaderValue();
+            var value = new SQLiteDataReaderValue();
             bool complete;
 
             InvokeReadValueCallback(i, new SQLiteReadValueEventArgs(
@@ -962,7 +962,7 @@ namespace System.Data.SQLite
 
         if (HelperMethods.HasFlags(_flags, SQLiteConnectionFlags.UseConnectionReadValueCallbacks))
         {
-            SQLiteDataReaderValue value = new SQLiteDataReaderValue();
+            var value = new SQLiteDataReaderValue();
             bool complete;
 
             InvokeReadValueCallback(i, new SQLiteReadValueEventArgs(
@@ -996,7 +996,7 @@ namespace System.Data.SQLite
 
         if (HelperMethods.HasFlags(_flags, SQLiteConnectionFlags.UseConnectionReadValueCallbacks))
         {
-            SQLiteDataReaderValue value = new SQLiteDataReaderValue();
+            var value = new SQLiteDataReaderValue();
             bool complete;
 
             InvokeReadValueCallback(i, new SQLiteReadValueEventArgs(
@@ -1014,10 +1014,10 @@ namespace System.Data.SQLite
         if (i >= PrivateVisibleFieldCount && _keyInfo != null)
             return _keyInfo.GetGuid(i - PrivateVisibleFieldCount);
 
-        TypeAffinity affinity = VerifyType(i, DbType.Guid);
+        var affinity = VerifyType(i, DbType.Guid);
         if (affinity == TypeAffinity.Blob)
         {
-            byte[] buffer = new byte[16];
+            var buffer = new byte[16];
             _activeStatement._sql.GetBytes(_activeStatement, i, 0, buffer, 0, 16);
             return new Guid(buffer);
         }
@@ -1037,7 +1037,7 @@ namespace System.Data.SQLite
 
         if (HelperMethods.HasFlags(_flags, SQLiteConnectionFlags.UseConnectionReadValueCallbacks))
         {
-            SQLiteDataReaderValue value = new SQLiteDataReaderValue();
+            var value = new SQLiteDataReaderValue();
             bool complete;
 
             InvokeReadValueCallback(i, new SQLiteReadValueEventArgs(
@@ -1071,7 +1071,7 @@ namespace System.Data.SQLite
 
         if (HelperMethods.HasFlags(_flags, SQLiteConnectionFlags.UseConnectionReadValueCallbacks))
         {
-            SQLiteDataReaderValue value = new SQLiteDataReaderValue();
+            var value = new SQLiteDataReaderValue();
             bool complete;
 
             InvokeReadValueCallback(i, new SQLiteReadValueEventArgs(
@@ -1105,7 +1105,7 @@ namespace System.Data.SQLite
 
         if (HelperMethods.HasFlags(_flags, SQLiteConnectionFlags.UseConnectionReadValueCallbacks))
         {
-            SQLiteDataReaderValue value = new SQLiteDataReaderValue();
+            var value = new SQLiteDataReaderValue();
             bool complete;
 
             InvokeReadValueCallback(i, new SQLiteReadValueEventArgs(
@@ -1323,7 +1323,7 @@ namespace System.Data.SQLite
 
         public int GetHashCode(ColumnParent obj)
         {
-            int result = 0;
+            var result = 0;
 
             if ((obj != null) && (obj.DatabaseName != null))
                 result ^= obj.DatabaseName.GetHashCode();
@@ -1357,14 +1357,14 @@ namespace System.Data.SQLite
         if (columnToParent == null)
             columnToParent = new Dictionary<int, ColumnParent>();
 
-        for (int n = 0; n < fieldCount; n++)
+        for (var n = 0; n < fieldCount; n++)
         {
-            string databaseName = sql.ColumnDatabaseName(stmt, n);
-            string tableName = sql.ColumnTableName(stmt, n);
-            string columnName = sql.ColumnOriginalName(stmt, n);
+            var databaseName = sql.ColumnDatabaseName(stmt, n);
+            var tableName = sql.ColumnTableName(stmt, n);
+            var columnName = sql.ColumnOriginalName(stmt, n);
 
-            ColumnParent key = new ColumnParent(databaseName, tableName, null);
-            ColumnParent value = new ColumnParent(databaseName, tableName, columnName);
+            var key = new ColumnParent(databaseName, tableName, null);
+            var value = new ColumnParent(databaseName, tableName, columnName);
 
             List<int> indexList;
 
@@ -1385,16 +1385,16 @@ namespace System.Data.SQLite
         Dictionary<ColumnParent, List<int>> parentToColumns
         )
     {
-        int result = 0;
+        var result = 0;
 
         if (parentToColumns != null)
         {
-            foreach (ColumnParent key in parentToColumns.Keys)
+            foreach (var key in parentToColumns.Keys)
             {
                 if (key == null)
                     continue;
 
-                string tableName = key.TableName;
+                var tableName = key.TableName;
 
                 if (String.IsNullOrEmpty(tableName))
                     continue;
@@ -1427,20 +1427,20 @@ namespace System.Data.SQLite
         //
         Dictionary<ColumnParent, List<int>> parentToColumns = null;
         Dictionary<int, ColumnParent> columnToParent = null;
-        SQLiteBase sql = _command.Connection._sql;
+        var sql = _command.Connection._sql;
 
         GetStatementColumnParents(
             sql, _activeStatement, _fieldCount,
             ref parentToColumns, ref columnToParent);
 
-        DataTable tbl = new DataTable("SchemaTable");
+        var tbl = new DataTable("SchemaTable");
         DataTable tblIndexes = null;
         DataTable tblIndexColumns;
         DataRow row;
         string temp;
-        string strCatalog = String.Empty;
-        string strTable = String.Empty;
-        string strColumn = String.Empty;
+        var strCatalog = String.Empty;
+        var strTable = String.Empty;
+        var strColumn = String.Empty;
 
         tbl.Locale = CultureInfo.InvariantCulture;
         tbl.Columns.Add(SchemaTableColumn.ColumnName, typeof(String));
@@ -1471,13 +1471,13 @@ namespace System.Data.SQLite
         tbl.Columns.Add("CollationType", typeof(string));
         tbl.BeginLoadData();
 
-        for (int n = 0; n < _fieldCount; n++)
+        for (var n = 0; n < _fieldCount; n++)
         {
-            SQLiteType sqlType = GetSQLiteType(_flags, n);
+            var sqlType = GetSQLiteType(_flags, n);
 
             row = tbl.NewRow();
 
-            DbType typ = sqlType.Type;
+            var typ = sqlType.Type;
 
             // Default settings for the column
             row[SchemaTableColumn.ColumnName] = GetName(n);
@@ -1513,27 +1513,27 @@ namespace System.Data.SQLite
             // If we have a table-bound column, extract the extra information from it
             if (String.IsNullOrEmpty(strColumn) == false)
             {
-                string baseCatalogName = String.Empty;
+                var baseCatalogName = String.Empty;
 
                 if (row[SchemaTableOptionalColumn.BaseCatalogName] != DBNull.Value)
                     baseCatalogName = (string)row[SchemaTableOptionalColumn.BaseCatalogName];
 
-                string baseTableName = String.Empty;
+                var baseTableName = String.Empty;
 
                 if (row[SchemaTableColumn.BaseTableName] != DBNull.Value)
                     baseTableName = (string)row[SchemaTableColumn.BaseTableName];
 
                 if (sql.DoesTableExist(baseCatalogName, baseTableName))
                 {
-                    string baseColumnName = String.Empty;
+                    var baseColumnName = String.Empty;
 
                     if (row[SchemaTableColumn.BaseColumnName] != DBNull.Value)
                         baseColumnName = (string)row[SchemaTableColumn.BaseColumnName];
 
                     string collSeq = null;
-                    bool bNotNull = false;
-                    bool bPrimaryKey = false;
-                    bool bAutoIncrement = false;
+                    var bNotNull = false;
+                    var bPrimaryKey = false;
+                    var bAutoIncrement = false;
                     string[] arSize;
 
                     // Get the column meta data
@@ -1545,7 +1545,7 @@ namespace System.Data.SQLite
                         ref dataType, ref collSeq, ref bNotNull, ref bPrimaryKey, ref bAutoIncrement);
 
                     if (bNotNull || bPrimaryKey) row[SchemaTableColumn.AllowDBNull] = false;
-                    bool allowDbNull = (bool)row[SchemaTableColumn.AllowDBNull];
+                    var allowDbNull = (bool)row[SchemaTableColumn.AllowDBNull];
 
                     row[SchemaTableColumn.IsKey] = bPrimaryKey && CountParents(parentToColumns) <= 1;
                     row[SchemaTableOptionalColumn.IsAutoIncrement] = bAutoIncrement;
@@ -1576,7 +1576,7 @@ namespace System.Data.SQLite
                     if (wantDefaultValue)
                     {
                         // Determine the default value for the column, which sucks because we have to query the schema for each column
-                        using (SQLiteCommand cmdTable = new SQLiteCommand(HelperMethods.StringFormat(CultureInfo.InvariantCulture, "PRAGMA [{0}].TABLE_INFO([{1}])",
+                        using (var cmdTable = new SQLiteCommand(HelperMethods.StringFormat(CultureInfo.InvariantCulture, "PRAGMA [{0}].TABLE_INFO([{1}])",
                             baseCatalogName,
                             baseTableName
                         ), _command.Connection))
@@ -1654,7 +1654,7 @@ namespace System.Data.SQLite
 
                 if (String.IsNullOrEmpty(dataType))
                 {
-                    TypeAffinity affin = TypeAffinity.Uninitialized;
+                    var affin = TypeAffinity.Uninitialized;
                     dataType = _activeStatement._sql.ColumnType(_activeStatement, n, ref affin);
                 }
 
@@ -1686,7 +1686,7 @@ namespace System.Data.SQLite
 
         if (HelperMethods.HasFlags(_flags, SQLiteConnectionFlags.UseConnectionReadValueCallbacks))
         {
-            SQLiteDataReaderValue value = new SQLiteDataReaderValue();
+            var value = new SQLiteDataReaderValue();
             bool complete;
 
             InvokeReadValueCallback(i, new SQLiteReadValueEventArgs(
@@ -1717,7 +1717,7 @@ namespace System.Data.SQLite
 
         if (HelperMethods.HasFlags(_flags, SQLiteConnectionFlags.UseConnectionReadValueCallbacks))
         {
-            SQLiteDataReaderValue value = new SQLiteDataReaderValue();
+            var value = new SQLiteDataReaderValue();
             bool complete;
 
             InvokeReadValueCallback(i, new SQLiteReadValueEventArgs(
@@ -1730,7 +1730,7 @@ namespace System.Data.SQLite
         if (i >= PrivateVisibleFieldCount && _keyInfo != null)
             return _keyInfo.GetValue(i - PrivateVisibleFieldCount);
 
-        SQLiteType typ = GetSQLiteType(_flags, i);
+        var typ = GetSQLiteType(_flags, i);
 
         if (HelperMethods.HasFlags(
                 _flags, SQLiteConnectionFlags.DetectTextAffinity) &&
@@ -1759,10 +1759,10 @@ namespace System.Data.SQLite
     {
       CheckDisposed();
 
-      int nMax = FieldCount;
+      var nMax = FieldCount;
       if (values.Length < nMax) nMax = values.Length;
 
-      for (int n = 0; n < nMax; n++)
+      for (var n = 0; n < nMax; n++)
       {
         values[n] = GetValue(n);
       }
@@ -1787,13 +1787,13 @@ namespace System.Data.SQLite
         if ((_activeStatement == null) || (_activeStatement._sql == null))
             throw new InvalidOperationException();
 
-        int nMax = PrivateVisibleFieldCount;
-        NameValueCollection result = new NameValueCollection(nMax);
+        var nMax = PrivateVisibleFieldCount;
+        var result = new NameValueCollection(nMax);
 
-        for (int n = 0; n < nMax; n++)
+        for (var n = 0; n < nMax; n++)
         {
-            string name = _activeStatement._sql.ColumnName(_activeStatement, n);
-            string value = _activeStatement._sql.GetText(_activeStatement, n);
+            var name = _activeStatement._sql.ColumnName(_activeStatement, n);
+            var value = _activeStatement._sql.GetText(_activeStatement, n);
 
             result.Add(name, value);
         }
@@ -1871,7 +1871,7 @@ namespace System.Data.SQLite
 
       SQLiteStatement stmt = null;
       int fieldCount;
-      bool schemaOnly = ((_commandBehavior & CommandBehavior.SchemaOnly) != 0);
+      var schemaOnly = ((_commandBehavior & CommandBehavior.SchemaOnly) != 0);
 
       while (true)
       {
@@ -1893,8 +1893,8 @@ namespace System.Data.SQLite
               if (!schemaOnly && stmt._sql.Step(stmt)) _stepCount++;
               if (stmt._sql.ColumnCount(stmt) == 0)
               {
-                int changes = 0;
-                bool readOnly = false;
+                var changes = 0;
+                var readOnly = false;
                 if (stmt.TryGetChanges(ref changes, ref readOnly))
                 {
                   if (!readOnly)
@@ -1939,8 +1939,8 @@ namespace System.Data.SQLite
           }
           else if (fieldCount == 0) // No rows returned, if fieldCount is zero, skip to the next statement
           {
-            int changes = 0;
-            bool readOnly = false;
+            var changes = 0;
+            var readOnly = false;
             if (stmt.TryGetChanges(ref changes, ref readOnly))
             {
               if (!readOnly)
@@ -1991,11 +1991,11 @@ namespace System.Data.SQLite
         {
             if (dataReader != null)
             {
-                SQLiteCommand command = dataReader._command;
+                var command = dataReader._command;
 
                 if (command != null)
                 {
-                    SQLiteConnection connection = command.Connection;
+                    var connection = command.Connection;
 
                     if (connection != null)
                         return connection;
@@ -2053,7 +2053,7 @@ namespace System.Data.SQLite
     /// <returns>A SQLiteType structure</returns>
     private SQLiteType GetSQLiteType(SQLiteConnectionFlags flags, int i)
     {
-        SQLiteType typ = _fieldTypeArray[i];
+        var typ = _fieldTypeArray[i];
 
         if (typ == null)
         {

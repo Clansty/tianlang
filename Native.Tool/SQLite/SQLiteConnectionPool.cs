@@ -188,7 +188,7 @@ namespace System.Data.SQLite
             //
             if (dispose)
             {
-                IDisposable disposable = handle as IDisposable;
+                var disposable = handle as IDisposable;
 
                 if (disposable != null)
                     disposable.Dispose();
@@ -494,7 +494,7 @@ namespace System.Data.SQLite
             ref int totalCount
             )
         {
-            ISQLiteConnectionPool connectionPool = GetConnectionPool();
+            var connectionPool = GetConnectionPool();
 
             if (connectionPool != null)
             {
@@ -521,8 +521,8 @@ namespace System.Data.SQLite
 
                         if (_queueList.TryGetValue(fileName, out queue))
                         {
-                            Queue<WeakReference> poolQueue = queue.Queue;
-                            int count = (poolQueue != null) ? poolQueue.Count : 0;
+                            var poolQueue = queue.Queue;
+                            var count = (poolQueue != null) ? poolQueue.Count : 0;
 
                             counts.Add(fileName, count);
                             totalCount += count;
@@ -530,13 +530,13 @@ namespace System.Data.SQLite
                     }
                     else
                     {
-                        foreach (KeyValuePair<string, PoolQueue> pair in _queueList)
+                        foreach (var pair in _queueList)
                         {
                             if (pair.Value == null)
                                 continue;
 
-                            Queue<WeakReference> poolQueue = pair.Value.Queue;
-                            int count = (poolQueue != null) ? poolQueue.Count : 0;
+                            var poolQueue = pair.Value.Queue;
+                            var count = (poolQueue != null) ? poolQueue.Count : 0;
 
                             counts.Add(pair.Key, count);
                             totalCount += count;
@@ -557,7 +557,7 @@ namespace System.Data.SQLite
         /// </param>
         internal static void ClearPool(string fileName)
         {
-            ISQLiteConnectionPool connectionPool = GetConnectionPool();
+            var connectionPool = GetConnectionPool();
 
             if (connectionPool != null)
             {
@@ -573,16 +573,16 @@ namespace System.Data.SQLite
                     {
                         queue.PoolVersion++;
 
-                        Queue<WeakReference> poolQueue = queue.Queue;
+                        var poolQueue = queue.Queue;
                         if (poolQueue == null) return;
 
                         while (poolQueue.Count > 0)
                         {
-                            WeakReference connection = poolQueue.Dequeue();
+                            var connection = poolQueue.Dequeue();
 
                             if (connection == null) continue;
 
-                            SQLiteConnectionHandle handle =
+                            var handle =
                                 connection.Target as SQLiteConnectionHandle;
 
                             if (handle != null)
@@ -602,7 +602,7 @@ namespace System.Data.SQLite
         /// </summary>
         internal static void ClearAllPools()
         {
-            ISQLiteConnectionPool connectionPool = GetConnectionPool();
+            var connectionPool = GetConnectionPool();
 
             if (connectionPool != null)
             {
@@ -612,20 +612,20 @@ namespace System.Data.SQLite
             {
                 lock (_syncRoot)
                 {
-                    foreach (KeyValuePair<string, PoolQueue> pair in _queueList)
+                    foreach (var pair in _queueList)
                     {
                         if (pair.Value == null)
                             continue;
 
-                        Queue<WeakReference> poolQueue = pair.Value.Queue;
+                        var poolQueue = pair.Value.Queue;
 
                         while (poolQueue.Count > 0)
                         {
-                            WeakReference connection = poolQueue.Dequeue();
+                            var connection = poolQueue.Dequeue();
 
                             if (connection == null) continue;
 
-                            SQLiteConnectionHandle handle =
+                            var handle =
                                 connection.Target as SQLiteConnectionHandle;
 
                             if (handle != null)
@@ -681,7 +681,7 @@ namespace System.Data.SQLite
             int version
             )
         {
-            ISQLiteConnectionPool connectionPool = GetConnectionPool();
+            var connectionPool = GetConnectionPool();
 
             if (connectionPool != null)
             {
@@ -703,7 +703,7 @@ namespace System.Data.SQLite
                     {
                         ResizePool(queue, true);
 
-                        Queue<WeakReference> poolQueue = queue.Queue;
+                        var poolQueue = queue.Queue;
                         if (poolQueue == null) return;
 
                         poolQueue.Enqueue(new WeakReference(handle, false));
@@ -747,7 +747,7 @@ namespace System.Data.SQLite
             out int version
             )
         {
-            ISQLiteConnectionPool connectionPool = GetConnectionPool();
+            var connectionPool = GetConnectionPool();
 
             if (connectionPool != null)
             {
@@ -829,11 +829,11 @@ namespace System.Data.SQLite
                 {
                     while (poolQueue.Count > 0)
                     {
-                        WeakReference connection = poolQueue.Dequeue();
+                        var connection = poolQueue.Dequeue();
 
                         if (connection == null) continue;
 
-                        SQLiteConnectionHandle handle =
+                        var handle =
                             connection.Target as SQLiteConnectionHandle;
 
                         if (handle == null) continue;
@@ -1000,20 +1000,20 @@ namespace System.Data.SQLite
             bool add
             )
         {
-            int target = queue.MaxPoolSize;
+            var target = queue.MaxPoolSize;
 
             if (add && target > 0) target--;
 
-            Queue<WeakReference> poolQueue = queue.Queue;
+            var poolQueue = queue.Queue;
             if (poolQueue == null) return;
 
             while (poolQueue.Count > target)
             {
-                WeakReference connection = poolQueue.Dequeue();
+                var connection = poolQueue.Dequeue();
 
                 if (connection == null) continue;
 
-                SQLiteConnectionHandle handle =
+                var handle =
                     connection.Target as SQLiteConnectionHandle;
 
                 if (handle != null)

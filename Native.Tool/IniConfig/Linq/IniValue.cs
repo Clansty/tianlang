@@ -160,7 +160,7 @@ namespace Native.Tool.IniConfig.Linq
 			}
 			else
 			{
-				IniValue value = obj as IniValue;
+				var value = obj as IniValue;
 				return this._value.CompareTo (value._value);
 			}
 		}

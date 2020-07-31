@@ -295,11 +295,11 @@ namespace Native.Tool.IniConfig.Linq
 		/// <returns></returns>
 		public override string ToString ()
 		{
-			StringBuilder iniStr = new StringBuilder ();
+			var iniStr = new StringBuilder ();
 			using (TextWriter textWriter = new StringWriter (iniStr))
 			{
 				textWriter.WriteLine ("[{0}]", this.Name.Trim ());  //添加 "节"
-				foreach (KeyValuePair<string, IniValue> item in this)
+				foreach (var item in this)
 				{
 					textWriter.WriteLine ("{0}={1}", item.Key.Trim (), item.Value.Value.Trim ());
 				}

@@ -97,7 +97,7 @@ namespace System.Data.SQLite
     /// <param name="whereClause">Whether the application of the parameter is part of a WHERE clause</param>
     protected override void ApplyParameterInfo(DbParameter parameter, DataRow row, StatementType statementType, bool whereClause)
     {
-      SQLiteParameter param = (SQLiteParameter)parameter;
+      var param = (SQLiteParameter)parameter;
       param.DbType = (DbType)row[SchemaTableColumn.ProviderType];
     }
 
@@ -373,7 +373,7 @@ namespace System.Data.SQLite
     {
       using (IDataReader reader = sourceCommand.ExecuteReader(CommandBehavior.KeyInfo | CommandBehavior.SchemaOnly))
       {
-        DataTable schema = reader.GetSchemaTable();
+        var schema = reader.GetSchemaTable();
 
         // If the query contains a primary key, turn off the IsUnique property
         // for all the non-key columns
@@ -387,7 +387,7 @@ namespace System.Data.SQLite
 
     private bool HasSchemaPrimaryKey(DataTable schema)
     {
-      DataColumn IsKeyColumn = schema.Columns[SchemaTableColumn.IsKey];
+      var IsKeyColumn = schema.Columns[SchemaTableColumn.IsKey];
 
       foreach (DataRow schemaRow in schema.Rows)
       {
@@ -400,8 +400,8 @@ namespace System.Data.SQLite
 
     private void ResetIsUniqueSchemaColumn(DataTable schema)
     {
-      DataColumn IsUniqueColumn = schema.Columns[SchemaTableColumn.IsUnique];
-      DataColumn IsKeyColumn = schema.Columns[SchemaTableColumn.IsKey];
+      var IsUniqueColumn = schema.Columns[SchemaTableColumn.IsUnique];
+      var IsKeyColumn = schema.Columns[SchemaTableColumn.IsKey];
 
       foreach (DataRow schemaRow in schema.Rows)
       {

@@ -54,7 +54,7 @@ namespace Native.Sdk.Cqp.Model
 			this._originalString = str;
 
 			#region --解析 CqCode--
-			Match match = _regices.Value[0].Match (str);
+			var match = _regices.Value[0].Match (str);
 			if (!match.Success)
 			{
 				throw new FormatException ("无法解析所传入的字符串, 字符串非CQ码格式!");
@@ -69,7 +69,7 @@ namespace Native.Sdk.Cqp.Model
 			#endregion
 
 			#region --解析键值对--
-			MatchCollection collection = _regices.Value[1].Matches (match.Groups[2].Value);
+			var collection = _regices.Value[1].Matches (match.Groups[2].Value);
 			this._items = new Dictionary<string, string> (collection.Count);
 			foreach (Match item in collection)
 			{
@@ -87,7 +87,7 @@ namespace Native.Sdk.Cqp.Model
 		{
 			this._type = type;
 			this._items = new Dictionary<string, string> (keyValues.Length);
-			foreach (KeyValuePair<string, string> item in keyValues)
+			foreach (var item in keyValues)
 			{
 				this._items.Add (item.Key, item.Value);
 			}
@@ -104,8 +104,8 @@ namespace Native.Sdk.Cqp.Model
 		/// <returns>返回等效的 <see cref="List{CqCode}"/></returns>
 		public static List<CQCode> Parse (string source)
 		{
-			MatchCollection collection = _regices.Value[0].Matches (source);
-			List<CQCode> codes = new List<CQCode> (collection.Count);
+			var collection = _regices.Value[0].Matches (source);
+			var codes = new List<CQCode> (collection.Count);
 			foreach (Match item in collection)
 			{
 				codes.Add (new CQCode (item.Groups[0].Value));
@@ -137,7 +137,7 @@ namespace Native.Sdk.Cqp.Model
 		/// <returns>如果指定的对象等于当前对象，则为 <code>true</code>，否则为 <code>false</code></returns>	
 		public override bool Equals (object obj)
 		{
-			CQCode code = obj as CQCode;
+			var code = obj as CQCode;
 			if (code != null)
 			{
 				return string.Equals (this._originalString, code._originalString);
@@ -168,10 +168,10 @@ namespace Native.Sdk.Cqp.Model
 				else
 				{
 					// 普通CQ码, 带参数
-					StringBuilder builder = new StringBuilder ();
+					var builder = new StringBuilder ();
 					builder.Append ("[CQ:");
 					builder.Append (this._type.GetDescription ());   // function
-					foreach (KeyValuePair<string, string> item in this._items)
+					foreach (var item in this._items)
 					{
 						builder.AppendFormat (",{0}={1}", item.Key, CQApi.CQEnCode (item.Value, true));
 					}

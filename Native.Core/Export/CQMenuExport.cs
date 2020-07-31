@@ -67,7 +67,7 @@ namespace Native.App.Export
 		{	
 			if (Menu_menuAHandler != null)	
 			{	
-				CQMenuCallEventArgs args = new CQMenuCallEventArgs (AppData.CQApi, AppData.CQLog, "设置A", "_menuA");	
+				var args = new CQMenuCallEventArgs (AppData.CQApi, AppData.CQLog, "设置A", "_menuA");	
 				Menu_menuAHandler (typeof (CQMenuExport), args);	
 			}	
 			return 0;	
@@ -83,7 +83,7 @@ namespace Native.App.Export
 		{	
 			if (Menu_menuBHandler != null)	
 			{	
-				CQMenuCallEventArgs args = new CQMenuCallEventArgs (AppData.CQApi, AppData.CQLog, "设置B", "_menuB");	
+				var args = new CQMenuCallEventArgs (AppData.CQApi, AppData.CQLog, "设置B", "_menuB");	
 				Menu_menuBHandler (typeof (CQMenuExport), args);	
 			}	
 			return 0;	

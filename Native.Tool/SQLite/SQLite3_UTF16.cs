@@ -178,10 +178,10 @@ namespace System.Data.SQLite
         }
         finally /* NOTE: Thread.Abort() protection. */
         {
-          IntPtr db = IntPtr.Zero;
+          var db = IntPtr.Zero;
           SQLiteErrorCode n;
 
-          int extFuncs = HelperMethods.HasFlags(connectionFlags, SQLiteConnectionFlags.NoExtensionFunctions) ? 0 : 1;
+          var extFuncs = HelperMethods.HasFlags(connectionFlags, SQLiteConnectionFlags.NoExtensionFunctions) ? 0 : 1;
 
 #if !SQLITE_STANDARD
           if ((vfsName != null) || (extFuncs != 0))
@@ -235,7 +235,7 @@ namespace System.Data.SQLite
           if (_functions == null)
               _functions = new Dictionary<SQLiteFunctionAttribute, SQLiteFunction>();
 
-          foreach (KeyValuePair<SQLiteFunctionAttribute, SQLiteFunction> pair
+          foreach (var pair
                   in SQLiteFunction.BindFunctions(this, connectionFlags))
           {
               _functions[pair.Key] = pair.Value;
@@ -262,7 +262,7 @@ namespace System.Data.SQLite
 #if !PLATFORM_COMPACTFRAMEWORK
                     if (HelperMethods.LogBind(flags))
                     {
-                        SQLiteStatementHandle handle =
+                        var handle =
                             (stmt != null) ? stmt._sqlite_stmt : null;
 
                         LogBind(handle, index, dt);
@@ -277,7 +277,7 @@ namespace System.Data.SQLite
 
     internal override void Bind_Text(SQLiteStatement stmt, SQLiteConnectionFlags flags, int index, string value)
     {
-        SQLiteStatementHandle handle = stmt._sqlite_stmt;
+        var handle = stmt._sqlite_stmt;
 
 #if !PLATFORM_COMPACTFRAMEWORK
         if (HelperMethods.LogBind(flags))
@@ -286,7 +286,7 @@ namespace System.Data.SQLite
         }
 #endif
 
-        SQLiteErrorCode n = UnsafeNativeMethods.sqlite3_bind_text16(handle, index, value, value.Length * 2, (IntPtr)(-1));
+        var n = UnsafeNativeMethods.sqlite3_bind_text16(handle, index, value, value.Length * 2, (IntPtr)(-1));
         if (n != SQLiteErrorCode.Ok) throw new SQLiteException(n, GetLastError());
     }
 
@@ -308,7 +308,7 @@ namespace System.Data.SQLite
       int len = 0;
       IntPtr p = UnsafeNativeMethods.sqlite3_column_name16_interop(stmt._sqlite_stmt, index, ref len);
 #else
-      IntPtr p = UnsafeNativeMethods.sqlite3_column_name16(stmt._sqlite_stmt, index);
+      var p = UnsafeNativeMethods.sqlite3_column_name16(stmt._sqlite_stmt, index);
 #endif
       if (p == IntPtr.Zero)
         throw new SQLiteException(SQLiteErrorCode.NoMem, GetLastError());

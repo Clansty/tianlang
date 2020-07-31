@@ -146,7 +146,7 @@ namespace Native.Sdk.Cqp
 			{
 				throw new ArgumentNullException ("source");
 			}
-			StringBuilder builder = new StringBuilder (source);
+			var builder = new StringBuilder (source);
 			builder = builder.Replace ("&", "&amp;");
 			builder = builder.Replace ("[", "&#91;");
 			builder = builder.Replace ("]", "&#93;");
@@ -168,7 +168,7 @@ namespace Native.Sdk.Cqp
 			{
 				throw new ArgumentNullException ("source");
 			}
-			StringBuilder builder = new StringBuilder (source);
+			var builder = new StringBuilder (source);
 			builder = builder.Replace ("&#91;", "[");
 			builder = builder.Replace ("&#93;", "]");
 			builder = builder.Replace ("&#44;", ",");
@@ -191,7 +191,7 @@ namespace Native.Sdk.Cqp
 				throw new ArgumentException ("分享的链接为空", "url");
 			}
 
-			CQCode code = new CQCode (
+			var code = new CQCode (
 				CQFunction.Share,
 				new KeyValuePair<string, string> ("url", url));
 
@@ -279,7 +279,7 @@ namespace Native.Sdk.Cqp
 		/// <returns>返回 <see cref="CQCode"/> 对象</returns>
 		public static CQCode CQCode_Anonymous (bool forced = false)
 		{
-			CQCode code = new CQCode (CQFunction.Anonymous);
+			var code = new CQCode (CQFunction.Anonymous);
 			if (forced)
 			{
 				code.Items.Add ("ignore", "true");
@@ -323,7 +323,7 @@ namespace Native.Sdk.Cqp
 				throw new ArgumentException ("歌曲链接不能为空", "musicUrl");
 			}
 
-			CQCode code = new CQCode (
+			var code = new CQCode (
 				CQFunction.Music,
 				new KeyValuePair<string, string> ("type", "custom"),
 				new KeyValuePair<string, string> ("url", url),
@@ -400,7 +400,7 @@ namespace Native.Sdk.Cqp
 			GCHandle msgHandle = sendMsg.GetStringGCHandle (CQApi.DefaultEncoding);
 			try
 			{
-				int msgId = CQP.CQ_sendGroupMsg (this.AppInfo.AuthCode, groupId, msgHandle.AddrOfPinnedObject ());
+				var msgId = CQP.CQ_sendGroupMsg (this.AppInfo.AuthCode, groupId, msgHandle.AddrOfPinnedObject ());
 				return new QQMessage (this, msgId, sendMsg, false);
 			}
 			finally
@@ -427,7 +427,7 @@ namespace Native.Sdk.Cqp
 			GCHandle msgHandle = sendMsg.GetStringGCHandle (CQApi.DefaultEncoding);
 			try
 			{
-				int msgId = CQP.CQ_sendPrivateMsg (this.AppInfo.AuthCode, qqId, msgHandle.AddrOfPinnedObject ());
+				var msgId = CQP.CQ_sendPrivateMsg (this.AppInfo.AuthCode, qqId, msgHandle.AddrOfPinnedObject ());
 				return new QQMessage (this, msgId, sendMsg, false);
 			}
 			finally
@@ -454,7 +454,7 @@ namespace Native.Sdk.Cqp
 			GCHandle msgHandle = sendMsg.GetStringGCHandle (CQApi.DefaultEncoding);
 			try
 			{
-				int msgId = CQP.CQ_sendDiscussMsg (this.AppInfo.AuthCode, discussId, msgHandle.AddrOfPinnedObject ());
+				var msgId = CQP.CQ_sendDiscussMsg (this.AppInfo.AuthCode, discussId, msgHandle.AddrOfPinnedObject ());
 				return new QQMessage (this, msgId, sendMsg);
 			}
 			finally
@@ -674,10 +674,10 @@ namespace Native.Sdk.Cqp
 			try
 			{
 				// 初始化域名对象
-				Uri uri = new Uri (domain);
+				var uri = new Uri (domain);
 
 				// 使用 Container 对象解析Cookies
-				CookieContainer container = new CookieContainer ();
+				var container = new CookieContainer ();
 				container.SetCookies (uri, this.GetCookies (domain).Replace (';', ','));    // 替换分隔符以解析
 
 				// 返回实例
@@ -715,7 +715,7 @@ namespace Native.Sdk.Cqp
 				throw new ArgumentOutOfRangeException ("qqId");
 			}
 
-			string data = CQP.CQ_getStrangerInfo (this.AppInfo.AuthCode, qqId, notCache).ToString (CQApi.DefaultEncoding);
+			var data = CQP.CQ_getStrangerInfo (this.AppInfo.AuthCode, qqId, notCache).ToString (CQApi.DefaultEncoding);
 			if (string.IsNullOrEmpty (data))
 			{
 #if DEBUG
@@ -748,7 +748,7 @@ namespace Native.Sdk.Cqp
 		/// <returns>获取成功返回 <see cref="FriendInfoCollection"/>, 失败返回 <see langword="null"/></returns>
 		public FriendInfoCollection GetFriendList ()
 		{
-			string data = CQP.CQ_getFriendList (this.AppInfo.AuthCode, false).ToString (_defaultEncoding);
+			var data = CQP.CQ_getFriendList (this.AppInfo.AuthCode, false).ToString (_defaultEncoding);
 			if (string.IsNullOrEmpty (data))
 			{
 #if DEBUG
@@ -793,7 +793,7 @@ namespace Native.Sdk.Cqp
 				throw new ArgumentOutOfRangeException ("qqId");
 			}
 
-			string data = CQP.CQ_getGroupMemberInfoV2 (this.AppInfo.AuthCode, groupId, qqId, notCache).ToString (CQApi.DefaultEncoding);
+			var data = CQP.CQ_getGroupMemberInfoV2 (this.AppInfo.AuthCode, groupId, qqId, notCache).ToString (CQApi.DefaultEncoding);
 			if (string.IsNullOrEmpty (data))
 			{
 #if DEBUG
@@ -833,7 +833,7 @@ namespace Native.Sdk.Cqp
 				throw new ArgumentOutOfRangeException ("groupId");
 			}
 
-			string data = CQP.CQ_getGroupMemberList (this.AppInfo.AuthCode, groupId).ToString (CQApi.DefaultEncoding);
+			var data = CQP.CQ_getGroupMemberList (this.AppInfo.AuthCode, groupId).ToString (CQApi.DefaultEncoding);
 			if (string.IsNullOrEmpty (data))
 			{
 #if DEBUG
@@ -874,7 +874,7 @@ namespace Native.Sdk.Cqp
 				throw new ArgumentOutOfRangeException ("groupId");
 			}
 
-			string data = CQP.CQ_getGroupInfo (this.AppInfo.AuthCode, groupId, notCache).ToString (CQApi.DefaultEncoding);
+			var data = CQP.CQ_getGroupInfo (this.AppInfo.AuthCode, groupId, notCache).ToString (CQApi.DefaultEncoding);
 			if (string.IsNullOrEmpty (data))
 			{
 #if DEBUG
@@ -907,7 +907,7 @@ namespace Native.Sdk.Cqp
 		/// <returns>获取成功返回 <see cref="GroupInfoCollection"/> 对象, 失败返回 <see langword="null"/></returns>
 		public GroupInfoCollection GetGroupList ()
 		{
-			string data = CQP.CQ_getGroupList (this.AppInfo.AuthCode).ToString (CQApi.DefaultEncoding);
+			var data = CQP.CQ_getGroupList (this.AppInfo.AuthCode).ToString (CQApi.DefaultEncoding);
 			if (string.IsNullOrEmpty (data))
 			{
 #if DEBUG

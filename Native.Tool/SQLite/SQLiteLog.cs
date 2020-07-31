@@ -295,7 +295,7 @@ namespace System.Data.SQLite
                 {
                     _callback = new SQLiteLogCallback(LogCallback);
 
-                    SQLiteErrorCode rc = _sql.SetLogCallback(_callback);
+                    var rc = _sql.SetLogCallback(_callback);
 
                     if (rc != SQLiteErrorCode.Ok)
                     {
@@ -362,7 +362,7 @@ namespace System.Data.SQLite
                 //
                 if (_sql != null)
                 {
-                    SQLiteErrorCode rc = _sql.Shutdown();
+                    var rc = _sql.Shutdown();
 
                     if (rc != SQLiteErrorCode.Ok)
                         throw new SQLiteException(rc,
@@ -619,7 +619,7 @@ namespace System.Data.SQLite
             if (e == null)
                 return;
 
-            string message = e.Message;
+            var message = e.Message;
 
             if (message == null)
             {
@@ -633,12 +633,12 @@ namespace System.Data.SQLite
                     message = "<empty>";
             }
 
-            object errorCode = e.ErrorCode;
-            string type = "error";
+            var errorCode = e.ErrorCode;
+            var type = "error";
 
             if ((errorCode is SQLiteErrorCode) || (errorCode is int))
             {
-                SQLiteErrorCode rc = (SQLiteErrorCode)(int)errorCode;
+                var rc = (SQLiteErrorCode)(int)errorCode;
 
                 rc &= SQLiteErrorCode.NonExtendedMask;
 

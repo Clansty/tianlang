@@ -67,8 +67,8 @@ namespace System.Data.SQLite
       _flags = flags;
 
       // Determine parameters for this statement (if any) and prepare space for them.
-      int nCmdStart = 0;
-      int n = _sql.Bind_ParamCount(this, _flags);
+      var nCmdStart = 0;
+      var n = _sql.Bind_ParamCount(this, _flags);
       int x;
       string s;
 
@@ -205,15 +205,15 @@ namespace System.Data.SQLite
     {
       if (_paramNames == null) return false;
 
-      int startAt = 0;
+      var startAt = 0;
       if (s.Length > 0)
       {
         if (":$@;".IndexOf(s[0]) == -1)
           startAt = 1;
       }
 
-      int x = _paramNames.Length;
-      for (int n = 0; n < x; n++)
+      var x = _paramNames.Length;
+      for (var n = 0; n < x; n++)
       {
         if (String.Compare(_paramNames[n], startAt, s, 0, Math.Max(_paramNames[n].Length - startAt, s.Length), StringComparison.OrdinalIgnoreCase) == 0)
         {
@@ -231,8 +231,8 @@ namespace System.Data.SQLite
     {
       if (_paramNames == null) return;
 
-      int x = _paramNames.Length;
-      for (int n = 0; n < x; n++)
+      var x = _paramNames.Length;
+      for (var n = 0; n < x; n++)
       {
         BindParameter(n + 1, _paramValues[n]);
       }
@@ -254,11 +254,11 @@ namespace System.Data.SQLite
         {
             if (statement != null)
             {
-                SQLiteCommand command = statement._command;
+                var command = statement._command;
 
                 if (command != null)
                 {
-                    SQLiteConnection connection = command.Connection;
+                    var connection = command.Connection;
 
                     if (connection != null)
                         return connection;
@@ -298,7 +298,7 @@ namespace System.Data.SQLite
         )
     {
         complete = false;
-        SQLiteConnectionFlags oldFlags = _flags;
+        var oldFlags = _flags;
         _flags &= ~SQLiteConnectionFlags.UseConnectionBindValueCallbacks;
 
         try
@@ -306,7 +306,7 @@ namespace System.Data.SQLite
             if (parameter == null)
                 return;
 
-            SQLiteConnection connection = GetConnection(this);
+            var connection = GetConnection(this);
 
             if (connection == null)
                 return;
@@ -315,7 +315,7 @@ namespace System.Data.SQLite
             // NOTE: First, always look for an explicitly set database type
             //       name.
             //
-            string typeName = parameter.TypeName;
+            var typeName = parameter.TypeName;
 
             if (typeName == null)
             {
@@ -356,12 +356,12 @@ namespace System.Data.SQLite
                 return;
             }
 
-            SQLiteBindValueCallback callback = callbacks.BindValueCallback;
+            var callback = callbacks.BindValueCallback;
 
             if (callback == null)
                 return;
 
-            object userData = callbacks.BindValueUserData;
+            var userData = callbacks.BindValueUserData;
 
             callback(
                 _sql, _command, oldFlags, parameter, typeName, index,
@@ -394,8 +394,8 @@ namespace System.Data.SQLite
               return;
       }
 
-      object obj = param.Value;
-      DbType objType = param.DbType;
+      var obj = param.Value;
+      var objType = param.DbType;
 
       if ((obj != null) && (objType == DbType.Object))
           objType = SQLiteConvert.TypeToDbType(obj.GetType());
@@ -416,12 +416,12 @@ namespace System.Data.SQLite
         return;
       }
 
-      CultureInfo invariantCultureInfo = CultureInfo.InvariantCulture;
+      var invariantCultureInfo = CultureInfo.InvariantCulture;
 
-      bool invariantText = HelperMethods.HasFlags(
+      var invariantText = HelperMethods.HasFlags(
           _flags, SQLiteConnectionFlags.BindInvariantText);
 
-      CultureInfo cultureInfo = CultureInfo.CurrentCulture;
+      var cultureInfo = CultureInfo.CurrentCulture;
 
       if (HelperMethods.HasFlags(
             _flags, SQLiteConnectionFlags.ConvertInvariantText))
@@ -446,7 +446,7 @@ namespace System.Data.SQLite
           return;
       }
 
-      bool invariantDecimal = HelperMethods.HasFlags(
+      var invariantDecimal = HelperMethods.HasFlags(
           _flags, SQLiteConnectionFlags.BindInvariantDecimal);
 
       if (HelperMethods.HasFlags(
@@ -541,10 +541,10 @@ namespace System.Data.SQLite
 
     internal void SetTypes(string typedefs)
     {
-      int pos = typedefs.IndexOf("TYPES", 0, StringComparison.OrdinalIgnoreCase);
+      var pos = typedefs.IndexOf("TYPES", 0, StringComparison.OrdinalIgnoreCase);
       if (pos == -1) throw new ArgumentOutOfRangeException();
 
-      string[] types = typedefs.Substring(pos + 6).Replace(" ", String.Empty).Replace(";", String.Empty).Replace("\"", String.Empty).Replace("[", String.Empty).Replace("]", String.Empty).Replace("`", String.Empty).Split(',', '\r', '\n', '\t');
+      var types = typedefs.Substring(pos + 6).Replace(" ", String.Empty).Replace(";", String.Empty).Replace("\"", String.Empty).Replace("[", String.Empty).Replace("]", String.Empty).Replace("`", String.Empty).Split(',', '\r', '\n', '\t');
 
       int n;
       for (n = 0; n < types.Length; n++)

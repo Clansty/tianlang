@@ -64,7 +64,7 @@ namespace System.Data.SQLite
             return defaultIsolationLevel;
         }
 
-        IsolationLevel isolationLevel = transaction.IsolationLevel;
+        var isolationLevel = transaction.IsolationLevel;
 
         //
         // TODO: Are these isolation level mappings actually correct?

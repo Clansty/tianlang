@@ -145,7 +145,7 @@ namespace Native.Sdk.Cqp.Model
 #endif
 			}
 
-			IEnumerable<CQCode> codes = from code in this.CQCodes where code.Function == CQFunction.Image select code;
+			var codes = from code in this.CQCodes where code.Function == CQFunction.Image select code;
 			if (codes != null)
 			{
 				if (codes.Count () > 0)
@@ -169,11 +169,11 @@ namespace Native.Sdk.Cqp.Model
 #endif
 			}
 
-			IEnumerable<CQCode> codes = from code in this.CQCodes where code.Function == CQFunction.Image select code;
+			var codes = from code in this.CQCodes where code.Function == CQFunction.Image select code;
 			if (codes != null)
 			{
-				string[] result = new string[codes.Count ()];
-				for (int i = 0; i < result.Length; i++)
+				var result = new string[codes.Count ()];
+				for (var i = 0; i < result.Length; i++)
 				{
 					result[i] = this.CQApi.ReceiveImage (codes.ElementAt (i).Items["file"]);
 				}
@@ -218,14 +218,14 @@ namespace Native.Sdk.Cqp.Model
 		/// <returns>表示当前对象的字符串</returns>
 		public override string ToString ()
 		{
-			StringBuilder builder = new StringBuilder ();
+			var builder = new StringBuilder ();
 			builder.AppendFormat ("标识: {0}{1}", this.Id, Environment.NewLine);
 			builder.AppendFormat ("内容: {0}{1}", this.Text, Environment.NewLine);
 			builder.AppendFormat ("正则消息: {0}{1}", this.IsRegexMessage, Environment.NewLine);
 			if (this.IsRegexMessage)
 			{
 				builder.AppendLine ("解析结果:");
-				foreach (KeyValuePair<string, string> item in this.RegexResult)
+				foreach (var item in this.RegexResult)
 				{
 					builder.Append ("\t");
 					builder.AppendFormat ("{0}: {1}", item.Key, item.Value);
@@ -256,13 +256,13 @@ namespace Native.Sdk.Cqp.Model
 				throw new InvalidDataException ("读取失败, 获取的原始数据长度小于 4");
 			}
 
-			int count = reader.ReadInt32_Ex (); // 获取解析到的正则结果个数
+			var count = reader.ReadInt32_Ex (); // 获取解析到的正则结果个数
 			this.RegexResult = new Dictionary<string, string> (count);  // 初始化正则结果数组
 			if (count > 0)
 			{
-				for (int i = 0; i < count; i++)
+				for (var i = 0; i < count; i++)
 				{
-					using (BinaryReader temeReader = new BinaryReader (new MemoryStream (reader.ReadToken_Ex ())))
+					using (var temeReader = new BinaryReader (new MemoryStream (reader.ReadToken_Ex ())))
 					{
 						if (temeReader.Length () < 4)
 						{

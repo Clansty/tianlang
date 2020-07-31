@@ -118,7 +118,7 @@ namespace System.Data.SQLite
         bool parseViaFramework
         )
     {
-      SQLiteConnection cnn = new SQLiteConnection(
+      var cnn = new SQLiteConnection(
           connectionString, parseViaFramework);
 
       SelectCommand = new SQLiteCommand(commandText, cnn);
@@ -211,10 +211,10 @@ namespace System.Data.SQLite
         CheckDisposed();
 
 #if !PLATFORM_COMPACTFRAMEWORK
-        EventHandler<RowUpdatingEventArgs> previous = (EventHandler<RowUpdatingEventArgs>)base.Events[_updatingEventPH];
+        var previous = (EventHandler<RowUpdatingEventArgs>)base.Events[_updatingEventPH];
         if ((previous != null) && (value.Target is DbCommandBuilder))
         {
-          EventHandler<RowUpdatingEventArgs> handler = (EventHandler<RowUpdatingEventArgs>)FindBuilder(previous);
+          var handler = (EventHandler<RowUpdatingEventArgs>)FindBuilder(previous);
           if (handler != null)
           {
             base.Events.RemoveHandler(_updatingEventPH, handler);
@@ -231,8 +231,8 @@ namespace System.Data.SQLite
     {
       if (mcd != null)
       {
-        Delegate[] invocationList = mcd.GetInvocationList();
-        for (int i = 0; i < invocationList.Length; i++)
+        var invocationList = mcd.GetInvocationList();
+        for (var i = 0; i < invocationList.Length; i++)
         {
           if (invocationList[i].Target is DbCommandBuilder)
           {
@@ -259,7 +259,7 @@ namespace System.Data.SQLite
     /// <param name="value">The event's specifics</param>
     protected override void OnRowUpdating(RowUpdatingEventArgs value)
     {
-      EventHandler<RowUpdatingEventArgs> handler = base.Events[_updatingEventPH] as EventHandler<RowUpdatingEventArgs>;
+      var handler = base.Events[_updatingEventPH] as EventHandler<RowUpdatingEventArgs>;
 
       if (handler != null)
         handler(this, value);
@@ -271,7 +271,7 @@ namespace System.Data.SQLite
     /// <param name="value">The event's specifics</param>
     protected override void OnRowUpdated(RowUpdatedEventArgs value)
     {
-      EventHandler<RowUpdatedEventArgs> handler = base.Events[_updatedEventPH] as EventHandler<RowUpdatedEventArgs>;
+      var handler = base.Events[_updatedEventPH] as EventHandler<RowUpdatedEventArgs>;
 
       if (handler != null)
         handler(this, value);

@@ -13,24 +13,39 @@
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>bin\x86\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ServiceStack.Common">
+      <HintPath>..\Lib\ServiceStack.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Interfaces">
+      <HintPath>..\Lib\ServiceStack.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Redis">
+      <HintPath>..\Lib\ServiceStack.Redis.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Text">
+      <HintPath>..\Lib\ServiceStack.Text.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -43,12 +58,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Args.cs" />
-    <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Cmds.cs" />
     <Compile Include="Command.cs" />
     <Compile Include="Common.cs" />
-    <Compile Include="Enums.cs" />
+    <Compile Include="Events\EnableEvent.cs" />
+    <Compile Include="Events\FriendRequestEvent.cs" />
+    <Compile Include="Events\GroupAddMemberEvent.cs" />
+    <Compile Include="Events\JoinGroupRequestEvent.cs" />
+    <Compile Include="Events\PrivateMsgEvent.cs" />
+    <Compile Include="Events\StartupEvent.cs" />
+    <Compile Include="Events\GroupMsgEvent.cs" />
     <Compile Include="Fired.cs" />
     <Compile Include="Groups.cs" />
     <Compile Include="INamedUser.cs" />
@@ -56,7 +75,6 @@
     <Compile Include="Loading.designer.cs">
       <DependentUpon>Loading.cs</DependentUpon>
     </Compile>
-    <Compile Include="LQ.cs" />
     <Compile Include="MemberList.cs" />
     <Compile Include="Menu.cs" />
     <Compile Include="Menu.designer.cs">
@@ -68,7 +86,6 @@
     <Compile Include="Push.designer.cs">
       <DependentUpon>Push.cs</DependentUpon>
     </Compile>
-    <Compile Include="QYEvents.cs" />
     <Compile Include="Radis.cs" />
     <Compile Include="RealName.cs" />
     <Compile Include="RealNameBindingResult.cs" />
@@ -76,7 +93,6 @@
     <Compile Include="RealNameStatus.cs" />
     <Compile Include="RealNameVerifingResult.cs" />
     <Compile Include="Repeater.cs" />
-    <Compile Include="Robot.cs" />
     <Compile Include="Send.cs" />
     <Compile Include="SendTest.cs" />
     <Compile Include="SendTest.designer.cs">
@@ -91,8 +107,6 @@
     <Compile Include="Status.cs" />
     <Compile Include="StringHelper.cs" />
     <Compile Include="Strs.cs" />
-    <Compile Include="Structs.cs" />
-    <Compile Include="Unpack.cs" />
     <Compile Include="UnRegUser.cs" />
     <Compile Include="UserInfo.cs" />
     <Compile Include="UserType.cs" />

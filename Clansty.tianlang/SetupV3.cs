@@ -6,7 +6,7 @@ namespace Clansty.tianlang
     {
         public static void Enter(FriendMsgArgs e)
         {
-            User u = new User(e.FromQQ);
+            var u = new User(e.FromQQ);
             string m = e.Msg;
 
             if (m == "上一步")
@@ -39,7 +39,7 @@ namespace Clansty.tianlang
             switch (u.Step)
             {
                 case 1:
-                    int g = UserInfo.ParseEnrollment(m);
+                    var g = UserInfo.ParseEnrollment(m);
                     if (g < 1970)
                     {
                         C.WriteLn($"setup step1 异常，{u.Uin} 发 {m}", ConsoleColor.Yellow);
@@ -86,7 +86,7 @@ namespace Clansty.tianlang
                 C.WriteLn($"{u.Uin} 加群向导完成", ConsoleColor.Green);
                 e.Reply(Strs.Get("setupSetNC", u.ProperNamecard));//你的群名片已修改为 {0}
                 e.Reply(Strs.Get("setupOK"));//目前我们需要的信息就这么多，祝你在群里玩的开心
-                string tip = Strs.Get($"setupTip{u.Enrollment}");//根据年级来分的提示
+                var tip = Strs.Get($"setupTip{u.Enrollment}");//根据年级来分的提示
                 if (tip != "")
                     e.Reply(tip); //你是高一的，建议同时加入 2018 级新高一年级群 //??2019级新生即将来临?敬请期待??? 
                 tip = Strs.Get($"setupTipAll");//给所有人的广告位

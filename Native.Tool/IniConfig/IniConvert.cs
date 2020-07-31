@@ -24,8 +24,8 @@ namespace Native.Tool.IniConfig
 		/// <returns>序列化成功返回 <see cref="IniObject"/></returns>
 		public static IniObject SerializeObject (params object[] objs)
 		{
-			IniObject iniobj = new IniObject ();
-			foreach (object obj in objs)
+			var iniobj = new IniObject ();
+			foreach (var obj in objs)
 			{
 				iniobj.Add (SerializeObject (obj));
 			}
@@ -45,10 +45,10 @@ namespace Native.Tool.IniConfig
 				throw new ArgumentNullException ("obj");
 			}
 
-			Type objType = obj.GetType ();
+			var objType = obj.GetType ();
 
 			IniSection inisect = null;
-			IniConfigSectionAttribute sectionAttribute = objType.GetCustomAttribute<IniConfigSectionAttribute> ();
+			var sectionAttribute = objType.GetCustomAttribute<IniConfigSectionAttribute> ();
 			if (sectionAttribute != null)
 			{
 				inisect = new IniSection (sectionAttribute.SectionName);
@@ -58,7 +58,7 @@ namespace Native.Tool.IniConfig
 				inisect = new IniSection (objType.Name);
 			}
 
-			foreach (PropertyInfo property in objType.GetRuntimeProperties ())
+			foreach (var property in objType.GetRuntimeProperties ())
 			{
 				// 跳过不准备序列化的属性
 				if (property.GetCustomAttribute<IniNonSerializeAttribute> () != null)
@@ -68,7 +68,7 @@ namespace Native.Tool.IniConfig
 
 				// 获取 Key
 				string key = null;
-				IniConfigKeyAttribute keyAttribute = property.GetCustomAttribute<IniConfigKeyAttribute> ();
+				var keyAttribute = property.GetCustomAttribute<IniConfigKeyAttribute> ();
 				if (keyAttribute != null)
 				{
 					key = keyAttribute.KeyName;
@@ -79,7 +79,7 @@ namespace Native.Tool.IniConfig
 				}
 
 				// 只序列化 0 个参数的属性
-				MethodInfo methodInfo = property.GetGetMethod (true);
+				var methodInfo = property.GetGetMethod (true);
 				if (methodInfo.GetParameters ().Count () == 0)
 				{
 					inisect.Add (key, new IniValue (Convert.ToString (methodInfo.Invoke (obj, null))));
@@ -107,17 +107,17 @@ namespace Native.Tool.IniConfig
 				throw new ArgumentNullException ("type");
 			}
 
-			List<PropertyInfo> properties = new List<PropertyInfo> (type.GetRuntimeProperties ());
+			var properties = new List<PropertyInfo> (type.GetRuntimeProperties ());
 
-			object instance = Activator.CreateInstance (type);
+			var instance = Activator.CreateInstance (type);
 			// 遍历 节 中的键值对
-			foreach (KeyValuePair<string, IniValue> iniPair in obj)
+			foreach (var iniPair in obj)
 			{
 				// 获取属性
-				PropertyInfo property = type.GetRuntimeProperty (iniPair.Key);
+				var property = type.GetRuntimeProperty (iniPair.Key);
 				if (property == null)
 				{
-					IEnumerable<PropertyInfo> linqProperties = from temp in properties
+					var linqProperties = from temp in properties
 															   where temp.GetCustomAttribute<IniConfigKeyAttribute> ().KeyName.CompareTo (iniPair.Key) == 0
 															   select temp;
 					try
@@ -135,7 +135,7 @@ namespace Native.Tool.IniConfig
 				}
 
 				// 设置属性的值
-				object value = Convert.ChangeType (iniPair.Value.Value, property.PropertyType);
+				var value = Convert.ChangeType (iniPair.Value.Value, property.PropertyType);
 				if (value == null)
 				{
 					value = string.Empty;

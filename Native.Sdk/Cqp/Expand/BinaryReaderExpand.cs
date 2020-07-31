@@ -99,7 +99,7 @@ namespace Native.Sdk.Cqp.Expand
 		/// <exception cref="IOException">出现 I/O 错误。</exception>
 		public static byte[] ReadToken_Ex (this BinaryReader binary)
 		{
-			short len = ReadInt16_Ex (binary);
+			var len = ReadInt16_Ex (binary);
 			return GetBinary (binary, len);
 		}
 
@@ -127,7 +127,7 @@ namespace Native.Sdk.Cqp.Expand
 		#region --私有方法--
 		private static byte[] GetBinary (BinaryReader binary, long len, bool isReverse = false)
 		{
-			byte[] buffer = new byte[len];
+			var buffer = new byte[len];
 			binary.Read (buffer, 0, buffer.Length);
 			if (isReverse)
 			{

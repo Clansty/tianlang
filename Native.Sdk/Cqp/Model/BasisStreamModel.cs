@@ -37,7 +37,7 @@ namespace Native.Sdk.Cqp.Model
 		{
 			if (cipherBytes.Length > 0)
 			{
-				using (BinaryReader reader = new BinaryReader (new MemoryStream (cipherBytes)))
+				using (var reader = new BinaryReader (new MemoryStream (cipherBytes)))
 				{
 					this.Initialize (reader);
 				}

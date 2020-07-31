@@ -147,7 +147,7 @@
 		TemplateBuilder.WriteLine (1);
 
 		//解析 event 节点
-		JArray node = CQJsonReader.GetEventNode ();
+		var node = CQJsonReader.GetEventNode ();
 		if (node != null)
 		{
 			TemplateBuilder.WriteLine (1, "/// <summary>");
@@ -156,7 +156,7 @@
 			TemplateBuilder.WriteLine (1, "private static void ResolveBackcall ()");
 			TemplateBuilder.WriteLine (1, "{");
 
-			foreach (JToken token in node)
+			foreach (var token in node)
 			{
 				TemplateBuilder.WriteLine (2, "/*");
 				TemplateBuilder.WriteFormatLine (2, " * Id: {0}", token["id"].Value<int> ());
@@ -268,11 +268,11 @@
 			TemplateBuilder.WriteLine (1);
 
 			TemplateBuilder.WriteLine (1, "#region --导出方法--");
-			foreach (JToken token in node)
+			foreach (var token in node)
 			{
 
-				bool isRegex = false;
-				JObject temp = token as JObject;
+				var isRegex = false;
+				var temp = token as JObject;
 				if  (temp != null)
 				{
 					isRegex = temp.ContainsKey ("regex");
@@ -547,7 +547,7 @@
 		TemplateBuilder.WriteLine (1, "#endregion");
 		TemplateBuilder.WriteLine (1);
 
-		JArray node = CQJsonReader.GetMenuNode ();
+		var node = CQJsonReader.GetMenuNode ();
 		if (node != null)
 		{
 			TemplateBuilder.WriteLine (1, "#region --私有方法--");
@@ -557,7 +557,7 @@
 			TemplateBuilder.WriteLine (1, "private static void ResolveBackcall ()");
 			TemplateBuilder.WriteLine (1, "{");
 
-			foreach (JToken token in node)
+			foreach (var token in node)
 			{
 				Log.Info ("添加 {0} 到事件...", token["function"].Value<string> ());
 
@@ -577,7 +577,7 @@
 			TemplateBuilder.WriteLine (1);
 			TemplateBuilder.WriteLine (1, "#region --导出方法--");
 	
-			foreach (JToken token in node)
+			foreach (var token in node)
 			{
 				Log.Info ("导出 {0} 函数...", token["function"].Value<string> ());
 				TemplateBuilder.WriteLine (1, "/*");
@@ -646,7 +646,7 @@
 		TemplateBuilder.WriteLine (1, "#endregion");
 		TemplateBuilder.WriteLine (1);
 
-		JArray node = CQJsonReader.GetStatusNode ();
+		var node = CQJsonReader.GetStatusNode ();
 		if (node != null)
 		{
 			TemplateBuilder.WriteLine (1, "#region --私有方法--");
@@ -656,7 +656,7 @@
 			TemplateBuilder.WriteLine (1, "private static void ResolveBackcall ()");
 			TemplateBuilder.WriteLine (1, "{");
 
-			foreach (JToken token in node)
+			foreach (var token in node)
 			{
 				Log.Info ("添加 {0} 到事件...", token["function"].Value<string> ());
 				TemplateBuilder.WriteLine (2, "/*");
@@ -679,7 +679,7 @@
 			TemplateBuilder.WriteLine (1);
 			TemplateBuilder.WriteLine (1, "#region --导出方法--");
 
-			foreach (JToken token in node)
+			foreach (var token in node)
 			{
 				Log.Info ("导出 {0} 函数...", token["function"].Value<string> ());
 				TemplateBuilder.WriteLine (1, "/*");
@@ -747,7 +747,7 @@
 
 			Log.Info ("确定文件保存位置...");
 			// 获取当前 T4 模板的位置
-			string templateFileDir = Path.GetDirectoryName(host.TemplateFile);
+			var templateFileDir = Path.GetDirectoryName(host.TemplateFile);
 			targetFileName = name;
 			targetFilePath = Path.Combine (templateFileDir, targetFileName);
 			fileContent = new StringBuilder ();
@@ -766,7 +766,7 @@
 			if (fileContent != null)
 			{
 				tabCout += 1;
-				for (int i = 0; i < tabCout; i++)
+				for (var i = 0; i < tabCout; i++)
 				{
 					fileContent.Append ("\t");
 				}
@@ -799,7 +799,7 @@
 			if (fileContent != null)
 			{
 				tabCout += 1;
-				for (int i = 0; i < tabCout; i++)
+				for (var i = 0; i < tabCout; i++)
 				{
 					fileContent.Append ("\t");
 				}
@@ -838,7 +838,7 @@
 					// 组合引用
 					Log.Info ("写入引用列表...");
 					UsingItems.Reverse ();
-					foreach (string item in UsingItems)
+					foreach (var item in UsingItems)
 					{
 						fileContent.Insert (0, string.Format ("using {0};{1}", item, Environment.NewLine));
 					}
@@ -883,18 +883,18 @@
 		public static void Initialize (ITextTemplatingEngineHost host)
 		{
 			Log.Info ("获取项目基本信息...");
-			string projectDir = host.ResolveAssemblyReference ("$(ProjectDir)");
+			var projectDir = host.ResolveAssemblyReference ("$(ProjectDir)");
 			Log.Info ("项目目录: {0}", projectDir);
-			string targetName = host.ResolveAssemblyReference ("$(TargetName)");
+			var targetName = host.ResolveAssemblyReference ("$(TargetName)");
 			Log.Info ("项目名称: {0}", targetName);
-			string filePath = Path.Combine (projectDir, "app.json");
+			var filePath = Path.Combine (projectDir, "app.json");
 			Log.Info ("Json路径: {0}", filePath);
 			if (File.Exists (filePath) == true)
 			{
 				try
 				{
 					Log.Info ("正在读取文件...");
-					using (JsonTextReader reader = new JsonTextReader (new StreamReader (File.OpenRead (filePath), Encoding.UTF8)))
+					using (var reader = new JsonTextReader (new StreamReader (File.OpenRead (filePath), Encoding.UTF8)))
 					{
 						root = JObject.Load (reader);
 						IsReadSuccess = true;
@@ -1084,7 +1084,7 @@
 		{
 			if (textTransform != null)
 			{
-				StringBuilder builder = new	StringBuilder ();
+				var builder = new	StringBuilder ();
 				builder.AppendFormat (format, args);
 				WriteLog (INFO, builder.ToString ());
 			}
@@ -1097,7 +1097,7 @@
 		{
 			if (textTransform != null)
 			{
-				StringBuilder builder = new	StringBuilder ();
+				var builder = new	StringBuilder ();
 				builder.AppendFormat (format, args);
 				WriteLog (WARNING, builder.ToString ());
 				textTransform.Warning (builder.ToString ());
@@ -1111,7 +1111,7 @@
 		{
 			if (textTransform != null)
 			{
-				StringBuilder builder = new	StringBuilder ();
+				var builder = new	StringBuilder ();
 				builder.AppendFormat (format, args);
 				WriteLog (ERROR, builder.ToString ());
 				textTransform.Error (builder.ToString ());
@@ -1122,7 +1122,7 @@
 		{
 			if (textTransform != null)
 			{
-				StringBuilder builder = new StringBuilder ();
+				var builder = new StringBuilder ();
 				builder.AppendFormat ("[{0}]: {1}", type, msg);
 				builder.AppendLine ();
 				textTransform.Write (builder.ToString ());

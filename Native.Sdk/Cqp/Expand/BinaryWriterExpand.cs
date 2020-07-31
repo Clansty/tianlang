@@ -61,7 +61,7 @@ namespace Native.Sdk.Cqp.Expand
 		/// <exception cref="ArgumentNullException">buffer 为 null。</exception>
 		public static void Write_Ex (this BinaryWriter binary, string value)
 		{
-			byte[] buffer = Encoding.Default.GetBytes (value);
+			var buffer = Encoding.Default.GetBytes (value);
 			Write_Ex (binary, (short)buffer.Length);
 			SetBinary (binary, buffer, false);
 		}
@@ -72,9 +72,9 @@ namespace Native.Sdk.Cqp.Expand
 		/// <param name="binary">基础 <see cref="BinaryWriter"/> 对象</param>
 		public static byte[] ToArray (this BinaryWriter binary)
 		{
-			long position = binary.BaseStream.Position;		// 记录原指针位置
+			var position = binary.BaseStream.Position;		// 记录原指针位置
 
-			byte[] buffer = new byte[binary.BaseStream.Length];
+			var buffer = new byte[binary.BaseStream.Length];
 			binary.BaseStream.Position = 0;					// 设置读取位置为 0
 			binary.BaseStream.Read (buffer, 0, buffer.Length);
 

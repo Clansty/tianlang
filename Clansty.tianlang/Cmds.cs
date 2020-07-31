@@ -1,4 +1,5 @@
-﻿using ServiceStack.Redis;
+﻿using Native.Sdk.Cqp.EventArgs;
+using ServiceStack.Redis;
 using System;
 using System.Collections.Generic;
 
@@ -19,7 +20,7 @@ namespace Clansty.tianlang
                     s = s.Trim(' ', '\n', '[', ']', '@');
                     if ((!ulong.TryParse(s, out _)) || s == "")
                         return "QQ号格式错误";
-                    User u = new User(s);
+                    var u = new User(s);
                     UserInfo.CheckQmpAsync(u);
                     return u.ToXml();
                 }
@@ -32,8 +33,8 @@ namespace Clansty.tianlang
                 Permission = UserType.user,
                 Func = _ =>
                 {
-                    string r = "";
-                    foreach (KeyValuePair<string, GroupCommand> cmd in gcmds)
+                    var r = "";
+                    foreach (var cmd in gcmds)
                     {
                         r += $"{cmd.Value.Usage}\n" +
                              $"{cmd.Value.Description}\n" +
@@ -57,9 +58,9 @@ namespace Clansty.tianlang
                     {
                         return "参数的数量不够";
                     }
-                    string hashid = s.GetLeft(" ");
+                    var hashid = s.GetLeft(" ");
                     s = s.GetRight(" ");
-                    string keyid = s.GetLeft(" ");
+                    var keyid = s.GetLeft(" ");
                     s = s.GetRight(" ");
                     Rds.HSet(hashid, keyid, s);
                     return $"完成";
@@ -73,11 +74,11 @@ namespace Clansty.tianlang
                 Permission = UserType.powerUser,
                 Func = s =>
                 {
-                    if (s.IndexOf(" ") < 0)
+                    if (s.IndexOf(" ", StringComparison.Ordinal) < 0)
                     {
                         return "参数的数量不够";
                     }
-                    string hashid = s.GetLeft(" ");
+                    var hashid = s.GetLeft(" ");
                     s = s.GetRight(" ");
                     return Rds.HGet(hashid, s);
                 }
@@ -108,13 +109,13 @@ namespace Clansty.tianlang
                 Func = s =>
                 {
                     s = s.Trim(' ', '\n', '[', ']', '@');
-                    if (long.TryParse(s, out _))
+                    if (long.TryParse(s, out var qq))
                     {
-                        User u = new User(s);
+                        var u = new User(s);
                         if (u.Role >= UserType.powerUser)
                             return $"不能拉黑一个 {u.Role}";
                         u.Role = UserType.blackListed;
-                        Robot.Group.RemoveMember(G.major, s);
+                        C.CQApi.RemoveGroupMember(G.major,qq);
                         return $"已拉黑 {u.ProperNamecard}({s})";
                     }
                     return $"{s} 不是有效的长整数";
@@ -129,13 +130,13 @@ namespace Clansty.tianlang
                 Func = s =>
                 {
                     s = s.Trim(' ', '\n', '[', ']', '@');
-                    if (long.TryParse(s, out _))
+                    if (long.TryParse(s, out var qq))
                     {
-                        User u = new User(s);
+                        var u = new User(qq);
                         if (u.Role >= UserType.powerUser)
                             return $"不能踢一个 {u.Role}";
-                        Robot.Group.RemoveMember(G.major, s);
-                        return $"已踢 {u.ProperNamecard}({s})";
+                        C.CQApi.RemoveGroupMember(G.major,qq);
+                        return $"已踢 {u.ProperNamecard}({qq})";
                     }
                     return $"{s} 不是有效的长整数";
                 }
@@ -168,7 +169,7 @@ namespace Clansty.tianlang
                     {
                         return "参数的数量不够";
                     }
-                    string hashid = s.GetLeft(" ");
+                    var hashid = s.GetLeft(" ");
                     s = s.GetRight(" ");
                     Strs.Set(hashid, s);
                     return "完成";
@@ -182,9 +183,9 @@ namespace Clansty.tianlang
                 Permission = UserType.powerUser,
                 Func = _ =>
                 {
-                    IRedisClient client = Rds.GetClient();
-                    string r = "";
-                    foreach (string cmd in client.GetHashKeys("strs"))
+                    var client = Rds.GetClient();
+                    var r = "";
+                    foreach (var cmd in client.GetHashKeys("strs"))
                         r += cmd + "\n";
                     r = r.Trim();
                     client.Dispose();
@@ -199,13 +200,13 @@ namespace Clansty.tianlang
                 Permission = UserType.powerUser,
                 Func = _ =>
                 {
-                    string r = "";
-                    string date = DateTime.Now.ToShortDateString();
-                    IRedisClient client = Rds.GetClient();
-                    Dictionary<string, string> kvps = client.GetAllEntriesFromHash("stats" + date);
+                    var r = "";
+                    var date = DateTime.Now.ToShortDateString();
+                    var client = Rds.GetClient();
+                    var kvps = client.GetAllEntriesFromHash("stats" + date);
                     client.Dispose();
-                    int tot = 0;
-                    foreach (KeyValuePair<string, string> kvp in kvps)
+                    var tot = 0;
+                    foreach (var kvp in kvps)
                     {
                         r += $"{kvp.Key}: {kvp.Value}\n";
                         tot += int.Parse(kvp.Value);
@@ -228,16 +229,16 @@ namespace Clansty.tianlang
                 }
             },
         };
-        public static void SiEnter(GroupMsgArgs e)
+        public static void SiEnter(CQGroupMessageEventArgs e)
         {
             try
             {
-                string key = (e.Msg.GetLeft(" ") == "" ? e.Msg : e.Msg.GetLeft(" ")).UnEscape().ToLower();
-                string act = e.Msg.GetRight(" ").UnEscape();
+                var key = (e.Message.Text.GetLeft(" ") == "" ? e.Message.Text : e.Message.Text.GetLeft(" ")).UnEscape().ToLower();
+                var act = e.Message.Text.GetRight(" ").UnEscape();
                 if (gcmds.ContainsKey(key))
                 {
-                    GroupCommand m = gcmds[key];
-                    User u = new User(e.FromQQ);
+                    var m = gcmds[key];
+                    var u = new User(e.FromQQ.ToString());
                     if (u.Role < m.Permission)
                     {
                         e.Reply($"权限不够\n{key} 需要 {m.Permission}，而你属于{u.Role}", true);
@@ -257,17 +258,17 @@ namespace Clansty.tianlang
                 e.Reply(ex.Message);
             }
         }
-        public static void SudoEnter(GroupMsgArgs e)
+        public static void SudoEnter(CQGroupMessageEventArgs e)
         {
             try
             {
-                string s = e.Msg.GetRight("sudo ").Trim();
-                string key = (s.GetLeft(" ") == "" ? s : s.GetLeft(" ")).ToLower();
-                string act = s.GetRight(" ");
+                var s = e.Message.Text.GetRight("sudo ").Trim();
+                var key = (s.GetLeft(" ") == "" ? s : s.GetLeft(" ")).ToLower();
+                var act = s.GetRight(" ");
                 if (gcmds.ContainsKey(key))
                 {
-                    GroupCommand m = gcmds[key];
-                    User u = new User(e.FromQQ);
+                    var m = gcmds[key];
+                    var u = new User(e.FromQQ.ToString());
                     if (u.Role < m.Permission)
                     {
                         e.Reply($"权限不够\n{key} 需要 {m.Permission}，而你属于{u.Role}, true");

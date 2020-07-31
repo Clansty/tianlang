@@ -108,7 +108,7 @@ namespace Native.Tool.Http
         /// <returns>返回从 Internal 读取的 <see cref="byte"/> 数组</returns>
         public static byte[] Get (string url, string referer, string userAgent, string accept, int timeout, ref CookieCollection cookies, ref WebHeaderCollection headers, WebProxy proxy, Encoding encoding, bool allowAutoRedirect = true, bool autoCookieMerge = true)
         {
-            HttpWebClient httpWebClient = new HttpWebClient ();
+            var httpWebClient = new HttpWebClient ();
             httpWebClient.CookieCollection = cookies;
             httpWebClient.Headers = headers;
             httpWebClient.Referer = referer;
@@ -119,7 +119,7 @@ namespace Native.Tool.Http
             httpWebClient.Proxy = proxy;
             httpWebClient.AllowAutoRedirect = allowAutoRedirect;
             httpWebClient.AutoCookieMerge = autoCookieMerge;
-            byte[] result = httpWebClient.DownloadData (new Uri (url));
+            var result = httpWebClient.DownloadData (new Uri (url));
             headers = httpWebClient.ResponseHeaders;
             cookies = httpWebClient.CookieCollection;
             return result;
@@ -210,7 +210,7 @@ namespace Native.Tool.Http
         /// <returns>返回从 Internal 读取的 <see cref="byte"/> 数组</returns>
         public static byte[] Get (string url, string referer, ref CookieCollection cookies, bool allowAutoRedirect = true, bool autoCookieMerge = true)
         {
-            WebHeaderCollection headers = new WebHeaderCollection ();
+            var headers = new WebHeaderCollection ();
             return Get (url, referer, ref cookies, ref headers, null, Encoding.UTF8, allowAutoRedirect, autoCookieMerge);
         }
         /// <summary>
@@ -229,7 +229,7 @@ namespace Native.Tool.Http
         /// <returns>返回从 Internal 读取的 <see cref="byte"/> 数组</returns>
         public static byte[] Get (string url, string referer, ref WebHeaderCollection headers, bool allowAutoRedirect = true)
         {
-            CookieCollection cookies = new CookieCollection ();
+            var cookies = new CookieCollection ();
             return Get (url, referer, ref cookies, ref headers, null, Encoding.UTF8, allowAutoRedirect, false);
         }
         /// <summary>
@@ -245,7 +245,7 @@ namespace Native.Tool.Http
         /// <returns>返回从 Internal 读取的 <see cref="byte"/> 数组</returns>
         public static byte[] Get (string url, string referer, bool allowAutoRedirect = true)
         {
-            WebHeaderCollection headers = new WebHeaderCollection ();
+            var headers = new WebHeaderCollection ();
             return Get (url, referer, ref headers, allowAutoRedirect);
         }
         /// <summary>
@@ -262,7 +262,7 @@ namespace Native.Tool.Http
         /// <returns>返回从 Internal 读取的 <see cref="byte"/> 数组</returns>
         public static byte[] Get (string url, ref CookieCollection cookies, bool allowAutoRedirect = true, bool autoCookieMerge = true)
         {
-            WebHeaderCollection headers = new WebHeaderCollection ();
+            var headers = new WebHeaderCollection ();
             return Get (url, string.Empty, ref cookies, ref headers, null, Encoding.UTF8, allowAutoRedirect, autoCookieMerge);
         }
         /// <summary>
@@ -278,7 +278,7 @@ namespace Native.Tool.Http
         /// <returns>返回从 Internal 读取的 <see cref="byte"/> 数组</returns>
         public static byte[] Get (string url, ref WebHeaderCollection headers, bool allowAutoRedirect = true)
         {
-            CookieCollection cookies = new CookieCollection ();
+            var cookies = new CookieCollection ();
             return Get (url, string.Empty, ref cookies, ref headers, null, Encoding.UTF8, allowAutoRedirect, false);
         }
         /// <summary>
@@ -323,7 +323,7 @@ namespace Native.Tool.Http
         /// <returns>返回从 Internal 读取的 <see cref="byte"/> 数组</returns>
         public static byte[] Post (string url, byte[] data, string contentType, string referer, string userAgent, string accept, int timeout, ref CookieCollection cookies, ref WebHeaderCollection headers, WebProxy proxy, Encoding encoding, bool allowAutoRedirect = true, bool autoCookieMerge = true)
         {
-            HttpWebClient httpWebClient = new HttpWebClient ();
+            var httpWebClient = new HttpWebClient ();
             httpWebClient.ContentType = contentType;
             httpWebClient.Referer = referer;
             httpWebClient.UserAgent = userAgent;
@@ -334,7 +334,7 @@ namespace Native.Tool.Http
             httpWebClient.Proxy = proxy;
             httpWebClient.AutoCookieMerge = autoCookieMerge;
             httpWebClient.AllowAutoRedirect = allowAutoRedirect;
-            byte[] result = httpWebClient.UploadData (new Uri (url), data);
+            var result = httpWebClient.UploadData (new Uri (url), data);
             headers = httpWebClient.ResponseHeaders;
             cookies = httpWebClient.CookieCollection;
             return result;
@@ -433,7 +433,7 @@ namespace Native.Tool.Http
         /// <returns>返回从 Internal 读取的 <see cref="byte"/> 数组</returns>
         public static byte[] Post (string url, byte[] data, string contentType, string referer, ref CookieCollection cookies, bool allowAutoRedirect = true, bool autoCookieMerge = true)
         {
-            WebHeaderCollection headers = new WebHeaderCollection ();
+            var headers = new WebHeaderCollection ();
             return Post (url, data, contentType, referer, ref cookies, ref headers, allowAutoRedirect, autoCookieMerge);
         }
         /// <summary>
@@ -454,7 +454,7 @@ namespace Native.Tool.Http
         /// <returns>返回从 Internal 读取的 <see cref="byte"/> 数组</returns>
         public static byte[] Post (string url, byte[] data, string contentType, string referer, ref WebHeaderCollection headers, bool allowAutoRedirect = true)
         {
-            CookieCollection cookies = new CookieCollection ();
+            var cookies = new CookieCollection ();
             return Post (url, data, contentType, referer, ref cookies, ref headers, allowAutoRedirect, false);
         }
         /// <summary>
@@ -507,7 +507,7 @@ namespace Native.Tool.Http
         /// <returns>返回从 Internal 读取的 <see cref="byte"/> 数组</returns>
         public static byte[] Post (string url, byte[] data, string contentType, string referer, bool allowAutoRedirect = true)
         {
-            WebHeaderCollection headers = new WebHeaderCollection ();
+            var headers = new WebHeaderCollection ();
             return Post (url, data, contentType, referer, ref headers, allowAutoRedirect);
         }
         /// <summary>
@@ -557,9 +557,9 @@ namespace Native.Tool.Http
                 throw new ArgumentNullException ("newCookies");
             }
 
-            for (int i = 0; i < newCookies.Count; i++)
+            for (var i = 0; i < newCookies.Count; i++)
             {
-                int index = CheckCookie (oldCookies, newCookies[i].Name);
+                var index = CheckCookie (oldCookies, newCookies[i].Name);
                 if (index >= 0)
                 {
                     oldCookies[index].Value = newCookies[i].Value;
@@ -596,7 +596,7 @@ namespace Native.Tool.Http
         /// <returns></returns>
         private static int CheckCookie (CookieCollection cookie, string name)
         {
-            for (int i = 0; i < cookie.Count; i++)
+            for (var i = 0; i < cookie.Count; i++)
             {
                 if (cookie[i].Name == name)
                 {
@@ -611,7 +611,7 @@ namespace Native.Tool.Http
         /// <returns></returns>
         private static SecurityProtocolType GetSecurityAllValue ()
         {
-            SecurityProtocolType temp = (SecurityProtocolType)0;
+            var temp = (SecurityProtocolType)0;
             foreach (SecurityProtocolType item in Enum.GetValues (typeof (SecurityProtocolType)))
             {
                 temp |= item;
@@ -635,7 +635,7 @@ namespace Native.Tool.Http
                 ServicePointManager.ServerCertificateValidationCallback = CheckValidationResult;
                 ServicePointManager.SecurityProtocol = this.ServiceSecurityType;
             }
-            HttpWebRequest httpWebRequest = (HttpWebRequest)base.GetWebRequest (address);
+            var httpWebRequest = (HttpWebRequest)base.GetWebRequest (address);
             httpWebRequest.ProtocolVersion = HttpVersion.Version11;
             httpWebRequest.KeepAlive = KeepAlive;   // 默认: False, 不建立持续型连接
             if (CookieCollection != null)
@@ -704,7 +704,7 @@ namespace Native.Tool.Http
         /// <returns>一个 System.Net.WebResponse 包含指定的响应 System.Net.WebRequest。</returns>
         protected override WebResponse GetWebResponse (WebRequest request)
         {
-            HttpWebResponse httpWebResponse = (HttpWebResponse)base.GetWebResponse (request);
+            var httpWebResponse = (HttpWebResponse)base.GetWebResponse (request);
             this.Method = httpWebResponse.Method;
             this.ContentType = httpWebResponse.ContentType;
             // 开启自动合并更新时, 若传入的 CookieCollection 为 null, 则将反回的 CookieCollection 赋给传入的 CookieCollection

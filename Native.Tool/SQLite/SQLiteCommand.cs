@@ -193,7 +193,7 @@ namespace System.Data.SQLite
             SQLiteConnectionEventType.DisposingCommand, null, _transaction, this,
             null, null, null, new object[] { disposing, disposed }));
 
-        bool skippedDispose = false;
+        var skippedDispose = false;
 
         try
         {
@@ -272,7 +272,7 @@ namespace System.Data.SQLite
         {
             if (command != null)
             {
-                SQLiteConnection cnn = command._cnn;
+                var cnn = command._cnn;
 
                 if (cnn != null)
                     return cnn.Flags;
@@ -292,11 +292,11 @@ namespace System.Data.SQLite
     {
         if (_statementList == null) return;
 
-        int x = _statementList.Count;
+        var x = _statementList.Count;
 
-        for (int n = 0; n < x; n++)
+        for (var n = 0; n < x; n++)
         {
-            SQLiteStatement stmt = _statementList[n];
+            var stmt = _statementList[n];
             if (stmt == null) continue;
             stmt.Dispose();
         }
@@ -401,7 +401,7 @@ namespace System.Data.SQLite
         else return null; // No more commands
       }
 
-      SQLiteStatement stmt = _statementList[index];
+      var stmt = _statementList[index];
       stmt.BindParameters();
 
       return stmt;
@@ -416,7 +416,7 @@ namespace System.Data.SQLite
 
       if (_activeReader != null)
       {
-        SQLiteDataReader reader = _activeReader.Target as SQLiteDataReader;
+        var reader = _activeReader.Target as SQLiteDataReader;
         if (reader != null)
           reader.Cancel();
       }
@@ -643,9 +643,9 @@ namespace System.Data.SQLite
     {
         CheckDisposed();
 
-        SQLiteConnection connection = _cnn;
+        var connection = _cnn;
         SQLiteConnection.Check(connection); /* throw */
-        SQLiteBase sqlBase = connection._sql;
+        var sqlBase = connection._sql;
 
         if ((connection == null) || (sqlBase == null))
             throw new SQLiteException("invalid or unusable connection");
@@ -655,8 +655,8 @@ namespace System.Data.SQLite
 
         try
         {
-            string text = _commandText;
-            uint timeout = (uint)(_commandTimeout * 1000);
+            var text = _commandText;
+            var timeout = (uint)(_commandTimeout * 1000);
             SQLiteStatement previousStatement = null;
 
             while ((text != null) && (text.Length > 0))
@@ -690,7 +690,7 @@ namespace System.Data.SQLite
 
             if (statements != null)
             {
-                foreach (SQLiteStatement statement in statements)
+                foreach (var statement in statements)
                 {
                     if (statement == null)
                         continue;
@@ -830,15 +830,15 @@ namespace System.Data.SQLite
             {
                 connection.Open();
 
-                using (SQLiteCommand command = connection.CreateCommand())
+                using (var command = connection.CreateCommand())
                 {
                     command.CommandText = commandText;
 
                     if (args != null)
                     {
-                        foreach (object arg in args)
+                        foreach (var arg in args)
                         {
-                            SQLiteParameter parameter = arg as SQLiteParameter;
+                            var parameter = arg as SQLiteParameter;
 
                             if (parameter == null)
                             {
@@ -870,7 +870,7 @@ namespace System.Data.SQLite
                             }
                         case SQLiteExecuteType.Reader:
                             {
-                                bool success = true;
+                                var success = true;
 
                                 try
                                 {
@@ -939,7 +939,7 @@ namespace System.Data.SQLite
       SQLiteConnection.Check(_cnn);
       InitializeForReader();
 
-      SQLiteDataReader rd = new SQLiteDataReader(this, behavior);
+      var rd = new SQLiteDataReader(this, behavior);
       _activeReader = new WeakReference(rd, false);
 
       return rd;
@@ -987,8 +987,8 @@ namespace System.Data.SQLite
       CheckDisposed();
       SQLiteConnection.Check(_cnn);
 
-      using (SQLiteDataReader reader = ExecuteReader(behavior |
-          CommandBehavior.SingleRow | CommandBehavior.SingleResult))
+      using (var reader = ExecuteReader(behavior |
+                                        CommandBehavior.SingleRow | CommandBehavior.SingleResult))
       {
         while (reader.NextResult()) ;
         return reader.RecordsAffected;
@@ -1020,8 +1020,8 @@ namespace System.Data.SQLite
       CheckDisposed();
       SQLiteConnection.Check(_cnn);
 
-      using (SQLiteDataReader reader = ExecuteReader(behavior |
-          CommandBehavior.SingleRow | CommandBehavior.SingleResult))
+      using (var reader = ExecuteReader(behavior |
+                                        CommandBehavior.SingleRow | CommandBehavior.SingleResult))
       {
         if (reader.Read() && (reader.FieldCount > 0))
           return reader[0];
@@ -1070,15 +1070,15 @@ namespace System.Data.SQLite
         if (_statementList == null)
             return;
 
-        SQLiteBase sqlBase = _cnn._sql;
+        var sqlBase = _cnn._sql;
         SQLiteErrorCode rc;
 
-        foreach (SQLiteStatement item in _statementList)
+        foreach (var item in _statementList)
         {
             if (item == null)
                 continue;
 
-            SQLiteStatementHandle stmt = item._sqlite_stmt;
+            var stmt = item._sqlite_stmt;
 
             if (stmt == null)
                 continue;

@@ -186,7 +186,7 @@ namespace System.Data.SQLite
     {
         if (HResult == unchecked((int)0x80004005)) /* E_FAIL */
         {
-            int? localHResult = GetHResultForErrorCode(ResultCode);
+            var localHResult = GetHResultForErrorCode(ResultCode);
 
             if (localHResult != null)
                 HResult = (int)localHResult;
@@ -394,8 +394,8 @@ namespace System.Data.SQLite
         //       the AppDomain.DomainUnload event handler registered
         //       by the SQLiteLog class.
         //
-        BindingFlags flags = BindingFlags.Static |
-            BindingFlags.NonPublic | BindingFlags.InvokeMethod;
+        var flags = BindingFlags.Static |
+                    BindingFlags.NonPublic | BindingFlags.InvokeMethod;
 
         return typeof(SQLite3).InvokeMember("GetErrorString",
             flags, null, null, new object[] { errorCode }) as string;

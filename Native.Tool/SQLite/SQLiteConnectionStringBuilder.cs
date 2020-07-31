@@ -944,11 +944,11 @@ namespace System.Data.SQLite
     /// <returns>Returns true if the value was found and returned</returns>
     public override bool TryGetValue(string keyword, out object value)
     {
-      bool b = base.TryGetValue(keyword, out value);
+      var b = base.TryGetValue(keyword, out value);
 
       if (!_properties.ContainsKey(keyword)) return b;
 
-      PropertyDescriptor pd = _properties[keyword] as PropertyDescriptor;
+      var pd = _properties[keyword] as PropertyDescriptor;
 
       if (pd == null) return b;
 
@@ -962,7 +962,7 @@ namespace System.Data.SQLite
       }
       else
       {
-        DefaultValueAttribute att = pd.Attributes[typeof(DefaultValueAttribute)] as DefaultValueAttribute;
+        var att = pd.Attributes[typeof(DefaultValueAttribute)] as DefaultValueAttribute;
         if (att != null)
         {
           value = att.Value;

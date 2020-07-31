@@ -61,10 +61,10 @@ namespace System.Data.SQLite
 
         internal KeyQuery(SQLiteConnection cnn, string database, string table, params string[] columns)
         {
-            using (SQLiteCommandBuilder builder = new SQLiteCommandBuilder())
+            using (var builder = new SQLiteCommandBuilder())
             {
                 _command = cnn.CreateCommand();
-                for (int n = 0; n < columns.Length; n++)
+                for (var n = 0; n < columns.Length; n++)
                 {
                     columns[n] = builder.QuoteIdentifier(columns[n]);
                 }
@@ -162,17 +162,17 @@ namespace System.Data.SQLite
     /// <param name="stmt"></param>
     internal SQLiteKeyReader(SQLiteConnection cnn, SQLiteDataReader reader, SQLiteStatement stmt)
     {
-      Dictionary<string, int> catalogs = new Dictionary<string, int>();
-      Dictionary<string, List<string>> tables = new Dictionary<string, List<string>>();
+      var catalogs = new Dictionary<string, int>();
+      var tables = new Dictionary<string, List<string>>();
       List<string> list;
-      List<KeyInfo> keys = new List<KeyInfo>();
-      List<RowIdInfo> rowIds = new List<RowIdInfo>();
+      var keys = new List<KeyInfo>();
+      var rowIds = new List<RowIdInfo>();
 
       // Record the statement so we can use it later for sync'ing
       _stmt = stmt;
 
       // Fetch all the attached databases on this connection
-      using (DataTable tbl = cnn.GetSchema("Catalogs"))
+      using (var tbl = cnn.GetSchema("Catalogs"))
       {
         foreach (DataRow row in tbl.Rows)
         {
@@ -181,7 +181,7 @@ namespace System.Data.SQLite
       }
 
       // Fetch all the unique tables and catalogs used by the current statement
-      using (DataTable schema = reader.GetSchemaTable(false, false))
+      using (var schema = reader.GetSchemaTable(false, false))
       {
         foreach (DataRow row in schema.Rows)
         {
@@ -190,8 +190,8 @@ namespace System.Data.SQLite
             continue;
 
           // Record the unique table so we can look up its keys
-          string catalog = (string)row[SchemaTableOptionalColumn.BaseCatalogName];
-          string table = (string)row[SchemaTableColumn.BaseTableName];
+          var catalog = (string)row[SchemaTableOptionalColumn.BaseCatalogName];
+          var table = (string)row[SchemaTableColumn.BaseTableName];
 
           if (tables.ContainsKey(catalog) == false)
           {
@@ -207,17 +207,17 @@ namespace System.Data.SQLite
 
         // For each catalog and each table, query the indexes for the table.
         // Find a primary key index if there is one.  If not, find a unique index instead
-        foreach (KeyValuePair<string, List<string>> pair in tables)
+        foreach (var pair in tables)
         {
-          for (int i = 0; i < pair.Value.Count; i++)
+          for (var i = 0; i < pair.Value.Count; i++)
           {
-            string table = pair.Value[i];
+            var table = pair.Value[i];
             DataRow preferredRow = null;
-            using (DataTable tbl = cnn.GetSchema("Indexes", new string[] { pair.Key, null, table }))
+            using (var tbl = cnn.GetSchema("Indexes", new string[] { pair.Key, null, table }))
             {
               // Loop twice.  The first time looking for a primary key index,
               // the second time looking for a unique index
-              for (int n = 0; n < 2 && preferredRow == null; n++)
+              for (var n = 0; n < 2 && preferredRow == null; n++)
               {
                 foreach (DataRow row in tbl.Rows)
                 {
@@ -240,30 +240,30 @@ namespace System.Data.SQLite
               }
               else // We found a usable index, so fetch the necessary table details
               {
-                using (DataTable tblTables = cnn.GetSchema("Tables", new string[] { pair.Key, null, table }))
+                using (var tblTables = cnn.GetSchema("Tables", new string[] { pair.Key, null, table }))
                 {
                   // Find the root page of the table in the current statement and get the cursor that's iterating it
-                  int database = catalogs[pair.Key];
-                  int rootPage = Convert.ToInt32(tblTables.Rows[0]["TABLE_ROOTPAGE"], CultureInfo.InvariantCulture);
-                  int cursor = stmt._sql.GetCursorForTable(stmt, database, rootPage);
+                  var database = catalogs[pair.Key];
+                  var rootPage = Convert.ToInt32(tblTables.Rows[0]["TABLE_ROOTPAGE"], CultureInfo.InvariantCulture);
+                  var cursor = stmt._sql.GetCursorForTable(stmt, database, rootPage);
 
                   // Now enumerate the members of the index we're going to use
-                  using (DataTable indexColumns = cnn.GetSchema("IndexColumns", new string[] { pair.Key, null, table, (string)preferredRow["INDEX_NAME"] }))
+                  using (var indexColumns = cnn.GetSchema("IndexColumns", new string[] { pair.Key, null, table, (string)preferredRow["INDEX_NAME"] }))
                   {
                     //
                     // NOTE: If this is actually a RowId (or alias), record that now.  There should
                     //       be exactly one index column in that case.
                     //
-                    bool isRowId = (string)preferredRow["INDEX_NAME"] == "sqlite_master_PK_" + table;
+                    var isRowId = (string)preferredRow["INDEX_NAME"] == "sqlite_master_PK_" + table;
                     KeyQuery query = null;
 
-                    List<string> cols = new List<string>();
-                    for (int x = 0; x < indexColumns.Rows.Count; x++)
+                    var cols = new List<string>();
+                    for (var x = 0; x < indexColumns.Rows.Count; x++)
                     {
-                      string columnName = SQLiteConvert.GetStringOrNull(
+                      var columnName = SQLiteConvert.GetStringOrNull(
                           indexColumns.Rows[x]["COLUMN_NAME"]);
 
-                      bool addKey = true;
+                      var addKey = true;
                       // If the column in the index already appears in the query, skip it
                       foreach (DataRow row in schema.Rows)
                       {
@@ -276,7 +276,7 @@ namespace System.Data.SQLite
                         {
                           if (isRowId)
                           {
-                            RowIdInfo rowId = new RowIdInfo();
+                            var rowId = new RowIdInfo();
 
                             rowId.databaseName = pair.Key;
                             rowId.tableName = table;
@@ -302,17 +302,17 @@ namespace System.Data.SQLite
                       // already in the query need to be queried separately, so construct a subquery
                       if (cols.Count > 0)
                       {
-                        string[] querycols = new string[cols.Count];
+                        var querycols = new string[cols.Count];
                         cols.CopyTo(querycols);
                         query = new KeyQuery(cnn, pair.Key, table, querycols);
                       }
                     }
 
                     // Create a KeyInfo struct for each column of the index
-                    for (int x = 0; x < indexColumns.Rows.Count; x++)
+                    for (var x = 0; x < indexColumns.Rows.Count; x++)
                     {
-                      string columnName = SQLiteConvert.GetStringOrNull(indexColumns.Rows[x]["COLUMN_NAME"]);
-                      KeyInfo key = new KeyInfo();
+                      var columnName = SQLiteConvert.GetStringOrNull(indexColumns.Rows[x]["COLUMN_NAME"]);
+                      var key = new KeyInfo();
 
                       key.rootPage = rootPage;
                       key.cursor = cursor;
@@ -353,7 +353,7 @@ namespace System.Data.SQLite
             (databaseName != null) &&
             (tableName != null))
         {
-            for (int i = 0; i < _rowIdInfo.Length; i++)
+            for (var i = 0; i < _rowIdInfo.Length; i++)
             {
                 if (_rowIdInfo[i].databaseName == databaseName &&
                     _rowIdInfo[i].tableName == tableName)
@@ -377,12 +377,12 @@ namespace System.Data.SQLite
             (databaseName != null) &&
             (tableName != null))
         {
-            for (int i = 0; i < _keyInfo.Length; i++)
+            for (var i = 0; i < _keyInfo.Length; i++)
             {
                 if (_keyInfo[i].databaseName == databaseName &&
                     _keyInfo[i].tableName == tableName)
                 {
-                    long rowid = _stmt._sql.GetRowIdForCursor(_stmt, _keyInfo[i].cursor);
+                    var rowid = _stmt._sql.GetRowIdForCursor(_stmt, _keyInfo[i].cursor);
 
                     if (rowid != 0)
                         return rowid;
@@ -431,7 +431,7 @@ namespace System.Data.SQLite
 
                 if (_keyInfo != null)
                 {
-                    for (int n = 0; n < _keyInfo.Length; n++)
+                    for (var n = 0; n < _keyInfo.Length; n++)
                     {
                         if (_keyInfo[n].query != null)
                             _keyInfo[n].query.Dispose();
@@ -486,7 +486,7 @@ namespace System.Data.SQLite
 
       KeyQuery last = null;
 
-      for (int n = 0; n < _keyInfo.Length; n++)
+      for (var n = 0; n < _keyInfo.Length; n++)
       {
         if (_keyInfo[n].query == null || _keyInfo[n].query != last)
         {
@@ -509,7 +509,7 @@ namespace System.Data.SQLite
       _isValid = false;
       if (_keyInfo == null) return;
 
-      for (int n = 0; n < _keyInfo.Length; n++)
+      for (var n = 0; n < _keyInfo.Length; n++)
       {
         if (_keyInfo[n].query != null)
           _keyInfo[n].query.IsValid = false;
@@ -554,7 +554,7 @@ namespace System.Data.SQLite
 
     internal int GetOrdinal(string name)
     {
-      for (int n = 0; n < _keyInfo.Length; n++)
+      for (var n = 0; n < _keyInfo.Length; n++)
       {
         if (String.Compare(name, _keyInfo[n].columnName, StringComparison.OrdinalIgnoreCase) == 0) return n;
       }
@@ -644,7 +644,7 @@ namespace System.Data.SQLite
       if (_keyInfo[i].query != null) return _keyInfo[i].query._reader.GetInt16(_keyInfo[i].column);
       else
       {
-        long rowid = _stmt._sql.GetRowIdForCursor(_stmt, _keyInfo[i].cursor);
+        var rowid = _stmt._sql.GetRowIdForCursor(_stmt, _keyInfo[i].cursor);
         if (rowid == 0) throw new InvalidCastException();
         return Convert.ToInt16(rowid);
       }
@@ -656,7 +656,7 @@ namespace System.Data.SQLite
       if (_keyInfo[i].query != null) return _keyInfo[i].query._reader.GetInt32(_keyInfo[i].column);
       else
       {
-        long rowid = _stmt._sql.GetRowIdForCursor(_stmt, _keyInfo[i].cursor);
+        var rowid = _stmt._sql.GetRowIdForCursor(_stmt, _keyInfo[i].cursor);
         if (rowid == 0) throw new InvalidCastException();
         return Convert.ToInt32(rowid);
       }
@@ -668,7 +668,7 @@ namespace System.Data.SQLite
       if (_keyInfo[i].query != null) return _keyInfo[i].query._reader.GetInt64(_keyInfo[i].column);
       else
       {
-        long rowid = _stmt._sql.GetRowIdForCursor(_stmt, _keyInfo[i].cursor);
+        var rowid = _stmt._sql.GetRowIdForCursor(_stmt, _keyInfo[i].cursor);
         if (rowid == 0) throw new InvalidCastException();
         return rowid;
       }
@@ -710,7 +710,7 @@ namespace System.Data.SQLite
     {
       KeyQuery last = null;
 
-      for (int n = 0; n < _keyInfo.Length; n++)
+      for (var n = 0; n < _keyInfo.Length; n++)
       {
         if (_keyInfo[n].query == null || _keyInfo[n].query != last)
         {
@@ -718,7 +718,7 @@ namespace System.Data.SQLite
 
           if (last == null) // ROWID aliases are treated special
           {
-            DataRow row = tbl.NewRow();
+            var row = tbl.NewRow();
             row[SchemaTableColumn.ColumnName] = _keyInfo[n].columnName;
             row[SchemaTableColumn.ColumnOrdinal] = tbl.Rows.Count;
             row[SchemaTableColumn.ColumnSize] = 8;
@@ -746,12 +746,12 @@ namespace System.Data.SQLite
           else
           {
             last.Sync(0);
-            using (DataTable tblSub = last._reader.GetSchemaTable())
+            using (var tblSub = last._reader.GetSchemaTable())
             {
               foreach (DataRow row in tblSub.Rows)
               {
-                object[] o = row.ItemArray;
-                DataRow newrow = tbl.Rows.Add(o);
+                var o = row.ItemArray;
+                var newrow = tbl.Rows.Add(o);
                 newrow[SchemaTableOptionalColumn.IsHidden] = true;
                 newrow[SchemaTableColumn.ColumnOrdinal] = tbl.Rows.Count - 1;
               }

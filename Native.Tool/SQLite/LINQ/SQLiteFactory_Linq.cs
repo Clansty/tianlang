@@ -45,7 +45,7 @@ namespace System.Data.SQLite
 
         SQLiteLog.Initialize(typeof(SQLiteFactory).Name);
 
-        string version =
+        var version =
 #if NET_40 || NET_45 || NET_451 || NET_452 || NET_46 || NET_461 || NET_462 || NET_47 || NET_471 || NET_472 || NET_STANDARD_20 || NET_STANDARD_21
             "4.0.0.0";
 #else
@@ -77,10 +77,10 @@ namespace System.Data.SQLite
     {
         if (_sqliteServices == null)
         {
-            string typeName = UnsafeNativeMethods.GetSettingValue(
+            var typeName = UnsafeNativeMethods.GetSettingValue(
                 "TypeName_SQLiteProviderServices", null);
 
-            Version version = this.GetType().Assembly.GetName().Version;
+            var version = this.GetType().Assembly.GetName().Version;
 
             if (typeName != null)
             {
@@ -93,11 +93,11 @@ namespace System.Data.SQLite
                     CultureInfo.InvariantCulture, DefaultTypeName, version);
             }
 
-            Type type = Type.GetType(typeName, false);
+            var type = Type.GetType(typeName, false);
 
             if (type != null)
             {
-                FieldInfo field = type.GetField(
+                var field = type.GetField(
                     "Instance", DefaultBindingFlags);
 
                 if (field != null)

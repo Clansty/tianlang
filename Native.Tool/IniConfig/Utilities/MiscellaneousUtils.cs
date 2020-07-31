@@ -10,14 +10,14 @@ namespace Native.Tool.IniConfig.Utilities
 	{
 		internal static int ByteArrayCompare (byte[] b1, byte[] b2)
 		{
-			int num = b1.Length.CompareTo (b2.Length);
+			var num = b1.Length.CompareTo (b2.Length);
 			if (num != 0)
 			{
 				return num;
 			}
-			for (int i = 0; i < b1.Length; i++)
+			for (var i = 0; i < b1.Length; i++)
 			{
-				int temp = b1[i].CompareTo (b2[i]);
+				var temp = b1[i].CompareTo (b2[i]);
 				if (temp != 0)
 				{
 					return temp;

@@ -102,7 +102,7 @@ namespace System.Data.SQLite
     /// <returns>A SQLiteParameter object</returns>
     public SQLiteParameter Add(string parameterName, DbType parameterType, int parameterSize, string sourceColumn)
     {
-      SQLiteParameter param = new SQLiteParameter(parameterName, parameterType, parameterSize, sourceColumn);
+      var param = new SQLiteParameter(parameterName, parameterType, parameterSize, sourceColumn);
       Add(param);
 
       return param;
@@ -117,7 +117,7 @@ namespace System.Data.SQLite
     /// <returns>A SQLiteParameter object</returns>
     public SQLiteParameter Add(string parameterName, DbType parameterType, int parameterSize)
     {
-      SQLiteParameter param = new SQLiteParameter(parameterName, parameterType, parameterSize);
+      var param = new SQLiteParameter(parameterName, parameterType, parameterSize);
       Add(param);
 
       return param;
@@ -131,7 +131,7 @@ namespace System.Data.SQLite
     /// <returns>A SQLiteParameter object</returns>
     public SQLiteParameter Add(string parameterName, DbType parameterType)
     {
-      SQLiteParameter param = new SQLiteParameter(parameterName, parameterType);
+      var param = new SQLiteParameter(parameterName, parameterType);
       Add(param);
 
       return param;
@@ -144,7 +144,7 @@ namespace System.Data.SQLite
     /// <returns>A zero-based index of where the parameter is located in the array</returns>
     public int Add(SQLiteParameter parameter)
     {
-      int n = -1;
+      var n = -1;
 
       if (String.IsNullOrEmpty(parameter.ParameterName) == false)
       {
@@ -183,7 +183,7 @@ namespace System.Data.SQLite
     /// <returns>Returns the SQLiteParameter object created during the call.</returns>
     public SQLiteParameter AddWithValue(string parameterName, object value)
     {
-      SQLiteParameter param = new SQLiteParameter(parameterName, value);
+      var param = new SQLiteParameter(parameterName, value);
       Add(param);
 
       return param;
@@ -195,8 +195,8 @@ namespace System.Data.SQLite
     /// <param name="values">The array of parameters to add</param>
     public void AddRange(SQLiteParameter[] values)
     {
-      int x = values.Length;
-      for (int n = 0; n < x; n++)
+      var x = values.Length;
+      for (var n = 0; n < x; n++)
         Add(values[n]);
     }
 
@@ -206,8 +206,8 @@ namespace System.Data.SQLite
     /// <param name="values">The array of parameters to add</param>
     public override void AddRange(Array values)
     {
-      int x = values.Length;
-      for (int n = 0; n < x; n++)
+      var x = values.Length;
+      for (var n = 0; n < x; n++)
         Add((SQLiteParameter)(values.GetValue(n)));
     }
 
@@ -318,8 +318,8 @@ namespace System.Data.SQLite
     /// <returns>-1 if not found, otherwise a zero-based index of the parameter</returns>
     public override int IndexOf(string parameterName)
     {
-      int x = _parameterList.Count;
-      for (int n = 0; n < x; n++)
+      var x = _parameterList.Count;
+      for (var n = 0; n < x; n++)
       {
         if (String.Compare(parameterName, _parameterList[n].ParameterName, StringComparison.OrdinalIgnoreCase) == 0)
           return n;
@@ -415,13 +415,13 @@ namespace System.Data.SQLite
     {
       if (_unboundFlag == false || _parameterList.Count == 0 || _command._statementList == null) return;
 
-      int nUnnamed = 0;
+      var nUnnamed = 0;
       string s;
       int n;
-      int y = -1;
+      var y = -1;
       SQLiteStatement stmt;
 
-      foreach(SQLiteParameter p in _parameterList)
+      foreach(var p in _parameterList)
       {
         y ++;
         s = p.ParameterName;
@@ -432,7 +432,7 @@ namespace System.Data.SQLite
         }
 
         int x;
-        bool isMapped = false;
+        var isMapped = false;
 
         if (activeStatement == null)
           x = _command._statementList.Count;

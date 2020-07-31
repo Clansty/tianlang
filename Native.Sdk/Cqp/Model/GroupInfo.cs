@@ -98,7 +98,7 @@ namespace Native.Sdk.Cqp.Model
 		/// <returns>表示当前对象的字符串</returns>
 		public override string ToString ()
 		{
-			StringBuilder builder = new StringBuilder ();
+			var builder = new StringBuilder ();
 			builder.AppendFormat ("群: {0}{1}", this.Group.Id, Environment.NewLine);
 			builder.AppendFormat ("群名: {0}{1}", this.Name, Environment.NewLine);
 			if (!this._isGroupList)

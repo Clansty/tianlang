@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Clansty.tianlang.Events;
+using Native.Sdk.Cqp.Interface;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,7 +20,7 @@ namespace Native.Core
 		/// <param name="container">用于注册的 IOC 容器 </param>
 		public static void Register (IUnityContainer unityContainer)
 		{
-			
+			unityContainer.RegisterType<IGroupMessage, GroupMsgEvent>("群消息处理");
 		}
 	}
 }

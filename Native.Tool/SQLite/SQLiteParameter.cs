@@ -503,7 +503,7 @@ namespace System.Data.SQLite
     /// <returns>A new, unassociated SQLiteParameter</returns>
     public object Clone()
     {
-      SQLiteParameter newparam = new SQLiteParameter(this);
+      var newparam = new SQLiteParameter(this);
 
       return newparam;
     }

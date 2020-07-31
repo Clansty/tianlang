@@ -20,12 +20,12 @@ namespace Clansty.tianlang
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            string pmsg = textBox1.Text;
-            string ftxt = comboBox1.Text;
+            var pmsg = textBox1.Text;
+            var ftxt = comboBox1.Text;
             new Thread(() =>
             {
                 List<GroupMember> l = Robot.Group.GetMembers(G.major);
-                foreach (GroupMember i in l)
+                foreach (var i in l)
                 {
                     if (i.Card.IndexOf(ftxt) > -1)
                     {

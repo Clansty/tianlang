@@ -11,8 +11,8 @@ namespace Clansty.tianlang
     {
         public static async Task CronAsync(bool test = false)
         {
-            string last = Rds.HGet("fired", "last");
-            string now = DateTime.Now.ToShortDateString();
+            var last = Rds.HGet("fired", "last");
+            var now = DateTime.Now.ToShortDateString();
             if (last == now)
                 return;
             if (DateTime.Now.Hour < 5)
@@ -23,16 +23,16 @@ namespace Clansty.tianlang
 
         private static void EnLikeNew()
         {
-            IRedisClient client = Rds.GetClient();
-            HashSet<string> likee = client.GetAllItemsFromSet("likee");
-            HashSet<string> liker = client.GetAllItemsFromSet("liker");
+            var client = Rds.GetClient();
+            var likee = client.GetAllItemsFromSet("likee");
+            var liker = client.GetAllItemsFromSet("liker");
             client.Dispose();
-            foreach (string ee in likee)
+            foreach (var ee in likee)
             {
-                int tot = 0;
-                foreach (string er in liker)
+                var tot = 0;
+                foreach (var er in liker)
                 {
-                    (int o, int r) = Like(er, ee, 50);
+                    (var o, var r) = Like(er, ee, 50);
                     tot += o;
                     if (r != 0)
                         C.WriteLn($"like err {r}: {er} => {ee}", ConsoleColor.Red);
@@ -45,10 +45,10 @@ namespace Clansty.tianlang
 
         public static void EnFire(long w)
         {
-            IRedisClient client = Rds.GetClient();
-            HashSet<string> s = client.GetAllItemsFromSet($"fire{w}");
+            var client = Rds.GetClient();
+            var s = client.GetAllItemsFromSet($"fire{w}");
             client.Dispose();
-            foreach (string i in s)
+            foreach (var i in s)
             {
                 Sf(w, i, Strs.Get("fire"));
                 C.WriteLn($"{i} <- fire", ConsoleColor.Cyan);
@@ -61,12 +61,12 @@ namespace Clansty.tianlang
 
         public static void EnLike(long w)
         {
-            IRedisClient client = Rds.GetClient();
-            HashSet<string> s = client.GetAllItemsFromSet($"like{w}");
+            var client = Rds.GetClient();
+            var s = client.GetAllItemsFromSet($"like{w}");
             client.Dispose();
-            foreach (string i in s)
+            foreach (var i in s)
             {
-                (int o, int r) = Like(w, i, 20);
+                (var o, var r) = Like(w, i, 20);
                 C.WriteLn($"{i} <- {o}, {r}", ConsoleColor.Cyan);
                 if (r != 0)
                 {
@@ -81,7 +81,7 @@ namespace Clansty.tianlang
 
         private static (int, int) Like(long w, string i, int c)
         {
-            int o = 0;
+            var o = 0;
             int r;
             while (true)
             {

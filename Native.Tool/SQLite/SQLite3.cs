@@ -245,9 +245,9 @@ namespace System.Data.SQLite
         //
         if (_modules != null)
         {
-            foreach (KeyValuePair<string, SQLiteModule> pair in _modules)
+            foreach (var pair in _modules)
             {
-                SQLiteModule module = pair.Value;
+                var module = pair.Value;
 
                 if (module == null)
                     continue;
@@ -276,7 +276,7 @@ namespace System.Data.SQLite
               return;
           }
 
-          bool unbindFunctions = HelperMethods.HasFlags(_flags, SQLiteConnectionFlags.UnbindFunctionsOnClose);
+          var unbindFunctions = HelperMethods.HasFlags(_flags, SQLiteConnectionFlags.UnbindFunctionsOnClose);
 
       retry:
 
@@ -539,12 +539,12 @@ namespace System.Data.SQLite
     {
         get
         {
-            StringBuilder result = new StringBuilder();
-            IList<string> list = SQLiteDefineConstants.OptionList;
+            var result = new StringBuilder();
+            var list = SQLiteDefineConstants.OptionList;
 
             if (list != null)
             {
-                foreach (string element in list)
+                foreach (var element in list)
                 {
                     if (element == null)
                         continue;
@@ -588,9 +588,9 @@ namespace System.Data.SQLite
     {
         get
         {
-            StringBuilder result = new StringBuilder();
-            int index = 0;
-            IntPtr zValue = UnsafeNativeMethods.sqlite3_compileoption_get(index++);
+            var result = new StringBuilder();
+            var index = 0;
+            var zValue = UnsafeNativeMethods.sqlite3_compileoption_get(index++);
 
             while (zValue != IntPtr.Zero)
             {
@@ -666,14 +666,14 @@ namespace System.Data.SQLite
         string name
         )
     {
-        IntPtr pDbName = IntPtr.Zero;
+        var pDbName = IntPtr.Zero;
 
         try
         {
             if (name != null)
                 pDbName = SQLiteString.Utf8IntPtrFromString(name);
 
-            int result = UnsafeNativeMethods.sqlite3_db_readonly(
+            var result = UnsafeNativeMethods.sqlite3_db_readonly(
                 _sql, pDbName);
 
             if (result == -1) /* database not found */
@@ -801,7 +801,7 @@ namespace System.Data.SQLite
 
     internal static SQLiteErrorCode StaticSetMemoryStatus(bool value)
     {
-        SQLiteErrorCode rc = UnsafeNativeMethods.sqlite3_config_int(
+        var rc = UnsafeNativeMethods.sqlite3_config_int(
             SQLiteConfigOpsEnum.SQLITE_CONFIG_MEMSTATUS, value ? 1 : 0);
 
         return rc;
@@ -813,7 +813,7 @@ namespace System.Data.SQLite
     /// <returns>A standard SQLite return code (i.e. zero for success and non-zero for failure).</returns>
     internal override SQLiteErrorCode ReleaseMemory()
     {
-        SQLiteErrorCode rc = UnsafeNativeMethods.sqlite3_db_release_memory(_sql);
+        var rc = UnsafeNativeMethods.sqlite3_db_release_memory(_sql);
         return rc;
     }
 
@@ -857,11 +857,11 @@ namespace System.Data.SQLite
         ref uint nLargest
         )
     {
-        SQLiteErrorCode rc = SQLiteErrorCode.Ok;
+        var rc = SQLiteErrorCode.Ok;
 
-        int nFreeLocal = UnsafeNativeMethods.sqlite3_release_memory(nBytes);
+        var nFreeLocal = UnsafeNativeMethods.sqlite3_release_memory(nBytes);
         uint nLargestLocal = 0;
-        bool resetOkLocal = false;
+        var resetOkLocal = false;
 
 #if !DEBUG && WINDOWS // NOTE: Should be "WIN32HEAP && !MEMDEBUG && WINDOWS"
         if (HelperMethods.IsWindows())
@@ -915,7 +915,7 @@ namespace System.Data.SQLite
         bool directories
         )
     {
-        SQLiteErrorCode rc = SQLiteErrorCode.Ok;
+        var rc = SQLiteErrorCode.Ok;
 
         if (directories)
         {
@@ -1050,7 +1050,7 @@ namespace System.Data.SQLite
         }
         finally /* NOTE: Thread.Abort() protection. */
         {
-          IntPtr db = IntPtr.Zero;
+          var db = IntPtr.Zero;
           SQLiteErrorCode n;
 
 #if !SQLITE_STANDARD
@@ -1091,7 +1091,7 @@ namespace System.Data.SQLite
           if (_functions == null)
               _functions = new Dictionary<SQLiteFunctionAttribute, SQLiteFunction>();
 
-          foreach (KeyValuePair<SQLiteFunctionAttribute, SQLiteFunction> pair
+          foreach (var pair
                   in SQLiteFunction.BindFunctions(this, connectionFlags))
           {
               _functions[pair.Key] = pair.Value;
@@ -1110,9 +1110,9 @@ namespace System.Data.SQLite
     internal override int CountPool()
     {
         Dictionary<string, int> counts = null;
-        int openCount = 0;
-        int closeCount = 0;
-        int totalCount = 0;
+        var openCount = 0;
+        var closeCount = 0;
+        var totalCount = 0;
 
         SQLiteConnectionPool.GetCounts(_fileName,
             ref counts, ref openCount, ref closeCount,
@@ -1125,7 +1125,7 @@ namespace System.Data.SQLite
     {
       IntPtr db = _sql;
       if (db == IntPtr.Zero) throw new SQLiteException("no connection handle available");
-      SQLiteErrorCode n = UnsafeNativeMethods.sqlite3_busy_timeout(db, nTimeoutMS);
+      var n = UnsafeNativeMethods.sqlite3_busy_timeout(db, nTimeoutMS);
       if (n != SQLiteErrorCode.Ok) throw new SQLiteException(n, GetLastError());
     }
 
@@ -1133,8 +1133,8 @@ namespace System.Data.SQLite
     {
       SQLiteErrorCode n;
       Random rnd = null;
-      uint starttick = (uint)Environment.TickCount;
-      uint timeout = (uint)(stmt._command._commandTimeout * 1000);
+      var starttick = (uint)Environment.TickCount;
+      var timeout = (uint)(stmt._command._commandTimeout * 1000);
 
       ResetCancelCount();
 
@@ -1219,13 +1219,13 @@ namespace System.Data.SQLite
         {
             if (have_errstr == null)
             {
-                int versionNumber = SQLiteVersionNumber;
+                var versionNumber = SQLiteVersionNumber;
                 have_errstr = (versionNumber >= 3007015);
             }
 
             if ((bool)have_errstr)
             {
-                IntPtr ptr = UnsafeNativeMethods.sqlite3_errstr(rc);
+                var ptr = UnsafeNativeMethods.sqlite3_errstr(rc);
 
                 if (ptr != IntPtr.Zero)
                 {
@@ -1264,7 +1264,7 @@ namespace System.Data.SQLite
         {
             if (have_stmt_readonly == null)
             {
-                int versionNumber = SQLiteVersionNumber;
+                var versionNumber = SQLiteVersionNumber;
                 have_stmt_readonly = (versionNumber >= 3007004);
             }
 
@@ -1297,7 +1297,7 @@ namespace System.Data.SQLite
       {
         // Recreate a dummy statement
         string str = null;
-        using (SQLiteStatement tmp = Prepare(null, stmt._sqlStatement, null, (uint)(stmt._command._commandTimeout * 1000), ref str))
+        using (var tmp = Prepare(null, stmt._sqlStatement, null, (uint)(stmt._command._commandTimeout * 1000), ref str))
         {
           // Finalize the existing statement
           stmt._sqlite_stmt.Dispose();
@@ -1329,7 +1329,7 @@ namespace System.Data.SQLite
 
     internal override string GetLastError(string defValue)
     {
-        string result = SQLiteBase.GetLastError(_sql, _sql);
+        var result = SQLiteBase.GetLastError(_sql, _sql);
         if (String.IsNullOrEmpty(result)) result = defValue;
         return result;
     }
@@ -1388,7 +1388,7 @@ namespace System.Data.SQLite
         //       used to smooth integration with the base .NET Framework
         //       data classes.
         //
-        string baseSchemaName = (cnn != null) ? cnn._baseSchemaName : null;
+        var baseSchemaName = (cnn != null) ? cnn._baseSchemaName : null;
 
         if (!String.IsNullOrEmpty(baseSchemaName))
         {
@@ -1402,7 +1402,7 @@ namespace System.Data.SQLite
         }
       }
 
-      SQLiteConnectionFlags flags =
+      var flags =
           (cnn != null) ? cnn.Flags : SQLiteConnectionFlags.Default;
 
       if (ForceLogPrepare() ||
@@ -1415,22 +1415,22 @@ namespace System.Data.SQLite
                   CultureInfo.CurrentCulture, "Preparing {{{0}}}...", strSql));
       }
 
-      IntPtr stmt = IntPtr.Zero;
-      IntPtr ptr = IntPtr.Zero;
-      int len = 0;
-      SQLiteErrorCode n = SQLiteErrorCode.Schema;
-      int retries = 0;
-      int maximumRetries = (cnn != null) ? cnn._prepareRetries : SQLiteConnection.DefaultPrepareRetries;
-      byte[] b = ToUTF8(strSql);
+      var stmt = IntPtr.Zero;
+      var ptr = IntPtr.Zero;
+      var len = 0;
+      var n = SQLiteErrorCode.Schema;
+      var retries = 0;
+      var maximumRetries = (cnn != null) ? cnn._prepareRetries : SQLiteConnection.DefaultPrepareRetries;
+      var b = ToUTF8(strSql);
       string typedefs = null;
       SQLiteStatement cmd = null;
       Random rnd = null;
-      uint starttick = (uint)Environment.TickCount;
+      var starttick = (uint)Environment.TickCount;
 
       ResetCancelCount();
 
-      GCHandle handle = GCHandle.Alloc(b, GCHandleType.Pinned);
-      IntPtr psql = handle.AddrOfPinnedObject();
+      var handle = GCHandle.Alloc(b, GCHandleType.Pinned);
+      var psql = handle.AddrOfPinnedObject();
       SQLiteStatementHandle statementHandle = null;
       try
       {
@@ -1498,7 +1498,7 @@ namespace System.Data.SQLite
           {
             if (String.Compare(GetLastError(), "near \"TYPES\": syntax error", StringComparison.OrdinalIgnoreCase) == 0)
             {
-              int pos = strSql.IndexOf(';');
+              var pos = strSql.IndexOf(';');
               if (pos == -1) pos = strSql.Length - 1;
 
               typedefs = strSql.Substring(0, pos + 1);
@@ -1524,7 +1524,7 @@ namespace System.Data.SQLite
               _buildingSchema = true;
               try
               {
-                ISQLiteSchemaExtensions ext = ((IServiceProvider)SQLiteFactory.Instance).GetService(typeof(ISQLiteSchemaExtensions)) as ISQLiteSchemaExtensions;
+                var ext = ((IServiceProvider)SQLiteFactory.Instance).GetService(typeof(ISQLiteSchemaExtensions)) as ISQLiteSchemaExtensions;
 
                 if (ext != null)
                   ext.BuildTempSchema(cnn);
@@ -1612,7 +1612,7 @@ namespace System.Data.SQLite
 
     private static string FormatDateTime(DateTime value)
     {
-        StringBuilder result = new StringBuilder();
+        var result = new StringBuilder();
 
         result.Append(value.ToString("yyyy-MM-ddTHH:mm:ss.FFFFFFFK"));
         result.Append(' ');
@@ -1650,11 +1650,11 @@ namespace System.Data.SQLite
         if (array == null)
             return null;
 
-        StringBuilder result = new StringBuilder(array.Length * 2);
+        var result = new StringBuilder(array.Length * 2);
 
-        int length = array.Length;
+        var length = array.Length;
 
-        for (int index = 0; index < length; index++)
+        for (var index = 0; index < length; index++)
             result.Append(array[index].ToString("x2"));
 
         return result.ToString();
@@ -1672,7 +1672,7 @@ namespace System.Data.SQLite
 
     internal override void Bind_Double(SQLiteStatement stmt, SQLiteConnectionFlags flags, int index, double value)
     {
-        SQLiteStatementHandle handle = stmt._sqlite_stmt;
+        var handle = stmt._sqlite_stmt;
 
         if (ForceLogPrepare() || HelperMethods.LogBind(flags))
         {
@@ -1680,7 +1680,7 @@ namespace System.Data.SQLite
         }
 
 #if !PLATFORM_COMPACTFRAMEWORK
-        SQLiteErrorCode n = UnsafeNativeMethods.sqlite3_bind_double(handle, index, value);
+        var n = UnsafeNativeMethods.sqlite3_bind_double(handle, index, value);
         if (n != SQLiteErrorCode.Ok) throw new SQLiteException(n, GetLastError());
 #elif !SQLITE_STANDARD
         SQLiteErrorCode n = UnsafeNativeMethods.sqlite3_bind_double_interop(handle, index, ref value);
@@ -1692,20 +1692,20 @@ namespace System.Data.SQLite
 
     internal override void Bind_Int32(SQLiteStatement stmt, SQLiteConnectionFlags flags, int index, int value)
     {
-        SQLiteStatementHandle handle = stmt._sqlite_stmt;
+        var handle = stmt._sqlite_stmt;
 
         if (ForceLogPrepare() || HelperMethods.LogBind(flags))
         {
             LogBind(handle, index, value);
         }
 
-        SQLiteErrorCode n = UnsafeNativeMethods.sqlite3_bind_int(handle, index, value);
+        var n = UnsafeNativeMethods.sqlite3_bind_int(handle, index, value);
         if (n != SQLiteErrorCode.Ok) throw new SQLiteException(n, GetLastError());
     }
 
     internal override void Bind_UInt32(SQLiteStatement stmt, SQLiteConnectionFlags flags, int index, uint value)
     {
-        SQLiteStatementHandle handle = stmt._sqlite_stmt;
+        var handle = stmt._sqlite_stmt;
 
         if (ForceLogPrepare() || HelperMethods.LogBind(flags))
         {
@@ -1735,7 +1735,7 @@ namespace System.Data.SQLite
 
     internal override void Bind_Int64(SQLiteStatement stmt, SQLiteConnectionFlags flags, int index, long value)
     {
-        SQLiteStatementHandle handle = stmt._sqlite_stmt;
+        var handle = stmt._sqlite_stmt;
 
         if (ForceLogPrepare() || HelperMethods.LogBind(flags))
         {
@@ -1743,7 +1743,7 @@ namespace System.Data.SQLite
         }
 
 #if !PLATFORM_COMPACTFRAMEWORK
-        SQLiteErrorCode n = UnsafeNativeMethods.sqlite3_bind_int64(handle, index, value);
+        var n = UnsafeNativeMethods.sqlite3_bind_int64(handle, index, value);
         if (n != SQLiteErrorCode.Ok) throw new SQLiteException(n, GetLastError());
 #elif !SQLITE_STANDARD
         SQLiteErrorCode n = UnsafeNativeMethods.sqlite3_bind_int64_interop(handle, index, ref value);
@@ -1755,7 +1755,7 @@ namespace System.Data.SQLite
 
     internal override void Bind_UInt64(SQLiteStatement stmt, SQLiteConnectionFlags flags, int index, ulong value)
     {
-        SQLiteStatementHandle handle = stmt._sqlite_stmt;
+        var handle = stmt._sqlite_stmt;
 
         if (ForceLogPrepare() || HelperMethods.LogBind(flags))
         {
@@ -1763,7 +1763,7 @@ namespace System.Data.SQLite
         }
 
 #if !PLATFORM_COMPACTFRAMEWORK
-        SQLiteErrorCode n = UnsafeNativeMethods.sqlite3_bind_uint64(handle, index, value);
+        var n = UnsafeNativeMethods.sqlite3_bind_uint64(handle, index, value);
         if (n != SQLiteErrorCode.Ok) throw new SQLiteException(n, GetLastError());
 #elif !SQLITE_STANDARD
         SQLiteErrorCode n = UnsafeNativeMethods.sqlite3_bind_uint64_interop(handle, index, ref value);
@@ -1775,42 +1775,42 @@ namespace System.Data.SQLite
 
     internal override void Bind_Boolean(SQLiteStatement stmt, SQLiteConnectionFlags flags, int index, bool value)
     {
-        SQLiteStatementHandle handle = stmt._sqlite_stmt;
+        var handle = stmt._sqlite_stmt;
 
         if (ForceLogPrepare() || HelperMethods.LogBind(flags))
         {
             LogBind(handle, index, value);
         }
 
-        int value2 = value ? 1 : 0;
+        var value2 = value ? 1 : 0;
 
-        SQLiteErrorCode n = UnsafeNativeMethods.sqlite3_bind_int(handle, index, value2);
+        var n = UnsafeNativeMethods.sqlite3_bind_int(handle, index, value2);
         if (n != SQLiteErrorCode.Ok) throw new SQLiteException(n, GetLastError());
     }
 
     internal override void Bind_Text(SQLiteStatement stmt, SQLiteConnectionFlags flags, int index, string value)
     {
-        SQLiteStatementHandle handle = stmt._sqlite_stmt;
+        var handle = stmt._sqlite_stmt;
 
         if (ForceLogPrepare() || HelperMethods.LogBind(flags))
         {
             LogBind(handle, index, value);
         }
 
-        byte[] b = ToUTF8(value);
+        var b = ToUTF8(value);
 
         if (ForceLogPrepare() || HelperMethods.LogBind(flags))
         {
             LogBind(handle, index, b);
         }
 
-        SQLiteErrorCode n = UnsafeNativeMethods.sqlite3_bind_text(handle, index, b, b.Length - 1, (IntPtr)(-1));
+        var n = UnsafeNativeMethods.sqlite3_bind_text(handle, index, b, b.Length - 1, (IntPtr)(-1));
         if (n != SQLiteErrorCode.Ok) throw new SQLiteException(n, GetLastError());
     }
 
     internal override void Bind_DateTime(SQLiteStatement stmt, SQLiteConnectionFlags flags, int index, DateTime dt)
     {
-        SQLiteStatementHandle handle = stmt._sqlite_stmt;
+        var handle = stmt._sqlite_stmt;
 
         if (ForceLogPrepare() || HelperMethods.LogBind(flags))
         {
@@ -1834,7 +1834,7 @@ namespace System.Data.SQLite
         {
             case SQLiteDateFormats.Ticks:
                 {
-                    long value = dt.Ticks;
+                    var value = dt.Ticks;
 
                     if (ForceLogPrepare() || HelperMethods.LogBind(flags))
                     {
@@ -1842,7 +1842,7 @@ namespace System.Data.SQLite
                     }
 
 #if !PLATFORM_COMPACTFRAMEWORK
-                    SQLiteErrorCode n = UnsafeNativeMethods.sqlite3_bind_int64(handle, index, value);
+                    var n = UnsafeNativeMethods.sqlite3_bind_int64(handle, index, value);
                     if (n != SQLiteErrorCode.Ok) throw new SQLiteException(n, GetLastError());
                     break;
 #elif !SQLITE_STANDARD
@@ -1855,7 +1855,7 @@ namespace System.Data.SQLite
                 }
             case SQLiteDateFormats.JulianDay:
                 {
-                    double value = ToJulianDay(dt);
+                    var value = ToJulianDay(dt);
 
                     if (ForceLogPrepare() || HelperMethods.LogBind(flags))
                     {
@@ -1863,7 +1863,7 @@ namespace System.Data.SQLite
                     }
 
 #if !PLATFORM_COMPACTFRAMEWORK
-                    SQLiteErrorCode n = UnsafeNativeMethods.sqlite3_bind_double(handle, index, value);
+                    var n = UnsafeNativeMethods.sqlite3_bind_double(handle, index, value);
                     if (n != SQLiteErrorCode.Ok) throw new SQLiteException(n, GetLastError());
                     break;
 #elif !SQLITE_STANDARD
@@ -1876,7 +1876,7 @@ namespace System.Data.SQLite
                 }
             case SQLiteDateFormats.UnixEpoch:
                 {
-                    long value = Convert.ToInt64(dt.Subtract(UnixEpoch).TotalSeconds);
+                    var value = Convert.ToInt64(dt.Subtract(UnixEpoch).TotalSeconds);
 
                     if (ForceLogPrepare() || HelperMethods.LogBind(flags))
                     {
@@ -1884,7 +1884,7 @@ namespace System.Data.SQLite
                     }
 
 #if !PLATFORM_COMPACTFRAMEWORK
-                    SQLiteErrorCode n = UnsafeNativeMethods.sqlite3_bind_int64(handle, index, value);
+                    var n = UnsafeNativeMethods.sqlite3_bind_int64(handle, index, value);
                     if (n != SQLiteErrorCode.Ok) throw new SQLiteException(n, GetLastError());
                     break;
 #elif !SQLITE_STANDARD
@@ -1897,14 +1897,14 @@ namespace System.Data.SQLite
                 }
             default:
                 {
-                    byte[] b = ToUTF8(dt);
+                    var b = ToUTF8(dt);
 
                     if (ForceLogPrepare() || HelperMethods.LogBind(flags))
                     {
                         LogBind(handle, index, b);
                     }
 
-                    SQLiteErrorCode n = UnsafeNativeMethods.sqlite3_bind_text(handle, index, b, b.Length - 1, (IntPtr)(-1));
+                    var n = UnsafeNativeMethods.sqlite3_bind_text(handle, index, b, b.Length - 1, (IntPtr)(-1));
                     if (n != SQLiteErrorCode.Ok) throw new SQLiteException(n, GetLastError());
                     break;
                 }
@@ -1913,34 +1913,34 @@ namespace System.Data.SQLite
 
     internal override void Bind_Blob(SQLiteStatement stmt, SQLiteConnectionFlags flags, int index, byte[] blobData)
     {
-        SQLiteStatementHandle handle = stmt._sqlite_stmt;
+        var handle = stmt._sqlite_stmt;
 
         if (ForceLogPrepare() || HelperMethods.LogBind(flags))
         {
             LogBind(handle, index, blobData);
         }
 
-        SQLiteErrorCode n = UnsafeNativeMethods.sqlite3_bind_blob(handle, index, blobData, blobData.Length, (IntPtr)(-1));
+        var n = UnsafeNativeMethods.sqlite3_bind_blob(handle, index, blobData, blobData.Length, (IntPtr)(-1));
         if (n != SQLiteErrorCode.Ok) throw new SQLiteException(n, GetLastError());
     }
 
     internal override void Bind_Null(SQLiteStatement stmt, SQLiteConnectionFlags flags, int index)
     {
-        SQLiteStatementHandle handle = stmt._sqlite_stmt;
+        var handle = stmt._sqlite_stmt;
 
         if (ForceLogPrepare() || HelperMethods.LogBind(flags))
         {
             LogBind(handle, index);
         }
 
-        SQLiteErrorCode n = UnsafeNativeMethods.sqlite3_bind_null(handle, index);
+        var n = UnsafeNativeMethods.sqlite3_bind_null(handle, index);
         if (n != SQLiteErrorCode.Ok) throw new SQLiteException(n, GetLastError());
     }
 
     internal override int Bind_ParamCount(SQLiteStatement stmt, SQLiteConnectionFlags flags)
     {
-        SQLiteStatementHandle handle = stmt._sqlite_stmt;
-        int value = UnsafeNativeMethods.sqlite3_bind_parameter_count(handle);
+        var handle = stmt._sqlite_stmt;
+        var value = UnsafeNativeMethods.sqlite3_bind_parameter_count(handle);
 
         if (ForceLogPrepare() || HelperMethods.LogBind(flags))
         {
@@ -1957,7 +1957,7 @@ namespace System.Data.SQLite
 
     internal override string Bind_ParamName(SQLiteStatement stmt, SQLiteConnectionFlags flags, int index)
     {
-        SQLiteStatementHandle handle = stmt._sqlite_stmt;
+        var handle = stmt._sqlite_stmt;
         string name;
 
 #if !SQLITE_STANDARD
@@ -1982,8 +1982,8 @@ namespace System.Data.SQLite
 
     internal override int Bind_ParamIndex(SQLiteStatement stmt, SQLiteConnectionFlags flags, string paramName)
     {
-        SQLiteStatementHandle handle = stmt._sqlite_stmt;
-        int index = UnsafeNativeMethods.sqlite3_bind_parameter_index(handle, ToUTF8(paramName));
+        var handle = stmt._sqlite_stmt;
+        var index = UnsafeNativeMethods.sqlite3_bind_parameter_index(handle, ToUTF8(paramName));
 
         if (ForceLogPrepare() || HelperMethods.LogBind(flags))
         {
@@ -2009,7 +2009,7 @@ namespace System.Data.SQLite
       int len = 0;
       IntPtr p = UnsafeNativeMethods.sqlite3_column_name_interop(stmt._sqlite_stmt, index, ref len);
 #else
-      IntPtr p = UnsafeNativeMethods.sqlite3_column_name(stmt._sqlite_stmt, index);
+      var p = UnsafeNativeMethods.sqlite3_column_name(stmt._sqlite_stmt, index);
 #endif
       if (p == IntPtr.Zero)
         throw new SQLiteException(SQLiteErrorCode.NoMem, GetLastError());
@@ -2033,19 +2033,19 @@ namespace System.Data.SQLite
         IntPtr p = UnsafeNativeMethods.sqlite3_column_decltype_interop(stmt._sqlite_stmt, index, ref len);
 #else
         len = -1;
-        IntPtr p = UnsafeNativeMethods.sqlite3_column_decltype(stmt._sqlite_stmt, index);
+        var p = UnsafeNativeMethods.sqlite3_column_decltype(stmt._sqlite_stmt, index);
 #endif
         nAffinity = ColumnAffinity(stmt, index);
 
         if ((p != IntPtr.Zero) && ((len > 0) || (len == -1)))
         {
-            string declType = UTF8ToString(p, len);
+            var declType = UTF8ToString(p, len);
 
             if (!String.IsNullOrEmpty(declType))
                 return declType;
         }
 
-        string[] ar = stmt.TypeDefinitions;
+        var ar = stmt.TypeDefinitions;
 
         if (ar != null)
         {
@@ -2058,9 +2058,9 @@ namespace System.Data.SQLite
 
     internal override int ColumnIndex(SQLiteStatement stmt, string columnName)
     {
-      int x = ColumnCount(stmt);
+      var x = ColumnCount(stmt);
 
-      for (int n = 0; n < x; n++)
+      for (var n = 0; n < x; n++)
       {
         if (String.Compare(columnName, ColumnName(stmt, n), StringComparison.OrdinalIgnoreCase) == 0)
           return n;
@@ -2105,9 +2105,9 @@ namespace System.Data.SQLite
     {
         string dataType = null; /* NOT USED */
         string collateSequence = null; /* NOT USED */
-        bool notNull = false; /* NOT USED */
-        bool primaryKey = false; /* NOT USED */
-        bool autoIncrement = false; /* NOT USED */
+        var notNull = false; /* NOT USED */
+        var primaryKey = false; /* NOT USED */
+        var autoIncrement = false; /* NOT USED */
 
         return ColumnMetaData(
             dataBase, table, null, false, ref dataType,
@@ -2117,11 +2117,11 @@ namespace System.Data.SQLite
 
     internal override bool ColumnMetaData(string dataBase, string table, string column, bool canThrow, ref string dataType, ref string collateSequence, ref bool notNull, ref bool primaryKey, ref bool autoIncrement)
     {
-      IntPtr dataTypePtr = IntPtr.Zero;
-      IntPtr collSeqPtr = IntPtr.Zero;
-      int nnotNull = 0;
-      int nprimaryKey = 0;
-      int nautoInc = 0;
+      var dataTypePtr = IntPtr.Zero;
+      var collSeqPtr = IntPtr.Zero;
+      var nnotNull = 0;
+      var nprimaryKey = 0;
+      var nautoInc = 0;
       SQLiteErrorCode n;
       int dtLen;
       int csLen;
@@ -2166,11 +2166,11 @@ namespace System.Data.SQLite
                 }
             case TypeAffinity.Blob:
                 {
-                    long size = GetBytes(stmt, index, 0, null, 0, 0);
+                    var size = GetBytes(stmt, index, 0, null, 0, 0);
 
                     if ((size > 0) && (size <= int.MaxValue))
                     {
-                        byte[] bytes = new byte[(int)size];
+                        var bytes = new byte[(int)size];
 
                         GetBytes(stmt, index, 0, bytes, 0, (int)size);
 
@@ -2284,19 +2284,19 @@ namespace System.Data.SQLite
 
     internal override long GetBytes(SQLiteStatement stmt, int index, int nDataOffset, byte[] bDest, int nStart, int nLength)
     {
-      int nlen = UnsafeNativeMethods.sqlite3_column_bytes(stmt._sqlite_stmt, index);
+      var nlen = UnsafeNativeMethods.sqlite3_column_bytes(stmt._sqlite_stmt, index);
 
       // If no destination buffer, return the size needed.
       if (bDest == null) return nlen;
 
-      int nCopied = nLength;
+      var nCopied = nLength;
 
       if (nCopied + nStart > bDest.Length) nCopied = bDest.Length - nStart;
       if (nCopied + nDataOffset > nlen) nCopied = nlen - nDataOffset;
 
       if (nCopied > 0)
       {
-        IntPtr ptr = UnsafeNativeMethods.sqlite3_column_blob(stmt._sqlite_stmt, index);
+        var ptr = UnsafeNativeMethods.sqlite3_column_blob(stmt._sqlite_stmt, index);
 
         Marshal.Copy((IntPtr)(ptr.ToInt64() + nDataOffset), bDest, nStart, nCopied);
       }
@@ -2316,9 +2316,9 @@ namespace System.Data.SQLite
     internal override long GetChars(SQLiteStatement stmt, int index, int nDataOffset, char[] bDest, int nStart, int nLength)
     {
       int nlen;
-      int nCopied = nLength;
+      var nCopied = nLength;
 
-      string str = GetText(stmt, index);
+      var str = GetText(stmt, index);
       nlen = str.Length;
 
       if (bDest == null) return nlen;
@@ -2360,7 +2360,7 @@ namespace System.Data.SQLite
 
     internal override SQLiteErrorCode CreateCollation(string strCollation, SQLiteCollation func, SQLiteCollation func16, bool canThrow)
     {
-      SQLiteErrorCode n = UnsafeNativeMethods.sqlite3_create_collation(_sql, ToUTF8(strCollation), 2, IntPtr.Zero, func16);
+      var n = UnsafeNativeMethods.sqlite3_create_collation(_sql, ToUTF8(strCollation), 2, IntPtr.Zero, func16);
       if (n == SQLiteErrorCode.Ok) n = UnsafeNativeMethods.sqlite3_create_collation(_sql, ToUTF8(strCollation), 1, IntPtr.Zero, func);
       if (canThrow && (n != SQLiteErrorCode.Ok)) throw new SQLiteException(n, GetLastError());
       return n;
@@ -2446,19 +2446,19 @@ namespace System.Data.SQLite
 
     internal override long GetParamValueBytes(IntPtr p, int nDataOffset, byte[] bDest, int nStart, int nLength)
     {
-      int nlen = UnsafeNativeMethods.sqlite3_value_bytes(p);
+      var nlen = UnsafeNativeMethods.sqlite3_value_bytes(p);
 
       // If no destination buffer, return the size needed.
       if (bDest == null) return nlen;
 
-      int nCopied = nLength;
+      var nCopied = nLength;
 
       if (nCopied + nStart > bDest.Length) nCopied = bDest.Length - nStart;
       if (nCopied + nDataOffset > nlen) nCopied = nlen - nDataOffset;
 
       if (nCopied > 0)
       {
-        IntPtr ptr = UnsafeNativeMethods.sqlite3_value_blob(p);
+        var ptr = UnsafeNativeMethods.sqlite3_value_blob(p);
 
         Marshal.Copy((IntPtr)(ptr.ToInt64() + nDataOffset), bDest, nStart, nCopied);
       }
@@ -2561,7 +2561,7 @@ namespace System.Data.SQLite
 
     internal override void ReturnText(IntPtr context, string value)
     {
-      byte[] b = ToUTF8(value);
+      var b = ToUTF8(value);
       UnsafeNativeMethods.sqlite3_result_text(context, ToUTF8(value), b.Length - 1, (IntPtr)(-1));
     }
 
@@ -2593,7 +2593,7 @@ namespace System.Data.SQLite
             isLoadNeeded = false; /* mixed-mode assembly */
 #endif
 
-        string fileName = _shimExtensionFileName;
+        var fileName = _shimExtensionFileName;
 
         if (fileName != null)
             return fileName;
@@ -2629,8 +2629,8 @@ namespace System.Data.SQLite
         if (_sql == null)
             throw new SQLiteException("connection has an invalid handle");
 
-        bool isLoadNeeded = false;
-        string fileName = GetShimExtensionFileName(ref isLoadNeeded);
+        var isLoadNeeded = false;
+        var fileName = GetShimExtensionFileName(ref isLoadNeeded);
 
         if (isLoadNeeded)
         {
@@ -2727,13 +2727,13 @@ namespace System.Data.SQLite
             return SQLiteErrorCode.Error;
         }
 
-        IntPtr pSql = IntPtr.Zero;
+        var pSql = IntPtr.Zero;
 
         try
         {
             pSql = SQLiteString.Utf8IntPtrFromString(strSql);
 
-            SQLiteErrorCode n = UnsafeNativeMethods.sqlite3_declare_vtab(
+            var n = UnsafeNativeMethods.sqlite3_declare_vtab(
                 _sql, pSql);
 
             if ((n == SQLiteErrorCode.Ok) && (module != null))
@@ -2788,13 +2788,13 @@ namespace System.Data.SQLite
             return SQLiteErrorCode.Error;
         }
 
-        IntPtr pName = IntPtr.Zero;
+        var pName = IntPtr.Zero;
 
         try
         {
             pName = SQLiteString.Utf8IntPtrFromString(name);
 
-            SQLiteErrorCode n = UnsafeNativeMethods.sqlite3_overload_function(
+            var n = UnsafeNativeMethods.sqlite3_overload_function(
                 _sql, pName, argumentCount);
 
             if (n != SQLiteErrorCode.Ok) error = GetLastError();
@@ -2822,10 +2822,10 @@ namespace System.Data.SQLite
     /// </returns>
     private static string GetStatusDbOpsNames()
     {
-        StringBuilder builder = new StringBuilder();
+        var builder = new StringBuilder();
 
 #if !PLATFORM_COMPACTFRAMEWORK
-        foreach (string name in Enum.GetNames(
+        foreach (var name in Enum.GetNames(
                 typeof(SQLiteStatusOpsEnum)))
         {
             if (String.IsNullOrEmpty(name))
@@ -2870,10 +2870,10 @@ namespace System.Data.SQLite
     /// </returns>
     private static string GetLimitOpsNames()
     {
-        StringBuilder builder = new StringBuilder();
+        var builder = new StringBuilder();
 
 #if !PLATFORM_COMPACTFRAMEWORK
-        foreach (string name in Enum.GetNames(
+        foreach (var name in Enum.GetNames(
                 typeof(SQLiteLimitOpsEnum)))
         {
             if (String.IsNullOrEmpty(name))
@@ -2918,10 +2918,10 @@ namespace System.Data.SQLite
     /// </returns>
     private static string GetConfigDbOpsNames()
     {
-        StringBuilder builder = new StringBuilder();
+        var builder = new StringBuilder();
 
 #if !PLATFORM_COMPACTFRAMEWORK
-        foreach (string name in Enum.GetNames(
+        foreach (var name in Enum.GetNames(
                 typeof(SQLiteConfigDbOpsEnum)))
         {
             if (String.IsNullOrEmpty(name))
@@ -3076,8 +3076,8 @@ namespace System.Data.SQLite
                             typeof(string)));
                     }
 
-                    SQLiteErrorCode rc = SQLiteErrorCode.Error;
-                    IntPtr pDbName = IntPtr.Zero;
+                    var rc = SQLiteErrorCode.Error;
+                    var pDbName = IntPtr.Zero;
 
                     try
                     {
@@ -3116,7 +3116,7 @@ namespace System.Data.SQLite
                 }
             case SQLiteConfigDbOpsEnum.SQLITE_DBCONFIG_LOOKASIDE: // void* int int
                 {
-                    object[] array = value as object[];
+                    var array = value as object[];
 
                     if (array == null)
                     {
@@ -3176,7 +3176,7 @@ namespace System.Data.SQLite
                             typeof(bool)));
                     }
 
-                    int result = 0; /* NOT USED */
+                    var result = 0; /* NOT USED */
 
                     return UnsafeNativeMethods.sqlite3_db_config_int_refint(
                         _sql, option, ((bool)value ? 1 : 0), ref result);
@@ -3230,17 +3230,17 @@ namespace System.Data.SQLite
         if (fileName == null)
             throw new ArgumentNullException("fileName");
 
-        IntPtr pError = IntPtr.Zero;
+        var pError = IntPtr.Zero;
 
         try
         {
-            byte[] utf8FileName = UTF8Encoding.UTF8.GetBytes(fileName + '\0');
+            var utf8FileName = UTF8Encoding.UTF8.GetBytes(fileName + '\0');
             byte[] utf8ProcName = null;
 
             if (procName != null)
                 utf8ProcName = UTF8Encoding.UTF8.GetBytes(procName + '\0');
 
-            SQLiteErrorCode n = UnsafeNativeMethods.sqlite3_load_extension(
+            var n = UnsafeNativeMethods.sqlite3_load_extension(
                 _sql, utf8FileName, utf8ProcName, ref pError);
 
             if (n != SQLiteErrorCode.Ok)
@@ -3259,7 +3259,7 @@ namespace System.Data.SQLite
     /// Enables or disables extended result codes returned by SQLite
     internal override void SetExtendedResultCodes(bool bOnOff)
     {
-      SQLiteErrorCode n = UnsafeNativeMethods.sqlite3_extended_result_codes(
+      var n = UnsafeNativeMethods.sqlite3_extended_result_codes(
           _sql, (bOnOff ? -1 : 0));
 
       if (n != SQLiteErrorCode.Ok) throw new SQLiteException(n, GetLastError());
@@ -3292,9 +3292,9 @@ namespace System.Data.SQLite
     {
         if (passwordBytes == null) return;
 
-        for (int index = 0; index < passwordBytes.Length; index++)
+        for (var index = 0; index < passwordBytes.Length; index++)
         {
-            byte value = (byte)((index + 1) % byte.MaxValue);
+            var value = (byte)((index + 1) % byte.MaxValue);
 
             passwordBytes[index] = value;
             passwordBytes[index] ^= value;
@@ -3303,7 +3303,7 @@ namespace System.Data.SQLite
 
     internal override void SetPassword(byte[] passwordBytes)
     {
-      SQLiteErrorCode n = UnsafeNativeMethods.sqlite3_key(_sql, passwordBytes, passwordBytes.Length);
+      var n = UnsafeNativeMethods.sqlite3_key(_sql, passwordBytes, passwordBytes.Length);
 
       if (HelperMethods.HasFlags(_flags, SQLiteConnectionFlags.HidePassword))
         ZeroPassword(passwordBytes);
@@ -3325,7 +3325,7 @@ namespace System.Data.SQLite
 
     internal override void ChangePassword(byte[] newPasswordBytes)
     {
-      SQLiteErrorCode n = UnsafeNativeMethods.sqlite3_rekey(_sql, newPasswordBytes, (newPasswordBytes == null) ? 0 : newPasswordBytes.Length);
+      var n = UnsafeNativeMethods.sqlite3_rekey(_sql, newPasswordBytes, (newPasswordBytes == null) ? 0 : newPasswordBytes.Length);
 
       if (HelperMethods.HasFlags(_flags, SQLiteConnectionFlags.HidePassword))
         ZeroPassword(newPasswordBytes);
@@ -3390,7 +3390,7 @@ namespace System.Data.SQLite
     /// <returns>Returns a result code</returns>
     internal override SQLiteErrorCode SetLogCallback(SQLiteLogCallback func)
     {
-        SQLiteErrorCode rc = UnsafeNativeMethods.sqlite3_config_log(
+        var rc = UnsafeNativeMethods.sqlite3_config_log(
             SQLiteConfigOpsEnum.SQLITE_CONFIG_LOG, func, IntPtr.Zero);
 
         if (rc == SQLiteErrorCode.Ok)
@@ -3461,9 +3461,9 @@ namespace System.Data.SQLite
         //       set to failure.  However, this will not prevent further
         //       attempts, if any, to invalidate subsequent function pointers.
         //
-        bool result = true;
-        SQLiteErrorCode rc = SQLiteErrorCode.Ok;
-        StringBuilder builder = new StringBuilder();
+        var result = true;
+        var rc = SQLiteErrorCode.Ok;
+        var builder = new StringBuilder();
 
         ///////////////////////////////////////////////////////////////////////////////////////////
 
@@ -3691,7 +3691,7 @@ namespace System.Data.SQLite
         {
             try
             {
-                SQLiteErrorCode rc2 = SetLogCallback(null); /* throw */
+                var rc2 = SetLogCallback(null); /* throw */
 
                 if (rc2 != SQLiteErrorCode.Ok)
                 {
@@ -3818,28 +3818,28 @@ namespace System.Data.SQLite
         if (sourceName == null)
             throw new ArgumentNullException("sourceName");
 
-        SQLite3 destSqlite3 = destCnn._sql as SQLite3;
+        var destSqlite3 = destCnn._sql as SQLite3;
 
         if (destSqlite3 == null)
             throw new ArgumentException(
                 "Destination connection has no wrapper.",
                 "destCnn");
 
-        SQLiteConnectionHandle destHandle = destSqlite3._sql;
+        var destHandle = destSqlite3._sql;
 
         if (destHandle == null)
             throw new ArgumentException(
                 "Destination connection has an invalid handle.",
                 "destCnn");
 
-        SQLiteConnectionHandle sourceHandle = _sql;
+        var sourceHandle = _sql;
 
         if (sourceHandle == null)
             throw new InvalidOperationException(
                 "Source connection has an invalid handle.");
 
-        byte[] zDestName = ToUTF8(destName);
-        byte[] zSourceName = ToUTF8(sourceName);
+        var zDestName = ToUTF8(destName);
+        var zSourceName = ToUTF8(sourceName);
 
         SQLiteBackupHandle backupHandle = null;
 
@@ -3849,12 +3849,12 @@ namespace System.Data.SQLite
         }
         finally /* NOTE: Thread.Abort() protection. */
         {
-            IntPtr backup = UnsafeNativeMethods.sqlite3_backup_init(
+            var backup = UnsafeNativeMethods.sqlite3_backup_init(
                 destHandle, zDestName, sourceHandle, zSourceName);
 
             if (backup == IntPtr.Zero)
             {
-                SQLiteErrorCode resultCode = ResultCode();
+                var resultCode = ResultCode();
 
                 if (resultCode != SQLiteErrorCode.Ok)
                     throw new SQLiteException(resultCode, GetLastError());
@@ -3901,7 +3901,7 @@ namespace System.Data.SQLite
         if (backup == null)
             throw new ArgumentNullException("backup");
 
-        SQLiteBackupHandle handle = backup._sqlite_backup;
+        var handle = backup._sqlite_backup;
 
         if (handle == null)
             throw new InvalidOperationException(
@@ -3913,7 +3913,7 @@ namespace System.Data.SQLite
             throw new InvalidOperationException(
                 "Backup object has an invalid handle pointer.");
 
-        SQLiteErrorCode n = UnsafeNativeMethods.sqlite3_backup_step(handlePtr, nPage);
+        var n = UnsafeNativeMethods.sqlite3_backup_step(handlePtr, nPage);
         backup._stepResult = n; /* NOTE: Save for use by FinishBackup. */
 
         if (n == SQLiteErrorCode.Ok)
@@ -3954,7 +3954,7 @@ namespace System.Data.SQLite
         if (backup == null)
             throw new ArgumentNullException("backup");
 
-        SQLiteBackupHandle handle = backup._sqlite_backup;
+        var handle = backup._sqlite_backup;
 
         if (handle == null)
             throw new InvalidOperationException(
@@ -3982,7 +3982,7 @@ namespace System.Data.SQLite
         if (backup == null)
             throw new ArgumentNullException("backup");
 
-        SQLiteBackupHandle handle = backup._sqlite_backup;
+        var handle = backup._sqlite_backup;
 
         if (handle == null)
             throw new InvalidOperationException(
@@ -4009,7 +4009,7 @@ namespace System.Data.SQLite
         if (backup == null)
             throw new ArgumentNullException("backup");
 
-        SQLiteBackupHandle handle = backup._sqlite_backup;
+        var handle = backup._sqlite_backup;
 
         if (handle == null)
             throw new InvalidOperationException(
@@ -4024,7 +4024,7 @@ namespace System.Data.SQLite
 #if !SQLITE_STANDARD
         SQLiteErrorCode n = UnsafeNativeMethods.sqlite3_backup_finish_interop(handlePtr);
 #else
-        SQLiteErrorCode n = UnsafeNativeMethods.sqlite3_backup_finish(handlePtr);
+        var n = UnsafeNativeMethods.sqlite3_backup_finish(handlePtr);
 #endif
         handle.SetHandleAsInvalid();
 
@@ -4073,7 +4073,7 @@ namespace System.Data.SQLite
             // NOTE: Save the state of the logging class and then restore it
             //       after we are done to avoid logging too many false errors.
             //
-            bool savedEnabled = SQLiteLog.Enabled;
+            var savedEnabled = SQLiteLog.Enabled;
             SQLiteLog.Enabled = false;
 
             try
@@ -4084,7 +4084,7 @@ namespace System.Data.SQLite
                 //       *unless* the SQLite library has already been initialized.
                 //       In that case it will always return SQLITE_MISUSE.
                 //
-                SQLiteErrorCode rc = UnsafeNativeMethods.sqlite3_config_none(
+                var rc = UnsafeNativeMethods.sqlite3_config_none(
                     SQLiteConfigOpsEnum.SQLITE_CONFIG_NONE);
 
                 return (rc == SQLiteErrorCode.Misuse);
@@ -4132,7 +4132,7 @@ namespace System.Data.SQLite
     /// <returns>Returns the data in the column</returns>
     internal override object GetValue(SQLiteStatement stmt, SQLiteConnectionFlags flags, int index, SQLiteType typ)
     {
-      TypeAffinity aff = typ.Affinity;
+      var aff = typ.Affinity;
       if (aff == TypeAffinity.Null) return DBNull.Value;
       Type t = null;
 
@@ -4151,8 +4151,8 @@ namespace System.Data.SQLite
           if (typ.Type == DbType.Guid && typ.Affinity == TypeAffinity.Text)
             return new Guid(GetText(stmt, index));
 
-          int n = (int)GetBytes(stmt, index, 0, null, 0, 0);
-          byte[] b = new byte[n];
+          var n = (int)GetBytes(stmt, index, 0, null, 0, 0);
+          var b = new byte[n];
           GetBytes(stmt, index, 0, b, 0, n);
 
           if (typ.Type == DbType.Guid && n == 16)

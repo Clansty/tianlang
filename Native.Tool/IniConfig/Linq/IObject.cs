@@ -122,10 +122,10 @@ namespace Native.Tool.IniConfig.Linq
 				return false;
 			}
 
-			for (int i = 0; i < objA.Count; i++)
+			for (var i = 0; i < objA.Count; i++)
 			{
-				ISection valueA = objA._sortedList.Values.ElementAt (i);
-				ISection valueB = objB._sortedList.Values.ElementAt (i);
+				var valueA = objA._sortedList.Values.ElementAt (i);
+				var valueB = objB._sortedList.Values.ElementAt (i);
 
 				if (!object.Equals (valueA, valueB))
 				{
@@ -201,8 +201,8 @@ namespace Native.Tool.IniConfig.Linq
 				throw new ArgumentException ("源 IObject 中的元素数量大于从 arrayIndex 到目标数组末尾的可用空间");
 			}
 
-			int num = 0;
-			foreach (KeyValuePair<string, ISection> item in this._sortedList)
+			var num = 0;
+			foreach (var item in this._sortedList)
 			{
 				array[arrayIndex + num] = item.Value;
 				num++;
@@ -231,7 +231,7 @@ namespace Native.Tool.IniConfig.Linq
 				throw new ArgumentNullException ("item");
 			}
 
-			int index = this._sortedList.IndexOfValue (item);
+			var index = this._sortedList.IndexOfValue (item);
 			if (index != -1)
 			{
 				this._sortedList.RemoveAt (index);
@@ -305,8 +305,8 @@ namespace Native.Tool.IniConfig.Linq
 		/// <returns>表示当前对象的字符串</returns>
 		public override string ToString ()
 		{
-			StringBuilder builder = new StringBuilder ();
-			foreach (ISection item in this._sortedList.Values)
+			var builder = new StringBuilder ();
+			foreach (var item in this._sortedList.Values)
 			{
 				builder.AppendLine (item.ToString ());
 			}

@@ -48,14 +48,14 @@
         /// <returns>返回中间文本内容</returns>
         public static string Between(this string str, string leftstr, string rightstr)
         {
-            int i = str.IndexOf(leftstr) + leftstr.Length;
-            string temp = str.Substring(i, str.IndexOf(rightstr, i) - i);
+            var i = str.IndexOf(leftstr) + leftstr.Length;
+            var temp = str.Substring(i, str.IndexOf(rightstr, i) - i);
             return temp;
         }
         public static string LastBetween(this string str, string leftstr, string rightstr)
         {
-            int i = str.LastIndexOf(leftstr) + leftstr.Length;
-            string temp = str.Substring(i, str.IndexOf(rightstr, i) - i);
+            var i = str.LastIndexOf(leftstr) + leftstr.Length;
+            var temp = str.Substring(i, str.IndexOf(rightstr, i) - i);
             return temp;
         }
     }

@@ -88,7 +88,7 @@ namespace Native.Tool.IniConfig
 			}
 
 			this.InitializeIni (obj.FileName, encoding);
-			foreach (ISection item in obj)
+			foreach (var item in obj)
 			{
 				this._object.Add (item);
 			}
@@ -159,11 +159,11 @@ namespace Native.Tool.IniConfig
 				throw new ArgumentNullException ("obj");
 			}
 
-			Type tType = obj.GetType ();
+			var tType = obj.GetType ();
 
 			// 获取节点名称
-			string key = string.Empty;
-			IniSectionAttribute sectionAttribute = tType.GetCustomAttribute<IniSectionAttribute> ();
+			var key = string.Empty;
+			var sectionAttribute = tType.GetCustomAttribute<IniSectionAttribute> ();
 			if (sectionAttribute != null)
 			{
 				key = sectionAttribute.SectionName;
@@ -199,20 +199,20 @@ namespace Native.Tool.IniConfig
 			}
 
 			// 获取节对象
-			ISection section = this._object[sectionKey];
+			var section = this._object[sectionKey];
 			if (section.Count > 0)
 			{
 				section.Clear ();
 			}
 
-			Type tType = obj.GetType ();
-			PropertyInfo[] tProperties = tType.GetProperties (BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-			foreach (PropertyInfo property in tProperties)
+			var tType = obj.GetType ();
+			var tProperties = tType.GetProperties (BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+			foreach (var property in tProperties)
 			{
 				// 获取属性是否有标记 KeyName
-				IniKeyAttribute keyAttribute = property.GetCustomAttribute<IniKeyAttribute> ();
+				var keyAttribute = property.GetCustomAttribute<IniKeyAttribute> ();
 
-				string key = string.Empty;
+				var key = string.Empty;
 				if (keyAttribute != null)
 				{
 					key = keyAttribute.KeyName;
@@ -229,7 +229,7 @@ namespace Native.Tool.IniConfig
 				}
 
 				// 获取只有0个参数的 Get 方法 (排除索引器)
-				MethodInfo method = property.GetGetMethod (true);
+				var method = property.GetGetMethod (true);
 				if (method.GetParameters ().Count () == 0)
 				{
 					section.Add (key, new IValue (method.Invoke (obj, null)));
@@ -297,8 +297,8 @@ namespace Native.Tool.IniConfig
 				throw new ArgumentNullException ("t");
 			}
 
-			string key = string.Empty;
-			IniSectionAttribute sectionAttribute = t.GetCustomAttribute<IniSectionAttribute> ();
+			var key = string.Empty;
+			var sectionAttribute = t.GetCustomAttribute<IniSectionAttribute> ();
 			if (sectionAttribute != null)
 			{
 				key = sectionAttribute.SectionName;
@@ -338,26 +338,26 @@ namespace Native.Tool.IniConfig
 			}
 
 			// 实例化对象
-			object instance = Activator.CreateInstance (t, true);
+			var instance = Activator.CreateInstance (t, true);
 
 			// 获取属性列表
-			List<PropertyInfo> properties = new List<PropertyInfo> (t.GetProperties (BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance));
+			var properties = new List<PropertyInfo> (t.GetProperties (BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance));
 
 			// 获取节点
-			ISection section = this._object[sectionKey];
-			foreach (KeyValuePair<string, IValue> item in section)
+			var section = this._object[sectionKey];
+			foreach (var item in section)
 			{
 				if (properties.Count == 0)
 				{
 					throw new TargetException (string.Format ("正在尝试调用一个不存在的属性 {0} 引发异常", item.Key));
 				}
 
-				for (int i = 0; i < properties.Count; i++)
+				for (var i = 0; i < properties.Count; i++)
 				{
-					IniKeyAttribute keyAttribute = properties[i].GetCustomAttribute<IniKeyAttribute> ();
+					var keyAttribute = properties[i].GetCustomAttribute<IniKeyAttribute> ();
 					if ((keyAttribute != null && keyAttribute.KeyName.Equals (item.Key)) || properties[i].Name.Equals (item.Key))
 					{
-						object value = Convert.ChangeType (item.Value, properties[i].PropertyType);
+						var value = Convert.ChangeType (item.Value, properties[i].PropertyType);
 						properties[i].GetSetMethod (true).Invoke (instance, new object[] { value });
 						properties.RemoveAt (i);
 						break;
@@ -376,7 +376,7 @@ namespace Native.Tool.IniConfig
 			if (!Path.IsPathRooted (filePath))
 			{
 				// 处理原始字符串
-				StringBuilder builder = new StringBuilder (filePath);
+				var builder = new StringBuilder (filePath);
 				builder.Replace ('/', '\\');
 				while (builder[0] == '\\')
 				{
@@ -389,7 +389,7 @@ namespace Native.Tool.IniConfig
 			}
 
 			// 处理文件
-			FileInfo file = new FileInfo (filePath);
+			var file = new FileInfo (filePath);
 			if (!file.Exists)
 			{
 				file.Directory.Create ();
@@ -422,10 +422,10 @@ namespace Native.Tool.IniConfig
 			ISection tempSection = null;
 			while (textReader.Peek () != -1)
 			{
-				string line = textReader.ReadLine ();
+				var line = textReader.ReadLine ();
 				if (string.IsNullOrEmpty (line) == false && Regices[2].IsMatch (line) == false)
 				{
-					Match match = Regices[0].Match (line);
+					var match = Regices[0].Match (line);
 					if (match.Success)
 					{
 						tempSection = new ISection (match.Groups[1].Value);
