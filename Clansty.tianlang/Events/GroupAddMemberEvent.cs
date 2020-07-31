@@ -9,6 +9,7 @@ namespace Clansty.tianlang.Events
         {
             if (e.FromGroup == G.major)
             {
+                MemberList.major.Add(e.BeingOperateQQ);
                 var u = new User(e.BeingOperateQQ);
                 if (u.IsFresh)
                 {
@@ -28,6 +29,11 @@ namespace Clansty.tianlang.Events
                     //S.Private(member, Strs.Get("welcomeBack"));//"如果以上信息有误，你可以回复 <setup> 来重新设置"
                     S.Si(u.ToXml("数据库存在此人信息，新人向导跳过"), e.CQApi);
                 }
+            }
+
+            if (e.FromGroup == G.g2020)
+            {
+                MemberList.g2020.Add(e.BeingOperateQQ);
             }
         }
     }

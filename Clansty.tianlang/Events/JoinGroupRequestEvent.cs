@@ -26,14 +26,14 @@ namespace Clansty.tianlang.Events
                     {
                         e.Request.SetGroupAddRequest(CQGroupAddRequestType.ApplyAddGroup, CQResponseType.FAIL,
                             "blacklisted");
-                        S.Si(u.ToXml(Strs.Get("addRejected", Strs.Get("blacklisted"))) + $"\n申请信息: {msg}", e.CQApi);
+                        S.Si(u.ToXml(Strs.Get("addRejected", Strs.Get("blacklisted"))) + $"\n申请信息: {msg}");
                         return;
                     }
 
                     if (Rds.SContains("knownUsers", e.FromQQ))
                     {
                         e.Request.SetGroupAddRequest(CQGroupAddRequestType.ApplyAddGroup, CQResponseType.PASS);
-                        S.Si(u.ToXml("加群申请已同意: 白名单用户") + $"\n申请信息: {msg}", e.CQApi);
+                        S.Si(u.ToXml("加群申请已同意: 白名单用户") + $"\n申请信息: {msg}");
                         return;
                     }
 
@@ -43,7 +43,7 @@ namespace Clansty.tianlang.Events
                         if (u.VerifyMsg == RealNameVerifingResult.succeed && u.Name == msg)
                         {
                             e.Request.SetGroupAddRequest(CQGroupAddRequestType.ApplyAddGroup, CQResponseType.PASS);
-                            S.Si(u.ToXml("加群申请已同意: 已实名用户") + $"\n申请信息: {msg}", e.CQApi);
+                            S.Si(u.ToXml("加群申请已同意: 已实名用户") + $"\n申请信息: {msg}");
                             return;
                         }
 
@@ -53,7 +53,7 @@ namespace Clansty.tianlang.Events
                         {
                             e.Request.SetGroupAddRequest(CQGroupAddRequestType.ApplyAddGroup, CQResponseType.FAIL,
                                 "此身份已有一个账户加入，如有疑问请联系管理员");
-                            S.Si(u.ToXml("加群申请已拒绝: 此人已存在") + $"\n申请信息: {msg}", e.CQApi);
+                            S.Si(u.ToXml("加群申请已拒绝: 此人已存在") + $"\n申请信息: {msg}");
                             return;
                         }
 
@@ -64,20 +64,20 @@ namespace Clansty.tianlang.Events
                             if (u.Verified)
                             {
                                 e.Request.SetGroupAddRequest(CQGroupAddRequestType.ApplyAddGroup, CQResponseType.PASS);
-                                S.Si(u.ToXml("加群申请已同意: 实名认证成功") + $"\n申请信息: {msg}", e.CQApi);
+                                S.Si(u.ToXml("加群申请已同意: 实名认证成功") + $"\n申请信息: {msg}");
                                 return;
                             }
 
                             var err = u.VerifyMsg;
                             e.Request.SetGroupAddRequest(CQGroupAddRequestType.ApplyAddGroup, CQResponseType.FAIL,
                                 "玄学错误，请联系管理员");
-                            S.Si(u.ToXml("加群申请已拒绝: 玄学错误，此错误不应该由本段代码处理") + $"\n申请信息: {msg}\n未预期的错误: {err}", e.CQApi);
+                            S.Si(u.ToXml("加群申请已拒绝: 玄学错误，此错误不应该由本段代码处理") + $"\n申请信息: {msg}\n未预期的错误: {err}");
                             return;
                         }
 
                         e.Request.SetGroupAddRequest(CQGroupAddRequestType.ApplyAddGroup, CQResponseType.FAIL,
                             Strs.Get("formatIncorrect"));
-                        S.Si(u.ToXml(Strs.Get("addRejected", Strs.Get("formatErr"))) + $"\n申请信息: {msg}", e.CQApi);
+                        S.Si(u.ToXml(Strs.Get("addRejected", Strs.Get("formatErr"))) + $"\n申请信息: {msg}");
                         return;
                     }
 
@@ -88,7 +88,7 @@ namespace Clansty.tianlang.Events
                     {
                         e.Request.SetGroupAddRequest(CQGroupAddRequestType.ApplyAddGroup, CQResponseType.FAIL,
                             Strs.Get("EnrFormatErr"));
-                        S.Si(u.ToXml(Strs.Get("addRejected", Strs.Get("EnrFormatErr"))) + $"\n申请信息: {msg}", e.CQApi);
+                        S.Si(u.ToXml(Strs.Get("addRejected", Strs.Get("EnrFormatErr"))) + $"\n申请信息: {msg}");
                         return;
                     }
 
@@ -98,7 +98,7 @@ namespace Clansty.tianlang.Events
                     {
                         u.Name = name;
                         u.Junior = UserInfo.ParseJunior(msg.GetLeft(" "));
-                        S.Si(u.ToXml("此年级不支持自动审核") + $"\n申请信息: {msg}", e.CQApi);
+                        S.Si(u.ToXml("此年级不支持自动审核") + $"\n申请信息: {msg}");
                         return;
                     }
 
@@ -108,12 +108,12 @@ namespace Clansty.tianlang.Events
                         {
                             e.Request.SetGroupAddRequest(CQGroupAddRequestType.ApplyAddGroup, CQResponseType.FAIL,
                                 "已实名账户请用登记姓名加入，如有问题请联系管理员");
-                            S.Si(u.ToXml("加群申请已拒绝: 已实名账户尝试 override") + $"\n申请信息: {msg}", e.CQApi);
+                            S.Si(u.ToXml("加群申请已拒绝: 已实名账户尝试 override") + $"\n申请信息: {msg}");
                             return;
                         }
 
                         e.Request.SetGroupAddRequest(CQGroupAddRequestType.ApplyAddGroup, CQResponseType.PASS);
-                        S.Si(u.ToXml("加群申请已同意: 已实名用户") + $"\n申请信息: {msg}", e.CQApi);
+                        S.Si(u.ToXml("加群申请已同意: 已实名用户") + $"\n申请信息: {msg}");
                         return;
                     }
 
@@ -122,7 +122,7 @@ namespace Clansty.tianlang.Events
                     if (chk.Status == RealNameStatus.notFound)
                     {
                         e.Request.SetGroupAddRequest(CQGroupAddRequestType.ApplyAddGroup, CQResponseType.FAIL, "查无此人");
-                        S.Si(u.ToXml("加群申请已拒绝: 查无此人") + $"\n申请信息: {msg}", e.CQApi);
+                        S.Si(u.ToXml("加群申请已拒绝: 查无此人") + $"\n申请信息: {msg}");
                         return;
                     }
 
@@ -130,7 +130,7 @@ namespace Clansty.tianlang.Events
                     {
                         e.Request.SetGroupAddRequest(CQGroupAddRequestType.ApplyAddGroup, CQResponseType.FAIL,
                             "此身份已有一个账户加入，如有疑问请联系管理员");
-                        S.Si(u.ToXml("加群申请已拒绝: 此人已存在") + $"\n申请信息: {msg}", e.CQApi);
+                        S.Si(u.ToXml("加群申请已拒绝: 此人已存在") + $"\n申请信息: {msg}");
                         return;
                     }
 
@@ -174,7 +174,7 @@ namespace Clansty.tianlang.Events
                         if (u.Verified)
                         {
                             e.Request.SetGroupAddRequest(CQGroupAddRequestType.ApplyAddGroup, CQResponseType.PASS);
-                            S.Si(u.ToXml("加群申请已同意: 实名认证成功") + $"\n申请信息: {msg}", e.CQApi);
+                            S.Si(u.ToXml("加群申请已同意: 实名认证成功") + $"\n申请信息: {msg}");
                             return;
                         }
 
@@ -182,11 +182,11 @@ namespace Clansty.tianlang.Events
                         e.Request.SetGroupAddRequest(CQGroupAddRequestType.ApplyAddGroup, CQResponseType.FAIL,
                             "玄学错误，请联系管理员");
                         S.Si(u.ToXml("加群申请已拒绝: 玄学错误，此错误不应该由本段代码处理\n" +
-                                     $"申请信息: {msg}\n未预期的错误: {err}"), e.CQApi);
+                                     $"申请信息: {msg}\n未预期的错误: {err}"));
                         return;
                     }
 
-                    S.Si(u.ToXml("申请用户信息"), e.CQApi);
+                    S.Si(u.ToXml("申请用户信息"));
                 }
             }
 

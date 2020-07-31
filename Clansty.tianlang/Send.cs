@@ -10,32 +10,28 @@ namespace Clansty.tianlang
 {
     static class S
     {
-        public static void Group(long group, object msg, CQApi api = null)
+        public static void Group(long group, params object[] msg)
         {
-            if (api is null)
-                api = C.CQApi;
-            api.SendGroupMessage(group, msg);
+            C.CQApi.SendGroupMessage(group, msg);
         }
 
-        public static void Private(QQ qq, object msg, CQApi api = null)
+        public static void Private(QQ qq, params object[] msg)
         {
-            Private(qq.Id, msg, api);
+            Private(qq.Id, msg);
         }
 
-        public static void Private(string qq, object msg, CQApi api = null)
+        public static void Private(string qq, params object[] msg)
         {
-            Private(long.Parse(qq), msg, api);
+            Private(long.Parse(qq), msg);
         }
 
-        public static void Private(long longqq, object msg, CQApi api = null)
+        public static void Private(long longqq, params object[] msg)
         {
-            if (api is null)
-                api = C.CQApi;
-            api.SendPrivateMessage(longqq, msg);
+            C.CQApi.SendPrivateMessage(longqq, msg);
         }
 
-        public static void Major(object msg, CQApi api = null) => Group(G.major, msg, api);
-        public static void Si(object msg, CQApi api = null) => Group(G.si, msg, api);
-        public static void Test(object msg, CQApi api = null) => Group(G.test, msg, api);
+        public static void Major(params object[] msg) => Group(G.major, msg);
+        public static void Si(params object[] msg) => Group(G.si, msg);
+        public static void Test(params object[] msg) => Group(G.test, msg);
     }
 }
