@@ -8,7 +8,6 @@ namespace Clansty.tianlang.Events
     {
         public void CQStartup(object sender, CQStartupEventArgs e)
         {
-            C.CQApi = e.CQApi;
             C.AllocConsole();
             Console.Title = $@"甜狼 {C.Version}";
             new Menu().Show();

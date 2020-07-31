@@ -6,7 +6,11 @@ namespace Clansty.tianlang
     public static class Rds
     {
         public static IRedisClient GetClient() => pool.GetClient();
+#if DEBUG
+        public static PooledRedisClientManager pool = new PooledRedisClientManager(233, 10, "qVAo9C1tCbD2PEiR@101.132.178.136:6379");
+#else
         public static PooledRedisClientManager pool = new PooledRedisClientManager(233, 10, "qVAo9C1tCbD2PEiR@127.0.0.1:6379");
+#endif
         public static void HSet(string key, string subkey, string value)
         {
             var client = GetClient();

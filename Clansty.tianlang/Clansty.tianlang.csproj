@@ -81,7 +81,7 @@
       <DependentUpon>Menu.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Radis.cs" />
+    <Compile Include="Redis.cs" />
     <Compile Include="RealName.cs" />
     <Compile Include="RealNameBindingResult.cs" />
     <Compile Include="RealNameCheckingResult.cs" />
@@ -122,6 +122,9 @@
     <EmbeddedResource Include="Siamc.resx">
       <DependentUpon>Siamc.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -800,7 +800,7 @@ namespace Native.Sdk.Cqp
 				if (Debugger.Launch()) { Debugger.Break(); }
 				throw new InvalidDataException("获取的数据流格式无效");
 #else
-				return null;
+				return "不是群成员";
 #endif
 			}
 
