@@ -19,7 +19,7 @@ namespace Clansty.tianlang
          * 新生群后台实名实现
          */
         
-        public const string Version = "3.1.17.5";//20200731
+        public const string Version = "3.1.17.6";//20200731
         public static CQApi CQApi = null;
 
         public static void Write(string text, ConsoleColor color = ConsoleColor.White)
