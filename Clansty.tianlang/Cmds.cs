@@ -233,8 +233,8 @@ namespace Clansty.tianlang
         {
             try
             {
-                var key = (e.Message.Text.GetLeft(" ") == "" ? e.Message.Text : e.Message.Text.GetLeft(" ")).UnEscape().ToLower();
-                var act = e.Message.Text.GetRight(" ").UnEscape();
+                var key = (e.Message.Text.GetLeft(" ") == "" ? e.Message.Text : e.Message.Text.GetLeft(" ")).ToLower();
+                var act = e.Message.Text.GetRight(" ");
                 if (gcmds.ContainsKey(key))
                 {
                     var m = gcmds[key];

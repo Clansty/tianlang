@@ -23,7 +23,7 @@ namespace Clansty.tianlang.SIAMC
                 else if (method == 1)
                 {
                     uins = new HashSet<string>();
-                    var members = Robot.Group.GetMembers(G.major);
+                    var members = C.CQApi.GetGroupMemberList(G.major);
                     foreach (var i in members)
                     {
                         uins.Add(i.QQ);

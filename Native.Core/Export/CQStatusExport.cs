@@ -62,7 +62,7 @@ namespace Native.App.Export
 		[DllExport (ExportName = "_statusUptime", CallingConvention = CallingConvention.StdCall)]	
 		public static string Status_statusUptime ()	
 		{	
-			var args = new CQStatusUpdateEventArgs (AppData.CQApi, AppData.CQLog, 1, "运行时间", "UPTIME", "_statusUptime", 1000);	
+			CQStatusUpdateEventArgs args = new CQStatusUpdateEventArgs (AppData.CQApi, AppData.CQLog, 1, "运行时间", "UPTIME", "_statusUptime", 1000);	
 			if (Status_statusUptimeHandler != null)	
 			{	
 				return Status_statusUptimeHandler (typeof (CQStatusExport), args).ToSendString ();	

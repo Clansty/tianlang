@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Native.Sdk.Cqp.Model;
 
 namespace Clansty.tianlang
 {
@@ -10,7 +11,7 @@ namespace Clansty.tianlang
     {
         public static HashSet<string> major = new HashSet<string>();
         public static HashSet<string> g2020 = new HashSet<string>();
-        public static void UpdateMajor(List<GroupMember> l)
+        public static void UpdateMajor(GroupMemberInfoCollection l)
         {
             major.Clear();
             foreach (var i in l)
@@ -18,7 +19,7 @@ namespace Clansty.tianlang
                 major.Add(i.QQ);
             }
         }
-        public static void UpdateG2020(List<GroupMember> l)
+        public static void UpdateG2020(GroupMemberInfoCollection l)
         {
             g2020.Clear();
             foreach (var i in l)
@@ -28,11 +29,11 @@ namespace Clansty.tianlang
         }
         public static void UpdateMajor()
         {
-            UpdateMajor(Robot.Group.GetMembers(G.major));
+            UpdateMajor(C.CQApi.GetGroupMemberList(G.major));
         }
         public static void UpdateG2020()
         {
-            UpdateMajor(Robot.Group.GetMembers(G.g2020));
+            UpdateMajor(C.CQApi.GetGroupMemberList(G.major));
         }
     }
 }

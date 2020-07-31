@@ -20,7 +20,13 @@ namespace Native.Core
 		/// <param name="container">用于注册的 IOC 容器 </param>
 		public static void Register (IUnityContainer unityContainer)
 		{
+			unityContainer.RegisterType<IAppEnable, EnableEvent>("应用已被启用");
+			unityContainer.RegisterType<IFriendAddRequest, FriendRequestEvent>("好友添加请求处理");
+			unityContainer.RegisterType<IGroupMemberIncrease, GroupAddMemberEvent>("群成员增加事件处理");
 			unityContainer.RegisterType<IGroupMessage, GroupMsgEvent>("群消息处理");
+			unityContainer.RegisterType<IGroupAddRequest, JoinGroupRequestEvent>("群添加请求处理");
+			unityContainer.RegisterType<IPrivateMessage, PrivateMsgEvent>("私聊消息处理");
+			unityContainer.RegisterType<ICQStartup, ICQStartup>("酷Q启动事件");
 		}
 	}
 }

@@ -6,6 +6,11 @@ namespace Clansty.tianlang
     class User : INamedUser
     {
         public string Uin { get; }
+
+        public long LongUin
+        {
+            get => long.Parse(Uin);
+        }
         public User(string uin)
         {
             Uin = uin;
@@ -67,7 +72,7 @@ namespace Clansty.tianlang
         }
         public string Nick
         {
-            get => Get("nick").Trim() == "" ? Robot.GetNick(Uin) : Get("nick").Trim();
+            get => Get("nick").Trim() == "" ? C.CQApi.GetStrangerInfo(LongUin).Nick : Get("nick").Trim();
             set => Set("nick", value);
         }
         public bool Branch
@@ -153,8 +158,8 @@ namespace Clansty.tianlang
         }
         public string Namecard
         {
-            get => Robot.Group.GetCard(G.major, Uin);
-            set => Robot.Group.SetCard(G.major, Uin, value);
+            get => C.CQApi.GetGroupMemberInfo(G.major, LongUin).Card;
+            set => C.CQApi.SetGroupMemberVisitingCard(G.major, LongUin, value);
         }
         public Status Status
         {

@@ -104,11 +104,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Export\CQExport.log">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CQExport.tt</DependentUpon>
-    </None>
     <None Include="FodyWeavers.xml" />
     <None Include="app.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -120,7 +115,7 @@
   <ItemGroup>
     <Content Include="Export\CQExport.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>CQExport.log</LastGenOutput>
+      <LastGenOutput>CQExport.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>
