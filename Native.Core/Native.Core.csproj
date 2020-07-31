@@ -127,6 +127,10 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Clansty.tianlang\Clansty.tianlang.csproj">
+      <Project>{293aabdd-70a1-428c-bdbd-c6c9e59087a0}</Project>
+      <Name>Clansty.tianlang</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Native.Sdk\Native.Sdk.csproj">
       <Project>{d7a958b3-79d9-49f8-8bb4-9619bab6ecba}</Project>
       <Name>Native.Sdk</Name>
