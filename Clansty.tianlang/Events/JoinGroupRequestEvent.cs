@@ -188,6 +188,14 @@ namespace Clansty.tianlang.Events
 
                     S.Si(u.ToXml("申请用户信息"));
                 }
+
+                if (e.FromGroup == G.g2020)
+                {
+                    //来自大群并且已验证就放
+                    var u = new User(e.FromQQ);
+                    if (u.IsMember && u.IsFresh)
+                        e.Request.SetGroupAddRequest(CQGroupAddRequestType.ApplyAddGroup, CQResponseType.PASS);
+                }
             }
 
             if (e.SubType == CQGroupAddRequestType.RobotBeInviteAddGroup)
