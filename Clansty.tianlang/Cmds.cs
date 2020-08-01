@@ -233,8 +233,10 @@ namespace Clansty.tianlang
         {
             try
             {
-                var key = (e.Message.Text.GetLeft(" ") == "" ? e.Message.Text : e.Message.Text.GetLeft(" ")).ToLower();
+                var key = (e.Message.Text.GetLeft(" ") == "" ? e.Message.Text.ToLower() : e.Message.Text.GetLeft(" ")).ToLower();
                 var act = e.Message.Text.GetRight(" ");
+                key = key.Trim(' ', '\r', '\n');
+                act = act.Trim(' ', '\r', '\n');
                 if (gcmds.ContainsKey(key))
                 {
                     var m = gcmds[key];
@@ -263,8 +265,10 @@ namespace Clansty.tianlang
             try
             {
                 var s = e.Message.Text.GetRight("sudo ").Trim();
-                var key = (s.GetLeft(" ") == "" ? s : s.GetLeft(" ")).ToLower();
+                var key = (s.GetLeft(" ") == "" ? s.ToLower() : s.GetLeft(" ")).ToLower();
                 var act = s.GetRight(" ");
+                key = key.Trim(' ', '\r', '\n');
+                act = act.Trim(' ', '\r', '\n');
                 if (gcmds.ContainsKey(key))
                 {
                     var m = gcmds[key];

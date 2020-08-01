@@ -20,7 +20,6 @@ namespace Clansty.tianlang
          * User.Verified 的定義：至少得有名字吧
          *
          * 7/31 管理群會話 TODO 總結：
-         * 執行命令的時候 trim 掉回車
          * 草了现在 branch 是 get only 的也得改（費點功夫）
          * 申請加群裏面的名字也校驗
          * 2020届初中是实名信息有的，改不了新的 enrollment
