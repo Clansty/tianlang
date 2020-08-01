@@ -17,7 +17,6 @@ namespace Clansty.tianlang
          * 新生群名片标准化
          * 检测是否成员来决定是否推荐大群/新生群
          * 新生群后台实名实现
-         * User.Verified 的定義：至少得有名字吧
          *
          * 7/31 管理群會話 TODO 總結：
          * 草了现在 branch 是 get only 的也得改（費點功夫）
