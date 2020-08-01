@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Native.Sdk.Cqp.EventArgs;
 
 namespace Clansty.tianlang
@@ -21,6 +22,7 @@ namespace Clansty.tianlang
                         return "QQ号格式错误";
                     var u = new User(s);
                     UserInfo.CheckQmpAsync(u);
+                    UserInfo.CheckG2020QmpAsync(u);
                     return u.ToXml();
                 }
             },
@@ -225,6 +227,34 @@ namespace Clansty.tianlang
                     s = s.Trim(' ', '\n', '[', ']', '@');
                     var u = UserInfo.FindUser(s);
                     return u.ToXml();
+                }
+            },
+            ["chkqmp"] = new GroupCommand
+            {
+                Description = "test",
+                Usage = "chkqmp [qq]",
+                IsParamsNeeded = true,
+                Permission = UserType.administrator,
+                Func = s =>
+                {
+                    s = s.Trim(' ', '\n', '[', ']', '@');
+                    var task = UserInfo.CheckQmpAsync(new User(s));
+                    task.Wait();
+                    return task.Result.ToString();
+                }
+            },
+            ["chkqmp2020"] = new GroupCommand
+            {
+                Description = "test",
+                Usage = "chkqmp2020 [qq]",
+                IsParamsNeeded = true,
+                Permission = UserType.administrator,
+                Func = s =>
+                {
+                    s = s.Trim(' ', '\n', '[', ']', '@');
+                    var task = UserInfo.CheckG2020QmpAsync(new User(s));
+                    task.Wait();
+                    return task.Result.ToString();
                 }
             },
         };

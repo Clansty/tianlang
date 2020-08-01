@@ -323,6 +323,7 @@ namespace Clansty.tianlang
                       $"班级: {Class}\n" +
                       $"群名片: {Namecard}\n" +
                       $"理想群名片: {ProperNamecard}\n" +
+                      $"ProperG2020Namecard: {ProperG2020Namecard}\n" +
                       $"IsMember: {IsMember}\n" +
                       $"身份: {Role}\n" +
                       $"实名状态: {VerifyMsg}";
