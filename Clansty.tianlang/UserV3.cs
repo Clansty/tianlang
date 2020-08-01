@@ -84,10 +84,12 @@ namespace Clansty.tianlang
                 return false;
             }
         }
+
         /// <summary>
         /// 标识实名认证成功验证，此时不应该能自己修改姓名
         /// </summary>
-        public bool Verified => VerifyMsg == RealNameVerifingResult.succeed || VerifyMsg == RealNameVerifingResult.unsupported;
+        public bool Verified => VerifyMsg == RealNameVerifingResult.succeed ||
+                                (VerifyMsg == RealNameVerifingResult.unsupported && Name != "");
         public RealNameVerifingResult VerifyMsg
         {
             get
