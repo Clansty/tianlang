@@ -30,13 +30,6 @@ namespace Clansty.tianlang.Events
                         return;
                     }
 
-                    if (Rds.SContains("knownUsers", e.FromQQ))
-                    {
-                        e.Request.SetGroupAddRequest(CQGroupAddRequestType.ApplyAddGroup, CQResponseType.PASS);
-                        S.Si(u.ToXml("加群申请已同意: 白名单用户") + $"\n申请信息: {msg}");
-                        return;
-                    }
-
                     if (msg.IndexOf(" ", StringComparison.Ordinal) < 0)
                     {
                         //TODO 只填了姓名，但是姓名找得到可以同意
