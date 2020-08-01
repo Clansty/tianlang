@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using Native.Sdk.Cqp;
 
 namespace Clansty.tianlang
@@ -18,6 +13,7 @@ namespace Clansty.tianlang
          * 检测是否成员来决定是否推荐大群/新生群
          * 新生群后台实名实现
          * 进群申请的姓名校验
+         * 進群申請分析更智能，用 parse nick 來 parse 姓名
          *
          * 7/31 管理群會話 TODO 總結：
          * 草了现在 branch 是 get only 的也得改（費點功夫）

@@ -1,11 +1,14 @@
-﻿namespace Clansty.tianlang.SIAMC
+﻿using System.ComponentModel;
+using System.Windows.Forms;
+
+namespace Clansty.tianlang.SIAMC
 {
     partial class Siamc
     {
         /// <summary>
         /// Required designer variable.
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        private IContainer components = null;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -182,20 +185,20 @@
         }
 
         #endregion
-        public System.Windows.Forms.DataGridView data;
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem 罗德岛ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 退出ToolStripMenuItem;
-        private System.Windows.Forms.DataGridViewTextBoxColumn uin;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn branch;
-        private System.Windows.Forms.DataGridViewTextBoxColumn enrollment;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn junior;
-        private System.Windows.Forms.DataGridViewTextBoxColumn grade;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nick;
-        private System.Windows.Forms.DataGridViewTextBoxColumn name;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cls;
-        private System.Windows.Forms.DataGridViewTextBoxColumn verifyMsg;
-        private System.Windows.Forms.DataGridViewTextBoxColumn role;
-        private System.Windows.Forms.DataGridViewButtonColumn update;
+        public DataGridView data;
+        private MenuStrip menuStrip1;
+        private ToolStripMenuItem 罗德岛ToolStripMenuItem;
+        private ToolStripMenuItem 退出ToolStripMenuItem;
+        private DataGridViewTextBoxColumn uin;
+        private DataGridViewCheckBoxColumn branch;
+        private DataGridViewTextBoxColumn enrollment;
+        private DataGridViewCheckBoxColumn junior;
+        private DataGridViewTextBoxColumn grade;
+        private DataGridViewTextBoxColumn nick;
+        private DataGridViewTextBoxColumn name;
+        private DataGridViewTextBoxColumn cls;
+        private DataGridViewTextBoxColumn verifyMsg;
+        private DataGridViewTextBoxColumn role;
+        private DataGridViewButtonColumn update;
     }
 }

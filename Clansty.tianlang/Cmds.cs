@@ -1,15 +1,14 @@
-﻿using Native.Sdk.Cqp.EventArgs;
-using ServiceStack.Redis;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Native.Sdk.Cqp.EventArgs;
 
 namespace Clansty.tianlang
 {
     public static class Cmds
     {
-        public static readonly Dictionary<string, GroupCommand> gcmds = new Dictionary<string, GroupCommand>()
+        public static readonly Dictionary<string, GroupCommand> gcmds = new Dictionary<string, GroupCommand>
         {
-            ["info"] = new GroupCommand()
+            ["info"] = new GroupCommand
             {
                 Description = "查询一个用户的信息",
                 Usage = "info [QQ号]",
@@ -25,7 +24,7 @@ namespace Clansty.tianlang
                     return u.ToXml();
                 }
             },
-            ["help"] = new GroupCommand()
+            ["help"] = new GroupCommand
             {
                 Description = "显示命令行帮助",
                 Usage = "help",
@@ -46,7 +45,7 @@ namespace Clansty.tianlang
                     return r;
                 }
             },
-            ["hset"] = new GroupCommand()
+            ["hset"] = new GroupCommand
             {
                 Description = "设置数据库中某个哈希链表中某一项的值",
                 Usage = "hset [哈希链表 ID] [项 ID] [值]",
@@ -63,10 +62,10 @@ namespace Clansty.tianlang
                     var keyid = s.GetLeft(" ");
                     s = s.GetRight(" ");
                     Rds.HSet(hashid, keyid, s);
-                    return $"完成";
+                    return "完成";
                 }
             },
-            ["hget"] = new GroupCommand()
+            ["hget"] = new GroupCommand
             {
                 Description = "获取数据库中某个哈希链表中某一项的值",
                 Usage = "hget [哈希链表 ID] [项 ID]",
@@ -83,7 +82,7 @@ namespace Clansty.tianlang
                     return Rds.HGet(hashid, s);
                 }
             },
-            ["rqns"] = new GroupCommand()
+            ["rqns"] = new GroupCommand
             {
                 Description = "手动对某个成员启动新人向导",
                 Usage = "rqns [QQ号 | @人]",
@@ -94,13 +93,13 @@ namespace Clansty.tianlang
                     s = s.Trim(' ', '\n', '[', ']', '@');
                     if (long.TryParse(s, out _))
                     {
-                        Setup.New(s, false);
+                        Setup.New(s);
                         return $"新人向导已对 {new User(s).Namecard}({s}) 启动";
                     }
                     return $"{s} 不是有效的长整数";
                 }
             },
-            ["blk"] = new GroupCommand()
+            ["blk"] = new GroupCommand
             {
                 Description = "拉黑并踢出某个人，被拉黑的人再次加群会被自动拒绝。可以通过大群命令 sudo blk [人] 来快速使用",
                 Usage = "blk [QQ号 | @人]",
@@ -121,7 +120,7 @@ namespace Clansty.tianlang
                     return $"{s} 不是有效的长整数";
                 }
             },
-            ["t"] = new GroupCommand()
+            ["t"] = new GroupCommand
             {
                 Description = "踢出某个人，再次加群不会被自动拒绝。可以通过大群命令 sudo t [人] 来快速使用",
                 Usage = "t [QQ号 | @人]",
@@ -141,7 +140,7 @@ namespace Clansty.tianlang
                     return $"{s} 不是有效的长整数";
                 }
             },
-            ["echo"] = new GroupCommand()
+            ["echo"] = new GroupCommand
             {
                 Description = "原样输出文本消息或者处理 XML 或 JSON 结构化消息",
                 Usage = "echo [要输出的内容]",
@@ -149,7 +148,7 @@ namespace Clansty.tianlang
                 Permission = UserType.powerUser,
                 Func = s => s
             },
-            ["gstrs"] = new GroupCommand()
+            ["gstrs"] = new GroupCommand
             {
                 Description = "获取语句模板文本",
                 Usage = "gstrs [模板 ID]",
@@ -157,7 +156,7 @@ namespace Clansty.tianlang
                 Permission = UserType.powerUser,
                 Func = Strs.Get
             },
-            ["sstrs"] = new GroupCommand()
+            ["sstrs"] = new GroupCommand
             {
                 Description = "设置语句模板文本",
                 Usage = "sstrs [模板 ID] [内容]",
@@ -175,7 +174,7 @@ namespace Clansty.tianlang
                     return "完成";
                 }
             },
-            ["strs"] = new GroupCommand()
+            ["strs"] = new GroupCommand
             {
                 Description = "获取现在所有的语句模板",
                 Usage = "strs",
@@ -192,7 +191,7 @@ namespace Clansty.tianlang
                     return r;
                 }
             },
-            ["stats"] = new GroupCommand()
+            ["stats"] = new GroupCommand
             {
                 Description = "查看统计数据",
                 Usage = "stats",
@@ -215,7 +214,7 @@ namespace Clansty.tianlang
                     return r;
                 }
             },
-            ["find"] = new GroupCommand()
+            ["find"] = new GroupCommand
             {
                 Description = "通过姓名查人",
                 Usage = "find [姓名]",

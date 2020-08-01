@@ -1,7 +1,6 @@
-﻿using Native.Sdk.Cqp.EventArgs;
+﻿using System.Threading.Tasks;
+using Native.Sdk.Cqp.EventArgs;
 using Native.Sdk.Cqp.Interface;
-using ServiceStack.Redis;
-using System.Threading.Tasks;
 
 namespace Clansty.tianlang.Events
 {

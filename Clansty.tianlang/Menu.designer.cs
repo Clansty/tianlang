@@ -1,11 +1,13 @@
-﻿namespace Clansty.tianlang
+﻿using System.ComponentModel;
+
+namespace Clansty.tianlang
 {
     partial class Menu
     {
         /// <summary>
         /// Required designer variable.
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        private IContainer components = null;
 
         /// <summary>
         /// Clean up any resources being used.

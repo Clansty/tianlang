@@ -33,8 +33,7 @@
             {
                 if (res == "0")
                     return new RealNameCheckingResult(r);
-                else
-                    return new RealNameCheckingResult(r, res);
+                return new RealNameCheckingResult(r, res);
             }
         }
 

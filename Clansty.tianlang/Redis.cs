@@ -1,5 +1,5 @@
-﻿using ServiceStack.Redis;
-using System;
+﻿using System;
+using ServiceStack.Redis;
 
 namespace Clansty.tianlang
 {

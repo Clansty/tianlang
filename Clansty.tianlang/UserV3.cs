@@ -10,6 +10,7 @@ namespace Clansty.tianlang
         {
             get => long.Parse(Uin);
         }
+
         public User(string uin)
         {
             Uin = uin;
@@ -69,11 +70,13 @@ namespace Clansty.tianlang
             get => Get("name");
             set => Set("name", value);
         }
+
         public string Nick
         {
             get => Get("nick").Trim() == "" ? C.CQApi.GetStrangerInfo(LongUin).Nick : Get("nick").Trim();
             set => Set("nick", value);
         }
+
         public bool Branch
         {
             get
@@ -90,6 +93,7 @@ namespace Clansty.tianlang
         /// </summary>
         public bool Verified => VerifyMsg == RealNameVerifingResult.succeed ||
                                 (VerifyMsg == RealNameVerifingResult.unsupported && Name != "");
+
         public RealNameVerifingResult VerifyMsg
         {
             get
@@ -107,7 +111,7 @@ namespace Clansty.tianlang
                 if (bind == RealNameBindingResult.occupied)
                     return RealNameVerifingResult.occupied;
 
-                return RealNameVerifingResult.wtf;//不可能运行到这里
+                return RealNameVerifingResult.wtf; //不可能运行到这里
             }
         }
 
@@ -116,7 +120,9 @@ namespace Clansty.tianlang
             get => Get("junior") == "1";
             set => Set("junior", value ? "1" : "0");
         }
+
         public string Class => Rds.HGet("classes", Name);
+
         public int Enrollment
         {
             get
@@ -141,6 +147,7 @@ namespace Clansty.tianlang
             }
             set => Set("enrollment", value.ToString());
         }
+
         public int Step
         {
             get
@@ -157,6 +164,7 @@ namespace Clansty.tianlang
             }
             set => Set("step", value.ToString());
         }
+
         public string Namecard
         {
             get
@@ -167,13 +175,24 @@ namespace Clansty.tianlang
 
             set => C.CQApi.SetGroupMemberVisitingCard(G.major, LongUin, value);
         }
+        public string G2020Namecard
+        {
+            get
+            {
+                var info = C.CQApi.GetGroupMemberInfo(G.g2020, LongUin);
+                return info is null ? "" : info.Card;
+            }
+
+            set => C.CQApi.SetGroupMemberVisitingCard(G.g2020, LongUin, value);
+        }
+
         public Status Status
         {
             get
             {
                 try
                 {
-                    return (Status)int.Parse(Get("status"));
+                    return (Status) int.Parse(Get("status"));
                 }
                 catch
                 {
@@ -181,15 +200,16 @@ namespace Clansty.tianlang
                     return Status.no;
                 }
             }
-            set => Set("status", ((int)value).ToString());
+            set => Set("status", ((int) value).ToString());
         }
+
         public UserType Role
         {
             get
             {
                 try
                 {
-                    return (UserType)int.Parse(Get("role"));
+                    return (UserType) int.Parse(Get("role"));
                 }
                 catch
                 {
@@ -197,8 +217,9 @@ namespace Clansty.tianlang
                     return UserType.user;
                 }
             }
-            set => Set("role", ((int)value).ToString());
+            set => Set("role", ((int) value).ToString());
         }
+
         public string Grade
         {
             get
@@ -224,10 +245,11 @@ namespace Clansty.tianlang
                     default:
                         if (Enrollment < 2000)
                             return "未知";
-                        r = (Enrollment + 3).ToString() + "届";
+                        r = (Enrollment + 3) + "届";
                         graduated = true;
                         break;
                 }
+
                 if (!graduated)
                     if (Junior)
                         r = "初" + r;
@@ -242,6 +264,7 @@ namespace Clansty.tianlang
                 return r;
             }
         }
+
         public string ProperNamecard
         {
             get
@@ -257,6 +280,30 @@ namespace Clansty.tianlang
                 return r;
             }
         }
+
+        public string ProperG2020Namecard
+        {
+            get
+            {
+                var left = "";
+                if (Branch)
+                    left += "金阊";
+                if (Enrollment != 2020)
+                    left += Grade;
+                if (!Verified)
+                    left = "未实名" + left;
+                left = left.Trim();
+                var r = left;
+                if (left != "")
+                    r += " | ";
+                if (string.IsNullOrEmpty((Name)))
+                    r += Nick;
+                else
+                    r += Name;
+                return r;
+            }
+        }
+
         internal bool IsFresh => Name == ""; //紧急 fix
         public bool IsMember => MemberList.major.Contains(Uin);
 
@@ -266,19 +313,19 @@ namespace Clansty.tianlang
         public string ToXml(string title = "用户信息")
         {
             var ret = $"[{title}]\n" +
-                       $"QQ: {Uin}\n" +
-                       $"年级: {Grade}\n" +
-                       $"昵称: {Nick}\n" +
-                       $"姓名: {Name}\n" +
-                       $"校区: {(Branch ? "金阊" : "本部")}\n" +
-                       $"入学年份: {Enrollment}\n" +
-                       $"初中: {Junior}\n" +
-                       $"班级: {Class}\n" +
-                       $"群名片: {Namecard}\n" +
-                       $"理想群名片: {ProperNamecard}\n" +
-                       $"IsMember: {IsMember}\n" +
-                       $"身份: {Role}\n" +
-                       $"实名状态: {VerifyMsg}";
+                      $"QQ: {Uin}\n" +
+                      $"年级: {Grade}\n" +
+                      $"昵称: {Nick}\n" +
+                      $"姓名: {Name}\n" +
+                      $"校区: {(Branch ? "金阊" : "本部")}\n" +
+                      $"入学年份: {Enrollment}\n" +
+                      $"初中: {Junior}\n" +
+                      $"班级: {Class}\n" +
+                      $"群名片: {Namecard}\n" +
+                      $"理想群名片: {ProperNamecard}\n" +
+                      $"IsMember: {IsMember}\n" +
+                      $"身份: {Role}\n" +
+                      $"实名状态: {VerifyMsg}";
             //test for new struct for real name related information 191230
             using (var client = Rds.GetClient())
             {
@@ -292,6 +339,7 @@ namespace Clansty.tianlang
                     }
                 }
             }
+
             //TODO: i will transfer real-name check info to the new struct soon
             return ret;
         }

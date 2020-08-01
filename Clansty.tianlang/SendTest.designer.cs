@@ -1,11 +1,14 @@
-﻿namespace Clansty.tianlang
+﻿using System.ComponentModel;
+using System.Windows.Forms;
+
+namespace Clansty.tianlang
 {
     partial class SendTest
     {
         /// <summary>
         /// Required designer variable.
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        private IContainer components = null;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -66,7 +69,7 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button button1;
+        private TextBox textBox1;
+        private Button button1;
     }
 }

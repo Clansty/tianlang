@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Clansty.tianlang
 {
@@ -47,7 +43,7 @@ namespace Clansty.tianlang
                     default:
                         if (Enrollment < 2000)
                             return "未知";
-                        r = (Enrollment + 3).ToString() + "届";
+                        r = (Enrollment + 3) + "届";
                         break;
                 }
                 return r;

@@ -1,11 +1,14 @@
-﻿namespace Clansty.tianlang.SIAMC
+﻿using System.ComponentModel;
+using System.Windows.Forms;
+
+namespace Clansty.tianlang.SIAMC
 {
     partial class Loading
     {
         /// <summary>
         /// Required designer variable.
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        private IContainer components = null;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -87,9 +90,9 @@
 
         #endregion
 
-        public System.Windows.Forms.ProgressBar progressBar1;
-        public System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        public System.Windows.Forms.Label label3;
+        public ProgressBar progressBar1;
+        public Label label1;
+        private Label label2;
+        public Label label3;
     }
 }
