@@ -175,6 +175,7 @@ namespace Clansty.tianlang
 
             set => C.CQApi.SetGroupMemberVisitingCard(G.major, LongUin, value);
         }
+
         public string G2020Namecard
         {
             get
@@ -288,7 +289,7 @@ namespace Clansty.tianlang
                 var left = "";
                 if (Branch)
                     left += "金阊";
-                if (Enrollment != 2020)
+                if (Enrollment != 2020 || Enrollment < 2000)
                     left += Grade;
                 if (!Verified)
                     left = "未实名" + left;
