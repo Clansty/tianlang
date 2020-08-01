@@ -25,7 +25,7 @@ namespace Clansty.tianlang
          * 到时候会有一个人两个实名身份的情况（難度大）
          */
         
-        public const string Version = "3.1.17.7";//20200801
+        public const string Version = "3.1.17.8";//20200801
         public static CQApi CQApi = null;
 
         public static void Write(string text, ConsoleColor color = ConsoleColor.White)

@@ -16,16 +16,23 @@ namespace Clansty.tianlang.Events
                 e.Reply(u.ToXml("你的信息"));
             }
             else if (e.Message.Text.StartsWith("我叫"))
-            {//here, to line 93 handles manual name-filling event
+            {
+                //here, to line 93 handles manual name-filling event
                 var name = e.Message.Text.GetRight("我叫").Trim();
                 if (u.Verified)
                 {
-                    e.Reply(Strs.Get("rnVerified"));//你已经实名认证了，无需再次补填姓名
+                    e.Reply(Strs.Get("rnVerified")); //你已经实名认证了，无需再次补填姓名
                     return;
                 }
+
                 if (u.VerifyMsg == RealNameVerifingResult.unsupported)
                 {
-                    e.Reply(Strs.Get("rnUnsupported"));
+                    //尝试进行验证
+                    u.Name = name;
+                    e.Reply(Strs.Get("rnOK")); // here set succeeded
+                    //update in 3.0.14.2 notice the administration
+                    S.Si(u.ToXml("旧人补填姓名成功"));
+                    UserInfo.CheckQmpAsync(u);
                     return;
                 }
 
@@ -48,11 +55,13 @@ namespace Clansty.tianlang.Events
                     e.Reply(Strs.Get("rnUnmatch", u.Grade));
                     return;
                 }
+
                 if (chk.Status == RealNameStatus.e2018 && u.Enrollment != 2018)
                 {
                     e.Reply(Strs.Get("rnUnmatch", u.Grade));
                     return;
                 }
+
                 if (chk.Status == RealNameStatus.e2019 && u.Enrollment != 2019)
                 {
                     e.Reply(Strs.Get("rnUnmatch", u.Grade));
@@ -66,16 +75,16 @@ namespace Clansty.tianlang.Events
                     u.Name = name;
                     if (u.Verified)
                     {
-                        e.Reply(Strs.Get("rnOK"));// here set succeeded
+                        e.Reply(Strs.Get("rnOK")); // here set succeeded
                         //update in 3.0.14.2 notice the administration
                         S.Si(u.ToXml("旧人补填姓名成功"));
                         return;
                     }
+
                     e.Reply(Strs.Get("unexceptedErr", u.VerifyMsg));
-                    return;
+                    UserInfo.CheckQmpAsync(u);
                 }
-                UserInfo.CheckQmpAsync(u);
-            }// end manual name-filling handling
+            } // end manual name-filling handling
         }
     }
 }
