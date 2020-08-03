@@ -12,6 +12,7 @@ namespace Clansty.tianlang
          * 检测是否成员来决定是否推荐大群/新生群
          * 新生群后台实名实现
          * 進群申請分析更智能，用 parse nick 來 parse 姓名
+         * 新生群加群解析姓名直接入库
          *
          * 7/31 管理群會話 TODO 總結：
          * 草了现在 branch 是 get only 的也得改（費點功夫）
@@ -20,7 +21,7 @@ namespace Clansty.tianlang
          * 到时候会有一个人两个实名身份的情况（難度大）
          */
         
-        public const string Version = "3.1.18.7";//20200801
+        public const string Version = "3.1.18.8";//20200803
         public static CQApi CQApi = null;
 
         public static void Write(string text, ConsoleColor color = ConsoleColor.White)
