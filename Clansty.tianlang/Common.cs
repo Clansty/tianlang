@@ -9,8 +9,6 @@ namespace Clansty.tianlang
         /*
          * TODO:
          * 號碼全用 long
-         * 检测是否成员来决定是否推荐大群/新生群
-         * 新生群后台实名实现
          * 進群申請分析更智能，用 parse nick 來 parse 姓名
          * 新生群加群解析姓名直接入库
          *
