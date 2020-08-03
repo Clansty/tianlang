@@ -117,7 +117,7 @@ namespace Clansty.tianlang
 
         public bool Junior
         {
-            get => Get("junior") == "1";
+            get => Get("junior") == "1" || string.IsNullOrEmpty(Class);
             set => Set("junior", value ? "1" : "0");
         }
 
