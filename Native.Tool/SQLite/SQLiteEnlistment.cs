@@ -106,7 +106,7 @@ namespace System.Data.SQLite
 
     private void Cleanup(SQLiteConnection cnn)
     {
-        if (_disposeConnection && (cnn != null))
+        if (_disposeConnection && cnn != null)
             cnn.Dispose();
 
         _transaction = null;

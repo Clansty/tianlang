@@ -197,7 +197,7 @@ namespace System.Data.SQLite
             //       "Create" flag, even when a native API is used that does not accept
             //       a flags parameter.
             //
-            if (((openFlags & SQLiteOpenFlagsEnum.Create) != SQLiteOpenFlagsEnum.Create) && !File.Exists(strFilename))
+            if ((openFlags & SQLiteOpenFlagsEnum.Create) != SQLiteOpenFlagsEnum.Create && !File.Exists(strFilename))
               throw new SQLiteException(SQLiteErrorCode.CantOpen, strFilename);
 
             if (vfsName != null)
@@ -263,7 +263,7 @@ namespace System.Data.SQLite
                     if (HelperMethods.LogBind(flags))
                     {
                         var handle =
-                            (stmt != null) ? stmt._sqlite_stmt : null;
+                            stmt != null ? stmt._sqlite_stmt : null;
 
                         LogBind(handle, index, dt);
                     }

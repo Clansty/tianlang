@@ -519,7 +519,7 @@ namespace System.Data.SQLite
                     handlers = null;
             }
 
-            if (enabled && (handlers != null))
+            if (enabled && handlers != null)
                 handlers(null, new LogEventArgs(
                     IntPtr.Zero, errorCode, message, null));
         }
@@ -597,7 +597,7 @@ namespace System.Data.SQLite
                     handlers = null;
             }
 
-            if (enabled && (handlers != null))
+            if (enabled && handlers != null)
                 handlers(null, new LogEventArgs(pUserData, errorCode,
                     SQLiteBase.UTF8ToString(pMessage, -1), null));
         }
@@ -636,7 +636,7 @@ namespace System.Data.SQLite
             var errorCode = e.ErrorCode;
             var type = "error";
 
-            if ((errorCode is SQLiteErrorCode) || (errorCode is int))
+            if (errorCode is SQLiteErrorCode || errorCode is int)
             {
                 var rc = (SQLiteErrorCode)(int)errorCode;
 
@@ -654,8 +654,8 @@ namespace System.Data.SQLite
                 {
                     type = "warning";
                 }
-                else if ((rc == SQLiteErrorCode.Row) ||
-                    (rc == SQLiteErrorCode.Done))
+                else if (rc == SQLiteErrorCode.Row ||
+                    rc == SQLiteErrorCode.Done)
                 {
                     type = "data";
                 }
@@ -665,7 +665,7 @@ namespace System.Data.SQLite
                 type = "trace";
             }
 
-            if ((errorCode != null) &&
+            if (errorCode != null &&
                 !Object.ReferenceEquals(errorCode, String.Empty))
             {
                 Trace.WriteLine(HelperMethods.StringFormat(

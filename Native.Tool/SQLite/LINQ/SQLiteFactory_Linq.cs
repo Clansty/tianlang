@@ -63,7 +63,7 @@ namespace System.Data.SQLite
     object IServiceProvider.GetService(Type serviceType)
     {
       if (serviceType == typeof(ISQLiteSchemaExtensions) ||
-        (_dbProviderServicesType != null && serviceType == _dbProviderServicesType))
+        _dbProviderServicesType != null && serviceType == _dbProviderServicesType)
       {
         return GetSQLiteProviderServicesInstance();
       }

@@ -43,7 +43,7 @@ namespace Clansty.tianlang
                     default:
                         if (Enrollment < 2000)
                             return "未知";
-                        r = (Enrollment + 3) + "届";
+                        r = Enrollment + 3 + "届";
                         break;
                 }
                 return r;

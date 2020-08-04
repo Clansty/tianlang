@@ -92,7 +92,7 @@ namespace Clansty.tianlang
         /// 标识实名认证成功验证，此时不应该能自己修改姓名
         /// </summary>
         public bool Verified => VerifyMsg == RealNameVerifingResult.succeed ||
-                                (VerifyMsg == RealNameVerifingResult.unsupported && Name != "");
+                                VerifyMsg == RealNameVerifingResult.unsupported && Name != "";
 
         public RealNameVerifingResult VerifyMsg
         {
@@ -117,7 +117,7 @@ namespace Clansty.tianlang
 
         public bool Junior
         {
-            get => Get("junior") == "1" || (string.IsNullOrEmpty(Class) && Enrollment==2017 && VerifyMsg== RealNameVerifingResult.succeed);
+            get => Get("junior") == "1" || string.IsNullOrEmpty(Class) && Enrollment==2017 && VerifyMsg== RealNameVerifingResult.succeed;
             set => Set("junior", value ? "1" : "0");
         }
 
@@ -246,7 +246,7 @@ namespace Clansty.tianlang
                     default:
                         if (Enrollment < 2000)
                             return "未知";
-                        r = (Enrollment + 3) + "届";
+                        r = Enrollment + 3 + "届";
                         graduated = true;
                         break;
                 }
@@ -297,7 +297,7 @@ namespace Clansty.tianlang
                 var r = left;
                 if (left != "")
                     r += " | ";
-                if (string.IsNullOrEmpty((Name)))
+                if (string.IsNullOrEmpty(Name))
                     r += Nick;
                 else
                     r += Name;

@@ -284,7 +284,7 @@ namespace System.Data.SQLite
         long jd
         )
     {
-        return ((jd >= MinimumJd) && (jd <= MaximumJd));
+        return jd >= MinimumJd && jd <= MaximumJd;
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -364,10 +364,10 @@ namespace System.Data.SQLite
 
         Z = (int)((jd + 43200000) / 86400000);
         A = (int)((Z - 1867216.25) / 36524.25);
-        A = Z + 1 + A - (A / 4);
+        A = Z + 1 + A - A / 4;
         B = A + 1524;
         C = (int)((B - 122.1) / 365.25);
-        D = (36525 * C) / 100;
+        D = 36525 * C / 100;
         E = (int)((B - D) / 30.6001);
         X1 = (int)(30.6001 * E);
 
@@ -509,7 +509,7 @@ namespace System.Data.SQLite
         int A, B, X1, X2;
 
         A = Y / 100;
-        B = 2 - A + (A / 4);
+        B = 2 - A + A / 4;
         X1 = 36525 * (Y + 4716) / 100;
         X2 = 306001 * (M + 1) / 10000;
 
@@ -517,8 +517,8 @@ namespace System.Data.SQLite
 
         jd = (long)((X1 + X2 + D + B - 1524.5) * 86400000);
 
-        jd += (dateTime.Hour * 3600000) + (dateTime.Minute * 60000) +
-            (dateTime.Second * 1000) + dateTime.Millisecond;
+        jd += dateTime.Hour * 3600000 + dateTime.Minute * 60000 +
+            dateTime.Second * 1000 + dateTime.Millisecond;
 
         return jd;
     }
@@ -797,7 +797,7 @@ namespace System.Data.SQLite
     /// <returns>The whole number of seconds since the Unix epoch</returns>
     public static long ToUnixEpoch(DateTime value)
     {
-        return (value.Subtract(UnixEpoch).Ticks / TimeSpan.TicksPerSecond);
+        return value.Subtract(UnixEpoch).Ticks / TimeSpan.TicksPerSecond;
     }
 
     /// <summary>
@@ -815,7 +815,7 @@ namespace System.Data.SQLite
         )
     {
         if (formatString != null) return formatString;
-        return (kind == DateTimeKind.Utc) ? _datetimeFormatUtc : _datetimeFormatLocal;
+        return kind == DateTimeKind.Utc ? _datetimeFormatUtc : _datetimeFormatLocal;
     }
 
     /// <summary>
@@ -858,13 +858,13 @@ namespace System.Data.SQLite
             case SQLiteDateFormats.UnixEpoch:
                 return ((long)(dateValue.Subtract(UnixEpoch).Ticks / TimeSpan.TicksPerSecond)).ToString();
             case SQLiteDateFormats.InvariantCulture:
-                return dateValue.ToString((formatString != null) ?
+                return dateValue.ToString(formatString != null ?
                     formatString : FullFormat, CultureInfo.InvariantCulture);
             case SQLiteDateFormats.CurrentCulture:
-                return dateValue.ToString((formatString != null) ?
+                return dateValue.ToString(formatString != null ?
                     formatString : FullFormat, CultureInfo.CurrentCulture);
             default:
-                return (dateValue.Kind == DateTimeKind.Unspecified) ?
+                return dateValue.Kind == DateTimeKind.Unspecified ?
                     DateTime.SpecifyKind(dateValue, kind).ToString(
                         GetDateTimeKindFormat(kind, formatString),
                             CultureInfo.InvariantCulture) : dateValue.ToString(
@@ -1003,7 +1003,7 @@ namespace System.Data.SQLite
         //       are used for escaping other characters (e.g. the separator
         //       character).
         //
-        if ((separator == EscapeChar) || (separator == QuoteChar))
+        if (separator == EscapeChar || separator == QuoteChar)
         {
             error = "separator character cannot be the escape or quote characters";
             return null;
@@ -1039,9 +1039,9 @@ namespace System.Data.SQLite
                 //       the current character in an effort to help preserve
                 //       the original string content.
                 //
-                if ((character != EscapeChar) &&
-                    (character != QuoteChar) &&
-                    (character != separator))
+                if (character != EscapeChar &&
+                    character != QuoteChar &&
+                    character != separator)
                 {
                     element.Append(EscapeChar);
                 }
@@ -1167,29 +1167,29 @@ namespace System.Data.SQLite
             case TypeCode.Boolean:
                 return (bool)obj;
             case TypeCode.Char:
-                return ((char)obj) != (char)0 ? true : false;
+                return (char)obj != (char)0 ? true : false;
             case TypeCode.SByte:
-                return ((sbyte)obj) != (sbyte)0 ? true : false;
+                return (sbyte)obj != (sbyte)0 ? true : false;
             case TypeCode.Byte:
-                return ((byte)obj) != (byte)0 ? true : false;
+                return (byte)obj != (byte)0 ? true : false;
             case TypeCode.Int16:
-                return ((short)obj) != (short)0 ? true : false;
+                return (short)obj != (short)0 ? true : false;
             case TypeCode.UInt16:
-                return ((ushort)obj) != (ushort)0 ? true : false;
+                return (ushort)obj != (ushort)0 ? true : false;
             case TypeCode.Int32:
-                return ((int)obj) != (int)0 ? true : false;
+                return (int)obj != (int)0 ? true : false;
             case TypeCode.UInt32:
-                return ((uint)obj) != (uint)0 ? true : false;
+                return (uint)obj != (uint)0 ? true : false;
             case TypeCode.Int64:
-                return ((long)obj) != (long)0 ? true : false;
+                return (long)obj != (long)0 ? true : false;
             case TypeCode.UInt64:
-                return ((ulong)obj) != (ulong)0 ? true : false;
+                return (ulong)obj != (ulong)0 ? true : false;
             case TypeCode.Single:
-                return ((float)obj) != (float)0.0 ? true : false;
+                return (float)obj != (float)0.0 ? true : false;
             case TypeCode.Double:
-                return ((double)obj) != (double)0.0 ? true : false;
+                return (double)obj != (double)0.0 ? true : false;
             case TypeCode.Decimal:
-                return ((decimal)obj) != Decimal.Zero ? true : false;
+                return (decimal)obj != Decimal.Zero ? true : false;
             case TypeCode.String:
                 return viaFramework ?
                     Convert.ToBoolean(obj, provider) :
@@ -1468,7 +1468,7 @@ namespace System.Data.SQLite
         SQLiteConnection connection
         )
     {
-        var flags = (connection != null) ?
+        var flags = connection != null ?
             connection.Flags : SQLiteConnectionFlags.None;
 
         if (HelperMethods.HasFlags(
@@ -1481,7 +1481,7 @@ namespace System.Data.SQLite
         object value = null;
         string @default = null;
 
-        if ((connection == null) ||
+        if (connection == null ||
             !connection.TryGetCachedSetting(name, @default, out value))
         {
             try
@@ -1615,7 +1615,7 @@ namespace System.Data.SQLite
         {
             SQLiteDbTypeMapping value;
 
-            if ((_typeNames != null) &&
+            if (_typeNames != null &&
                 _typeNames.TryGetValue(dbType, out value))
             {
                 return value.typeName;
@@ -1702,7 +1702,7 @@ namespace System.Data.SQLite
         else
           return TypeAffinity.Text;
       }
-      if ((tc == TypeCode.Decimal) &&
+      if (tc == TypeCode.Decimal &&
           HelperMethods.HasFlags(flags, SQLiteConnectionFlags.GetDecimalAsText))
       {
           return TypeAffinity.Text;
@@ -1884,7 +1884,7 @@ namespace System.Data.SQLite
         SQLiteConnection connection
         )
     {
-        var flags = (connection != null) ?
+        var flags = connection != null ?
             connection.Flags : SQLiteConnectionFlags.None;
 
         if (HelperMethods.HasFlags(
@@ -1898,7 +1898,7 @@ namespace System.Data.SQLite
         object value = null;
         string @default = null;
 
-        if ((connection == null) ||
+        if (connection == null ||
             !connection.TryGetCachedSetting(name, @default, out value))
         {
             value = UnsafeNativeMethods.GetSettingValue(name, @default);
@@ -1926,7 +1926,7 @@ namespace System.Data.SQLite
         }
         finally
         {
-            if (!found && (connection != null))
+            if (!found && connection != null)
                 connection.SetCachedSetting(name, value);
         }
     }
@@ -1976,7 +1976,7 @@ namespace System.Data.SQLite
         string text
         )
     {
-        return (text == null);
+        return text == null;
     }
 
     /// <summary>
@@ -2141,7 +2141,7 @@ namespace System.Data.SQLite
                         {
                             var index = typeName.IndexOf('(');
 
-                            if ((index > 0) &&
+                            if (index > 0 &&
                                 connectionTypeNames.TryGetValue(typeName.Substring(0, index).TrimEnd(), out value))
                             {
                                 return value.dataType;
@@ -2172,7 +2172,7 @@ namespace System.Data.SQLite
         }
 
         {
-            if ((_typeNames != null) && (typeName != null))
+            if (_typeNames != null && typeName != null)
             {
                 SQLiteDbTypeMapping value;
 
@@ -2184,7 +2184,7 @@ namespace System.Data.SQLite
                 {
                     var index = typeName.IndexOf('(');
 
-                    if ((index > 0) &&
+                    if (index > 0 &&
                         _typeNames.TryGetValue(typeName.Substring(0, index).TrimEnd(), out value))
                     {
                         return value.dataType;
@@ -3012,7 +3012,7 @@ namespace System.Data.SQLite
       string y
       )
     {
-      if ((x == null) && (y == null))
+      if (x == null && y == null)
         return 0;
       else if (x == null)
         return -1;

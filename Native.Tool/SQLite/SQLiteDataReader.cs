@@ -291,7 +291,7 @@ namespace System.Data.SQLite
     public override Collections.IEnumerator GetEnumerator()
     {
       CheckDisposed();
-      return new DbEnumerator(this, ((_commandBehavior & CommandBehavior.CloseConnection) == CommandBehavior.CloseConnection));
+      return new DbEnumerator(this, (_commandBehavior & CommandBehavior.CloseConnection) == CommandBehavior.CloseConnection);
     }
 
     /// <summary>
@@ -473,7 +473,7 @@ namespace System.Data.SQLite
             SQLiteTypeCallbacks callbacks;
 
             if (!connection.TryGetTypeCallbacks(typeName, out callbacks) ||
-                (callbacks == null))
+                callbacks == null)
             {
                 return;
             }
@@ -1287,11 +1287,11 @@ namespace System.Data.SQLite
         #region IEqualityComparer<ColumnParent> Members
         public bool Equals(ColumnParent x, ColumnParent y)
         {
-            if ((x == null) && (y == null))
+            if (x == null && y == null)
             {
                 return true;
             }
-            else if ((x == null) || (y == null))
+            else if (x == null || y == null)
             {
                 return false;
             }
@@ -1325,13 +1325,13 @@ namespace System.Data.SQLite
         {
             var result = 0;
 
-            if ((obj != null) && (obj.DatabaseName != null))
+            if (obj != null && obj.DatabaseName != null)
                 result ^= obj.DatabaseName.GetHashCode();
 
-            if ((obj != null) && (obj.TableName != null))
+            if (obj != null && obj.TableName != null)
                 result ^= obj.TableName.GetHashCode();
 
-            if ((obj != null) && (obj.ColumnName != null))
+            if (obj != null && obj.ColumnName != null)
                 result ^= obj.ColumnName.GetHashCode();
 
             return result;
@@ -1501,7 +1501,7 @@ namespace System.Data.SQLite
             if (String.IsNullOrEmpty(strColumn) == false) row[SchemaTableColumn.BaseColumnName] = strColumn;
 
             row[SchemaTableColumn.IsExpression] = String.IsNullOrEmpty(strColumn);
-            row[SchemaTableColumn.IsAliased] = (String.Compare(GetName(n), strColumn, StringComparison.OrdinalIgnoreCase) != 0);
+            row[SchemaTableColumn.IsAliased] = String.Compare(GetName(n), strColumn, StringComparison.OrdinalIgnoreCase) != 0;
 
             temp = columnToParent[n].TableName;
             if (String.IsNullOrEmpty(temp) == false) row[SchemaTableColumn.BaseTableName] = temp;
@@ -1734,14 +1734,14 @@ namespace System.Data.SQLite
 
         if (HelperMethods.HasFlags(
                 _flags, SQLiteConnectionFlags.DetectTextAffinity) &&
-            ((typ == null) || (typ.Affinity == TypeAffinity.Text)))
+            (typ == null || typ.Affinity == TypeAffinity.Text))
         {
             typ = GetSQLiteType(
                 typ, _activeStatement._sql.GetText(_activeStatement, i));
         }
         else if (HelperMethods.HasFlags(
                 _flags, SQLiteConnectionFlags.DetectStringType) &&
-            ((typ == null) || SQLiteConvert.IsStringDbType(typ.Type)))
+            (typ == null || SQLiteConvert.IsStringDbType(typ.Type)))
         {
             typ = GetSQLiteType(
                 typ, _activeStatement._sql.GetText(_activeStatement, i));
@@ -1784,7 +1784,7 @@ namespace System.Data.SQLite
     {
         CheckDisposed();
 
-        if ((_activeStatement == null) || (_activeStatement._sql == null))
+        if (_activeStatement == null || _activeStatement._sql == null)
             throw new InvalidOperationException();
 
         var nMax = PrivateVisibleFieldCount;
@@ -1822,7 +1822,7 @@ namespace System.Data.SQLite
         if (HelperMethods.HasFlags(
                 _flags, SQLiteConnectionFlags.StickyHasRows))
         {
-          return ((_readingState != 1) || (_stepCount > 0));
+          return _readingState != 1 || _stepCount > 0;
         }
 
         //
@@ -1831,7 +1831,7 @@ namespace System.Data.SQLite
         //       expected to succeed).  Prior to the introduction of the
         //       "sticky" flag, this is how this property has always worked.
         //
-        return (_readingState != 1);
+        return _readingState != 1;
       }
     }
 
@@ -1840,7 +1840,7 @@ namespace System.Data.SQLite
     /// </summary>
     public override bool IsClosed
     {
-      get { CheckDisposed(); return (_command == null); }
+      get { CheckDisposed(); return _command == null; }
     }
 
     /// <summary>
@@ -1871,7 +1871,7 @@ namespace System.Data.SQLite
 
       SQLiteStatement stmt = null;
       int fieldCount;
-      var schemaOnly = ((_commandBehavior & CommandBehavior.SchemaOnly) != 0);
+      var schemaOnly = (_commandBehavior & CommandBehavior.SchemaOnly) != 0;
 
       while (true)
       {
@@ -1930,7 +1930,7 @@ namespace System.Data.SQLite
         fieldCount = stmt._sql.ColumnCount(stmt);
 
         // If the statement is not a select statement or we're not retrieving schema only, then perform the initial step
-        if (!schemaOnly || (fieldCount == 0))
+        if (!schemaOnly || fieldCount == 0)
         {
           if (!schemaOnly && stmt._sql.Step(stmt))
           {
@@ -2036,7 +2036,7 @@ namespace System.Data.SQLite
         if (SQLiteConvert.LooksLikeDouble(text))
             return new SQLiteType(TypeAffinity.Double, DbType.Double);
 
-        if ((_activeStatement != null) &&
+        if (_activeStatement != null &&
             SQLiteConvert.LooksLikeDateTime(_activeStatement._sql, text))
         {
             return new SQLiteType(TypeAffinity.DateTime, DbType.DateTime);

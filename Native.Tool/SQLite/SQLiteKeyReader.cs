@@ -349,9 +349,9 @@ namespace System.Data.SQLite
         string tableName
         )
     {
-        if ((_rowIdInfo != null) &&
-            (databaseName != null) &&
-            (tableName != null))
+        if (_rowIdInfo != null &&
+            databaseName != null &&
+            tableName != null)
         {
             for (var i = 0; i < _rowIdInfo.Length; i++)
             {
@@ -373,9 +373,9 @@ namespace System.Data.SQLite
         string tableName
         )
     {
-        if ((_keyInfo != null) &&
-            (databaseName != null) &&
-            (tableName != null))
+        if (_keyInfo != null &&
+            databaseName != null &&
+            tableName != null)
         {
             for (var i = 0; i < _keyInfo.Length; i++)
             {
@@ -466,7 +466,7 @@ namespace System.Data.SQLite
     /// </summary>
     internal int Count
     {
-      get { return (_keyInfo == null) ? 0 : _keyInfo.Length; }
+      get { return _keyInfo == null ? 0 : _keyInfo.Length; }
     }
 
     private void Sync(int i)

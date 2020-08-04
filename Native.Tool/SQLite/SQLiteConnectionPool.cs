@@ -522,7 +522,7 @@ namespace System.Data.SQLite
                         if (_queueList.TryGetValue(fileName, out queue))
                         {
                             var poolQueue = queue.Queue;
-                            var count = (poolQueue != null) ? poolQueue.Count : 0;
+                            var count = poolQueue != null ? poolQueue.Count : 0;
 
                             counts.Add(fileName, count);
                             totalCount += count;
@@ -536,7 +536,7 @@ namespace System.Data.SQLite
                                 continue;
 
                             var poolQueue = pair.Value.Queue;
-                            var count = (poolQueue != null) ? poolQueue.Count : 0;
+                            var count = poolQueue != null ? poolQueue.Count : 0;
 
                             counts.Add(pair.Key, count);
                             totalCount += count;
@@ -699,7 +699,7 @@ namespace System.Data.SQLite
                     PoolQueue queue;
 
                     if (_queueList.TryGetValue(fileName, out queue) &&
-                        (version == queue.PoolVersion))
+                        version == queue.PoolVersion)
                     {
                         ResizePool(queue, true);
 

@@ -208,7 +208,7 @@ namespace System.Data.SQLite
     {
       var x = values.Length;
       for (var n = 0; n < x; n++)
-        Add((SQLiteParameter)(values.GetValue(n)));
+        Add((SQLiteParameter)values.GetValue(n));
     }
 
     /// <summary>
@@ -227,7 +227,7 @@ namespace System.Data.SQLite
     /// <returns>True if the parameter is in the collection</returns>
     public override bool Contains(string parameterName)
     {
-      return (IndexOf(parameterName) != -1);
+      return IndexOf(parameterName) != -1;
     }
 
     /// <summary>

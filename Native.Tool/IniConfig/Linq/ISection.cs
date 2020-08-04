@@ -126,7 +126,7 @@ namespace Native.Tool.IniConfig.Linq
 			var iValue = this[key];
 			if (iValue is T)
 			{
-				var result = (T)(iValue.Value);
+				var result = (T)iValue.Value;
 				if (typeof(T) != typeof(IComparable) && typeof(T) != typeof(IFormattable))
 				{
 					return result;

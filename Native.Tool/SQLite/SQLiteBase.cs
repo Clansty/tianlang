@@ -681,7 +681,7 @@ namespace System.Data.SQLite
 
         var index = (int)(rc & SQLiteErrorCode.NonExtendedMask);
 
-        if ((index < 0) || (index >= _errorMessages.Length))
+        if (index < 0 || index >= _errorMessages.Length)
             index = (int)SQLiteErrorCode.Error; /* Make into generic error. */
 
         return _errorMessages[index];
@@ -689,7 +689,7 @@ namespace System.Data.SQLite
 
     internal static string GetLastError(SQLiteConnectionHandle hdl, IntPtr db)
     {
-        if ((hdl == null) || (db == IntPtr.Zero))
+        if (hdl == null || db == IntPtr.Zero)
             return "null connection or database handle";
 
         string result = null;
@@ -727,7 +727,7 @@ namespace System.Data.SQLite
 
     internal static void FinishBackup(SQLiteConnectionHandle hdl, IntPtr backup)
     {
-        if ((hdl == null) || (backup == IntPtr.Zero)) return;
+        if (hdl == null || backup == IntPtr.Zero) return;
 
         try
         {
@@ -753,7 +753,7 @@ namespace System.Data.SQLite
 
     internal static void CloseBlob(SQLiteConnectionHandle hdl, IntPtr blob)
     {
-        if ((hdl == null) || (blob == IntPtr.Zero)) return;
+        if (hdl == null || blob == IntPtr.Zero) return;
 
         try
         {
@@ -779,7 +779,7 @@ namespace System.Data.SQLite
 
     internal static void FinalizeStatement(SQLiteConnectionHandle hdl, IntPtr stmt)
     {
-        if ((hdl == null) || (stmt == IntPtr.Zero)) return;
+        if (hdl == null || stmt == IntPtr.Zero) return;
 
         try
         {
@@ -805,7 +805,7 @@ namespace System.Data.SQLite
 
     internal static void CloseConnection(SQLiteConnectionHandle hdl, IntPtr db)
     {
-        if ((hdl == null) || (db == IntPtr.Zero)) return;
+        if (hdl == null || db == IntPtr.Zero) return;
 
         try
         {
@@ -834,7 +834,7 @@ namespace System.Data.SQLite
 #if !INTEROP_LEGACY_CLOSE
     internal static void CloseConnectionV2(SQLiteConnectionHandle hdl, IntPtr db)
     {
-        if ((hdl == null) || (db == IntPtr.Zero)) return;
+        if (hdl == null || db == IntPtr.Zero) return;
 
         try
         {
@@ -863,7 +863,7 @@ namespace System.Data.SQLite
 
     internal static bool ResetConnection(SQLiteConnectionHandle hdl, IntPtr db, bool canThrow)
     {
-        if ((hdl == null) || (db == IntPtr.Zero)) return false;
+        if (hdl == null || db == IntPtr.Zero) return false;
 
         var result = false;
 
@@ -934,7 +934,7 @@ namespace System.Data.SQLite
 
     internal static bool IsAutocommit(SQLiteConnectionHandle hdl, IntPtr db)
     {
-        if ((hdl == null) || (db == IntPtr.Zero)) return false;
+        if (hdl == null || db == IntPtr.Zero) return false;
 
         var result = false;
 
@@ -951,7 +951,7 @@ namespace System.Data.SQLite
 #endif
             {
                 if (!hdl.IsInvalid && !hdl.IsClosed)
-                    result = (UnsafeNativeMethods.sqlite3_get_autocommit(db) == 1);
+                    result = UnsafeNativeMethods.sqlite3_get_autocommit(db) == 1;
             }
         }
         GC.KeepAlive(hdl); /* NOTE: Unreachable code. */

@@ -183,7 +183,7 @@ namespace System.Data.SQLite
       {
         object value;
         TryGetValue("data source", out value);
-        return (value != null) ? value.ToString() : null;
+        return value != null ? value.ToString() : null;
       }
       set
       {
@@ -203,7 +203,7 @@ namespace System.Data.SQLite
       {
         object value;
         TryGetValue("uri", out value);
-        return (value != null) ? value.ToString() : null;
+        return value != null ? value.ToString() : null;
       }
       set
       {
@@ -223,7 +223,7 @@ namespace System.Data.SQLite
       {
         object value;
         TryGetValue("fulluri", out value);
-        return (value != null) ? value.ToString() : null;
+        return value != null ? value.ToString() : null;
       }
       set
       {
@@ -436,7 +436,7 @@ namespace System.Data.SQLite
       {
         object value;
         TryGetValue("password", out value);
-        return (value != null) ? value.ToString() : null;
+        return value != null ? value.ToString() : null;
       }
       set
       {
@@ -736,7 +736,7 @@ namespace System.Data.SQLite
         {
             object value;
             TryGetValue("defaulttypename", out value);
-            return (value != null) ? value.ToString() : null;
+            return value != null ? value.ToString() : null;
         }
         set
         {
@@ -756,7 +756,7 @@ namespace System.Data.SQLite
         {
             object value;
             TryGetValue("vfsname", out value);
-            return (value != null) ? value.ToString() : null;
+            return value != null ? value.ToString() : null;
         }
         set
         {
@@ -819,7 +819,7 @@ namespace System.Data.SQLite
         {
             object value;
             TryGetValue("zipvfsversion", out value);
-            return (value != null) ? value.ToString() : null;
+            return value != null ? value.ToString() : null;
         }
         set
         {

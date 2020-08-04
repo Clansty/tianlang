@@ -801,7 +801,7 @@ namespace Native.Tool.IniConfig.Linq
 		/// <returns>可以转换则为 <see langword="true"/> 否则为 <see langword="false"/></returns>
 		private static bool IsConvert (IValueType sourceType, IValueType[] targetTypes, bool nullable)
 		{
-			return Array.IndexOf<IValueType> (targetTypes, sourceType) != -1 || (nullable && (sourceType == IValueType.Empty));
+			return Array.IndexOf<IValueType> (targetTypes, sourceType) != -1 || nullable && sourceType == IValueType.Empty;
 		}
 		/// <summary>
 		/// 比较两个指定的 <see cref="IValue"/> 对象，并返回一个指示二者在排序顺序中的相对位置的整数

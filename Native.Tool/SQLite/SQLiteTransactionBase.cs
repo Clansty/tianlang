@@ -45,7 +45,7 @@ namespace System.Data.SQLite
             _cnn = connection;
             _version = _cnn._version;
 
-            _level = (deferredLock == true) ?
+            _level = deferredLock == true ?
                 SQLiteConnection.DeferredIsolationLevel :
                 SQLiteConnection.ImmediateIsolationLevel;
 

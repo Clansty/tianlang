@@ -81,7 +81,7 @@ namespace Native.Sdk.Cqp.Model
 		/// <param name="msg">模型使用的消息原文</param>
 		/// <param name="isRegexMsg">指示当前实例是否是正则消息</param>
 		public QQMessage (CQApi api, int msgId, string msg, bool isRegexMsg = false)
-			: base (api, (isRegexMsg == true) ? msg : string.Empty)
+			: base (api, isRegexMsg == true ? msg : string.Empty)
 		{
 			if (object.ReferenceEquals (msg, null))
 			{

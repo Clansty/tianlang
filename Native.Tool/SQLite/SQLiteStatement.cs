@@ -182,7 +182,7 @@ namespace System.Data.SQLite
         ref bool readOnly
         )
     {
-        if ((_sql != null) && _sql.IsOpen())
+        if (_sql != null && _sql.IsOpen())
         {
             changes = _sql.Changes;
             readOnly = _sql.IsReadOnly(this);
@@ -351,7 +351,7 @@ namespace System.Data.SQLite
             SQLiteTypeCallbacks callbacks;
 
             if (!connection.TryGetTypeCallbacks(typeName, out callbacks) ||
-                (callbacks == null))
+                callbacks == null)
             {
                 return;
             }
@@ -397,7 +397,7 @@ namespace System.Data.SQLite
       var obj = param.Value;
       var objType = param.DbType;
 
-      if ((obj != null) && (objType == DbType.Object))
+      if (obj != null && objType == DbType.Object)
           objType = SQLiteConvert.TypeToDbType(obj.GetType());
 
       if (SQLite3.ForceLogPrepare() || HelperMethods.LogPreBind(_flags))
@@ -410,7 +410,7 @@ namespace System.Data.SQLite
               handle, index, objType, obj));
       }
 
-      if ((obj == null) || Convert.IsDBNull(obj))
+      if (obj == null || Convert.IsDBNull(obj))
       {
           _sql.Bind_Null(this, _flags, index);
         return;
@@ -471,7 +471,7 @@ namespace System.Data.SQLite
           // NOTE: The old method (commented below) does not honor the selected date format
           //       for the connection.
           // _sql.Bind_DateTime(this, index, Convert.ToDateTime(obj, cultureInfo));
-            _sql.Bind_DateTime(this, _flags, index, (obj is string) ?
+            _sql.Bind_DateTime(this, _flags, index, obj is string ?
               _sql.ToDateTime((string)obj) : Convert.ToDateTime(obj, cultureInfo));
           break;
         case DbType.Boolean:

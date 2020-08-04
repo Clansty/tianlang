@@ -471,7 +471,7 @@ namespace System.Data.SQLite
         // NOTE: This must be done to prevent the core SQLite library from
         //       using our (invalid) result.
         //
-        if ((_base != null) && _base.IsOpen())
+        if (_base != null && _base.IsOpen())
             _base.Cancel();
 
         return 0;
@@ -517,7 +517,7 @@ namespace System.Data.SQLite
         // NOTE: This must be done to prevent the core SQLite library from
         //       using our (invalid) result.
         //
-        if ((_base != null) && _base.IsOpen())
+        if (_base != null && _base.IsOpen())
             _base.Cancel();
 
         return 0;
@@ -545,7 +545,7 @@ namespace System.Data.SQLite
             {
                 var nAux = _base.AggregateContext(context);
 
-                if ((_contextDataList != null) &&
+                if (_contextDataList != null &&
                     !_contextDataList.TryGetValue(nAux, out data))
                 {
                     data = new AggregateData();
@@ -602,7 +602,7 @@ namespace System.Data.SQLite
                 var n = _base.AggregateContext(context);
                 AggregateData aggData;
 
-                if ((_contextDataList != null) &&
+                if (_contextDataList != null &&
                     _contextDataList.TryGetValue(n, out aggData))
                 {
                     obj = aggData._data;
@@ -857,8 +857,8 @@ namespace System.Data.SQLite
             function = null;
             return false;
         }
-        else if ((functionAttribute.Callback1 != null) ||
-                (functionAttribute.Callback2 != null))
+        else if (functionAttribute.Callback1 != null ||
+                functionAttribute.Callback2 != null)
         {
             function = new SQLiteDelegateFunction(
                 functionAttribute.Callback1,
@@ -965,7 +965,7 @@ namespace System.Data.SQLite
                 SQLiteFunction f;
 
                 if (!lFunctions.TryGetValue(pr, out f) ||
-                    (f == null) ||
+                    f == null ||
                     !UnbindFunction(sqlbase, pr, f, flags))
                 {
                     result = false;
@@ -992,7 +992,7 @@ namespace System.Data.SQLite
 
                 var f = pair.Value;
 
-                if ((f != null) &&
+                if (f != null &&
                     UnbindFunction(sqlbase, pr, f, flags))
                 {
                     /* IGNORED */
@@ -1047,26 +1047,26 @@ namespace System.Data.SQLite
         function._base = sqliteBase;
         function._flags = flags;
 
-        function._InvokeFunc = (functionType == FunctionType.Scalar) ?
+        function._InvokeFunc = functionType == FunctionType.Scalar ?
             new SQLiteCallback(function.ScalarCallback) : null;
 
-        function._StepFunc = (functionType == FunctionType.Aggregate) ?
+        function._StepFunc = functionType == FunctionType.Aggregate ?
             new SQLiteCallback(function.StepCallback) : null;
 
-        function._FinalFunc = (functionType == FunctionType.Aggregate) ?
+        function._FinalFunc = functionType == FunctionType.Aggregate ?
             new SQLiteFinalCallback(function.FinalCallback) : null;
 
-        function._CompareFunc = (functionType == FunctionType.Collation) ?
+        function._CompareFunc = functionType == FunctionType.Collation ?
             new SQLiteCollation(function.CompareCallback) : null;
 
-        function._CompareFunc16 = (functionType == FunctionType.Collation) ?
+        function._CompareFunc16 = functionType == FunctionType.Collation ?
             new SQLiteCollation(function.CompareCallback16) : null;
 
         var name = functionAttribute.Name;
 
         if (functionType != FunctionType.Collation)
         {
-            var needCollSeq = (function is SQLiteFunctionEx);
+            var needCollSeq = function is SQLiteFunctionEx;
 
             sqliteBase.CreateFunction(
                 name, functionAttribute.Arguments, needCollSeq,
@@ -1121,7 +1121,7 @@ namespace System.Data.SQLite
 
         if (functionType != FunctionType.Collation)
         {
-            var needCollSeq = (function is SQLiteFunctionEx);
+            var needCollSeq = function is SQLiteFunctionEx;
 
             return sqliteBase.CreateFunction(
                 name, functionAttribute.Arguments, needCollSeq,

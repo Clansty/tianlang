@@ -1918,7 +1918,7 @@ namespace System.Data.SQLite
                     var bytes = new byte[nData];
                     var nRead = localStream.Read(bytes, 0, nData);
 
-                    if ((nRead > 0) && (pData != IntPtr.Zero))
+                    if (nRead > 0 && pData != IntPtr.Zero)
                         Marshal.Copy(bytes, 0, pData, nRead);
 
                     nData = nRead;
@@ -5140,8 +5140,8 @@ namespace System.Data.SQLite
         /// </summary>
         private void PopulateOperationMetadata()
         {
-            if ((tableName == null) || (numberOfColumns == null) ||
-                (operationCode == null) || (indirect == null))
+            if (tableName == null || numberOfColumns == null ||
+                operationCode == null || indirect == null)
             {
                 CheckIterator();
 
@@ -5160,7 +5160,7 @@ namespace System.Data.SQLite
                 tableName = SQLiteString.StringFromUtf8IntPtr(pTblName);
                 numberOfColumns = nColumns;
                 operationCode = op;
-                indirect = (bIndirect != 0);
+                indirect = bIndirect != 0;
             }
         }
 
@@ -5193,7 +5193,7 @@ namespace System.Data.SQLite
                     primaryKeyColumns = new bool[nColumns];
 
                     for (var index = 0; index < bytes.Length; index++)
-                        primaryKeyColumns[index] = (bytes[index] != 0);
+                        primaryKeyColumns[index] = bytes[index] != 0;
                 }
             }
         }

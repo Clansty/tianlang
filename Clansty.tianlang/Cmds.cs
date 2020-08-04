@@ -18,7 +18,7 @@ namespace Clansty.tianlang
                 Func = s =>
                 {
                     s = s.Trim(' ', '\n', '[', ']', '@');
-                    if ((!ulong.TryParse(s, out _)) || s == "")
+                    if (!ulong.TryParse(s, out _) || s == "")
                         return "QQ号格式错误";
                     var u = new User(s);
                     UserInfo.CheckQmpAsync(u);

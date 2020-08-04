@@ -63,7 +63,7 @@ namespace Native.Tool.IniConfig.Utilities
 				return new BigInteger (value9);
 			}
 			byte[] value10;
-			if ((value10 = (value as byte[])) != null)
+			if ((value10 = value as byte[]) != null)
 			{
 				return new BigInteger (value10);
 			}

@@ -350,12 +350,12 @@ namespace System.Data.SQLite
 
       try
       {
-        if ((_cnn != null) && (_cnn._sql != null))
+        if (_cnn != null && _cnn._sql != null)
         {
           if (_statementList == null)
             _remainingText = _commandText;
 
-          stmt = _cnn._sql.Prepare(_cnn, _remainingText, (_statementList == null) ? null : _statementList[_statementList.Count - 1], (uint)(_commandTimeout * 1000), ref _remainingText);
+          stmt = _cnn._sql.Prepare(_cnn, _remainingText, _statementList == null ? null : _statementList[_statementList.Count - 1], (uint)(_commandTimeout * 1000), ref _remainingText);
 
           if (stmt != null)
           {
@@ -376,7 +376,7 @@ namespace System.Data.SQLite
       {
         if (stmt != null)
         {
-          if ((_statementList != null) && _statementList.Contains(stmt))
+          if (_statementList != null && _statementList.Contains(stmt))
             _statementList.Remove(stmt);
 
           stmt.Dispose();
@@ -647,7 +647,7 @@ namespace System.Data.SQLite
         SQLiteConnection.Check(connection); /* throw */
         var sqlBase = connection._sql;
 
-        if ((connection == null) || (sqlBase == null))
+        if (connection == null || sqlBase == null)
             throw new SQLiteException("invalid or unusable connection");
 
         List<SQLiteStatement> statements = null;
@@ -659,7 +659,7 @@ namespace System.Data.SQLite
             var timeout = (uint)(_commandTimeout * 1000);
             SQLiteStatement previousStatement = null;
 
-            while ((text != null) && (text.Length > 0))
+            while (text != null && text.Length > 0)
             {
                 currentStatement = sqlBase.Prepare(
                     connection, text, previousStatement, timeout,
@@ -1023,7 +1023,7 @@ namespace System.Data.SQLite
       using (var reader = ExecuteReader(behavior |
                                         CommandBehavior.SingleRow | CommandBehavior.SingleResult))
       {
-        if (reader.Read() && (reader.FieldCount > 0))
+        if (reader.Read() && reader.FieldCount > 0)
           return reader[0];
       }
       return null;
@@ -1062,7 +1062,7 @@ namespace System.Data.SQLite
         CheckDisposed();
         SQLiteConnection.Check(_cnn);
 
-        if (clearBindings && (_parameterCollection != null))
+        if (clearBindings && _parameterCollection != null)
             _parameterCollection.Unbind();
 
         ClearDataReader();
@@ -1085,13 +1085,13 @@ namespace System.Data.SQLite
 
             rc = sqlBase.Reset(item);
 
-            if ((rc == SQLiteErrorCode.Ok) && clearBindings &&
-                (SQLite3.SQLiteVersionNumber >= 3003007))
+            if (rc == SQLiteErrorCode.Ok && clearBindings &&
+                SQLite3.SQLiteVersionNumber >= 3003007)
             {
                 rc = UnsafeNativeMethods.sqlite3_clear_bindings(stmt);
             }
 
-            if (!ignoreErrors && (rc != SQLiteErrorCode.Ok))
+            if (!ignoreErrors && rc != SQLiteErrorCode.Ok)
                 throw new SQLiteException(rc, sqlBase.GetLastError());
         }
     }

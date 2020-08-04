@@ -157,7 +157,7 @@ namespace System.Data.SQLite
                     // dispose managed resources here...
                     ////////////////////////////////////
 
-                    if (disposeSelect && (SelectCommand != null))
+                    if (disposeSelect && SelectCommand != null)
                     {
                         SelectCommand.Dispose();
                         SelectCommand = null;
@@ -212,7 +212,7 @@ namespace System.Data.SQLite
 
 #if !PLATFORM_COMPACTFRAMEWORK
         var previous = (EventHandler<RowUpdatingEventArgs>)base.Events[_updatingEventPH];
-        if ((previous != null) && (value.Target is DbCommandBuilder))
+        if (previous != null && value.Target is DbCommandBuilder)
         {
           var handler = (EventHandler<RowUpdatingEventArgs>)FindBuilder(previous);
           if (handler != null)
