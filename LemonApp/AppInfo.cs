@@ -47,5 +47,10 @@ namespace LemonApp
         /// 0 表示不需要取 cookies，需要请改为 1
         /// </summary>
         public readonly int ck = 0;
+        /// <summary>
+        /// 机器人自己的 QQ，以后将不需要这个
+        /// ☆请勿催更，我没有义务做这个 SDK
+        /// </summary>
+        public static long self = 0;
     }
 }
