@@ -1,4 +1,5 @@
-﻿using Native.Sdk.Cqp.EventArgs;
+﻿using System.Windows.Forms;
+using Native.Sdk.Cqp.EventArgs;
 using Native.Sdk.Cqp.Interface;
 
 namespace Clansty.tianlang.Events
@@ -16,20 +17,14 @@ namespace Clansty.tianlang.Events
                 if (e.Message.Text.StartsWith("sudo "))
                     Cmds.SudoEnter(e);
                 Repeater.Enter(e.Message);
-            }
-
-            if (e.FromGroup == G.test)
-            {
-                //TODO 结构化消息调试
-
-                //if (e.Msg.StartsWith("{") && e.Msg.IndexOf('}') > 0)
-                //    e.Reply($"[LQ:lightappelem,type=1,data={e.Msg.Replace(",", "&#44;")},msg_resid=]");
-                //else if (e.Msg.StartsWith("[LQ:lightappelem,type=1,data=") && e.Msg.IndexOf(",msg_resid=]") > 0)
-                //    e.Reply(e.Msg.Between("[LQ:lightappelem,type=1,data=", ",msg_resid=]").Replace("&#44;", ","));
-                //else if (e.Msg.StartsWith("[LQ:richmsg") && e.Msg.IndexOf("]") > 0)
-                //    e.Reply(e.Msg.Trim('[', ']'));
-                //else if (e.Msg.StartsWith("LQ:richmsg"))
-                //    e.Reply($"[{e.Msg.UnEscape()}]");
+                if (C.recording)
+                {
+                    var u = new User(e.FromQQ);
+                    if (u.Enrollment == 2020 || u.Enrollment == 2017 && u.Junior)
+                    {
+                        Rds.SAdd("elec2020", u.Uin);
+                    }
+                }
             }
         }
     }
