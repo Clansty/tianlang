@@ -32,15 +32,17 @@ namespace Clansty.tianlang
                 switch (Enrollment)
                 {
                     case 2017:
-                        r = "初/高三";
+                        r = "2020届";
                         break;
                     case 2018:
-                        r = "高二";
+                        r = "高三";
                         break;
                     case 2019:
-                        r = "高一";
+                        r = "高二";
                         break;
-                    default:
+                    case 2020:
+                        r = "高一";
+                        break;                   default:
                         if (Enrollment < 2000)
                             return "未知";
                         r = Enrollment + 3 + "届";
