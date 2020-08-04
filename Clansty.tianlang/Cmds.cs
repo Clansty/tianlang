@@ -22,7 +22,6 @@ namespace Clansty.tianlang
                         return "QQ号格式错误";
                     var u = new User(s);
                     UserInfo.CheckQmpAsync(u);
-                    UserInfo.CheckG2020QmpAsync(u);
                     return u.ToXml();
                 }
             },
@@ -239,20 +238,6 @@ namespace Clansty.tianlang
                 {
                     s = s.Trim(' ', '\n', '[', ']', '@');
                     var task = UserInfo.CheckQmpAsync(new User(s));
-                    task.Wait();
-                    return task.Result.ToString();
-                }
-            },
-            ["chkqmp2020"] = new GroupCommand
-            {
-                Description = "test",
-                Usage = "chkqmp2020 [qq]",
-                IsParamsNeeded = true,
-                Permission = UserType.administrator,
-                Func = s =>
-                {
-                    s = s.Trim(' ', '\n', '[', ']', '@');
-                    var task = UserInfo.CheckG2020QmpAsync(new User(s));
                     task.Wait();
                     return task.Result.ToString();
                 }

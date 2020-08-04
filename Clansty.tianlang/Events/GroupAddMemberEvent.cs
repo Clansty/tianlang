@@ -34,10 +34,7 @@ namespace Clansty.tianlang.Events
 
             if (e.FromGroup == G.g2020)
             {
-                MemberList.g2020.Add(e.BeingOperateQQ);
-                var u = new User(e.BeingOperateQQ);
-                UserInfo.CheckG2020QmpAsync(u);
-                if (!MemberList.major.Contains(u.Uin))
+                if (!MemberList.major.Contains(e.BeingOperateQQ))
                 {
                     S.Private(e.BeingOperateQQ, "看起来你还没有加入十中大群的说\n加入苏州十中跨年级大群 ", G.major, "，解锁更多好玩的");
                 }

@@ -16,7 +16,6 @@ namespace Clansty.tianlang.Events
         {
             await Task.Delay(2333);
             MemberList.UpdateMajor();
-            MemberList.UpdateG2020();
             C.WriteLn("Memberlist updated");
         }
     }

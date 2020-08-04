@@ -19,7 +19,7 @@ namespace Clansty.tianlang
          * 到时候会有一个人两个实名身份的情况（難度大）
          */
         
-        public const string Version = "3.1.18.12";//20200804
+        public const string Version = "3.1.19.0";//20200804
         public static CQApi CQApi = null;
         public static bool recording = false;
 
