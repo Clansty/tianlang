@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Native.Sdk.Cqp.EventArgs;
 
 namespace Clansty.tianlang
 {
@@ -243,12 +242,12 @@ namespace Clansty.tianlang
                 }
             },
         };
-        public static void SiEnter(CQGroupMessageEventArgs e)
+        internal static void SiEnter(GroupMsgArgs e)
         {
             try
             {
-                var key = (e.Message.Text.GetLeft(" ") == "" ? e.Message.Text.ToLower() : e.Message.Text.GetLeft(" ")).ToLower();
-                var act = e.Message.Text.GetRight(" ");
+                var key = (e.Msg.GetLeft(" ") == "" ? e.Msg.ToLower() : e.Msg.GetLeft(" ")).ToLower();
+                var act = e.Msg.GetRight(" ");
                 key = key.Trim(' ', '\r', '\n');
                 act = act.Trim(' ', '\r', '\n');
                 if (gcmds.ContainsKey(key))
@@ -274,11 +273,11 @@ namespace Clansty.tianlang
                 e.Reply(ex.Message);
             }
         }
-        public static void SudoEnter(CQGroupMessageEventArgs e)
+        internal static void SudoEnter(GroupMsgArgs e)
         {
             try
             {
-                var s = e.Message.Text.GetRight("sudo ").Trim();
+                var s = e.Msg.GetRight("sudo ").Trim();
                 var key = (s.GetLeft(" ") == "" ? s.ToLower() : s.GetLeft(" ")).ToLower();
                 var act = s.GetRight(" ");
                 key = key.Trim(' ', '\r', '\n');
