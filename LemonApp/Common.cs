@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using Native.Sdk.Cqp;
 
 namespace Clansty.tianlang
 {
@@ -20,7 +19,6 @@ namespace Clansty.tianlang
          */
         
         public const string Version = "3.1.19.0";//20200804
-        public static CQApi CQApi = null;
         public static bool recording = false;
 
         public static void Write(string text, ConsoleColor color = ConsoleColor.White)

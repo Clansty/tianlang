@@ -1,31 +1,19 @@
-﻿using Native.Sdk.Cqp.Model;
-
-namespace Clansty.tianlang
+﻿namespace Clansty.tianlang
 {
     static class S
     {
-        public static void Group(long group, params object[] msg)
+        public static void Group(string group, string msg)
         {
-            C.CQApi.SendGroupMessage(group, msg);
+            Robot.Send.Group(group, msg);
         }
 
-        public static void Private(QQ qq, params object[] msg)
+        public static void Private(string qq, string msg)
         {
-            Private(qq.Id, msg);
+            Robot.Send.Friend(qq, msg);
         }
 
-        public static void Private(string qq, params object[] msg)
-        {
-            Private(long.Parse(qq), msg);
-        }
-
-        public static void Private(long longqq, params object[] msg)
-        {
-            C.CQApi.SendPrivateMessage(longqq, msg);
-        }
-
-        public static void Major(params object[] msg) => Group(G.major, msg);
-        public static void Si(params object[] msg) => Group(G.si, msg);
-        public static void Test(params object[] msg) => Group(G.test, msg);
+        public static void Major(string msg) => Group(G.major, msg);
+        public static void Si(string msg) => Group(G.si, msg);
+        public static void Test(string msg) => Group(G.test, msg);
     }
 }

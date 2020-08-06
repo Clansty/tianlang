@@ -1,15 +1,8 @@
-﻿using Native.Sdk.Cqp.Model;
-
-namespace Clansty.tianlang
+﻿namespace Clansty.tianlang
 {
     class User : INamedUser
     {
         public string Uin { get; }
-
-        public long LongUin
-        {
-            get => long.Parse(Uin);
-        }
 
         public User(string uin)
         {
@@ -17,42 +10,6 @@ namespace Clansty.tianlang
             if (!Rds.SContains("users", uin))
             {
                 Rds.SAdd("users", uin);
-                var client = Rds.GetClient();
-                client.SetEntryInHashIfNotExists("u" + Uin, "name", "");
-                client.SetEntryInHashIfNotExists("u" + Uin, "nick", "");
-                client.SetEntryInHashIfNotExists("u" + Uin, "junior", "0");
-                client.SetEntryInHashIfNotExists("u" + Uin, "enrollment", "-1");
-                client.SetEntryInHashIfNotExists("u" + Uin, "step", "-1");
-                client.SetEntryInHashIfNotExists("u" + Uin, "status", "0");
-                client.SetEntryInHashIfNotExists("u" + Uin, "role", "0");
-                client.Dispose();
-            }
-        }
-
-        public User(long longuin)
-        {
-            Uin = longuin.ToString();
-            if (!Rds.SContains("users", Uin))
-            {
-                Rds.SAdd("users", Uin);
-                var client = Rds.GetClient();
-                client.SetEntryInHashIfNotExists("u" + Uin, "name", "");
-                client.SetEntryInHashIfNotExists("u" + Uin, "nick", "");
-                client.SetEntryInHashIfNotExists("u" + Uin, "junior", "0");
-                client.SetEntryInHashIfNotExists("u" + Uin, "enrollment", "-1");
-                client.SetEntryInHashIfNotExists("u" + Uin, "step", "-1");
-                client.SetEntryInHashIfNotExists("u" + Uin, "status", "0");
-                client.SetEntryInHashIfNotExists("u" + Uin, "role", "0");
-                client.Dispose();
-            }
-        }
-
-        public User(QQ eFromQq)
-        {
-            Uin = eFromQq;
-            if (!Rds.SContains("users", Uin))
-            {
-                Rds.SAdd("users", Uin);
                 var client = Rds.GetClient();
                 client.SetEntryInHashIfNotExists("u" + Uin, "name", "");
                 client.SetEntryInHashIfNotExists("u" + Uin, "nick", "");
@@ -73,7 +30,19 @@ namespace Clansty.tianlang
 
         public string Nick
         {
-            get => Get("nick").Trim() == "" ? C.CQApi.GetStrangerInfo(LongUin).Nick : Get("nick").Trim();
+            get
+            {
+                //为了防止频繁请求还是把默认昵称信息落数据库
+                //老写法还取两次
+                var ret = Get("nick").Trim();
+                if (string.IsNullOrEmpty(ret))
+                {
+                    ret = Robot.GetNick(Uin);
+                    Nick = ret;
+                }
+                return ret;
+            }
+
             set => Set("nick", value);
         }
 
@@ -167,24 +136,9 @@ namespace Clansty.tianlang
 
         public string Namecard
         {
-            get
-            {
-                var info = C.CQApi.GetGroupMemberInfo(G.major, LongUin);
-                return info is null ? "" : info.Card;
-            }
+            get => Robot.GetGroupMemberCard(G.major, Uin);
 
-            set => C.CQApi.SetGroupMemberVisitingCard(G.major, LongUin, value);
-        }
-
-        public string G2020Namecard
-        {
-            get
-            {
-                var info = C.CQApi.GetGroupMemberInfo(G.g2020, LongUin);
-                return info is null ? "" : info.Card;
-            }
-
-            set => C.CQApi.SetGroupMemberVisitingCard(G.g2020, LongUin, value);
+            set => Robot.SetGroupMemberCard(G.major, Uin, value);
         }
 
         public Status Status
@@ -282,29 +236,6 @@ namespace Clansty.tianlang
             }
         }
 
-        public string ProperG2020Namecard
-        {
-            get
-            {
-                var left = "";
-                if (Branch)
-                    left += "金阊";
-                if (Enrollment != 2020 && Enrollment > 2000)
-                    left += Grade;
-                if (!Verified)
-                    left = "未实名" + left;
-                left = left.Trim();
-                var r = left;
-                if (left != "")
-                    r += " | ";
-                if (string.IsNullOrEmpty(Name))
-                    r += Nick;
-                else
-                    r += Name;
-                return r;
-            }
-        }
-
         internal bool IsFresh => Name == ""; //紧急 fix
         public bool IsMember => MemberList.major.Contains(Uin);
 
@@ -324,7 +255,6 @@ namespace Clansty.tianlang
                       $"班级: {Class}\n" +
                       $"群名片: {Namecard}\n" +
                       $"理想群名片: {ProperNamecard}\n" +
-                      $"ProperG2020Namecard: {ProperG2020Namecard}\n" +
                       $"IsMember: {IsMember}\n" +
                       $"身份: {Role}\n" +
                       $"实名状态: {VerifyMsg}";

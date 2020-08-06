@@ -1,10 +1,13 @@
 ﻿using LemonApp;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using ServiceStack;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Web.Script.Serialization;
 
 namespace Clansty.tianlang
@@ -131,6 +134,14 @@ namespace Clansty.tianlang
         }
         [DllImport("LqrHelper.dll")]
         extern static IntPtr Api_GetGroupMemberList(long a, long b);
-
+        public static string GetNick(string qq)
+        {
+            WebClient client = new WebClient();
+            client.Encoding = Encoding.UTF8;
+            var json = client.DownloadString($"https://api.vvhan.com/api/qq?qq={qq}");
+            client.Dispose();
+            var jo = JObject.Parse(json);
+            return jo.Value<string>("name");
+        }
     }
 }

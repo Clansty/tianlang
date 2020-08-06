@@ -165,7 +165,8 @@ namespace Clansty.tianlang
             {
                 if (!MemberList.major.Contains(e.BeingOperateQQ))
                 {
-                    S.Private(e.BeingOperateQQ, "看起来你还没有加入十中大群的说\n加入苏州十中跨年级大群 ", G.major, "，解锁更多好玩的");
+                    //这里由于不是大群成员所以需要以手动群临时方式发送
+                    Robot.Send.Temp(G.g2020, e.BeingOperateQQ, $"看起来你还没有加入十中大群的说\n加入苏州十中跨年级大群 {G.major}，解锁更多好玩的");
                 }
             }
         }
