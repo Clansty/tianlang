@@ -12,6 +12,7 @@ namespace Clansty.tianlang
         }
         internal static void Enable()
         {
+            C.SetProcessDPIAware();
             C.AllocConsole();
             Console.Title = $@"甜狼 {C.Version}";
             new Menu().Show();

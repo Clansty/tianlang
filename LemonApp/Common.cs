@@ -37,5 +37,7 @@ namespace Clansty.tianlang
 
         [DllImport("kernel32.dll")]
         public static extern bool AllocConsole();
+        [DllImport("user32.dll")]
+        internal static extern bool SetProcessDPIAware();
     }
 }
