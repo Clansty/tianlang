@@ -10,6 +10,7 @@ namespace Clansty.tianlang
          * 號碼全用 long
          * 進群申請分析更智能，用 parse nick 來 parse 姓名
          * 新生群加群解析姓名直接入库
+         * 查不存在的人直接返回不存在不写数据库
          *
          * 7/31 管理群會話 TODO 總結：
          * 草了现在 branch 是 get only 的也得改（費點功夫）
