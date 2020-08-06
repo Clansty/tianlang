@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LemonApp
+namespace Clansty.tianlang
 {
     class GroupAddMemberArgs : EventArgs
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LemonApp
+namespace Clansty.tianlang
 {
     internal class FriendMsgArgs : EventArgs
     {

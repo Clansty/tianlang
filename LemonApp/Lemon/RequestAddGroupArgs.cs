@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace LemonApp
+namespace Clansty.tianlang
 {
     class RequestAddGroupArgs : EventArgs
     {

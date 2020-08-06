@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using LemonApp;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Web.Script.Serialization;
 
-namespace LemonApp
+namespace Clansty.tianlang
 {
     static class Robot
     {
@@ -89,19 +90,19 @@ namespace LemonApp
         {
             public static void Group(string group, string msg)
             {
-                Api_sendGroupMsg(ac, LemonApp.AppInfo.self, long.Parse(group), msg);
+                Api_sendGroupMsg(ac, Clansty.tianlang.AppInfo.self, long.Parse(group), msg);
             }
             [DllImport("LqrHelper.dll")]
             extern static void Api_sendGroupMsg(int a, long b, long c, string d);
             public static void Temp(string group,string qq,string msg)
             {
-                Api_sendTransieMsg(ac, LemonApp.AppInfo.self, long.Parse(group), msg, long.Parse(qq));
+                Api_sendTransieMsg(ac, Clansty.tianlang.AppInfo.self, long.Parse(group), msg, long.Parse(qq));
             }
             [DllImport("LqrHelper.dll")]
             extern static void Api_sendTransieMsg(int a, long b, long c, string d, long e);
             public static void Friend(string qq, string msg)
             {
-                Api_sendPrivateMsg(ac, LemonApp.AppInfo.self, long.Parse(qq), msg);
+                Api_sendPrivateMsg(ac, Clansty.tianlang.AppInfo.self, long.Parse(qq), msg);
             }
             [DllImport("LqrHelper.dll")]
             extern static void Api_sendPrivateMsg(int a, long b, long c, string d);
@@ -109,25 +110,25 @@ namespace LemonApp
 
         public static void GroupKickMember(string group, string qq)
         {
-            Api_KickGroupMember(LemonApp.AppInfo.self, long.Parse(group), long.Parse(qq), false);
+            Api_KickGroupMember(Clansty.tianlang.AppInfo.self, long.Parse(group), long.Parse(qq), false);
         }
         [DllImport("LqrHelper.dll")]
         extern static void Api_KickGroupMember(long a, long b, long c, bool d);
         public static string GetGroupMemberCard(string group, string qq)
         {
-            return Marshal.PtrToStringAnsi(Api_GetGroupMemberCard(LemonApp.AppInfo.self, long.Parse(group), long.Parse(qq)));
+            return Marshal.PtrToStringAnsi(Api_GetGroupMemberCard(Clansty.tianlang.AppInfo.self, long.Parse(group), long.Parse(qq)));
         }
         [DllImport("LqrHelper.dll")]
         extern static IntPtr Api_GetGroupMemberCard(long a, long b, long c);
         public static void SetGroupMemberCard(string group, string qq, string card)
         {
-            Api_SetGroupMemberCard(LemonApp.AppInfo.self, long.Parse(group), long.Parse(qq), card);
+            Api_SetGroupMemberCard(Clansty.tianlang.AppInfo.self, long.Parse(group), long.Parse(qq), card);
         }
         [DllImport("LqrHelper.dll")]
         extern static void Api_SetGroupMemberCard(long a, long b, long c, string d);
         public static ICollection<string> GetGroupMembers(string group)
         {
-            var json = Marshal.PtrToStringAnsi(Api_GetGroupMemberList(LemonApp.AppInfo.self, long.Parse(group)));
+            var json = Marshal.PtrToStringAnsi(Api_GetGroupMemberList(Clansty.tianlang.AppInfo.self, long.Parse(group)));
             var jobj = JObject.Parse(json);
             var members = jobj.SelectToken("members");
             var dic = members.ToObject<Dictionary<string, object>>();

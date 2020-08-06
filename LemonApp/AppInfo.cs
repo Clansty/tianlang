@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LemonApp
+namespace Clansty.tianlang
 {
     /// <summary>
     /// 请在这里填写应用的信息
@@ -26,7 +26,7 @@ namespace LemonApp
         /// <summary>
         /// 应用版本
         /// </summary>
-        public readonly string ver = "1.0";
+        public readonly string ver = C.Version;
         /// <summary>
         /// 开发者ID ‘预留  随便填
         /// </summary>
@@ -42,7 +42,7 @@ namespace LemonApp
         /// <summary>
         /// 应用详情显示的 URL
         /// </summary>
-        public readonly string url = "https://github.com/Clansty/LemonApp";
+        public readonly string url = "https://github.com/Clansty/Clansty.tianlang";
         /// <summary>
         /// 0 表示不需要取 cookies，需要请改为 1
         /// </summary>
