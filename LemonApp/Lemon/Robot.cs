@@ -116,8 +116,11 @@ namespace Clansty.tianlang
         public static string GetGroupMemberCard(string group, string qq)
         {
             //&nbsp;
-            return HttpUtility.HtmlDecode(Marshal.PtrToStringAnsi(Api_GetGroupMemberCard(tianlang.AppInfo.self, long.Parse(group), long.Parse(qq))));
+            var r = Marshal.PtrToStringAnsi(Api_GetGroupMemberCard(tianlang.AppInfo.self, long.Parse(group), long.Parse(qq)));
+            r = r.Replace("&nbsp;", " ");//nbsp 和空格是有区别的
+            return HttpUtility.HtmlDecode(r);
         }
+
         [DllImport("LqrHelper.dll")]
         extern static IntPtr Api_GetGroupMemberCard(long a, long b, long c);
         public static void SetGroupMemberCard(string group, string qq, string card)
