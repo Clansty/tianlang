@@ -130,10 +130,6 @@ namespace Clansty.tianlang
                 }
             }
         }
-        internal static void Msg(TempMsgArgs e)
-        {
-
-        }
         internal static void AddFriend(RequestAddFriendArgs e)
         {
             e.Accept();

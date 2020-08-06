@@ -46,16 +46,13 @@ namespace Clansty.tianlang
             switch (type)
             {
                 case 1:
+                case 3:
                     //好友消息
                     Events.Msg(new FriendMsgArgs(sq, msg));
                     break;
                 case 2:
                     //群消息
                     Events.Msg(new GroupMsgArgs(sq, g, msg));
-                    break;
-                case 3:
-                    //群临时
-                    Events.Msg(new TempMsgArgs(sq, g, msg));
                     break;
             }
             return 0;
@@ -90,22 +87,20 @@ namespace Clansty.tianlang
         {
             public static void Group(string group, string msg)
             {
-                Api_sendGroupMsg(ac, Clansty.tianlang.AppInfo.self, long.Parse(group), msg);
+                Api_sendGroupMsg(ac, tianlang.AppInfo.self, long.Parse(group), msg);
             }
             [DllImport("LqrHelper.dll")]
             extern static void Api_sendGroupMsg(int a, long b, long c, string d);
             public static void Temp(string group,string qq,string msg)
             {
-                Api_sendTransieMsg(ac, Clansty.tianlang.AppInfo.self, long.Parse(group), msg, long.Parse(qq));
+                Api_sendTransieMsg(ac, tianlang.AppInfo.self, long.Parse(group), msg, long.Parse(qq));
             }
             [DllImport("LqrHelper.dll")]
             extern static void Api_sendTransieMsg(int a, long b, long c, string d, long e);
             public static void Friend(string qq, string msg)
             {
-                Api_sendPrivateMsg(ac, Clansty.tianlang.AppInfo.self, long.Parse(qq), msg);
+                Temp(G.major, qq, msg);
             }
-            [DllImport("LqrHelper.dll")]
-            extern static void Api_sendPrivateMsg(int a, long b, long c, string d);
         }
 
         public static void GroupKickMember(string group, string qq)
