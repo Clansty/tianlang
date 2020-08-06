@@ -19,7 +19,7 @@ namespace Clansty.tianlang
          * 到时候会有一个人两个实名身份的情况（難度大）
          */
         
-        public const string Version = "3.2.19.1";//20200806
+        public const string Version = "3.2.19.2";//20200806
         public static bool recording = false;
 
         public static void Write(string text, ConsoleColor color = ConsoleColor.White)
