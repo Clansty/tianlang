@@ -29,7 +29,18 @@ namespace LemonApp
         }
         internal static void Msg(GroupMsgArgs e)
         {
-
+            if (e.Msg == "members")
+            {
+                var m = Robot.GetGroupMembers(e.FromGroup);
+                var r = "";
+                foreach (var i in m)
+                {
+                    r += i;
+                    r += "\n";
+                }
+                r = r.Trim('\n');
+                e.Reply(r);
+            }
         }
         internal static void Msg(TempMsgArgs e)
         {
@@ -38,22 +49,22 @@ namespace LemonApp
 
         internal static void AddFriend(RequestAddFriendArgs requestAddFriendArgs)
         {
-            throw new NotImplementedException();
+
         }
 
         internal static void GroupAddMember(GroupAddMemberArgs groupAddMemberArgs)
         {
-            throw new NotImplementedException();
+
         }
 
         internal static void JoinGroupRequest(RequestAddGroupArgs requestAddGroupArgs)
         {
-            throw new NotImplementedException();
+
         }
 
         internal static void InviteGroupRequest(RequestAddGroupArgs requestAddGroupArgs)
         {
-            throw new NotImplementedException();
+
         }
     }
 }

@@ -18,11 +18,11 @@ namespace LemonApp
         /// <summary>
         /// 应用ID  1.尽量唯一  2.编译出来需要以 .lq.dll 结尾 方便框架识别
         /// </summary>
-        public readonly string appId = "com.lwqwq.lemon.sdk";
+        public readonly string appId = "com.lwqwq.nthsbot";
         /// <summary>
         /// 应用名称
         /// </summary>
-        public readonly string name = "柠檬乐园样例应用";
+        public readonly string name = "甜狼";
         /// <summary>
         /// 应用版本
         /// </summary>
@@ -51,6 +51,6 @@ namespace LemonApp
         /// 机器人自己的 QQ，以后将不需要这个
         /// ☆请勿催更，我没有义务做这个 SDK
         /// </summary>
-        public static long self = 0;
+        public static long self = 2981882373;
     }
 }
