@@ -165,7 +165,7 @@ namespace Clansty.tianlang
                 }
             }
 
-            if (e.FromGroup == G.g2020)
+            if (e.Group == G.g2020)
             {
                 if (!MemberList.major.Contains(e.BeingOperateQQ))
                 {
