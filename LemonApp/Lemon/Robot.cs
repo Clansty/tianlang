@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Web;
 using System.Web.Script.Serialization;
 
 namespace Clansty.tianlang
@@ -114,7 +115,8 @@ namespace Clansty.tianlang
         extern static void Api_KickGroupMember(long a, long b, long c, bool d);
         public static string GetGroupMemberCard(string group, string qq)
         {
-            return Marshal.PtrToStringAnsi(Api_GetGroupMemberCard(Clansty.tianlang.AppInfo.self, long.Parse(group), long.Parse(qq)));
+            //&nbsp;
+            return HttpUtility.HtmlDecode(Marshal.PtrToStringAnsi(Api_GetGroupMemberCard(tianlang.AppInfo.self, long.Parse(group), long.Parse(qq))));
         }
         [DllImport("LqrHelper.dll")]
         extern static IntPtr Api_GetGroupMemberCard(long a, long b, long c);
