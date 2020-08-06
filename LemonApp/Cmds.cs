@@ -108,13 +108,13 @@ namespace Clansty.tianlang
                 Func = s =>
                 {
                     s = s.Trim(' ', '\n', '[', ']', '@');
-                    if (long.TryParse(s, out var qq))
+                    if (long.TryParse(s, out _))
                     {
                         var u = new User(s);
                         if (u.Role >= UserType.powerUser)
                             return $"不能拉黑一个 {u.Role}";
                         u.Role = UserType.blackListed;
-                        C.CQApi.RemoveGroupMember(G.major,qq);
+                        Robot.GroupKickMember(G.major,s);
                         return $"已拉黑 {u.ProperNamecard}({s})";
                     }
                     return $"{s} 不是有效的长整数";
@@ -129,13 +129,13 @@ namespace Clansty.tianlang
                 Func = s =>
                 {
                     s = s.Trim(' ', '\n', '[', ']', '@');
-                    if (long.TryParse(s, out var qq))
+                    if (long.TryParse(s, out _))
                     {
-                        var u = new User(qq);
+                        var u = new User(s);
                         if (u.Role >= UserType.powerUser)
                             return $"不能踢一个 {u.Role}";
-                        C.CQApi.RemoveGroupMember(G.major,qq);
-                        return $"已踢 {u.ProperNamecard}({qq})";
+                        Robot.GroupKickMember(G.major,s);
+                        return $"已踢 {u.ProperNamecard}({s})";
                     }
                     return $"{s} 不是有效的长整数";
                 }

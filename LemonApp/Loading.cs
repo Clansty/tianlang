@@ -23,10 +23,10 @@ namespace Clansty.tianlang.SIAMC
                 else if (method == 1)
                 {
                     uins = new HashSet<string>();
-                    var members = C.CQApi.GetGroupMemberList(G.major);
+                    var members = Robot.GetGroupMembers(G.major);
                     foreach (var i in members)
                     {
-                        uins.Add(i.QQ);
+                        uins.Add(i);
                     }
                 }
                 else
