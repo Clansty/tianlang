@@ -51,6 +51,10 @@ namespace Clansty.tianlang
         /// 机器人自己的 QQ，以后将不需要这个
         /// ☆请勿催更，我没有义务做这个 SDK
         /// </summary>
+# if DEBUG
         public static long self = 2981882373;
+#else
+        public static long self = 1980853671;
+#endif
     }
 }
