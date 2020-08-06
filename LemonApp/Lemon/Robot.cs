@@ -57,5 +57,32 @@ namespace LemonApp
             }
             return 0;
         }
+        [DllExport(CallingConvention.StdCall)]
+        static int _eventRequest_AddFriend(long qqid, int st, int q, string msg)
+        {
+            Events.AddFriend(new RequestAddFriendArgs(q, msg));
+            return 0;
+        }
+        [DllExport(CallingConvention.StdCall)]
+        static int _eventSystem_GroupMemberIncrease(long a,int b,int c,long d,long e,long f)
+        {
+            Events.GroupAddMember(new GroupAddMemberArgs(d.ToString(), e.ToString(), f.ToString()));
+            return 0;
+        }
+        [DllExport(CallingConvention.StdCall)]
+        static int _eventRequest_AddGroup(long a, int b, string c,int d,long e,long f,long g,string h,int i)
+        {
+            if (b == 104)
+            {
+                Events.JoinGroupRequest(new RequestAddGroupArgs(c, e, f, i, h));
+            }
+            if (b == 105)
+            {
+                Events.InviteGroupRequest(new RequestAddGroupArgs(c, e, f, i, h));
+            }
+            return 0;
+        }
+
+
     }
 }

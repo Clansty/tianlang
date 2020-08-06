@@ -35,5 +35,25 @@ namespace LemonApp
         {
 
         }
+
+        internal static void AddFriend(RequestAddFriendArgs requestAddFriendArgs)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static void GroupAddMember(GroupAddMemberArgs groupAddMemberArgs)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static void JoinGroupRequest(RequestAddGroupArgs requestAddGroupArgs)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static void InviteGroupRequest(RequestAddGroupArgs requestAddGroupArgs)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

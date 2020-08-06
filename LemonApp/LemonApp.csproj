@@ -63,11 +63,14 @@
   <ItemGroup>
     <Compile Include="AppInfo.cs" />
     <Compile Include="Events.cs" />
-    <Compile Include="TempMsgArgs.cs" />
-    <Compile Include="GroupMsgArgs.cs" />
+    <Compile Include="Lemon\GroupAddMemberArgs.cs" />
+    <Compile Include="Lemon\TempMsgArgs.cs" />
+    <Compile Include="Lemon\GroupMsgArgs.cs" />
     <Compile Include="Lemon\FriendMsgArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Lemon\Robot.cs" />
+    <Compile Include="Lemon\RequestAddFriendArgs.cs" />
+    <Compile Include="Lemon\RequestAddGroupArgs.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
