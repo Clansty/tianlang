@@ -15,14 +15,7 @@ namespace Clansty.tianlang
             C.AllocConsole();
             Console.Title = $@"甜狼 {C.Version}";
             new Menu().Show();
-            async void UpdateList()
-            {
-                await Task.Delay(2333);
-                MemberList.UpdateMajor();
-                C.WriteLn("Memberlist updated");
-            }
-            UserInfo.InitQmpCheckTask();
-            UpdateList();
+            C.WriteLn("记得点准备就绪");
         }
         internal static void Disable()
         {
