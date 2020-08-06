@@ -1,4 +1,9 @@
-﻿using System.Runtime.InteropServices;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.InteropServices;
 using System.Web.Script.Serialization;
 
 namespace LemonApp
@@ -101,5 +106,35 @@ namespace LemonApp
             [DllImport("LqrHelper.dll")]
             extern static void Api_sendPrivateMsg(int a, long b, long c, string d);
         }
+
+        public static void GroupKickMember(string group, string qq)
+        {
+            Api_KickGroupMember(LemonApp.AppInfo.self, long.Parse(group), long.Parse(qq), false);
+        }
+        [DllImport("LqrHelper.dll")]
+        extern static void Api_KickGroupMember(long a, long b, long c, bool d);
+        public static string GetGroupMemberCard(string group, string qq)
+        {
+            return Marshal.PtrToStringAnsi(Api_GetGroupMemberCard(LemonApp.AppInfo.self, long.Parse(group), long.Parse(qq)));
+        }
+        [DllImport("LqrHelper.dll")]
+        extern static IntPtr Api_GetGroupMemberCard(long a, long b, long c);
+        public static void SetGroupMemberCard(string group, string qq, string card)
+        {
+            Api_SetGroupMemberCard(LemonApp.AppInfo.self, long.Parse(group), long.Parse(qq), card);
+        }
+        [DllImport("LqrHelper.dll")]
+        extern static void Api_SetGroupMemberCard(long a, long b, long c, string d);
+        public static ICollection<string> GetGroupMembers(string group)
+        {
+            var json = Marshal.PtrToStringAnsi(Api_GetGroupMemberList(LemonApp.AppInfo.self, long.Parse(group)));
+            var jobj = JObject.Parse(json);
+            var members = jobj.SelectToken("members");
+            var dic = members.ToObject<Dictionary<string, object>>();
+            return dic.Keys;
+        }
+        [DllImport("LqrHelper.dll")]
+        extern static IntPtr Api_GetGroupMemberList(long a, long b);
+
     }
 }

@@ -23,6 +23,6 @@ namespace LemonApp
         /// </summary>
         /// <param name="msg">回复消息内容</param>
         /// <returns>是否成功</returns>
-        public bool Reply(string msg) => Robot.Send.Friend(FromQQ, msg);
+        public void Reply(string msg) => Robot.Send.Friend(FromQQ, msg);
     }
 }
