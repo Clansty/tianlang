@@ -118,7 +118,8 @@ namespace Clansty.tianlang
             //&nbsp;
             var r = Marshal.PtrToStringAnsi(Api_GetGroupMemberCard(tianlang.AppInfo.self, long.Parse(group), long.Parse(qq)));
             r = r.Replace("&nbsp;", " ");//nbsp 和空格是有区别的
-            return HttpUtility.HtmlDecode(r);
+            r = HttpUtility.HtmlDecode(r);
+            return r.Replace("\\/", "/");
         }
 
         [DllImport("LqrHelper.dll")]
