@@ -1,10 +1,7 @@
 ﻿using LemonApp;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using ServiceStack;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -76,7 +73,8 @@ namespace Clansty.tianlang
         [DllExport(CallingConvention.StdCall)]
         static int _eventRequest_AddGroup(long a, int b, string c, int d, long e, long f, long g, string h, int i)
         {
-            if (b == 104)
+            C.WriteLn(b.ToString());
+            if (b == 104 || b == 102)
             {
                 Events.JoinGroupRequest(new RequestAddGroupArgs(c, e, f, i, h));
             }
@@ -95,7 +93,7 @@ namespace Clansty.tianlang
             }
             [DllImport("LqrHelper.dll")]
             extern static void Api_sendGroupMsg(int a, long b, long c, string d);
-            public static void Temp(string group,string qq,string msg)
+            public static void Temp(string group, string qq, string msg)
             {
                 Api_sendTransieMsg(ac, tianlang.AppInfo.self, long.Parse(group), msg, long.Parse(qq));
             }
