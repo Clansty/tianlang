@@ -50,7 +50,7 @@ namespace Clansty.tianlang
             switch (type)
             {
                 case 1:
-                case 3:
+                case 4:
                     //好友消息
                     Events.Msg(new FriendMsgArgs(sq, msg));
                     break;
