@@ -1,0 +1,1 @@
+[![Build status](https://ci.lwqwq.com/api/projects/status/p85o7f2n8mg5mw46?svg=true)](https://ci.lwqwq.com/project/AppVeyor/tianlang)
