@@ -1,22 +1,18 @@
 ﻿using System;
-using System.Threading.Tasks;
 
 namespace Clansty.tianlang
 {
     static class Events
     {
-        //想更新功能，自己加，发 pr
         internal static void Exit()
         {
 
         }
         internal static void Enable()
         {
-            C.SetProcessDPIAware();
             C.AllocConsole();
             Console.Title = $@"甜狼 {C.Version}";
             new Menu().Show();
-            C.WriteLn("记得点准备就绪");
         }
         internal static void Disable()
         {
@@ -24,6 +20,8 @@ namespace Clansty.tianlang
         }
         internal static void Msg(FriendMsgArgs e)
         {
+#if DEBUG
+#else
             var u = new User(e.FromQQ);
             if (u.Status == Status.setup)
                 Setup.Enter(e);
@@ -102,9 +100,12 @@ namespace Clansty.tianlang
                     UserInfo.CheckQmpAsync(u);
                 }
             } // end manual name-filling handling
+#endif
         }
         internal static void Msg(GroupMsgArgs e)
         {
+#if DEBUG
+#else
             if (e.FromGroup == G.si)
                 Cmds.SiEnter(e);
 
@@ -123,6 +124,7 @@ namespace Clansty.tianlang
                     }
                 }
             }
+#endif
         }
         internal static void AddFriend(RequestAddFriendArgs e)
         {
@@ -130,10 +132,13 @@ namespace Clansty.tianlang
         }
         internal static void GroupAddMember(GroupAddMemberArgs e)
         {
+#if DEBUG
+#else
             if (e.Group == G.major)
             {
                 MemberList.major.Add(e.BeingOperateQQ);
                 var u = new User(e.BeingOperateQQ);
+                UserInfo.CheckQmpAsync(u);
                 if (u.IsFresh)
                 {
                     Setup.New(e.BeingOperateQQ, true);
@@ -150,8 +155,7 @@ namespace Clansty.tianlang
                         S.Private(e.BeingOperateQQ, tip); //目前是这个：【西花园事务所】是江苏省苏州第十中学校学生自建生活服务平台，添加【西花园事务所】为特别关心，可以第一时间收到最新消息 
                     //S.Private(member, u.ToXml("欢迎回来"));
                     //S.Private(member, Strs.Get("welcomeBack"));//"如果以上信息有误，你可以回复 <setup> 来重新设置"
-                    S.Si(u.ToXml("数据库存在此人信息，新人向导跳过"));
-                    UserInfo.CheckQmpAsync(u);
+                    S.Si(u.ToXml("数据库存在此人信息，新人向导跳过"));                    
                 }
             }
 
@@ -163,9 +167,12 @@ namespace Clansty.tianlang
                     Robot.Send.Temp(G.g2020, e.BeingOperateQQ, $"看起来你还没有加入十中大群的说\n加入苏州十中跨年级大群 {G.major}，解锁更多好玩的");
                 }
             }
+#endif
         }
         internal static void JoinGroupRequest(RequestAddGroupArgs e)
         {
+#if DEBUG
+#else
             if (e.Group == G.major)
             {
                 var msg = e.Msg.Contains("答案：")
@@ -278,7 +285,7 @@ namespace Clansty.tianlang
                     return;
                 }
 
-                #region
+            #region
                 //if (chk.Status == RealNameStatus.e2017 && enr != 2017)
                 //{
                 //    e.Reject("姓名与年级不匹配，请检查");
@@ -309,7 +316,7 @@ namespace Clansty.tianlang
                 //    S.Si(u.ToXml("加群申请已拒绝: 姓名与年级不匹配") + $"\n申请信息: {msg}");
                 //    return;
                 //}
-                #endregion
+            #endregion
 
                 if (chk.OccupiedQQ == null)
                 {
@@ -333,8 +340,7 @@ namespace Clansty.tianlang
 
                 S.Si(u.ToXml("申请用户信息"));
             }
-
-
+#endif
         }
         internal static void InviteGroupRequest(RequestAddGroupArgs e)
         {
