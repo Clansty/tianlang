@@ -102,6 +102,15 @@ namespace Clansty.tianlang
             } // end manual name-filling handling
 #endif
         }
+
+        internal static void GroupCardChanged(GroupCardChangedArgs e)
+        {
+            if (e.Group == G.major)
+            {
+                UserInfo.CheckQmpAsync(new User(e.QQ), e.NewCard);
+            }
+        }
+
         internal static void Msg(GroupMsgArgs e)
         {
 #if DEBUG

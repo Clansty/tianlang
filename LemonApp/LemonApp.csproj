@@ -85,6 +85,7 @@
     <Compile Include="Groups.cs" />
     <Compile Include="INamedUser.cs" />
     <Compile Include="Lemon\GroupAddMemberArgs.cs" />
+    <Compile Include="Lemon\GroupCardChangedArgs.cs" />
     <Compile Include="Lemon\TempMsgArgs.cs" />
     <Compile Include="Lemon\GroupMsgArgs.cs" />
     <Compile Include="Lemon\FriendMsgArgs.cs" />

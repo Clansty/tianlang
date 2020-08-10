@@ -84,6 +84,19 @@ namespace Clansty.tianlang
             }
             return 0;
         }
+        [DllExport(CallingConvention.StdCall)]
+        static int _eventTipsMsg(long a, int b, long c, long d, long e, string f)
+        {
+#if DEBUG
+            if (b == 112)
+            {
+                C.WriteLn($"{a}\n{c}\n{d}\n{e}\n{f}\n");
+            }
+#else
+            Events.GroupCardChanged(new GroupCardChangedArgs(c, d, f));
+#endif
+            return 0;
+        }
 
         public static class Send
         {
