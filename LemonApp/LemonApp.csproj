@@ -77,78 +77,79 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppInfo.cs" />
-    <Compile Include="Cmds.cs" />
-    <Compile Include="Command.cs" />
-    <Compile Include="Common.cs" />
-    <Compile Include="Events.cs" />
-    <Compile Include="Groups.cs" />
-    <Compile Include="INamedUser.cs" />
+    <Compile Include="System\AppInfo.cs" />
+    <Compile Include="Managing\Cmds.cs" />
+    <Compile Include="Managing\Command.cs" />
+    <Compile Include="Common\Common.cs" />
+    <Compile Include="Common\Events.cs" />
+    <Compile Include="Common\Groups.cs" />
+    <Compile Include="User\INamedUser.cs" />
     <Compile Include="Lemon\GroupAddMemberArgs.cs" />
     <Compile Include="Lemon\GroupCardChangedArgs.cs" />
     <Compile Include="Lemon\TempMsgArgs.cs" />
     <Compile Include="Lemon\GroupMsgArgs.cs" />
     <Compile Include="Lemon\FriendMsgArgs.cs" />
-    <Compile Include="MemberList.cs" />
+    <Compile Include="Common\MemberList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Lemon\Robot.cs" />
     <Compile Include="Lemon\RequestAddFriendArgs.cs" />
     <Compile Include="Lemon\RequestAddGroupArgs.cs" />
-    <Compile Include="Loading.cs">
+    <Compile Include="UI\Loading.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Loading.designer.cs">
+    <Compile Include="UI\Loading.designer.cs">
       <DependentUpon>Loading.cs</DependentUpon>
     </Compile>
-    <Compile Include="Menu.cs">
+    <Compile Include="UI\Menu.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Menu.designer.cs">
+    <Compile Include="UI\Menu.designer.cs">
       <DependentUpon>Menu.cs</DependentUpon>
     </Compile>
-    <Compile Include="RealName.cs" />
-    <Compile Include="RealNameBindingResult.cs" />
-    <Compile Include="RealNameCheckingResult.cs" />
-    <Compile Include="RealNameStatus.cs" />
-    <Compile Include="RealNameVerifingResult.cs" />
-    <Compile Include="Redis.cs" />
-    <Compile Include="Repeater.cs" />
-    <Compile Include="Send.cs" />
-    <Compile Include="SendTest.cs">
+    <Compile Include="Verifying\RealName.cs" />
+    <Compile Include="Verifying\RealNameBindingResult.cs" />
+    <Compile Include="Verifying\RealNameCheckingResult.cs" />
+    <Compile Include="Verifying\RealNameStatus.cs" />
+    <Compile Include="Verifying\RealNameVerifingResult.cs" />
+    <Compile Include="System\Redis.cs" />
+    <Compile Include="Modules\Repeater.cs" />
+    <Compile Include="Common\Send.cs" />
+    <Compile Include="UI\SendTest.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SendTest.designer.cs">
+    <Compile Include="UI\SendTest.designer.cs">
       <DependentUpon>SendTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="SetupV4.cs" />
-    <Compile Include="Siamc.cs">
+    <Compile Include="User\SetupV4.cs" />
+    <Compile Include="UI\Siamc.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Siamc.designer.cs">
+    <Compile Include="UI\Siamc.designer.cs">
       <DependentUpon>Siamc.cs</DependentUpon>
     </Compile>
-    <Compile Include="Status.cs" />
-    <Compile Include="StringHelper.cs" />
-    <Compile Include="Strs.cs" />
-    <Compile Include="UnRegUser.cs" />
-    <Compile Include="UserInfo.cs" />
-    <Compile Include="UserType.cs" />
-    <Compile Include="UserV3.cs" />
+    <Compile Include="User\Status.cs" />
+    <Compile Include="System\StringHelper.cs" />
+    <Compile Include="Common\Strs.cs" />
+    <Compile Include="User\UnRegUser.cs" />
+    <Compile Include="User\UserInfo.cs" />
+    <Compile Include="User\UserType.cs" />
+    <Compile Include="User\UserV3.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Loading.resx">
+    <EmbeddedResource Include="UI\Loading.resx">
       <DependentUpon>Loading.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Menu.resx">
+    <EmbeddedResource Include="UI\Menu.resx">
       <DependentUpon>Menu.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Siamc.resx">
+    <EmbeddedResource Include="UI\Siamc.resx">
       <DependentUpon>Siamc.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ImportGroup Label=".NET DllExport">
     <Import Project="$(SolutionDir)packages\DllExport.1.7.3\tools\net.r_eg.DllExport.targets" Condition="Exists($([MSBuild]::Escape('$(SolutionDir)packages\DllExport.1.7.3\tools\net.r_eg.DllExport.targets')))" Label="8337224c9ad9e356" />
