@@ -16,7 +16,7 @@ namespace Clansty.tianlang
                 Permission = UserType.powerUser,
                 Func = s =>
                 {
-                    s = s.Trim(' ', '\n', '[', ']', '@');
+                    s = s.Trim(' ', '\n', '[', ']', '@', 'L', 'Q', ':');
                     if (!ulong.TryParse(s, out _) || s == "")
                         return "QQ号格式错误";
                     var u = new User(s);
@@ -90,7 +90,7 @@ namespace Clansty.tianlang
                 Permission = UserType.powerUser,
                 Func = s =>
                 {
-                    s = s.Trim(' ', '\n', '[', ']', '@');
+                    s = s.Trim(' ', '\n', '[', ']', '@', 'L', 'Q', ':');
                     if (long.TryParse(s, out _))
                     {
                         Setup.New(s);
@@ -107,7 +107,7 @@ namespace Clansty.tianlang
                 Permission = UserType.powerUser,
                 Func = s =>
                 {
-                    s = s.Trim(' ', '\n', '[', ']', '@');
+                    s = s.Trim(' ', '\n', '[', ']', '@', 'L', 'Q', ':');
                     if (long.TryParse(s, out _))
                     {
                         var u = new User(s);
@@ -128,7 +128,7 @@ namespace Clansty.tianlang
                 Permission = UserType.powerUser,
                 Func = s =>
                 {
-                    s = s.Trim(' ', '\n', '[', ']', '@');
+                    s = s.Trim(' ', '\n', '[', ']', '@', 'L', 'Q', ':');
                     if (long.TryParse(s, out _))
                     {
                         var u = new User(s);
@@ -222,7 +222,7 @@ namespace Clansty.tianlang
                 Permission = UserType.powerUser,
                 Func = s =>
                 {
-                    s = s.Trim(' ', '\n', '[', ']', '@');
+                    s = s.Trim(' ', '\n', '[', ']', '@', 'L', 'Q', ':');
                     var u = UserInfo.FindUser(s);
                     return u.ToXml();
                 }
@@ -235,7 +235,7 @@ namespace Clansty.tianlang
                 Permission = UserType.administrator,
                 Func = s =>
                 {
-                    s = s.Trim(' ', '\n', '[', ']', '@');
+                    s = s.Trim(' ', '\n', '[', ']', '@', 'L', 'Q', ':');
                     var task = UserInfo.CheckQmpAsync(new User(s));
                     task.Wait();
                     return task.Result.ToString();
