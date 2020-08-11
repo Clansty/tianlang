@@ -258,21 +258,6 @@
                       $"IsMember: {IsMember}\n" +
                       $"身份: {Role}\n" +
                       $"实名状态: {VerifyMsg}";
-            //test for new struct for real name related information 191230
-            using (var client = Rds.GetClient())
-            {
-                var ht = client.GetAllEntriesFromHash($"name{Name}");
-                if (ht.Count > 0)
-                {
-                    ret += "\n--新版用户信息 Beta--";
-                    foreach (var kvp in ht)
-                    {
-                        ret += $"\n{kvp.Key}: {kvp.Value}";
-                    }
-                }
-            }
-
-            //TODO: i will transfer real-name check info to the new struct soon
             return ret;
         }
     }
