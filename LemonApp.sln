@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LemonApp", "LemonApp\LemonA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UjyTools", "UjyTools\UjyTools.csproj", "{F566B6CB-F69D-47E7-9207-09459171B56D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BotTester", "BotTester\BotTester.csproj", "{A19B4055-7CBC-427F-8DE6-1DDAAD4DD2EB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -14,11 +16,16 @@ Global
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{9D1B09EC-ECB6-44E9-AD6A-3CCA8C095506}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{9D1B09EC-ECB6-44E9-AD6A-3CCA8C095506}.Debug|Any CPU.Build.0 = Debug|x86
 		{9D1B09EC-ECB6-44E9-AD6A-3CCA8C095506}.Release|Any CPU.ActiveCfg = Release|x86
 		{9D1B09EC-ECB6-44E9-AD6A-3CCA8C095506}.Release|Any CPU.Build.0 = Release|x86
 		{F566B6CB-F69D-47E7-9207-09459171B56D}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{F566B6CB-F69D-47E7-9207-09459171B56D}.Debug|Any CPU.Build.0 = Debug|x64
 		{F566B6CB-F69D-47E7-9207-09459171B56D}.Release|Any CPU.ActiveCfg = Release|x64
 		{F566B6CB-F69D-47E7-9207-09459171B56D}.Release|Any CPU.Build.0 = Release|x64
+		{A19B4055-7CBC-427F-8DE6-1DDAAD4DD2EB}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{A19B4055-7CBC-427F-8DE6-1DDAAD4DD2EB}.Debug|Any CPU.Build.0 = Debug|x86
+		{A19B4055-7CBC-427F-8DE6-1DDAAD4DD2EB}.Release|Any CPU.ActiveCfg = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

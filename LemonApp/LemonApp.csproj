@@ -145,6 +145,7 @@
     <Compile Include="UI\Menu.designer.cs">
       <DependentUpon>Menu.cs</DependentUpon>
     </Compile>
+    <Compile Include="Verifying\Rds.cs" />
     <Compile Include="Verifying\RealName.cs" />
     <Compile Include="Verifying\RealNameBindingResult.cs" />
     <Compile Include="Verifying\RealNameCheckingResult.cs" />
