@@ -14,6 +14,9 @@ namespace BotTester
         {
             Sql.Init();
             var a = Sql.users;
+            var b = a.Rows.Find(54321);
+            var c = a.Rows.Add(12345, "aa", "bb", 0, 0, 0, 0, 0);
+            Sql.Commit();
         }
     }
 }

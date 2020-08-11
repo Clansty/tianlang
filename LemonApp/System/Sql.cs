@@ -57,10 +57,24 @@ namespace Clansty.tianlang
             var sqlPersons = "SELECT * FROM persons";
             daUsers = new MySqlDataAdapter(sqlUsers, connStr);
             daPersons = new MySqlDataAdapter(sqlPersons, connStr);
+            new MySqlCommandBuilder(daUsers);
+            new MySqlCommandBuilder(daPersons);
             daUsers.FillAsync(users);
             daPersons.FillAsync(persons);
             users.PrimaryKey = new DataColumn[] { users.Columns[0] };
             persons.PrimaryKey = new DataColumn[] { persons.Columns[0] };
+        }
+        public static void Commit()
+        {
+            try
+            {
+                daUsers.Update(users);
+                daPersons.Update(persons);
+            }
+            catch (Exception ex)
+            {
+                C.WriteLn(ex.ToString(), ConsoleColor.Red);                
+            }
         }
     }
 }

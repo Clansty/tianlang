@@ -1,24 +1,26 @@
-﻿namespace Clansty.tianlang
+﻿using System.Data;
+
+namespace Clansty.tianlang
 {
     class User : INamedUser
     {
         public string Uin { get; }
+        public DataRow Row { get; }
 
-        public User(string uin)
+        public User(string uin, bool createWhenNotFound = true)
         {
-            Uin = uin;
-            if (!Rds.SContains("users", uin))
+            Row = Sql.users.Rows.Find(uin);
+            if (Row is null)
             {
-                Rds.SAdd("users", uin);
-                var client = Rds.GetClient();
-                client.SetEntryInHashIfNotExists("u" + Uin, "name", "");
-                client.SetEntryInHashIfNotExists("u" + Uin, "nick", "");
-                client.SetEntryInHashIfNotExists("u" + Uin, "junior", "0");
-                client.SetEntryInHashIfNotExists("u" + Uin, "enrollment", "-1");
-                client.SetEntryInHashIfNotExists("u" + Uin, "step", "-1");
-                client.SetEntryInHashIfNotExists("u" + Uin, "status", "0");
-                client.SetEntryInHashIfNotExists("u" + Uin, "role", "0");
-                client.Dispose();
+                if (createWhenNotFound)
+                {
+                    //数据结构修改时这里要改
+                    Row = Sql.users.Rows.Add();
+                }
+                else
+                {
+                    throw new UserNotFoundException();
+                }
             }
         }
 

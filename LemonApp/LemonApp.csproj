@@ -7,7 +7,7 @@
     <ProjectGuid>{9D1B09EC-ECB6-44E9-AD6A-3CCA8C095506}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LemonApp</RootNamespace>
+    <RootNamespace>Clansty.tianlang</RootNamespace>
     <AssemblyName>com.lwqwq.nthsbot.lq</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -145,7 +145,8 @@
     <Compile Include="UI\Menu.designer.cs">
       <DependentUpon>Menu.cs</DependentUpon>
     </Compile>
-    <Compile Include="Verifying\Rds.cs" />
+    <Compile Include="System\Rds.cs" />
+    <Compile Include="User\UserNotFoundException.cs" />
     <Compile Include="Verifying\RealName.cs" />
     <Compile Include="Verifying\RealNameBindingResult.cs" />
     <Compile Include="Verifying\RealNameCheckingResult.cs" />
@@ -172,7 +173,7 @@
     <Compile Include="User\UnRegUser.cs" />
     <Compile Include="User\UserInfo.cs" />
     <Compile Include="User\UserType.cs" />
-    <Compile Include="User\UserV3.cs" />
+    <Compile Include="User\UserV4.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
