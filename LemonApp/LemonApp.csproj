@@ -121,6 +121,7 @@
     <Compile Include="Common\Common.cs" />
     <Compile Include="Common\Events.cs" />
     <Compile Include="Common\Groups.cs" />
+    <Compile Include="System\Sql.cs" />
     <Compile Include="User\INamedUser.cs" />
     <Compile Include="Lemon\GroupAddMemberArgs.cs" />
     <Compile Include="Lemon\GroupCardChangedArgs.cs" />
@@ -149,7 +150,6 @@
     <Compile Include="Verifying\RealNameCheckingResult.cs" />
     <Compile Include="Verifying\RealNameStatus.cs" />
     <Compile Include="Verifying\RealNameVerifingResult.cs" />
-    <Compile Include="System\Redis.cs" />
     <Compile Include="Modules\Repeater.cs" />
     <Compile Include="Common\Send.cs" />
     <Compile Include="UI\SendTest.cs">
