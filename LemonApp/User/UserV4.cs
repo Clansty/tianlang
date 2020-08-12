@@ -15,7 +15,7 @@ namespace Clansty.tianlang
                 if (createWhenNotFound)
                 {
                     //数据结构修改时这里要改
-                    Row = Sql.users.Rows.Add(uin, "", "", 0, 0, 0, 0, 0);
+                    Row = Sql.users.Rows.Add(uin, "", "", 0, 0, "", 0, 0, 0);
                 }
                 else
                 {
@@ -26,8 +26,8 @@ namespace Clansty.tianlang
 
         public string Name
         {
-            get => Get("name");
-            set => Set("name", value);
+            get => (string)Row["name"];
+            set => Row["name"] = value;
         }
 
         public string Nick
@@ -36,7 +36,7 @@ namespace Clansty.tianlang
             {
                 //为了防止频繁请求还是把默认昵称信息落数据库
                 //老写法还取两次
-                var ret = Get("nick").Trim();
+                var ret = (string)Row["nick"];
                 if (string.IsNullOrEmpty(ret))
                 {
                     ret = Robot.GetNick(Uin);
@@ -45,13 +45,14 @@ namespace Clansty.tianlang
                 return ret;
             }
 
-            set => Set("nick", value);
+            set => Row["nick"] = value;
         }
 
         public bool Branch
         {
             get
             {
+                //TODO
                 var chk = RealName.Check(Name);
                 if (chk.Status == RealNameStatus.e2019jc || chk.Status == RealNameStatus.e2018jc)
                     return true;
@@ -88,11 +89,11 @@ namespace Clansty.tianlang
 
         public bool Junior
         {
-            get => Get("junior") == "1" || string.IsNullOrEmpty(Class) && Enrollment==2017 && VerifyMsg== RealNameVerifingResult.succeed;
-            set => Set("junior", value ? "1" : "0");
+            get => (bool)Row["junior"];
+            set => Row["junior"] = value;
         }
 
-        public string Class => Rds.HGet("classes", Name);
+        public string Class => "";
 
         public int Enrollment
         {
@@ -108,15 +109,15 @@ namespace Clansty.tianlang
                     if (chk.Status == RealNameStatus.e2019 || chk.Status == RealNameStatus.e2019jc)
                         return 2019;
 
-                    return int.Parse(Get("enrollment"));
+                    return (int)Row["enrollment"];
                 }
                 catch
                 {
-                    Enrollment = -1;
-                    return -1;
+                    Enrollment = 0;
+                    return 0;
                 }
             }
-            set => Set("enrollment", value.ToString());
+            set => Row["enrollment"] = value;
         }
 
         public int Step
@@ -125,15 +126,15 @@ namespace Clansty.tianlang
             {
                 try
                 {
-                    return int.Parse(Get("step"));
+                    return (int)Row["step"];
                 }
                 catch
                 {
-                    Step = -1;
-                    return -1;
+                    Step = 0;
+                    return 0;
                 }
             }
-            set => Set("step", value.ToString());
+            set => Row["step"] = value;
         }
 
         public string Namecard
@@ -149,7 +150,7 @@ namespace Clansty.tianlang
             {
                 try
                 {
-                    return (Status) int.Parse(Get("status"));
+                    return (Status)Row["status"];
                 }
                 catch
                 {
@@ -157,7 +158,7 @@ namespace Clansty.tianlang
                     return Status.no;
                 }
             }
-            set => Set("status", ((int) value).ToString());
+            set => Row["status"] = (int)value;
         }
 
         public UserType Role
@@ -166,7 +167,7 @@ namespace Clansty.tianlang
             {
                 try
                 {
-                    return (UserType) int.Parse(Get("role"));
+                    return (UserType)Row["role"];
                 }
                 catch
                 {
@@ -174,7 +175,7 @@ namespace Clansty.tianlang
                     return UserType.user;
                 }
             }
-            set => Set("role", ((int) value).ToString());
+            set => Row["role"] = (int)value;
         }
 
         public string Grade
@@ -195,7 +196,7 @@ namespace Clansty.tianlang
                         r = "一";
                         break;
                     case 10086: //这种情况通过数据库自定义前缀
-                        var prefix = Get("prefix");
+                        var prefix = (string)Row["prefix"];
                         if (prefix == null)
                             prefix = "";
                         return prefix;
@@ -240,9 +241,6 @@ namespace Clansty.tianlang
 
         internal bool IsFresh => Name == ""; //紧急 fix
         public bool IsMember => MemberList.major.Contains(Uin);
-
-        public string Get(string key) => Rds.HGet("u" + Uin, key);
-        public void Set(string key, string value) => Rds.HSet("u" + Uin, key, value);
 
         public string ToXml(string title = "用户信息")
         {
