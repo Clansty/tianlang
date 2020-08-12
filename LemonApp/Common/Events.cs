@@ -6,7 +6,7 @@ namespace Clansty.tianlang
     {
         internal static void Exit()
         {
-            Sql.Commit();
+            Db.Commit();
         }
         internal static void Enable()
         {
@@ -16,7 +16,7 @@ namespace Clansty.tianlang
         }
         internal static void Disable()
         {
-            Sql.Commit();
+            Db.Commit();
         }
         internal static void Msg(FriendMsgArgs e)
         {

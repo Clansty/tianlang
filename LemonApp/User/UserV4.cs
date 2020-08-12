@@ -10,13 +10,13 @@ namespace Clansty.tianlang
 
         public User(long uin, bool createWhenNotFound = true)
         {
-            Row = Sql.users.Rows.Find(uin);
+            Row = Db.users.Rows.Find(uin);
             if (Row is null)
             {
                 if (createWhenNotFound)
                 {
                     //数据结构修改时这里要改
-                    Row = Sql.users.Rows.Add(uin, "", "", 0, 0, "", 0, 0, 0, 0);
+                    Row = Db.users.Rows.Add(uin, "", "", 0, 0, "", 0, 0, 0, 0);
                 }
                 else
                 {

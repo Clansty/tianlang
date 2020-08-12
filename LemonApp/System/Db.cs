@@ -4,7 +4,7 @@ using System.Data;
 
 namespace Clansty.tianlang
 {
-    public static class Sql
+    public static class Db
     {
         #region 我有点想在启动的时候把库里面东西全都取到内存，内存里操作，每隔一段时间再放回数据库
         //

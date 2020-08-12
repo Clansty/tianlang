@@ -8,10 +8,10 @@ namespace BotTester
     {
         static void Main(string[] args)
         {
-            Sql.Init();
+            Db.Init();
             var u = new User(999888777);
             C.WriteLn(u.ToXml());
-            Sql.Commit();
+            Db.Commit();
             Console.ReadLine();
         }
     }
