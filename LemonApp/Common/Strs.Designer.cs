@@ -61,11 +61,129 @@ namespace Clansty.tianlang {
         }
         
         /// <summary>
+        ///   查找类似 加群申请已同意:  的本地化字符串。
+        /// </summary>
+        internal static string AddAccepted {
+            get {
+                return ResourceManager.GetString("AddAccepted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 加群申请已拒绝:  的本地化字符串。
+        /// </summary>
+        internal static string AddRejected {
+            get {
+                return ResourceManager.GetString("AddRejected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 此人已存在 的本地化字符串。
+        /// </summary>
+        internal static string AddReqOccupied {
+            get {
+                return ResourceManager.GetString("AddReqOccupied", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 黑名单用户 的本地化字符串。
+        /// </summary>
+        internal static string Blacklisted {
+            get {
+                return ResourceManager.GetString("Blacklisted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 年级格式错误 的本地化字符串。
+        /// </summary>
+        internal static string EnrFormatErr {
+            get {
+                return ResourceManager.GetString("EnrFormatErr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 格式错误 的本地化字符串。
+        /// </summary>
+        internal static string FormatErr {
+            get {
+                return ResourceManager.GetString("FormatErr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 请按正确格式填写 的本地化字符串。
+        /// </summary>
+        internal static string FormatIncorrect {
+            get {
+                return ResourceManager.GetString("FormatIncorrect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 看起来你还没有加入十中大群的说
+        ///加入苏州十中跨年级大群 646751705，解锁更多好玩的 的本地化字符串。
+        /// </summary>
+        internal static string InviteMajor {
+            get {
+                return ResourceManager.GetString("InviteMajor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 只要姓名就行，不需要别的东西 的本地化字符串。
         /// </summary>
         internal static string NameVerifyFailed {
             get {
                 return ResourceManager.GetString("NameVerifyFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 此身份已有一个账户加入，如有疑问请联系管理员 的本地化字符串。
+        /// </summary>
+        internal static string Occupied {
+            get {
+                return ResourceManager.GetString("Occupied", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 查无此人，请检查姓名是否与入学登记的姓名一致 的本地化字符串。
+        /// </summary>
+        internal static string RnNotFound {
+            get {
+                return ResourceManager.GetString("RnNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 此身份已有一个账号加入，我们暂时不欢迎小号加入，这是防止家长入群的必要措施。如有疑问请联系管理员 的本地化字符串。
+        /// </summary>
+        internal static string RnOccupied {
+            get {
+                return ResourceManager.GetString("RnOccupied", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 实名认证成功 的本地化字符串。
+        /// </summary>
+        internal static string RnOK {
+            get {
+                return ResourceManager.GetString("RnOK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 你已经实名认证了，无需再次填写姓名 的本地化字符串。
+        /// </summary>
+        internal static string RnVerified {
+            get {
+                return ResourceManager.GetString("RnVerified", resourceCulture);
             }
         }
         
@@ -112,6 +230,24 @@ namespace Clansty.tianlang {
         internal static string SetupStep2Err {
             get {
                 return ResourceManager.GetString("SetupStep2Err", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 玄学错误，请联系管理员。 的本地化字符串。
+        /// </summary>
+        internal static string UnexceptedErr {
+            get {
+                return ResourceManager.GetString("UnexceptedErr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 数据库存在此人信息，新人向导跳过 的本地化字符串。
+        /// </summary>
+        internal static string WizardSkip {
+            get {
+                return ResourceManager.GetString("WizardSkip", resourceCulture);
             }
         }
     }

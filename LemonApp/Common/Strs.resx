@@ -117,8 +117,48 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddAccepted" xml:space="preserve">
+    <value>加群申请已同意: </value>
+  </data>
+  <data name="AddRejected" xml:space="preserve">
+    <value>加群申请已拒绝: </value>
+  </data>
+  <data name="AddReqOccupied" xml:space="preserve">
+    <value>此人已存在</value>
+  </data>
+  <data name="Blacklisted" xml:space="preserve">
+    <value>黑名单用户</value>
+  </data>
+  <data name="EnrFormatErr" xml:space="preserve">
+    <value>年级格式错误</value>
+  </data>
+  <data name="FormatErr" xml:space="preserve">
+    <value>格式错误</value>
+  </data>
+  <data name="FormatIncorrect" xml:space="preserve">
+    <value>请按正确格式填写</value>
+  </data>
+  <data name="InviteMajor" xml:space="preserve">
+    <value>看起来你还没有加入十中大群的说
+加入苏州十中跨年级大群 646751705，解锁更多好玩的</value>
+  </data>
   <data name="NameVerifyFailed" xml:space="preserve">
     <value>只要姓名就行，不需要别的东西</value>
+  </data>
+  <data name="Occupied" xml:space="preserve">
+    <value>此身份已有一个账户加入，如有疑问请联系管理员</value>
+  </data>
+  <data name="RnNotFound" xml:space="preserve">
+    <value>查无此人，请检查姓名是否与入学登记的姓名一致</value>
+  </data>
+  <data name="RnOccupied" xml:space="preserve">
+    <value>此身份已有一个账号加入，我们暂时不欢迎小号加入，这是防止家长入群的必要措施。如有疑问请联系管理员</value>
+  </data>
+  <data name="RnOK" xml:space="preserve">
+    <value>实名认证成功</value>
+  </data>
+  <data name="RnVerified" xml:space="preserve">
+    <value>你已经实名认证了，无需再次填写姓名</value>
   </data>
   <data name="SetupGreetingIntr" xml:space="preserve">
     <value>你好，我是甜狼，本群的人工智能管理</value>
@@ -136,5 +176,11 @@
   </data>
   <data name="SetupStep2Err" xml:space="preserve">
     <value>回复格式不正确，必须包含年级哦</value>
+  </data>
+  <data name="UnexceptedErr" xml:space="preserve">
+    <value>玄学错误，请联系管理员。</value>
+  </data>
+  <data name="WizardSkip" xml:space="preserve">
+    <value>数据库存在此人信息，新人向导跳过</value>
   </data>
 </root>

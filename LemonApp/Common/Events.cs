@@ -36,7 +36,7 @@ namespace Clansty.tianlang
                 var name = e.Msg.GetRight("我叫").Trim();
                 if (u.Verified)
                 {
-                    e.Reply(Strs.Get("rnVerified")); //你已经实名认证了，无需再次补填姓名
+                    e.Reply(Strs.RnVerified); //你已经实名认证了，无需再次补填姓名
                     return;
                 }
 
@@ -44,7 +44,7 @@ namespace Clansty.tianlang
                 {
                     //尝试进行验证
                     u.Name = name;
-                    e.Reply(Strs.Get("rnOK")); // here set succeeded
+                    e.Reply(Strs.RnOK); // here set succeeded
                     //update in 3.0.14.2 notice the administration
                     S.Si(u.ToXml("旧人补填姓名成功"));
                     UserInfo.CheckQmpAsync(u);
@@ -55,34 +55,15 @@ namespace Clansty.tianlang
 
                 if (chk.Status == RealNameStatus.notFound)
                 {
-                    e.Reply(Strs.Get("rnNotFound"));
+                    e.Reply(Strs.RnNotFound);
                     return;
                 }
 
                 if (chk.OccupiedQQ != null && chk.OccupiedQQ != e.FromQQ)
                 {
-                    e.Reply(Strs.Get("rnOccupied"));
+                    e.Reply(Strs.RnOccupied);
                     return;
                 }
-
-                if (chk.Status == RealNameStatus.e2017 && u.Enrollment != 2017)
-                {
-                    e.Reply(Strs.Get("rnUnmatch", u.Grade));
-                    return;
-                }
-
-                if (chk.Status == RealNameStatus.e2018 && u.Enrollment != 2018)
-                {
-                    e.Reply(Strs.Get("rnUnmatch", u.Grade));
-                    return;
-                }
-
-                if (chk.Status == RealNameStatus.e2019 && u.Enrollment != 2019)
-                {
-                    e.Reply(Strs.Get("rnUnmatch", u.Grade));
-                    return;
-                }
-
 
                 if (chk.OccupiedQQ == null)
                 {
@@ -90,13 +71,13 @@ namespace Clansty.tianlang
                     u.Name = name;
                     if (u.Verified)
                     {
-                        e.Reply(Strs.Get("rnOK")); // here set succeeded
+                        e.Reply(Strs.RnOK); // here set succeeded
                         //update in 3.0.14.2 notice the administration
                         S.Si(u.ToXml("旧人补填姓名成功"));
                         return;
                     }
 
-                    e.Reply(Strs.Get("unexceptedErr", u.VerifyMsg));
+                    e.Reply(Strs.UnexceptedErr + u.VerifyMsg);
                     UserInfo.CheckQmpAsync(u);
                 }
             } // end manual name-filling handling
@@ -124,14 +105,6 @@ namespace Clansty.tianlang
                 if (e.Msg.StartsWith("sudo "))
                     Cmds.SudoEnter(e);
                 Repeater.Enter(e.Msg);
-                if (C.recording)
-                {
-                    var u = new User(e.FromQQ);
-                    if (u.Enrollment == 2020 || u.Enrollment == 2017 && u.Junior)
-                    {
-                        Rds.SAdd("elec2020", u.Uin);
-                    }
-                }
             }
 #endif
         }
@@ -156,15 +129,7 @@ namespace Clansty.tianlang
                 {
                     u.Namecard = u.ProperNamecard;
                     u.Status = Status.no;
-                    var tip = Strs.Get($"setupTip{u.Enrollment}"); //根据年级来分的提示
-                    if (tip != "")
-                        S.Private(e.BeingOperateQQ, tip); //你是高一的，建议同时加入 2018 级新高一年级群 //??2019级新生即将来临?敬请期待??? 
-                    tip = Strs.Get("setupTipAll"); //给所有人的广告位
-                    if (tip != "")
-                        S.Private(e.BeingOperateQQ, tip); //目前是这个：【西花园事务所】是江苏省苏州第十中学校学生自建生活服务平台，添加【西花园事务所】为特别关心，可以第一时间收到最新消息 
-                    //S.Private(member, u.ToXml("欢迎回来"));
-                    //S.Private(member, Strs.Get("welcomeBack"));//"如果以上信息有误，你可以回复 <setup> 来重新设置"
-                    S.Si(u.ToXml("数据库存在此人信息，新人向导跳过"));                    
+                    S.Si(u.ToXml(Strs.WizardSkip));
                 }
             }
 
@@ -173,7 +138,7 @@ namespace Clansty.tianlang
                 if (!MemberList.major.Contains(e.BeingOperateQQ))
                 {
                     //这里由于不是大群成员所以需要以手动群临时方式发送
-                    Robot.Send.Temp(G.g2020, e.BeingOperateQQ, $"看起来你还没有加入十中大群的说\n加入苏州十中跨年级大群 {G.major}，解锁更多好玩的");
+                    Robot.Send.Temp(G.g2020, e.BeingOperateQQ, Strs.InviteMajor);
                 }
             }
 #endif
@@ -196,7 +161,7 @@ namespace Clansty.tianlang
                 if (u.Role == UserType.blackListed)
                 {
                     e.Reject("blacklisted");
-                    S.Si(u.ToXml(Strs.Get("addRejected", Strs.Get("blacklisted"))) + $"\n申请信息: {msg}");
+                    S.Si(u.ToXml(Strs.AddRejected + Strs.Blacklisted) + $"\n申请信息: {msg}");
                     return;
                 }
 
@@ -206,7 +171,7 @@ namespace Clansty.tianlang
                     if (u.VerifyMsg == RealNameVerifingResult.succeed && u.Name == msg)
                     {
                         e.Accept();
-                        S.Si(u.ToXml("加群申请已同意: 已实名用户") + $"\n申请信息: {msg}");
+                        S.Si(u.ToXml(Strs.AddAccepted + "已实名用户") + $"\n申请信息: {msg}");
                         return;
                     }
 
@@ -214,8 +179,8 @@ namespace Clansty.tianlang
                     if (chk2.OccupiedQQ != null && chk2.OccupiedQQ != e.QQ &&
                         chk2.Status != RealNameStatus.notFound)
                     {
-                        e.Reject("此身份已有一个账户加入，如有疑问请联系管理员");
-                        S.Si(u.ToXml("加群申请已拒绝: 此人已存在") + $"\n申请信息: {msg}");
+                        e.Reject(Strs.Occupied);
+                        S.Si(u.ToXml(Strs.AddRejected + Strs.AddReqOccupied) + $"\n申请信息: {msg}");
                         return;
                     }
 
@@ -226,18 +191,18 @@ namespace Clansty.tianlang
                         if (u.Verified)
                         {
                             e.Accept();
-                            S.Si(u.ToXml("加群申请已同意: 实名认证成功") + $"\n申请信息: {msg}");
+                            S.Si(u.ToXml(Strs.AddAccepted+Strs.RnOK) + $"\n申请信息: {msg}");
                             return;
                         }
 
                         var err = u.VerifyMsg;
-                        e.Reject("玄学错误，请联系管理员");
-                        S.Si(u.ToXml("加群申请已拒绝: 玄学错误，此错误不应该由本段代码处理") + $"\n申请信息: {msg}\n未预期的错误: {err}");
+                        e.Reject(Strs.UnexceptedErr);
+                        S.Si(u.ToXml(Strs.AddRejected+Strs.UnexceptedErr) + $"\n申请信息: {msg}\n未预期的错误: {err}");
                         return;
                     }
 
-                    e.Reject(Strs.Get("formatIncorrect"));
-                    S.Si(u.ToXml(Strs.Get("addRejected", Strs.Get("formatErr"))) + $"\n申请信息: {msg}");
+                    e.Reject(Strs.FormatIncorrect);
+                    S.Si(u.ToXml(Strs.AddRejected+ Strs.FormatErr) + $"\n申请信息: {msg}");
                     return;
                 }
 
@@ -247,8 +212,8 @@ namespace Clansty.tianlang
                 if (enr < 1970)
                 {
                     e.Reject(
-                        Strs.Get("EnrFormatErr"));
-                    S.Si(u.ToXml(Strs.Get("addRejected", Strs.Get("EnrFormatErr"))) + $"\n申请信息: {msg}");
+                        Strs.EnrFormatErr);
+                    S.Si(u.ToXml(Strs.AddRejected+ Strs.EnrFormatErr) + $"\n申请信息: {msg}");
                     return;
                 }
 
@@ -294,7 +259,7 @@ namespace Clansty.tianlang
                     return;
                 }
 
-            #region
+                #region
                 //if (chk.Status == RealNameStatus.e2017 && enr != 2017)
                 //{
                 //    e.Reject("姓名与年级不匹配，请检查");
@@ -325,7 +290,7 @@ namespace Clansty.tianlang
                 //    S.Si(u.ToXml("加群申请已拒绝: 姓名与年级不匹配") + $"\n申请信息: {msg}");
                 //    return;
                 //}
-            #endregion
+                #endregion
 
                 if (chk.OccupiedQQ == null)
                 {
