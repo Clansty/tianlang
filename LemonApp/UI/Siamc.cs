@@ -20,7 +20,7 @@ namespace Clansty.tianlang.SIAMC
             if (e.ColumnIndex == 10)
             {
                 var row = data.Rows[e.RowIndex];
-                var u = new User(row.Cells[0].Value.ToString());
+                var u = new User(long.Parse(row.Cells[0].Value.ToString()));
                 u.Enrollment = int.Parse(row.Cells[2].Value.ToString());
                 u.Junior = (bool)row.Cells[3].Value;
                 u.Name = row.Cells[6].Value.ToString();

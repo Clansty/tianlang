@@ -8,10 +8,10 @@ namespace Clansty.tianlang
 {
     class GroupAddMemberArgs : EventArgs
     {
-        public string Group { get; }
-        public string FromQQ { get; }
-        public string BeingOperateQQ { get; }
-        public GroupAddMemberArgs(string a, string b, string c)
+        public long Group { get; }
+        public long FromQQ { get; }
+        public long BeingOperateQQ { get; }
+        public GroupAddMemberArgs(long a, long b, long c)
         {
             Group = a;
             FromQQ = b;

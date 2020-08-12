@@ -6,13 +6,13 @@ namespace Clansty.tianlang
     {
         public FriendMsgArgs(long fq, string m)
         {
-            FromQQ = fq.ToString();
+            FromQQ = fq;
             Msg = m;
         }
         /// <summary>
         /// 发送这条消息的 QQ
         /// </summary>
-        public string FromQQ { get; }
+        public long FromQQ { get; }
         /// <summary>
         /// 消息内容
         /// </summary>

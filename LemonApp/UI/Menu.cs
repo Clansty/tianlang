@@ -72,31 +72,6 @@ namespace Clansty.tianlang
             MessageBox.Show("???");
         }
 
-        private void 全库ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            new Loading(0).Show();
-        }
-
-        private void 全群ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            new Loading(1).Show();
-        }
-
-        private void ToolStripMenuItem4_Click(object sender, EventArgs e)
-        {
-            new Loading(2019).Show();
-        }
-
-        private void ToolStripMenuItem5_Click(object sender, EventArgs e)
-        {
-            new Loading(2018).Show();
-        }
-
-        private void ToolStripMenuItem6_Click(object sender, EventArgs e)
-        {
-            new Loading(2017).Show();
-        }
-
         private void 开关选举记录ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             C.recording = !C.recording;
@@ -109,6 +84,11 @@ namespace Clansty.tianlang
             UserInfo.InitQmpCheckTask();
             MemberList.UpdateMajor();
             C.WriteLn("Memberlist updated");
+        }
+
+        private void toolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            new Loading().Show();
         }
     }
 }

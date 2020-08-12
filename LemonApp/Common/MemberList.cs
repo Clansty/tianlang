@@ -4,8 +4,8 @@ namespace Clansty.tianlang
 {
     static class MemberList
     {
-        public static HashSet<string> major = new HashSet<string>();
-        public static void UpdateMajor(ICollection<string> l)
+        public static HashSet<long> major = new HashSet<long>();
+        public static void UpdateMajor(ICollection<long> l)
         {
             major.Clear();
             foreach (var i in l)

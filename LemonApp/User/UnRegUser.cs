@@ -21,7 +21,7 @@ namespace Clansty.tianlang
                 Branch = true;
         }
         public string Name { get; }
-        public string Class => Rds.HGet("classes", Name);
+        public int Class => 0;//TODO
         public int Enrollment { get; }
         public bool Branch { get; }
         public string Grade

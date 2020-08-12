@@ -67,7 +67,7 @@ namespace Clansty.tianlang
         [DllExport(CallingConvention.StdCall)]
         static int _eventSystem_GroupMemberIncrease(long a, int b, int c, long d, long e, long f)
         {
-            Events.GroupAddMember(new GroupAddMemberArgs(d.ToString(), e.ToString(), f.ToString()));
+            Events.GroupAddMember(new GroupAddMemberArgs(d, e, f));
             return 0;
         }
         [DllExport(CallingConvention.StdCall)]
@@ -100,34 +100,34 @@ namespace Clansty.tianlang
 
         public static class Send
         {
-            public static void Group(string group, string msg)
+            public static void Group(long group, string msg)
             {
-                Api_sendGroupMsg(ac, tianlang.AppInfo.self, long.Parse(group), msg);
+                Api_sendGroupMsg(ac, tianlang.AppInfo.self, group, msg);
             }
             [DllImport("LqrHelper.dll")]
             extern static void Api_sendGroupMsg(int a, long b, long c, string d);
-            public static void Temp(string group, string qq, string msg)
+            public static void Temp(long group, long qq, string msg)
             {
-                Api_sendTransieMsg(ac, tianlang.AppInfo.self, long.Parse(group), msg, long.Parse(qq));
+                Api_sendTransieMsg(ac, tianlang.AppInfo.self, group, msg, qq);
             }
             [DllImport("LqrHelper.dll")]
             extern static void Api_sendTransieMsg(int a, long b, long c, string d, long e);
-            public static void Friend(string qq, string msg)
+            public static void Friend(long qq, string msg)
             {
                 Temp(G.major, qq, msg);
             }
         }
 
-        public static void GroupKickMember(string group, string qq)
+        public static void GroupKickMember(long group, long qq)
         {
-            Api_KickGroupMember(Clansty.tianlang.AppInfo.self, long.Parse(group), long.Parse(qq), false);
+            Api_KickGroupMember(Clansty.tianlang.AppInfo.self, group, qq, false);
         }
         [DllImport("LqrHelper.dll")]
         extern static void Api_KickGroupMember(long a, long b, long c, bool d);
-        public static string GetGroupMemberCard(string group, string qq)
+        public static string GetGroupMemberCard(long group, long qq)
         {
             //&nbsp;
-            var r = Marshal.PtrToStringAnsi(Api_GetGroupMemberCard(tianlang.AppInfo.self, long.Parse(group), long.Parse(qq)));
+            var r = Marshal.PtrToStringAnsi(Api_GetGroupMemberCard(tianlang.AppInfo.self, group, qq));
             r = r.Replace("&nbsp;", " ");//nbsp 和空格是有区别的
             r = HttpUtility.HtmlDecode(r);
             return r.Replace("\\/", "/");
@@ -135,23 +135,27 @@ namespace Clansty.tianlang
 
         [DllImport("LqrHelper.dll")]
         extern static IntPtr Api_GetGroupMemberCard(long a, long b, long c);
-        public static void SetGroupMemberCard(string group, string qq, string card)
+        public static void SetGroupMemberCard(long group, long qq, string card)
         {
-            Api_SetGroupMemberCard(Clansty.tianlang.AppInfo.self, long.Parse(group), long.Parse(qq), card);
+            Api_SetGroupMemberCard(Clansty.tianlang.AppInfo.self, group, qq, card);
         }
         [DllImport("LqrHelper.dll")]
         extern static void Api_SetGroupMemberCard(long a, long b, long c, string d);
-        public static ICollection<string> GetGroupMembers(string group)
+        public static List<long> GetGroupMembers(long group)
         {
-            var json = Marshal.PtrToStringAnsi(Api_GetGroupMemberList(Clansty.tianlang.AppInfo.self, long.Parse(group)));
+            var json = Marshal.PtrToStringAnsi(Api_GetGroupMemberList(Clansty.tianlang.AppInfo.self, group));
             var jobj = JObject.Parse(json);
             var members = jobj.SelectToken("members");
             var dic = members.ToObject<Dictionary<string, object>>();
-            return dic.Keys;
+            var keys = dic.Keys;
+            var ret = new List<long>();
+            foreach (var i in keys)
+                ret.Add(long.Parse(i));
+            return ret;
         }
         [DllImport("LqrHelper.dll")]
         extern static IntPtr Api_GetGroupMemberList(long a, long b);
-        public static string GetNick(string qq)
+        public static string GetNick(long qq)
         {
             WebClient client = new WebClient();
             client.Encoding = Encoding.UTF8;

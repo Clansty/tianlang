@@ -6,18 +6,18 @@ namespace Clansty.tianlang
     {
         public GroupMsgArgs(long a, long b, string c)
         {
-            FromQQ = a.ToString();
-            FromGroup = b.ToString();
+            FromQQ = a;
+            FromGroup = b;
             Msg = c;
         }
         /// <summary>
         /// 发送这条消息的人
         /// </summary>
-        public string FromQQ { get; }
+        public long FromQQ { get; }
         /// <summary>
         /// 来源群组
         /// </summary>
-        public string FromGroup { get; }
+        public long FromGroup { get; }
         /// <summary>
         /// 消息内容
         /// </summary>

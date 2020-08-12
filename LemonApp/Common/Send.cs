@@ -2,12 +2,12 @@
 {
     static class S
     {
-        public static void Group(string group, string msg)
+        public static void Group(long group, string msg)
         {
             Robot.Send.Group(group, msg);
         }
 
-        public static void Private(string qq, string msg)
+        public static void Private(long qq, string msg)
         {
             Robot.Send.Friend(qq, msg);
         }

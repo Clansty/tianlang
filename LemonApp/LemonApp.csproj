@@ -130,7 +130,6 @@
     <Compile Include="User\INamedUser.cs" />
     <Compile Include="Lemon\GroupAddMemberArgs.cs" />
     <Compile Include="Lemon\GroupCardChangedArgs.cs" />
-    <Compile Include="Lemon\TempMsgArgs.cs" />
     <Compile Include="Lemon\GroupMsgArgs.cs" />
     <Compile Include="Lemon\FriendMsgArgs.cs" />
     <Compile Include="Common\MemberList.cs" />

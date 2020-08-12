@@ -7,40 +7,17 @@ namespace Clansty.tianlang.SIAMC
 {
     public partial class Loading : Form
     {
-        public Loading(int method)
+        public Loading()
         {
             InitializeComponent();
             var siamc = new Siamc();
             Task.Run(() =>
             {
-                HashSet<string> uins = null;
-                if (method == 0)
+                HashSet<long> uins = new HashSet<long>();
+                var members = Robot.GetGroupMembers(G.major);
+                foreach (var i in members)
                 {
-                    var rcl = Rds.GetClient();
-                    uins = rcl.GetAllItemsFromSet("users");
-                    rcl.Dispose();
-                }
-                else if (method == 1)
-                {
-                    uins = new HashSet<string>();
-                    var members = Robot.GetGroupMembers(G.major);
-                    foreach (var i in members)
-                    {
-                        uins.Add(i);
-                    }
-                }
-                else
-                {
-                    var rcl = Rds.GetClient();
-                    var tmp = rcl.GetAllItemsFromSet("users");
-                    rcl.Dispose();
-                    uins = new HashSet<string>();
-                    foreach (var i in tmp)
-                    {
-                        var u = new User(i);
-                        if (u.Enrollment == method)
-                            uins.Add(i);
-                    }
+                    uins.Add(i);
                 }
 
                 var rows = siamc.data.Rows;

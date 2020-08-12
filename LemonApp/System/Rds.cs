@@ -9,12 +9,7 @@ namespace Clansty.tianlang
             throw new NotImplementedException();
         }
 
-        internal static dynamic GetClient()
-        {
-            throw new NotImplementedException();
-        }
-
-        internal static void HSet(string v, string name, string qq)
+        internal static void HSet(object v, object name, object qq)
         {
             throw new NotImplementedException();
         }

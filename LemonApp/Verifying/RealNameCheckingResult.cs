@@ -2,12 +2,12 @@
 {
     class RealNameCheckingResult
     {
-        public RealNameCheckingResult(RealNameStatus rns, string occupiedQQ = null)
+        public RealNameCheckingResult(RealNameStatus rns, long? occupiedQQ = null)
         {
             Status = rns;
             OccupiedQQ = occupiedQQ;
         }
         public RealNameStatus Status { get; }
-        public string OccupiedQQ { get; }
+        public long? OccupiedQQ { get; }
     }
 }

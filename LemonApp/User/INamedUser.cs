@@ -3,7 +3,7 @@
     interface INamedUser
     {
         string Name { get; }
-        string Class { get; }
+        int Class { get; }
         int Enrollment { get; }
         string Grade { get; }
         bool Branch { get; }

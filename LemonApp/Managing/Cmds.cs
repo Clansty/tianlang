@@ -17,9 +17,9 @@ namespace Clansty.tianlang
                 Func = s =>
                 {
                     s = s.Trim(' ', '\n', '[', ']', '@');
-                    if (!ulong.TryParse(s, out _) || s == "")
+                    if (!long.TryParse(s, out var i) || s == "")
                         return "QQ号格式错误";
-                    var u = new User(s);
+                    var u = new User(i);
                     UserInfo.CheckQmpAsync(u);
                     return u.ToXml();
                 }
@@ -45,43 +45,6 @@ namespace Clansty.tianlang
                     return r;
                 }
             },
-            ["hset"] = new GroupCommand
-            {
-                Description = "设置数据库中某个哈希链表中某一项的值",
-                Usage = "hset [哈希链表 ID] [项 ID] [值]",
-                IsParamsNeeded = true,
-                Permission = UserType.administrator,
-                Func = s =>
-                {
-                    if (s.IndexOf(" ") == s.LastIndexOf(" "))
-                    {
-                        return "参数的数量不够";
-                    }
-                    var hashid = s.GetLeft(" ");
-                    s = s.GetRight(" ");
-                    var keyid = s.GetLeft(" ");
-                    s = s.GetRight(" ");
-                    Rds.HSet(hashid, keyid, s);
-                    return "完成";
-                }
-            },
-            ["hget"] = new GroupCommand
-            {
-                Description = "获取数据库中某个哈希链表中某一项的值",
-                Usage = "hget [哈希链表 ID] [项 ID]",
-                IsParamsNeeded = true,
-                Permission = UserType.powerUser,
-                Func = s =>
-                {
-                    if (s.IndexOf(" ", StringComparison.Ordinal) < 0)
-                    {
-                        return "参数的数量不够";
-                    }
-                    var hashid = s.GetLeft(" ");
-                    s = s.GetRight(" ");
-                    return Rds.HGet(hashid, s);
-                }
-            },
             ["rqns"] = new GroupCommand
             {
                 Description = "手动对某个成员启动新人向导",
@@ -91,10 +54,10 @@ namespace Clansty.tianlang
                 Func = s =>
                 {
                     s = s.Trim(' ', '\n', '[', ']', '@');
-                    if (long.TryParse(s, out _))
+                    if (long.TryParse(s, out var i))
                     {
-                        Setup.New(s);
-                        return $"新人向导已对 {new User(s).Namecard}({s}) 启动";
+                        Setup.New(i);
+                        return $"新人向导已对 {new User(i).Namecard}({s}) 启动";
                     }
                     return $"{s} 不是有效的长整数";
                 }
@@ -108,13 +71,13 @@ namespace Clansty.tianlang
                 Func = s =>
                 {
                     s = s.Trim(' ', '\n', '[', ']', '@');
-                    if (long.TryParse(s, out _))
+                    if (long.TryParse(s, out var i))
                     {
-                        var u = new User(s);
+                        var u = new User(i);
                         if (u.Role >= UserType.powerUser)
                             return $"不能拉黑一个 {u.Role}";
                         u.Role = UserType.blackListed;
-                        Robot.GroupKickMember(G.major,s);
+                        Robot.GroupKickMember(G.major,i);
                         return $"已拉黑 {u.ProperNamecard}({s})";
                     }
                     return $"{s} 不是有效的长整数";
@@ -129,12 +92,12 @@ namespace Clansty.tianlang
                 Func = s =>
                 {
                     s = s.Trim(' ', '\n', '[', ']', '@');
-                    if (long.TryParse(s, out _))
+                    if (long.TryParse(s, out var i))
                     {
-                        var u = new User(s);
+                        var u = new User(i);
                         if (u.Role >= UserType.powerUser)
                             return $"不能踢一个 {u.Role}";
-                        Robot.GroupKickMember(G.major,s);
+                        Robot.GroupKickMember(G.major,i);
                         return $"已踢 {u.ProperNamecard}({s})";
                     }
                     return $"{s} 不是有效的长整数";
@@ -147,29 +110,6 @@ namespace Clansty.tianlang
                 IsParamsNeeded = true,
                 Permission = UserType.powerUser,
                 Func = s => s
-            },
-            ["stats"] = new GroupCommand
-            {
-                Description = "查看统计数据",
-                Usage = "stats",
-                IsParamsNeeded = false,
-                Permission = UserType.powerUser,
-                Func = _ =>
-                {
-                    var r = "";
-                    var date = DateTime.Now.ToShortDateString();
-                    var client = Rds.GetClient();
-                    var kvps = client.GetAllEntriesFromHash("stats" + date);
-                    client.Dispose();
-                    var tot = 0;
-                    foreach (var kvp in kvps)
-                    {
-                        r += $"{kvp.Key}: {kvp.Value}\n";
-                        tot += int.Parse(kvp.Value);
-                    }
-                    r += $"合计: {tot}";
-                    return r;
-                }
             },
             ["find"] = new GroupCommand
             {
@@ -184,20 +124,6 @@ namespace Clansty.tianlang
                     return u.ToXml();
                 }
             },
-            ["chkqmp"] = new GroupCommand
-            {
-                Description = "test",
-                Usage = "chkqmp [qq]",
-                IsParamsNeeded = true,
-                Permission = UserType.administrator,
-                Func = s =>
-                {
-                    s = s.Trim(' ', '\n', '[', ']', '@');
-                    var task = UserInfo.CheckQmpAsync(new User(s));
-                    task.Wait();
-                    return task.Result.ToString();
-                }
-            },
         };
         internal static void SiEnter(GroupMsgArgs e)
         {
@@ -210,7 +136,7 @@ namespace Clansty.tianlang
                 if (gcmds.ContainsKey(key))
                 {
                     var m = gcmds[key];
-                    var u = new User(e.FromQQ.ToString());
+                    var u = new User(e.FromQQ);
                     if (u.Role < m.Permission)
                     {
                         e.Reply($"权限不够\n{key} 需要 {m.Permission}，而你属于{u.Role}", true);
@@ -242,7 +168,7 @@ namespace Clansty.tianlang
                 if (gcmds.ContainsKey(key))
                 {
                     var m = gcmds[key];
-                    var u = new User(e.FromQQ.ToString());
+                    var u = new User(e.FromQQ);
                     if (u.Role < m.Permission)
                     {
                         e.Reply($"权限不够\n{key} 需要 {m.Permission}，而你属于{u.Role}, true");

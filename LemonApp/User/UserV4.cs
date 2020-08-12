@@ -5,7 +5,7 @@ namespace Clansty.tianlang
 {
     public class User : INamedUser
     {
-        public string Uin { get; }
+        public long Uin => (int)Row["id"];
         public DataRow Row { get; }
 
         public User(long uin, bool createWhenNotFound = true)
@@ -24,11 +24,6 @@ namespace Clansty.tianlang
                 }
             }
         }
-        public User(string uin, bool createWhenNotFound = true)
-        {
-            throw new System.Exception();
-        }
-
         public string Name
         {
             get
@@ -84,23 +79,7 @@ namespace Clansty.tianlang
         {
             get
             {
-                if (Enrollment != 2017 && Enrollment != 2018 && Enrollment != 2019)
-                    return RealNameVerifingResult.unsupported;
-#if DEBUG
-                return RealNameVerifingResult.succeed;
-#else
-                var bind = RealName.Bind(Uin, Name);
-                if (bind == RealNameBindingResult.noNeed)
-                    return RealNameVerifingResult.succeed;
-                if (bind == RealNameBindingResult.succeed)
-                    return RealNameVerifingResult.succeed;
-                if (bind == RealNameBindingResult.notFound)
-                    return RealNameVerifingResult.notFound;
-                if (bind == RealNameBindingResult.occupied)
-                    return RealNameVerifingResult.occupied;
-
-                return RealNameVerifingResult.wtf; //不可能运行到这里
-#endif
+                return RealNameVerifingResult.succeed;//TODO
             }
         }
 
@@ -110,7 +89,7 @@ namespace Clansty.tianlang
             set => Row["junior"] = value;
         }
 
-        public string Class => "";
+        public int Class => 0;
 
         public int Enrollment
         {
