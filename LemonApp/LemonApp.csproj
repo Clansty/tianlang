@@ -115,6 +115,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\Strs.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Strs.resx</DependentUpon>
+    </Compile>
     <Compile Include="System\AppInfo.cs" />
     <Compile Include="Managing\Cmds.cs" />
     <Compile Include="Managing\Command.cs" />
@@ -169,7 +174,6 @@
     </Compile>
     <Compile Include="User\Status.cs" />
     <Compile Include="System\StringHelper.cs" />
-    <Compile Include="Common\Strs.cs" />
     <Compile Include="User\UnRegUser.cs" />
     <Compile Include="User\UserInfo.cs" />
     <Compile Include="User\UserType.cs" />
@@ -180,6 +184,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Common\Strs.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Strs.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Clansty.tianlang</CustomToolNamespace>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\Loading.resx">
       <DependentUpon>Loading.cs</DependentUpon>
     </EmbeddedResource>

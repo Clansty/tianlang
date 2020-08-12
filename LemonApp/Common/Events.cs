@@ -6,7 +6,7 @@ namespace Clansty.tianlang
     {
         internal static void Exit()
         {
-
+            
         }
         internal static void Enable()
         {

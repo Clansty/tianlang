@@ -148,49 +148,6 @@ namespace Clansty.tianlang
                 Permission = UserType.powerUser,
                 Func = s => s
             },
-            ["gstrs"] = new GroupCommand
-            {
-                Description = "获取语句模板文本",
-                Usage = "gstrs [模板 ID]",
-                IsParamsNeeded = true,
-                Permission = UserType.powerUser,
-                Func = Strs.Get
-            },
-            ["sstrs"] = new GroupCommand
-            {
-                Description = "设置语句模板文本",
-                Usage = "sstrs [模板 ID] [内容]",
-                IsParamsNeeded = true,
-                Permission = UserType.administrator,
-                Func = s =>
-                {
-                    if (s.IndexOf(" ") < 0)
-                    {
-                        return "参数的数量不够";
-                    }
-                    var hashid = s.GetLeft(" ");
-                    s = s.GetRight(" ");
-                    Strs.Set(hashid, s);
-                    return "完成";
-                }
-            },
-            ["strs"] = new GroupCommand
-            {
-                Description = "获取现在所有的语句模板",
-                Usage = "strs",
-                IsParamsNeeded = false,
-                Permission = UserType.powerUser,
-                Func = _ =>
-                {
-                    var client = Rds.GetClient();
-                    var r = "";
-                    foreach (var cmd in client.GetHashKeys("strs"))
-                        r += cmd + "\n";
-                    r = r.Trim();
-                    client.Dispose();
-                    return r;
-                }
-            },
             ["stats"] = new GroupCommand
             {
                 Description = "查看统计数据",

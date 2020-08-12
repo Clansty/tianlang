@@ -14,16 +14,6 @@ namespace Clansty.tianlang
             throw new NotImplementedException();
         }
 
-        internal static void SAdd(string v, string uin)
-        {
-            throw new NotImplementedException();
-        }
-
-        internal static bool SContains(string v, string uin)
-        {
-            throw new NotImplementedException();
-        }
-
         internal static void HSet(string v, string name, string qq)
         {
             throw new NotImplementedException();

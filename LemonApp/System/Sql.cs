@@ -49,20 +49,26 @@ namespace Clansty.tianlang
 #endif
         public static DataTable users = new DataTable();
         public static DataTable persons = new DataTable();
+        public static DataTable strs = new DataTable();
         private static MySqlDataAdapter daUsers = null;
         private static MySqlDataAdapter daPersons = null;
+        private static MySqlDataAdapter daStrs = null;
         public static void Init()
         {
             var sqlUsers = "SELECT * FROM users";
             var sqlPersons = "SELECT * FROM persons";
+            var sqlStrs = "SELECT * FROM strs";
             daUsers = new MySqlDataAdapter(sqlUsers, connStr);
             daPersons = new MySqlDataAdapter(sqlPersons, connStr);
+            daStrs = new MySqlDataAdapter(sqlStrs, connStr);
             new MySqlCommandBuilder(daUsers);
             new MySqlCommandBuilder(daPersons);
             daUsers.FillAsync(users);
             daPersons.FillAsync(persons);
+            daStrs.FillAsync(strs);
             users.PrimaryKey = new DataColumn[] { users.Columns[0] };
             persons.PrimaryKey = new DataColumn[] { persons.Columns[0] };
+            strs.PrimaryKey = new DataColumn[] { strs.Columns[0] };
         }
         public static void Commit()
         {

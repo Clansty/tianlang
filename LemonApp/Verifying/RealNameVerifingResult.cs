@@ -1,6 +1,6 @@
 ﻿namespace Clansty.tianlang
 {
-    enum RealNameVerifingResult
+    public enum RealNameVerifingResult
     {
         /// <summary>
         /// 找不到此身份

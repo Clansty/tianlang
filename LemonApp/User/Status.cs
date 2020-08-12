@@ -1,6 +1,6 @@
 ﻿namespace Clansty.tianlang
 {
-    enum Status
+    public enum Status
     {
         no,
         setup

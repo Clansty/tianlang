@@ -1,13 +1,14 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 
 namespace Clansty.tianlang
 {
-    class User : INamedUser
+    public class User : INamedUser
     {
         public string Uin { get; }
         public DataRow Row { get; }
 
-        public User(string uin, bool createWhenNotFound = true)
+        public User(long uin, bool createWhenNotFound = true)
         {
             Row = Sql.users.Rows.Find(uin);
             if (Row is null)
@@ -15,7 +16,7 @@ namespace Clansty.tianlang
                 if (createWhenNotFound)
                 {
                     //数据结构修改时这里要改
-                    Row = Sql.users.Rows.Add(uin, "", "", 0, 0, "", 0, 0, 0);
+                    Row = Sql.users.Rows.Add(uin, "", "", 0, 0, "", 0, 0, 0, 0);
                 }
                 else
                 {
@@ -23,10 +24,21 @@ namespace Clansty.tianlang
                 }
             }
         }
+        public User(string uin, bool createWhenNotFound = true)
+        {
+            throw new System.Exception();
+        }
 
         public string Name
         {
-            get => (string)Row["name"];
+            get
+            {
+                var r = Row["name"];
+                if (r == DBNull.Value)
+                    return "";
+                return (string)Row["name"];
+            }
+
             set => Row["name"] = value;
         }
 
@@ -36,8 +48,13 @@ namespace Clansty.tianlang
             {
                 //为了防止频繁请求还是把默认昵称信息落数据库
                 //老写法还取两次
-                var ret = (string)Row["nick"];
-                if (string.IsNullOrEmpty(ret))
+                var r = Row["nick"];
+                string ret = null;
+                if (r != DBNull.Value)
+                {
+                    ret = (string)r;
+                }
+                if (string.IsNullOrWhiteSpace(ret))
                 {
                     ret = Robot.GetNick(Uin);
                     Nick = ret;
@@ -53,9 +70,6 @@ namespace Clansty.tianlang
             get
             {
                 //TODO
-                var chk = RealName.Check(Name);
-                if (chk.Status == RealNameStatus.e2019jc || chk.Status == RealNameStatus.e2018jc)
-                    return true;
                 return false;
             }
         }
@@ -72,7 +86,9 @@ namespace Clansty.tianlang
             {
                 if (Enrollment != 2017 && Enrollment != 2018 && Enrollment != 2019)
                     return RealNameVerifingResult.unsupported;
-
+#if DEBUG
+                return RealNameVerifingResult.succeed;
+#else
                 var bind = RealName.Bind(Uin, Name);
                 if (bind == RealNameBindingResult.noNeed)
                     return RealNameVerifingResult.succeed;
@@ -84,6 +100,7 @@ namespace Clansty.tianlang
                     return RealNameVerifingResult.occupied;
 
                 return RealNameVerifingResult.wtf; //不可能运行到这里
+#endif
             }
         }
 
@@ -99,23 +116,16 @@ namespace Clansty.tianlang
         {
             get
             {
-                try
-                {
-                    var chk = RealName.Check(Name);
-                    if (chk.Status == RealNameStatus.e2017)
-                        return 2017;
-                    if (chk.Status == RealNameStatus.e2018 || chk.Status == RealNameStatus.e2018jc)
-                        return 2018;
-                    if (chk.Status == RealNameStatus.e2019 || chk.Status == RealNameStatus.e2019jc)
-                        return 2019;
-
-                    return (int)Row["enrollment"];
-                }
-                catch
-                {
-                    Enrollment = 0;
-                    return 0;
-                }
+#if !DEBUG
+                var chk = RealName.Check(Name);
+                if (chk.Status == RealNameStatus.e2017)
+                    return 2017;
+                if (chk.Status == RealNameStatus.e2018 || chk.Status == RealNameStatus.e2018jc)
+                    return 2018;
+                if (chk.Status == RealNameStatus.e2019 || chk.Status == RealNameStatus.e2019jc)
+                    return 2019;
+#endif
+                return (int)Row["enrollment"];
             }
             set => Row["enrollment"] = value;
         }
@@ -139,9 +149,23 @@ namespace Clansty.tianlang
 
         public string Namecard
         {
-            get => Robot.GetGroupMemberCard(G.major, Uin);
+            get
+            {
+#if DEBUG
+                return ProperNamecard;
+#else
+                return Robot.GetGroupMemberCard(G.major, Uin);
+#endif
+            }
 
-            set => Robot.SetGroupMemberCard(G.major, Uin, value);
+            set
+            {
+#if DEBUG
+                C.WriteLn($"{Uin} 群名片设置为 {value}");
+#else
+                Robot.SetGroupMemberCard(G.major, Uin, value);
+#endif
+            }
         }
 
         public Status Status
@@ -196,7 +220,10 @@ namespace Clansty.tianlang
                         r = "一";
                         break;
                     case 10086: //这种情况通过数据库自定义前缀
-                        var prefix = (string)Row["prefix"];
+                        var p = Row["prefix"];
+                        var prefix = "未定义";
+                        if (p != DBNull.Value)
+                            prefix = (string)p;
                         if (prefix == null)
                             prefix = "";
                         return prefix;
