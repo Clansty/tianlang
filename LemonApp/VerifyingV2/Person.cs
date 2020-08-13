@@ -4,7 +4,7 @@ namespace Clansty.tianlang
 {
     class Person //做成一个实例化的类，表示某个人类
     {
-        public DataRow Row { get; }
+        #region 构造函数 产生器
         private Person(DataRow row)
         {
             Row = row;
@@ -59,6 +59,12 @@ namespace Clansty.tianlang
                 throw new PersonNotFoundException();
             return new Person(row);
         }
+        #endregion
+        #region 实例成员 这些成员应该是只读的
+        public DataRow Row { get; }
+        public int Id => (int)Row["id"];
+        public string Name => (string)Row["name"];
 
+        #endregion
     }
 }

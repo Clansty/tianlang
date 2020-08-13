@@ -50,15 +50,13 @@ namespace Clansty.tianlang
         public static DataTable users = new DataTable();
         public static DataTable persons = new DataTable();
         private static MySqlDataAdapter daUsers = null;
-        private static MySqlDataAdapter daPersons = null;
         public static void Init()
         {
             var sqlUsers = "SELECT * FROM users";
             var sqlPersons = "SELECT * FROM persons";
             daUsers = new MySqlDataAdapter(sqlUsers, connStr);
-            daPersons = new MySqlDataAdapter(sqlPersons, connStr);
+            var daPersons = new MySqlDataAdapter(sqlPersons, connStr);
             new MySqlCommandBuilder(daUsers);
-            new MySqlCommandBuilder(daPersons);
             daUsers.FillAsync(users);
             daPersons.FillAsync(persons);
             users.PrimaryKey = new DataColumn[] { users.Columns[0] };
@@ -69,7 +67,6 @@ namespace Clansty.tianlang
             try
             {
                 daUsers.Update(users);
-                daPersons.Update(persons);
             }
             catch (Exception ex)
             {
