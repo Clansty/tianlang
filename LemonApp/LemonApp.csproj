@@ -168,7 +168,6 @@
     </Compile>
     <Compile Include="User\Status.cs" />
     <Compile Include="System\StringHelper.cs" />
-    <Compile Include="User\UnRegUser.cs" />
     <Compile Include="User\UserInfo.cs" />
     <Compile Include="User\UserType.cs" />
     <Compile Include="User\UserV4.cs" />

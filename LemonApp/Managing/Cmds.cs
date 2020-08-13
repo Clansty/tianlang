@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Clansty.tianlang
 {
@@ -77,7 +76,7 @@ namespace Clansty.tianlang
                         if (u.Role >= UserType.powerUser)
                             return $"不能拉黑一个 {u.Role}";
                         u.Role = UserType.blackListed;
-                        Robot.GroupKickMember(G.major,i);
+                        Robot.GroupKickMember(G.major, i);
                         return $"已拉黑 {u.ProperNamecard}({s})";
                     }
                     return $"{s} 不是有效的长整数";
@@ -97,7 +96,7 @@ namespace Clansty.tianlang
                         var u = new User(i);
                         if (u.Role >= UserType.powerUser)
                             return $"不能踢一个 {u.Role}";
-                        Robot.GroupKickMember(G.major,i);
+                        Robot.GroupKickMember(G.major, i);
                         return $"已踢 {u.ProperNamecard}({s})";
                     }
                     return $"{s} 不是有效的长整数";
@@ -153,7 +152,7 @@ namespace Clansty.tianlang
             }
             catch (Exception ex)
             {
-                e.Reply("发生错误\n"+ex.Message);
+                e.Reply("发生错误\n" + ex.Message);
             }
         }
         internal static void SudoEnter(GroupMsgArgs e)
@@ -186,7 +185,7 @@ namespace Clansty.tianlang
             }
             catch (Exception ex)
             {
-                e.Reply("发生错误\n"ex.Message);
+                e.Reply("发生错误\n" + ex.Message);
             }
         }
 

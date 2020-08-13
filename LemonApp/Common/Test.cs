@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Clansty.tianlang
+﻿namespace Clansty.tianlang
 {
-    static class Test
+    public static class Test
     {
-        internal static void Do()
+        public static void Do()
         {
 
         }
