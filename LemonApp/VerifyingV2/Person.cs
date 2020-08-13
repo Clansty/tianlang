@@ -9,7 +9,7 @@ namespace Clansty.tianlang
         {
             Row = row;
         }
-        public static Person[] GetPeople(string name)
+        internal static Person[] GetPeople(string name)
         {
             //有可能有重名，返回多个
             //有可能找不到，返回空数组
@@ -21,7 +21,7 @@ namespace Clansty.tianlang
             }
             return r;
         }
-        public static Person Get(string name)
+        internal static Person Get(string name)
         {
             //找到了，返回
             //找不到，有重名，抛异常
@@ -32,7 +32,7 @@ namespace Clansty.tianlang
                 throw new DuplicateNameException();
             return ps[0];
         }
-        public static Person Get(string name, int enrollment)
+        internal static Person Get(string name, int enrollment)
         {
             var rows = Db.persons.Select($"name = '{name.Replace("'", "''")}' AND enrollment = {enrollment}");
             if (rows.Length == 0)
@@ -41,7 +41,7 @@ namespace Clansty.tianlang
                 throw new DuplicateNameException();
             return new Person(rows[0]);
         }
-        public static Person Get(string name, int enrollment, int _class)
+        internal static Person Get(string name, int enrollment, int _class)
         {
             var rows = Db.persons.Select($"name = '{name.Replace("'", "''")}' AND " +
                 $"enrollment = {enrollment} AND " +
@@ -52,7 +52,7 @@ namespace Clansty.tianlang
                 throw new DuplicateNameException();
             return new Person(rows[0]);
         }
-        public static Person Get(int id)
+        internal static Person Get(int id)
         {
             var row = Db.persons.Rows.Find(id);
             if (row is null)
@@ -61,17 +61,17 @@ namespace Clansty.tianlang
         }
         #endregion
         #region 实例成员 这些成员应该是只读的
-        public DataRow Row { get; }
-        public int Id => (int)Row["id"];
-        public string Name => (string)Row["name"];
-        public bool Junior => (bool)Row["junior"];
-        public bool Branch => (bool)Row["branch"];
-        public bool Board => (bool)Row["board"];
-        public Gender Gender => (Gender)Row["gender"];
-        public int Class => (int)Row["class"];
-        public int Enrollment => (int)Row["enrollment"];
+        internal DataRow Row { get; }
+        internal int Id => (int)Row["id"];
+        internal string Name => (string)Row["name"];
+        internal bool Junior => (bool)Row["junior"];
+        internal bool Branch => (bool)Row["branch"];
+        internal bool Board => (bool)Row["board"];
+        internal Gender Gender => (Gender)Row["gender"];
+        internal int Class => (int)Row["class"];
+        internal int Enrollment => (int)Row["enrollment"];
         #endregion
-        public User User
+        internal User User
         {
             get
             {

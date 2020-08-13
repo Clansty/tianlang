@@ -4,7 +4,7 @@ namespace Clansty.tianlang
 {
     internal class GroupMsgArgs : EventArgs
     {
-        public GroupMsgArgs(long a, long b, string c)
+        internal GroupMsgArgs(long a, long b, string c)
         {
             FromQQ = a;
             FromGroup = b;
@@ -13,21 +13,21 @@ namespace Clansty.tianlang
         /// <summary>
         /// 发送这条消息的人
         /// </summary>
-        public long FromQQ { get; }
+        internal long FromQQ { get; }
         /// <summary>
         /// 来源群组
         /// </summary>
-        public long FromGroup { get; }
+        internal long FromGroup { get; }
         /// <summary>
         /// 消息内容
         /// </summary>
-        public string Msg { get; }
+        internal string Msg { get; }
         /// <summary>
         /// 快捷回复
         /// </summary>
         /// <param name="msg">消息内容</param>
         /// <param name="includeSrcMsg">是否引用原始消息，设为 true 相当于在 msg 开头加入 SrcMsg</param>
-        public void Reply(string msg, bool _ = false) => Robot.Send.Group(FromGroup, msg);
+        internal void Reply(string msg, bool _ = false) => Robot.Send.Group(FromGroup, msg);
         //TODO 撤回
     }
 }

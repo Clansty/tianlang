@@ -4,7 +4,7 @@ namespace Clansty.tianlang
 {
     class UnRegUser : INamedUser
     {
-        public UnRegUser(string name)
+        internal UnRegUser(string name)
         {
             Name = name;
             var chk = RealName.Check(name);
@@ -20,11 +20,11 @@ namespace Clansty.tianlang
             if (chk.Status == RealNameStatus.e2019jc)
                 Branch = true;
         }
-        public string Name { get; }
-        public int Class => 0;//TODO
-        public int Enrollment { get; }
-        public bool Branch { get; }
-        public string Grade
+        internal string Name { get; }
+        internal int Class => 0;//TODO
+        internal int Enrollment { get; }
+        internal bool Branch { get; }
+        internal string Grade
         {
             get
             {
@@ -51,7 +51,7 @@ namespace Clansty.tianlang
                 return r;
             }
         }
-        public string ToXml(string title = "用户信息")
+        internal string ToString(string title = "用户信息")
         {
             return $"[{title}]\n" +
                    $"年级: {Grade}\n" +

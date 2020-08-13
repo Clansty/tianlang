@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 
 namespace Clansty.tianlang
 {
-    public static class Cmds
+    static class Cmds
     {
-        public static readonly Dictionary<string, GroupCommand> gcmds = new Dictionary<string, GroupCommand>
+        internal static readonly Dictionary<string, GroupCommand> gcmds = new Dictionary<string, GroupCommand>
         {
             ["info"] = new GroupCommand
             {
@@ -21,7 +21,7 @@ namespace Clansty.tianlang
                         return "QQ号格式错误";
                     var u = new User(i);
                     UserInfo.CheckQmpAsync(u);
-                    return u.ToXml();
+                    return u.ToString();
                 }
             },
             ["help"] = new GroupCommand
@@ -121,7 +121,7 @@ namespace Clansty.tianlang
                 {
                     s = s.Trim(' ', '\n', '[', ']', '@');
                     var u = UserInfo.FindUser(s);
-                    return u.ToXml();
+                    return u.ToString();
                 }
             },
         };

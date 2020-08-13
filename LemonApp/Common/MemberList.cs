@@ -4,8 +4,8 @@ namespace Clansty.tianlang
 {
     static class MemberList
     {
-        public static HashSet<long> major = new HashSet<long>();
-        public static void UpdateMajor(ICollection<long> l)
+        internal static HashSet<long> major = new HashSet<long>();
+        internal static void UpdateMajor(ICollection<long> l)
         {
             major.Clear();
             foreach (var i in l)
@@ -13,7 +13,7 @@ namespace Clansty.tianlang
                 major.Add(i);
             }
         }
-        public static void UpdateMajor()
+        internal static void UpdateMajor()
         {
             UpdateMajor(Robot.GetGroupMembers(G.major));
         }

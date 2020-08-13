@@ -8,7 +8,7 @@
         private const string dd = "打断";
         private const string dg = "出现了打断怪";
 
-        public static void Enter(string msg)
+        internal static void Enter(string msg)
         {
             if (last == msg)
             {

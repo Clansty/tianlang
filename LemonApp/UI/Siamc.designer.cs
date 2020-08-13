@@ -185,7 +185,7 @@ namespace Clansty.tianlang.SIAMC
         }
 
         #endregion
-        public DataGridView data;
+        internal DataGridView data;
         private MenuStrip menuStrip1;
         private ToolStripMenuItem 罗德岛ToolStripMenuItem;
         private ToolStripMenuItem 退出ToolStripMenuItem;

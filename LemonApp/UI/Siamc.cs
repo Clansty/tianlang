@@ -3,9 +3,9 @@ using System.Windows.Forms;
 
 namespace Clansty.tianlang.SIAMC
 {
-    public partial class Siamc : Form
+    internal partial class Siamc : Form
     {
-        public Siamc()
+        internal Siamc()
         {
             InitializeComponent();
         }

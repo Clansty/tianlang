@@ -4,7 +4,7 @@ namespace Clansty.tianlang
 {
     internal class Rds
     {
-        public static string HGet(object a, object b)
+        internal static string HGet(object a, object b)
         {
             throw new NotImplementedException();
         }

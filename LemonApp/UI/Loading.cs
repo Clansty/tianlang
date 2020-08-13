@@ -5,9 +5,9 @@ using System.Windows.Forms;
 
 namespace Clansty.tianlang.SIAMC
 {
-    public partial class Loading : Form
+    internal partial class Loading : Form
     {
-        public Loading()
+        internal Loading()
         {
             InitializeComponent();
             var siamc = new Siamc();

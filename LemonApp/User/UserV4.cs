@@ -1,14 +1,15 @@
-﻿using System;
+﻿using Clansty.tianlang.VerifyingV2;
+using System;
 using System.Data;
 
 namespace Clansty.tianlang
 {
-    public class User : INamedUser
+    class User
     {
-        public long Uin => (int)Row["id"];
-        public DataRow Row { get; }
+        internal long Uin => (int)Row["id"];
+        internal DataRow Row { get; }
 
-        public User(long uin, bool createWhenNotFound = true)
+        internal User(long uin, bool createWhenNotFound = true)
         {
             Row = Db.users.Rows.Find(uin);
             if (Row is null)
@@ -24,7 +25,7 @@ namespace Clansty.tianlang
                 }
             }
         }
-        public string Name
+        internal string Name
         {
             get
             {
@@ -37,7 +38,7 @@ namespace Clansty.tianlang
             set => Row["name"] = value;
         }
 
-        public string Nick
+        internal string Nick
         {
             get
             {
@@ -60,7 +61,7 @@ namespace Clansty.tianlang
             set => Row["nick"] = value;
         }
 
-        public bool Branch
+        internal bool Branch
         {
             get
             {
@@ -72,44 +73,28 @@ namespace Clansty.tianlang
         /// <summary>
         /// 标识实名认证成功验证，此时不应该能自己修改姓名
         /// </summary>
-        public bool Verified => VerifyMsg == RealNameVerifingResult.succeed ||
+        internal bool Verified => VerifyMsg == RealNameVerifingResult.succeed ||
                                 VerifyMsg == RealNameVerifingResult.unsupported && Name != "";
 
-        public RealNameVerifingResult VerifyMsg
-        {
-            get
-            {
-                return RealNameVerifingResult.succeed;//TODO
-            }
-        }
-
-        public bool Junior
+        internal bool Junior
         {
             get => (bool)Row["junior"];
             set => Row["junior"] = value;
         }
 
-        public int Class => 0;
+        internal int Class => 0;
 
-        public int Enrollment
+        internal int Enrollment
         {
             get
             {
-#if !DEBUG
-                var chk = RealName.Check(Name);
-                if (chk.Status == RealNameStatus.e2017)
-                    return 2017;
-                if (chk.Status == RealNameStatus.e2018 || chk.Status == RealNameStatus.e2018jc)
-                    return 2018;
-                if (chk.Status == RealNameStatus.e2019 || chk.Status == RealNameStatus.e2019jc)
-                    return 2019;
-#endif
+                //TODO
                 return (int)Row["enrollment"];
             }
             set => Row["enrollment"] = value;
         }
 
-        public int Step
+        internal int Step
         {
             get
             {
@@ -126,7 +111,7 @@ namespace Clansty.tianlang
             set => Row["step"] = value;
         }
 
-        public string Namecard
+        internal string Namecard
         {
             get
             {
@@ -147,7 +132,7 @@ namespace Clansty.tianlang
             }
         }
 
-        public Status Status
+        internal Status Status
         {
             get
             {
@@ -164,7 +149,7 @@ namespace Clansty.tianlang
             set => Row["status"] = (int)value;
         }
 
-        public UserType Role
+        internal UserType Role
         {
             get
             {
@@ -181,7 +166,7 @@ namespace Clansty.tianlang
             set => Row["role"] = (int)value;
         }
 
-        public string Grade
+        internal string Grade
         {
             get
             {
@@ -229,7 +214,7 @@ namespace Clansty.tianlang
             }
         }
 
-        public string ProperNamecard
+        internal string ProperNamecard
         {
             get
             {
@@ -246,9 +231,39 @@ namespace Clansty.tianlang
         }
 
         internal bool IsFresh => Name == ""; //紧急 fix
-        public bool IsMember => MemberList.major.Contains(Uin);
+        internal bool IsMember => MemberList.major.Contains(Uin);
+        internal Person Person
+        {
+            get
+            {
+                var rb = Row["bind"];
+                var b = 0;
+                if (rb != DBNull.Value)
+                    b = (int)rb;
+                if (b == 0)
+                    return null;
+                return Person.Get(b);
+            }
+        }
+        internal VerifyingResult VerifyMsg
+        {
+            get
+            {
+                var rb = Row["bind"];
+                var b = 0;
+                if (rb != DBNull.Value)
+                    b = (int)rb;
+                if (b != 0)
+                    return VerifyingResult.succeed;
+                if()
+            }
+        }
 
-        public string ToXml(string title = "用户信息")
+        public override string ToString()
+        {
+            return ToString("用户信息");
+        }
+        internal string ToString(string title)
         {
             var ret = $"[{title}]\n" +
                       $"QQ: {Uin}\n" +

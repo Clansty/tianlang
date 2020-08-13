@@ -3,9 +3,9 @@ using System.Windows.Forms;
 
 namespace Clansty.tianlang
 {
-    public partial class SendTest : Form
+    internal partial class SendTest : Form
     {
-        public SendTest()
+        internal SendTest()
         {
             InitializeComponent();
         }

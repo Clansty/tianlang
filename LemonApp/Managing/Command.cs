@@ -2,18 +2,18 @@
 
 namespace Clansty.tianlang
 {
-    public class GroupCommand
+    class GroupCommand
     {
-        public string Description { get; set; }
-        public string Usage { get; set; }
-        public UserType Permission { get; set; }
-        public bool IsParamsNeeded { get; set; }
-        public Func<string, string> Func { get; set; }
+        internal string Description { get; set; }
+        internal string Usage { get; set; }
+        internal UserType Permission { get; set; }
+        internal bool IsParamsNeeded { get; set; }
+        internal Func<string, string> Func { get; set; }
     }
     class PrivateCommand
     {
-        public string Description { get; set; }
-        public UserType Permission { get; set; }
-        public Func<string, string, string> Func { get; set; }
+        internal string Description { get; set; }
+        internal UserType Permission { get; set; }
+        internal Func<string, string, string> Func { get; set; }
     }
 }

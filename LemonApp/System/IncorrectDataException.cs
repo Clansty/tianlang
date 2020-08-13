@@ -4,7 +4,7 @@ namespace Clansty.tianlang
 {
     class IncorrectDataException : Exception
     {
-        public IncorrectDataException() : base() { }
-        public IncorrectDataException(string msg): base(msg) { }
+        internal IncorrectDataException() : base() { }
+        internal IncorrectDataException(string msg): base(msg) { }
     }
 }

@@ -4,7 +4,7 @@ namespace Clansty.tianlang
 {
     internal class FriendMsgArgs : EventArgs
     {
-        public FriendMsgArgs(long fq, string m)
+        internal FriendMsgArgs(long fq, string m)
         {
             FromQQ = fq;
             Msg = m;
@@ -12,17 +12,17 @@ namespace Clansty.tianlang
         /// <summary>
         /// 发送这条消息的 QQ
         /// </summary>
-        public long FromQQ { get; }
+        internal long FromQQ { get; }
         /// <summary>
         /// 消息内容
         /// </summary>
-        public string Msg { get; }
+        internal string Msg { get; }
 
         /// <summary>
         /// 快捷回复这条消息，即向 FromQQ 发送好友消息
         /// </summary>
         /// <param name="msg">回复消息内容</param>
         /// <returns>是否成功</returns>
-        public void Reply(string msg) => Robot.Send.Friend(FromQQ, msg);
+        internal void Reply(string msg) => Robot.Send.Friend(FromQQ, msg);
     }
 }

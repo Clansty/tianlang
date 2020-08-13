@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace Clansty.tianlang
 {
-    class UserNotFoundException : Exception
+    static class Test
     {
-        internal UserNotFoundException() : base(message: "找不到此用户") { }
+        internal static void Do()
+        {
+
+        }
     }
 }

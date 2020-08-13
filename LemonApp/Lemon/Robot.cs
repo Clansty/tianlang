@@ -98,33 +98,33 @@ namespace Clansty.tianlang
             return 0;
         }
 
-        public static class Send
+        static class Send
         {
-            public static void Group(long group, string msg)
+            internal static void Group(long group, string msg)
             {
                 Api_sendGroupMsg(ac, tianlang.AppInfo.self, group, msg);
             }
             [DllImport("LqrHelper.dll")]
             extern static void Api_sendGroupMsg(int a, long b, long c, string d);
-            public static void Temp(long group, long qq, string msg)
+            internal static void Temp(long group, long qq, string msg)
             {
                 Api_sendTransieMsg(ac, tianlang.AppInfo.self, group, msg, qq);
             }
             [DllImport("LqrHelper.dll")]
             extern static void Api_sendTransieMsg(int a, long b, long c, string d, long e);
-            public static void Friend(long qq, string msg)
+            internal static void Friend(long qq, string msg)
             {
                 Temp(G.major, qq, msg);
             }
         }
 
-        public static void GroupKickMember(long group, long qq)
+        internal static void GroupKickMember(long group, long qq)
         {
             Api_KickGroupMember(Clansty.tianlang.AppInfo.self, group, qq, false);
         }
         [DllImport("LqrHelper.dll")]
         extern static void Api_KickGroupMember(long a, long b, long c, bool d);
-        public static string GetGroupMemberCard(long group, long qq)
+        internal static string GetGroupMemberCard(long group, long qq)
         {
             //&nbsp;
             var r = Marshal.PtrToStringAnsi(Api_GetGroupMemberCard(tianlang.AppInfo.self, group, qq));
@@ -135,13 +135,13 @@ namespace Clansty.tianlang
 
         [DllImport("LqrHelper.dll")]
         extern static IntPtr Api_GetGroupMemberCard(long a, long b, long c);
-        public static void SetGroupMemberCard(long group, long qq, string card)
+        internal static void SetGroupMemberCard(long group, long qq, string card)
         {
             Api_SetGroupMemberCard(Clansty.tianlang.AppInfo.self, group, qq, card);
         }
         [DllImport("LqrHelper.dll")]
         extern static void Api_SetGroupMemberCard(long a, long b, long c, string d);
-        public static List<long> GetGroupMembers(long group)
+        internal static List<long> GetGroupMembers(long group)
         {
             var json = Marshal.PtrToStringAnsi(Api_GetGroupMemberList(Clansty.tianlang.AppInfo.self, group));
             var jobj = JObject.Parse(json);
@@ -155,7 +155,7 @@ namespace Clansty.tianlang
         }
         [DllImport("LqrHelper.dll")]
         extern static IntPtr Api_GetGroupMemberList(long a, long b);
-        public static string GetNick(long qq)
+        internal static string GetNick(long qq)
         {
             WebClient client = new WebClient();
             client.Encoding = Encoding.UTF8;

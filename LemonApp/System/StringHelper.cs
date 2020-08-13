@@ -1,6 +1,6 @@
 ﻿namespace Clansty.tianlang
 {
-    public static class StringHelper
+    static class StringHelper
     {
         /// <summary>
         /// 取文本左边内容
@@ -8,7 +8,7 @@
         /// <param name="str">文本</param>
         /// <param name="s">标识符</param>
         /// <returns>左边内容</returns>
-        public static string GetLeft(this string str, string s)
+        internal static string GetLeft(this string str, string s)
         {
             try
             {
@@ -27,7 +27,7 @@
         /// <param name="str">文本</param>
         /// <param name="s">标识符</param>
         /// <returns>右边内容</returns>
-        public static string GetRight(this string str, string s)
+        internal static string GetRight(this string str, string s)
         {
             try
             {
@@ -46,13 +46,13 @@
         /// <param name="leftstr">左边文本</param>
         /// <param name="rightstr">右边文本</param>
         /// <returns>返回中间文本内容</returns>
-        public static string Between(this string str, string leftstr, string rightstr)
+        internal static string Between(this string str, string leftstr, string rightstr)
         {
             var i = str.IndexOf(leftstr) + leftstr.Length;
             var temp = str.Substring(i, str.IndexOf(rightstr, i) - i);
             return temp;
         }
-        public static string LastBetween(this string str, string leftstr, string rightstr)
+        internal static string LastBetween(this string str, string leftstr, string rightstr)
         {
             var i = str.LastIndexOf(leftstr) + leftstr.Length;
             var temp = str.Substring(i, str.IndexOf(rightstr, i) - i);

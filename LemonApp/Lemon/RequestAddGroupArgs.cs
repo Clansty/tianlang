@@ -6,11 +6,11 @@ namespace Clansty.tianlang
     class RequestAddGroupArgs : EventArgs
     {
         string Seq { get; }
-        public long Group { get; }
-        public long QQ { get; }
+        internal long Group { get; }
+        internal long QQ { get; }
         int Flag { get; }
-        public string Msg { get; }
-        public RequestAddGroupArgs(string a, long b, long c, int d, string e)
+        internal string Msg { get; }
+        internal RequestAddGroupArgs(string a, long b, long c, int d, string e)
         {
             Seq = a;
             Group = b;
@@ -18,11 +18,11 @@ namespace Clansty.tianlang
             Flag = d;
             Msg = e;
         }
-        public void Accept()
+        internal void Accept()
         {
             Api_GroupHandleEvent(AppInfo.self, Seq, Group, QQ, 1, "", Flag);
         }
-        public void Reject(string reason = "")
+        internal void Reject(string reason = "")
         {
             Api_GroupHandleEvent(AppInfo.self, Seq, Group, QQ, 2, reason, Flag);
         }

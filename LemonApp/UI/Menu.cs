@@ -6,9 +6,9 @@ using Microsoft.VisualBasic;
 
 namespace Clansty.tianlang
 {
-    public partial class Menu : Form
+    internal partial class Menu : Form
     {
-        public Menu()
+        internal Menu()
         {
             InitializeComponent();
             版本ToolStripMenuItem.Text = C.Version;

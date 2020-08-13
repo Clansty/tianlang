@@ -90,9 +90,9 @@ namespace Clansty.tianlang.SIAMC
 
         #endregion
 
-        public ProgressBar progressBar1;
-        public Label label1;
+        internal ProgressBar progressBar1;
+        internal Label label1;
         private Label label2;
-        public Label label3;
+        internal Label label3;
     }
 }

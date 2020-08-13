@@ -120,6 +120,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Strs.resx</DependentUpon>
     </Compile>
+    <Compile Include="Common\Test.cs" />
     <Compile Include="System\AppInfo.cs" />
     <Compile Include="Managing\Cmds.cs" />
     <Compile Include="Managing\Command.cs" />
@@ -128,7 +129,6 @@
     <Compile Include="Common\Groups.cs" />
     <Compile Include="System\Db.cs" />
     <Compile Include="System\IncorrectDataException.cs" />
-    <Compile Include="User\INamedUser.cs" />
     <Compile Include="Lemon\GroupAddMemberArgs.cs" />
     <Compile Include="Lemon\GroupCardChangedArgs.cs" />
     <Compile Include="Lemon\GroupMsgArgs.cs" />
@@ -177,6 +177,8 @@
     <Compile Include="VerifyingV2\Gender.cs" />
     <Compile Include="VerifyingV2\Person.cs" />
     <Compile Include="VerifyingV2\PersonNotFoundException.cs" />
+    <Compile Include="VerifyingV2\SupportedEnrollment.cs" />
+    <Compile Include="VerifyingV2\VerifyingResult.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
