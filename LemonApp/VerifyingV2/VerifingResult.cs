@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace Clansty.tianlang.VerifyingV2
 {
-    enum VerifyingResult
+    enum VerifingResult
     {
         notFound,
         unsupported,
         occupied,
-        succeed
+        succeed,
+        nameEmpty
     }
 }

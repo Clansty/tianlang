@@ -128,7 +128,7 @@
     <Compile Include="Common\Events.cs" />
     <Compile Include="Common\Groups.cs" />
     <Compile Include="System\Db.cs" />
-    <Compile Include="System\IncorrectDataException.cs" />
+    <Compile Include="Exceptions\IncorrectDataException.cs" />
     <Compile Include="Lemon\GroupAddMemberArgs.cs" />
     <Compile Include="Lemon\GroupCardChangedArgs.cs" />
     <Compile Include="Lemon\GroupMsgArgs.cs" />
@@ -151,7 +151,7 @@
       <DependentUpon>Menu.cs</DependentUpon>
     </Compile>
     <Compile Include="System\Rds.cs" />
-    <Compile Include="User\UserNotFoundException.cs" />
+    <Compile Include="Exceptions\UserNotFoundException.cs" />
     <Compile Include="Modules\Repeater.cs" />
     <Compile Include="Common\Send.cs" />
     <Compile Include="UI\SendTest.cs">
@@ -173,12 +173,12 @@
     <Compile Include="User\UserInfo.cs" />
     <Compile Include="User\UserType.cs" />
     <Compile Include="User\UserV4.cs" />
-    <Compile Include="VerifyingV2\DuplicateNameException.cs" />
+    <Compile Include="Exceptions\DuplicateNameException.cs" />
     <Compile Include="VerifyingV2\Gender.cs" />
     <Compile Include="VerifyingV2\Person.cs" />
-    <Compile Include="VerifyingV2\PersonNotFoundException.cs" />
+    <Compile Include="Exceptions\PersonNotFoundException.cs" />
     <Compile Include="VerifyingV2\SupportedEnrollment.cs" />
-    <Compile Include="VerifyingV2\VerifyingResult.cs" />
+    <Compile Include="VerifyingV2\VerifingResult.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

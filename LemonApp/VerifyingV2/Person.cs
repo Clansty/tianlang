@@ -21,6 +21,8 @@ namespace Clansty.tianlang
             }
             return r;
         }
+        /// <exception cref="PersonNotFoundException"></exception>
+        /// <exception cref="DuplicateNameException"></exception>
         internal static Person Get(string name)
         {
             //找到了，返回
@@ -32,6 +34,8 @@ namespace Clansty.tianlang
                 throw new DuplicateNameException();
             return ps[0];
         }
+        /// <exception cref="PersonNotFoundException"></exception>
+        /// <exception cref="DuplicateNameException"></exception>
         internal static Person Get(string name, int enrollment)
         {
             var rows = Db.persons.Select($"name = '{name.Replace("'", "''")}' AND enrollment = {enrollment}");
@@ -41,6 +45,8 @@ namespace Clansty.tianlang
                 throw new DuplicateNameException();
             return new Person(rows[0]);
         }
+        /// <exception cref="PersonNotFoundException"></exception>
+        /// <exception cref="DuplicateNameException"></exception>
         internal static Person Get(string name, int enrollment, int _class)
         {
             var rows = Db.persons.Select($"name = '{name.Replace("'", "''")}' AND " +
@@ -52,6 +58,7 @@ namespace Clansty.tianlang
                 throw new DuplicateNameException();
             return new Person(rows[0]);
         }
+        /// <exception cref="PersonNotFoundException"></exception>
         internal static Person Get(int id)
         {
             var row = Db.persons.Rows.Find(id);
@@ -71,6 +78,7 @@ namespace Clansty.tianlang
         internal int Class => (int)Row["class"];
         internal int Enrollment => (int)Row["enrollment"];
         #endregion
+        /// <exception cref="IncorrectDataException"></exception>
         internal User User
         {
             get

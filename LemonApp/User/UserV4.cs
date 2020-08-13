@@ -73,8 +73,7 @@ namespace Clansty.tianlang
         /// <summary>
         /// 标识实名认证成功验证，此时不应该能自己修改姓名
         /// </summary>
-        internal bool Verified => VerifyMsg == RealNameVerifingResult.succeed ||
-                                VerifyMsg == RealNameVerifingResult.unsupported && Name != "";
+        internal bool Verified => VerifyMsg == VerifingResult.succeed || VerifyMsg == VerifingResult.unsupported;
 
         internal bool Junior
         {
@@ -245,7 +244,7 @@ namespace Clansty.tianlang
                 return Person.Get(b);
             }
         }
-        internal VerifyingResult VerifyMsg
+        internal VerifingResult VerifyMsg
         {
             get
             {
@@ -254,8 +253,50 @@ namespace Clansty.tianlang
                 if (rb != DBNull.Value)
                     b = (int)rb;
                 if (b != 0)
-                    return VerifyingResult.succeed;
-                if()
+                    return VerifingResult.succeed;
+                if (string.IsNullOrWhiteSpace(Name))
+                    return VerifingResult.nameEmpty; //NameEmpty 视为未实名
+                //尝试绑定
+                //XXX:绑定过程是否独立出一个函数
+                try
+                {
+                    var p = Person.Get(Name);
+                    if (p.User != null)
+                        return VerifingResult.occupied;
+                    Row["bind"] = p.Id;
+                    return VerifingResult.succeed;
+                }
+                catch (PersonNotFoundException)
+                {
+                    if (!SupportedEnrollment.Contains(Enrollment))
+                        return VerifingResult.unsupported;
+                    return VerifingResult.notFound;
+                }
+                catch (DuplicateNameException)
+                {
+                    try
+                    {
+                        var p = Person.Get(Name, Enrollment);
+                        if (p.User != null)
+                            return VerifingResult.occupied;
+                        Row["bind"] = p.Id;
+                        return VerifingResult.succeed;
+                    }
+                    catch (PersonNotFoundException)
+                    {
+                        if (!SupportedEnrollment.Contains(Enrollment))
+                            return VerifingResult.unsupported;
+                        return VerifingResult.notFound;
+                    }
+                    catch
+                    {
+                        throw;
+                    }
+                }
+                catch
+                {
+                    throw;
+                }
             }
         }
 
