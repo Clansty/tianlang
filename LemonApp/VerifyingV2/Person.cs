@@ -64,7 +64,12 @@ namespace Clansty.tianlang
         public DataRow Row { get; }
         public int Id => (int)Row["id"];
         public string Name => (string)Row["name"];
-
+        public bool Junior => (bool)Row["junior"];
+        public bool Branch => (bool)Row["branch"];
+        public bool Board => (bool)Row["board"];
+        public Gender Gender => (Gender)Row["gender"];
+        public int Class => (int)Row["class"];
+        public int Enrollment => (int)Row["enrollment"];
         #endregion
     }
 }

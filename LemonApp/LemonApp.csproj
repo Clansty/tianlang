@@ -173,6 +173,7 @@
     <Compile Include="User\UserType.cs" />
     <Compile Include="User\UserV4.cs" />
     <Compile Include="VerifyingV2\DuplicateNameException.cs" />
+    <Compile Include="VerifyingV2\Gender.cs" />
     <Compile Include="VerifyingV2\Person.cs" />
     <Compile Include="VerifyingV2\PersonNotFoundException.cs" />
   </ItemGroup>
