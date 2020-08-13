@@ -118,9 +118,7 @@ namespace Clansty.tianlang
                 Permission = UserType.powerUser,
                 Func = s =>
                 {
-                    s = s.Trim(' ', '\n', '[', ']', '@');
-                    var u = UserInfo.FindUser(s);
-                    return u.ToString();
+                    return Person.Get(s).ToString();
                 }
             },
         };

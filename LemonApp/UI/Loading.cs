@@ -31,7 +31,7 @@ namespace Clansty.tianlang.SIAMC
                     var u = new User(i);
                     Invoke(new Action(() =>
                     {
-                        rows.Add(u.Uin, u.Branch, u.Enrollment, u.Junior, u.Grade, u.Nick, u.Name, u.Class, u.VerifyMsg, u.Role, "保存此行");
+                        rows.Add(u.Uin, u.Branch, u.Enrollment, u.Junior, u.Grade, u.Nick, u.Name, 0, u.VerifyMsg, u.Role, "保存此行");
                         progressBar1.PerformStep();
                         label1.Text = progressBar1.Value.ToString();
                     }));

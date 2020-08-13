@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using System.IO;
 
 namespace Clansty.tianlang
 {
@@ -46,19 +47,6 @@ namespace Clansty.tianlang
             return new Person(rows[0]);
         }
         /// <exception cref="PersonNotFoundException"></exception>
-        /// <exception cref="DuplicateNameException"></exception>
-        internal static Person Get(string name, int enrollment, int _class)
-        {
-            var rows = Db.persons.Select($"name = '{name.Replace("'", "''")}' AND " +
-                $"enrollment = {enrollment} AND " +
-                $"class = {_class}");
-            if (rows.Length == 0)
-                throw new PersonNotFoundException();
-            if (rows.Length > 1)
-                throw new DuplicateNameException();
-            return new Person(rows[0]);
-        }
-        /// <exception cref="PersonNotFoundException"></exception>
         internal static Person Get(int id)
         {
             var row = Db.persons.Rows.Find(id);
@@ -78,7 +66,7 @@ namespace Clansty.tianlang
         internal int Class => (int)Row["class"];
         internal int Enrollment => (int)Row["enrollment"];
         #endregion
-        /// <exception cref="IncorrectDataException"></exception>
+        /// <exception cref="InvalidDataException"></exception>
         internal User User
         {
             get
@@ -87,9 +75,23 @@ namespace Clansty.tianlang
                 if (rows.Length == 0)
                     return null;
                 if (rows.Length > 1)
-                    throw new IncorrectDataException($"身份 {Id} 绑定到了两个不同用户");
+                    throw new InvalidDataException($"身份 {Id} 绑定到了两个不同用户");
                 return new User((long)rows[0]["id"]);
             }
+        }
+        public override string ToString()
+        {
+            var u = User;
+            if (u is null)
+                return $"ID: {Id}" +
+                       $"姓名: {Name}" +
+                       $"初中: {Junior}" +
+                       $"住校生: {Board}" +
+                       $"性别: {Gender}" +
+                       $"入学年份: {Enrollment}" +
+                       $"校区: {Branch}" +
+                       $"班级: {Class}";
+            return u.ToString();
         }
     }
 }

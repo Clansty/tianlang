@@ -7,7 +7,6 @@ namespace Clansty.tianlang
     {
         internal long Uin => (int)Row["id"];
         internal DataRow Row { get; }
-
         internal User(long uin, bool createWhenNotFound = true)
         {
             Row = Db.users.Rows.Find(uin);
@@ -28,15 +27,19 @@ namespace Clansty.tianlang
         {
             get
             {
-                var r = Row["name"];
-                if (r == DBNull.Value)
-                    return "";
-                return (string)Row["name"];
+                var p = Person;
+                if (p is null)
+                {
+                    var r = Row["name"];
+                    if (r == DBNull.Value)
+                        return "";
+                    return (string)Row["name"];
+                }
+                return p.Name;
             }
 
             set => Row["name"] = value;
         }
-
         internal string Nick
         {
             get
@@ -59,39 +62,47 @@ namespace Clansty.tianlang
 
             set => Row["nick"] = value;
         }
-
         internal bool Branch
         {
             get
             {
-                //TODO
-                return false;
+                var p = Person;
+                if (p is null)
+                    return false;
+                return p.Branch;
             }
         }
-
         /// <summary>
         /// 标识实名认证成功验证，此时不应该能自己修改姓名
         /// </summary>
         internal bool Verified => VerifyMsg == VerifingResult.succeed || VerifyMsg == VerifingResult.unsupported;
-
         internal bool Junior
         {
-            get => (bool)Row["junior"];
+            get
+            {
+                var p = Person;
+                if (p is null)
+                {
+                    if (Enrollment == 2019)
+                        return (bool)Row["junior"];
+                    return false;
+                }//2020
+                return p.Junior;
+            }
+
             set => Row["junior"] = value;
         }
-
-        internal int Class => 0;
-
         internal int Enrollment
         {
             get
             {
-                //TODO
-                return (int)Row["enrollment"];
+                var p = Person;
+                if (p is null)
+                    return (int)Row["enrollment"];
+                return p.Enrollment;
             }
             set => Row["enrollment"] = value;
         }
-
         internal int Step
         {
             get
@@ -108,7 +119,6 @@ namespace Clansty.tianlang
             }
             set => Row["step"] = value;
         }
-
         internal string Namecard
         {
             get
@@ -129,7 +139,6 @@ namespace Clansty.tianlang
 #endif
             }
         }
-
         internal Status Status
         {
             get
@@ -146,7 +155,6 @@ namespace Clansty.tianlang
             }
             set => Row["status"] = (int)value;
         }
-
         internal UserType Role
         {
             get
@@ -163,7 +171,6 @@ namespace Clansty.tianlang
             }
             set => Row["role"] = (int)value;
         }
-
         internal string Grade
         {
             get
@@ -211,7 +218,6 @@ namespace Clansty.tianlang
                 return r;
             }
         }
-
         internal string ProperNamecard
         {
             get
@@ -227,7 +233,6 @@ namespace Clansty.tianlang
                 return r;
             }
         }
-
         internal bool IsFresh => Name == ""; //紧急 fix
         internal bool IsMember => MemberList.major.Contains(Uin);
         internal Person Person
@@ -306,7 +311,6 @@ namespace Clansty.tianlang
                 }
             }
         }
-
         public override string ToString()
         {
             return ToString("用户信息");
@@ -315,18 +319,25 @@ namespace Clansty.tianlang
         {
             var ret = $"[{title}]\n" +
                       $"QQ: {Uin}\n" +
-                      $"年级: {Grade}\n" +
                       $"昵称: {Nick}\n" +
                       $"姓名: {Name}\n" +
-                      $"校区: {(Branch ? "金阊" : "本部")}\n" +
                       $"入学年份: {Enrollment}\n" +
-                      $"初中: {Junior}\n" +
-                      $"班级: {Class}\n" +
+                      $"年级: {Grade}\n" +
+                      $"实名状态: {VerifyMsg}" +
+                      $"是大群成员: {IsMember}\n";
+            if (IsMember)
+                ret +=
                       $"群名片: {Namecard}\n" +
                       $"理想群名片: {ProperNamecard}\n" +
-                      $"IsMember: {IsMember}\n" +
-                      $"身份: {Role}\n" +
-                      $"实名状态: {VerifyMsg}";
+                      $"身份: {Role}\n";
+            var p = Person;
+            if (p != null)
+                ret +=
+                      $"实名身份 ID: {p.Id}\n" +
+                      $"班级: {p.Class}\n" +
+                      $"性别: {p.Gender}\n" +
+                      $"校区: {(p.Branch ? "金阊" : "本部")}\n" +
+                      $"住校生: {p.Board}\n";
             return ret;
         }
     }
