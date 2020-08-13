@@ -15,10 +15,10 @@ namespace Clansty.tianlang
                 Permission = UserType.powerUser,
                 Func = s =>
                 {
-                    s = s.Trim(' ', '\n', '[', ']', '@');
+                    s = s.Trim(' ', '\n', '[', ']', '@', 'L', 'Q', ':');
                     if (!long.TryParse(s, out var i) || s == "")
                         return "QQ号格式错误";
-                    var u = new User(i);
+                    var u = new User(i, false);
                     UserInfo.CheckQmpAsync(u);
                     return u.ToString();
                 }
@@ -52,7 +52,7 @@ namespace Clansty.tianlang
                 Permission = UserType.powerUser,
                 Func = s =>
                 {
-                    s = s.Trim(' ', '\n', '[', ']', '@');
+                    s = s.Trim(' ', '\n', '[', ']', '@', 'L', 'Q', ':');
                     if (long.TryParse(s, out var i))
                     {
                         Setup.New(i);
@@ -69,7 +69,7 @@ namespace Clansty.tianlang
                 Permission = UserType.powerUser,
                 Func = s =>
                 {
-                    s = s.Trim(' ', '\n', '[', ']', '@');
+                    s = s.Trim(' ', '\n', '[', ']', '@', 'L', 'Q', ':');
                     if (long.TryParse(s, out var i))
                     {
                         var u = new User(i);
@@ -90,7 +90,7 @@ namespace Clansty.tianlang
                 Permission = UserType.powerUser,
                 Func = s =>
                 {
-                    s = s.Trim(' ', '\n', '[', ']', '@');
+                    s = s.Trim(' ', '\n', '[', ']', '@', 'L', 'Q', ':');
                     if (long.TryParse(s, out var i))
                     {
                         var u = new User(i);
