@@ -23,11 +23,6 @@ namespace Clansty.tianlang
             var u = new User(e.FromQQ);
             if (u.Status == Status.setup)
                 Setup.Enter(e);
-            else if (e.Msg == "whoami")
-            {
-                UserInfo.CheckQmpAsync(u);
-                e.Reply(u.ToString("你的信息"));
-            }
             else if (e.Msg.StartsWith("我叫"))
             {
                 //here, to line 93 handles manual name-filling event
@@ -42,9 +37,8 @@ namespace Clansty.tianlang
                 {
                     //尝试进行验证
                     u.Name = name;
-                    e.Reply(Strs.RnOK); // here set succeeded
-                    //update in 3.0.14.2 notice the administration
-                    S.Si(u.ToString("旧人补填姓名成功"));
+                    e.Reply(Strs.RnOK);
+                    S.Si(u.ToString(Strs.NameFillInSucceeded));
                     UserInfo.CheckQmpAsync(u);
                     return;
                 }
@@ -58,9 +52,8 @@ namespace Clansty.tianlang
                         u.Name = name;
                         if (u.Verified)
                         {
-                            e.Reply(Strs.RnOK); // here set succeeded
-                                                //update in 3.0.14.2 notice the administration
-                            S.Si(u.ToString("旧人补填姓名成功"));
+                            e.Reply(Strs.RnOK);
+                            S.Si(u.ToString(Strs.NameFillInSucceeded));
                             return;
                         }
                         e.Reply(Strs.UnexceptedErr + u.VerifyMsg);
@@ -77,7 +70,6 @@ namespace Clansty.tianlang
                 }
             } // end manual name-filling handling
         }
-
         internal static void GroupCardChanged(GroupCardChangedArgs e)
         {
             if (e.Group == G.major)
@@ -85,7 +77,6 @@ namespace Clansty.tianlang
                 UserInfo.CheckQmpAsync(new User(e.QQ), e.NewCard);
             }
         }
-
         internal static void Msg(GroupMsgArgs e)
         {
             if (e.FromGroup == G.si)
@@ -151,154 +142,69 @@ namespace Clansty.tianlang
                     return;
                 }
 
-                if (msg.IndexOf(" ", StringComparison.Ordinal) < 0)
+                if (u.VerifyMsg == VerifingResult.succeed)//本身就实名好了，填什么都给进
                 {
-                    //TODO 只填了姓名，但是姓名找得到可以同意
-                    if (u.VerifyMsg == RealNameVerifingResult.succeed && u.Name == msg)
-                    {
-                        e.Accept();
-                        S.Si(u.ToString(Strs.AddAccepted + "已实名用户") + $"\n申请信息: {msg}");
-                        return;
-                    }
+                    e.Accept();
+                    S.Si(u.ToString(Strs.AddAccepted + Strs.VerifiedUser) + $"\n申请信息: {msg}");
+                    return;
+                }
 
-                    var chk2 = RealName.Check(msg);
-                    if (chk2.OccupiedQQ != null && chk2.OccupiedQQ != e.QQ &&
-                        chk2.Status != RealNameStatus.notFound)
-                    {
-                        e.Reject(Strs.Occupied);
-                        S.Si(u.ToString(Strs.AddRejected + Strs.AddReqOccupied) + $"\n申请信息: {msg}");
-                        return;
-                    }
+                string name;
+                int enr;
+                //现在这样，直接把姓名赋值给 u.Name，要是 succeed 就给进，occupied notFound unsupported 都不给进
+                if (msg.IndexOf(" ", StringComparison.Ordinal) < 0)//没有空格的情况，20200813 直接用 parseNick 解析吧
+                {
+                    enr = UserInfo.ParseEnrollment(msg);
+                    name = UserInfo.ParseNick(msg);
+                }
+                else
+                {
+                    enr = UserInfo.ParseEnrollment(msg.GetLeft(" "));
+                    name = msg.GetRight(" ").Trim();
+                }
 
-                    if (chk2.OccupiedQQ == null && chk2.Status != RealNameStatus.notFound)
-                    {
-                        //尝试进行验证
-                        u.Name = msg;
-                        if (u.Verified)
-                        {
-                            e.Accept();
-                            S.Si(u.ToString(Strs.AddAccepted + Strs.RnOK) + $"\n申请信息: {msg}");
-                            return;
-                        }
-
-                        var err = u.VerifyMsg;
-                        e.Reject(Strs.UnexceptedErr);
-                        S.Si(u.ToString(Strs.AddRejected + Strs.UnexceptedErr) + $"\n申请信息: {msg}\n未预期的错误: {err}");
-                        return;
-                    }
-
+                //其实现在有没有空格都是一样的了，就判断那些字段有没有
+                if (string.IsNullOrWhiteSpace(name))
+                {
                     e.Reject(Strs.FormatIncorrect);
                     S.Si(u.ToString(Strs.AddRejected + Strs.FormatErr) + $"\n申请信息: {msg}");
                     return;
                 }
-
-                var enr = UserInfo.ParseEnrollment(msg.GetLeft(" "));
-                var name = msg.GetRight(" ").Trim();
-
-                if (enr < 1970)
+                //emptyName 这里已经处理过了接下来不会有
+                if (enr > 2000)
+                    u.Enrollment = enr;
+                u.Name = name;
+                #region 这三种情况都是人在受支持的年级的
+                if (u.VerifyMsg == VerifingResult.succeed)
                 {
-                    e.Reject(
-                        Strs.EnrFormatErr);
+                    e.Accept();
+                    S.Si(u.ToString(Strs.AddAccepted + Strs.RnOK) + $"\n申请信息: {msg}");
+                    return;
+                }
+                if (u.VerifyMsg == VerifingResult.occupied)
+                {
+                    e.Reject(Strs.JoinChkOccupied);
+                    S.Si(u.ToString(Strs.AddRejected + Strs.AddReqOccupied) + $"\n申请信息: {msg}");
+                    return;
+                }
+                if (u.VerifyMsg == VerifingResult.notFound)
+                {
+                    e.Reject(Strs.PersonNotFound);
+                    S.Si(u.ToString(Strs.AddRejected + Strs.PersonNotFound) + $"\n申请信息: {msg}");
+                    return;
+                }
+                #endregion
+                //接下来是 unsupported 再做细分
+                if (u.Enrollment < 2000)
+                {
+                    e.Reject(Strs.EnrFormatErr);
                     S.Si(u.ToString(Strs.AddRejected + Strs.EnrFormatErr) + $"\n申请信息: {msg}");
                     return;
                 }
-
-                u.Enrollment = enr;
-
-                if (enr != 2017 && enr != 2018 && enr != 2019)
-                {
-                    u.Name = name;
-                    u.Junior = UserInfo.ParseJunior(msg.GetLeft(" "));
-                    S.Si(u.ToString("此年级不支持自动审核") + $"\n申请信息: {msg}");
-                    return;
-                }
-
-                if (u.Verified)
-                {
-                    if (u.Name != name)
-                    {
-                        e.Reject(
-                            "已实名账户请用登记姓名加入，如有问题请联系管理员");
-                        S.Si(u.ToString("加群申请已拒绝: 已实名账户尝试 override") + $"\n申请信息: {msg}");
-                        return;
-                    }
-
-                    e.Accept();
-                    S.Si(u.ToString("加群申请已同意: 已实名用户") + $"\n申请信息: {msg}");
-                    return;
-                }
-
-                var chk = RealName.Check(name);
-
-                if (chk.Status == RealNameStatus.notFound)
-                {
-                    e.Reject("查无此人");
-                    S.Si(u.ToString("加群申请已拒绝: 查无此人") + $"\n申请信息: {msg}");
-                    return;
-                }
-
-                if (chk.OccupiedQQ != null && chk.OccupiedQQ != e.QQ)
-                {
-                    e.Reject(
-                        "此身份已有一个账户加入，如有疑问请联系管理员");
-                    S.Si(u.ToString("加群申请已拒绝: 此人已存在") + $"\n申请信息: {msg}");
-                    return;
-                }
-
-                #region
-                //if (chk.Status == RealNameStatus.e2017 && enr != 2017)
-                //{
-                //    e.Reject("姓名与年级不匹配，请检查");
-                //    S.Si(u.ToString("加群申请已拒绝: 姓名与年级不匹配") + $"\n申请信息: {msg}");
-                //    return;
-                //}
-                //if (chk.Status == RealNameStatus.e2018 && enr != 2018)
-                //{
-                //    e.Reject("姓名与年级不匹配，请检查");
-                //    S.Si(u.ToString("加群申请已拒绝: 姓名与年级不匹配") + $"\n申请信息: {msg}");
-                //    return;
-                //}
-                //if (chk.Status == RealNameStatus.e2018jc && enr != 2018)
-                //{
-                //    e.Reject("姓名与年级不匹配，请检查");
-                //    S.Si(u.ToString("加群申请已拒绝: 姓名与年级不匹配") + $"\n申请信息: {msg}");
-                //    return;
-                //}
-                //if (chk.Status == RealNameStatus.e2019 && enr != 2019)
-                //{
-                //    e.Reject("姓名与年级不匹配，请检查");
-                //    S.Si(u.ToString("加群申请已拒绝: 姓名与年级不匹配") + $"\n申请信息: {msg}");
-                //    return;
-                //}
-                //if (chk.Status == RealNameStatus.e2019jc && enr != 2019)
-                //{
-                //    e.Reject("姓名与年级不匹配，请检查");
-                //    S.Si(u.ToString("加群申请已拒绝: 姓名与年级不匹配") + $"\n申请信息: {msg}");
-                //    return;
-                //}
-                #endregion
-
-                if (chk.OccupiedQQ == null)
-                {
-                    //尝试进行验证
-                    u.Name = name;
-                    u.Junior = UserInfo.ParseJunior(msg.GetLeft(" "));
-                    if (u.Verified)
-                    {
-                        e.Accept();
-                        S.Si(u.ToString("加群申请已同意: 实名认证成功") + $"\n申请信息: {msg}");
-                        return;
-                    }
-
-                    var err = u.VerifyMsg;
-                    e.Reject(
-                        "玄学错误，请联系管理员");
-                    S.Si(u.ToString("加群申请已拒绝: 玄学错误，此错误不应该由本段代码处理\n" +
-                                 $"申请信息: {msg}\n未预期的错误: {err}"));
-                    return;
-                }
-
-                S.Si(u.ToString("申请用户信息"));
+                //由于年级受支持的一定会返回上面三种情况，所以这里不用判断一定是年级不受支持的
+                u.Junior = UserInfo.ParseJunior(msg.GetLeft(" "));
+                S.Si(u.ToString(Strs.EnrUnsupported) + $"\n申请信息: {msg}");
+                return;
             }
         }
         internal static void InviteGroupRequest(RequestAddGroupArgs e)

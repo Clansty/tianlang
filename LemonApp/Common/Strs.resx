@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, internalKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, internalKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AddAccepted" xml:space="preserve">
     <value>加群申请已同意: </value>
@@ -129,8 +129,14 @@
   <data name="Blacklisted" xml:space="preserve">
     <value>黑名单用户</value>
   </data>
+  <data name="CmdNotFound" xml:space="preserve">
+    <value>命令找不到</value>
+  </data>
   <data name="EnrFormatErr" xml:space="preserve">
     <value>年级格式错误</value>
+  </data>
+  <data name="EnrUnsupported" xml:space="preserve">
+    <value>此年级不支持自动审核</value>
   </data>
   <data name="FormatErr" xml:space="preserve">
     <value>格式错误</value>
@@ -142,11 +148,20 @@
     <value>看起来你还没有加入十中大群的说
 加入苏州十中跨年级大群 646751705，解锁更多好玩的</value>
   </data>
+  <data name="JoinChkOccupied" xml:space="preserve">
+    <value>此身份已有一个账户加入，如有疑问请联系管理员</value>
+  </data>
+  <data name="NameFillInSucceeded" xml:space="preserve">
+    <value>旧人补填姓名成功</value>
+  </data>
   <data name="NameVerifyFailed" xml:space="preserve">
     <value>只要姓名就行，不需要别的东西</value>
   </data>
   <data name="Occupied" xml:space="preserve">
     <value>此身份已有一个账户加入，如有疑问请联系管理员</value>
+  </data>
+  <data name="PersonNotFound" xml:space="preserve">
+    <value>查无此人</value>
   </data>
   <data name="RnNotFound" xml:space="preserve">
     <value>查无此人，请检查姓名是否与入学登记的姓名一致</value>
@@ -167,8 +182,7 @@
     <value>目前我们需要的信息就这么多，祝你在群里玩的开心</value>
   </data>
   <data name="SetupSetNC" xml:space="preserve">
-    <value>你的群名片已修改为 {0}</value>
-    <comment>format</comment>
+    <value>你的群名片已修改为 </value>
   </data>
   <data name="SetupStep2" xml:space="preserve">
     <value>请回复你开学后的年级或毕业的年份
@@ -180,7 +194,13 @@
   <data name="UnexceptedErr" xml:space="preserve">
     <value>玄学错误，请联系管理员。</value>
   </data>
+  <data name="VerifiedUser" xml:space="preserve">
+    <value>已实名用户</value>
+  </data>
   <data name="WizardSkip" xml:space="preserve">
     <value>数据库存在此人信息，新人向导跳过</value>
+  </data>
+  <data name="YourInfo" xml:space="preserve">
+    <value>你的信息</value>
   </data>
 </root>

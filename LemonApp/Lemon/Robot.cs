@@ -73,7 +73,6 @@ namespace Clansty.tianlang
         [DllExport(CallingConvention.StdCall)]
         static int _eventRequest_AddGroup(long a, int b, string c, int d, long e, long f, long g, string h, int i)
         {
-            C.WriteLn(b.ToString());
             if (b == 104 || b == 102)
             {
                 Events.JoinGroupRequest(new RequestAddGroupArgs(c, e, f, i, h));
@@ -89,16 +88,12 @@ namespace Clansty.tianlang
         {
             if (b == 112)
             {
-#if DEBUG            
-                C.WriteLn($"{a}\n{c}\n{d}\n{e}\n{f}\n");            
-#else
                 Events.GroupCardChanged(new GroupCardChangedArgs(c, d, f));
-#endif
             }
             return 0;
         }
 
-        static class Send
+        internal static class Send
         {
             internal static void Group(long group, string msg)
             {

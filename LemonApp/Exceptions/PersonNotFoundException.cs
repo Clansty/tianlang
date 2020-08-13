@@ -7,6 +7,6 @@ namespace Clansty.tianlang
     /// </summary>
     class PersonNotFoundException : Exception
     {
-        internal PersonNotFoundException() : base(message: "查无此人") { }
+        internal PersonNotFoundException() : base(message: Strs.PersonNotFound) { }
     }
 }

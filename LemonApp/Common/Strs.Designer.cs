@@ -97,11 +97,29 @@ namespace Clansty.tianlang {
         }
         
         /// <summary>
+        ///   查找类似 命令找不到 的本地化字符串。
+        /// </summary>
+        internal static string CmdNotFound {
+            get {
+                return ResourceManager.GetString("CmdNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 年级格式错误 的本地化字符串。
         /// </summary>
         internal static string EnrFormatErr {
             get {
                 return ResourceManager.GetString("EnrFormatErr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 此年级不支持自动审核 的本地化字符串。
+        /// </summary>
+        internal static string EnrUnsupported {
+            get {
+                return ResourceManager.GetString("EnrUnsupported", resourceCulture);
             }
         }
         
@@ -134,6 +152,24 @@ namespace Clansty.tianlang {
         }
         
         /// <summary>
+        ///   查找类似 此身份已有一个账户加入，如有疑问请联系管理员 的本地化字符串。
+        /// </summary>
+        internal static string JoinChkOccupied {
+            get {
+                return ResourceManager.GetString("JoinChkOccupied", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 旧人补填姓名成功 的本地化字符串。
+        /// </summary>
+        internal static string NameFillInSucceeded {
+            get {
+                return ResourceManager.GetString("NameFillInSucceeded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 只要姓名就行，不需要别的东西 的本地化字符串。
         /// </summary>
         internal static string NameVerifyFailed {
@@ -148,6 +184,15 @@ namespace Clansty.tianlang {
         internal static string Occupied {
             get {
                 return ResourceManager.GetString("Occupied", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 查无此人 的本地化字符串。
+        /// </summary>
+        internal static string PersonNotFound {
+            get {
+                return ResourceManager.GetString("PersonNotFound", resourceCulture);
             }
         }
         
@@ -206,7 +251,7 @@ namespace Clansty.tianlang {
         }
         
         /// <summary>
-        ///   查找类似 你的群名片已修改为 {0} 的本地化字符串。
+        ///   查找类似 你的群名片已修改为  的本地化字符串。
         /// </summary>
         internal static string SetupSetNC {
             get {
@@ -243,11 +288,29 @@ namespace Clansty.tianlang {
         }
         
         /// <summary>
+        ///   查找类似 已实名用户 的本地化字符串。
+        /// </summary>
+        internal static string VerifiedUser {
+            get {
+                return ResourceManager.GetString("VerifiedUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 数据库存在此人信息，新人向导跳过 的本地化字符串。
         /// </summary>
         internal static string WizardSkip {
             get {
                 return ResourceManager.GetString("WizardSkip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 你的信息 的本地化字符串。
+        /// </summary>
+        internal static string YourInfo {
+            get {
+                return ResourceManager.GetString("YourInfo", resourceCulture);
             }
         }
     }

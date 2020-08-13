@@ -265,6 +265,8 @@ namespace Clansty.tianlang
                         Row["bind"] = p.Id;
                         return VerifingResult.succeed;
                     }
+                    if (!SupportedEnrollment.Contains(Enrollment))
+                        return VerifingResult.unsupported;//已占用但是年级不一样且不支持，其实是重名了
                     return VerifingResult.occupied;
                 }
                 catch (PersonNotFoundException)
@@ -283,6 +285,8 @@ namespace Clansty.tianlang
                             Row["bind"] = p.Id;
                             return VerifingResult.succeed;
                         }
+                        if (!SupportedEnrollment.Contains(Enrollment))
+                            return VerifingResult.unsupported;//已占用但是年级不一样且不支持，其实是重名了
                         return VerifingResult.occupied;
                     }
                     catch (PersonNotFoundException)

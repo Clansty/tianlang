@@ -139,21 +139,21 @@ namespace Clansty.tianlang
                     var u = new User(e.FromQQ);
                     if (u.Role < m.Permission)
                     {
-                        e.Reply($"权限不够\n{key} 需要 {m.Permission}，而你属于{u.Role}", true);
+                        e.Reply($"权限不够\n{key} 需要 {m.Permission}，而你属于{u.Role}");
                         return;
                     }
                     if (act.Trim() == "" && m.IsParamsNeeded)
                     {
-                        e.Reply($"{key} 命令需要提供参数\n{m.Description}\n用法: \n{m.Usage}", true);
+                        e.Reply($"{key} 命令需要提供参数\n{m.Description}\n用法: \n{m.Usage}");
                         return;
                     }
-                    e.Reply(gcmds[key].Func(act), true);
+                    e.Reply(gcmds[key].Func(act));
                 }
 
             }
             catch (Exception ex)
             {
-                e.Reply(ex.Message);
+                e.Reply("发生错误\n"+ex.Message);
             }
         }
         internal static void SudoEnter(GroupMsgArgs e)
@@ -171,22 +171,22 @@ namespace Clansty.tianlang
                     var u = new User(e.FromQQ);
                     if (u.Role < m.Permission)
                     {
-                        e.Reply($"权限不够\n{key} 需要 {m.Permission}，而你属于{u.Role}, true");
+                        e.Reply($"权限不够\n{key} 需要 {m.Permission}，而你属于{u.Role}");
                         return;
                     }
                     if (act.Trim() == "" && m.IsParamsNeeded)
                     {
-                        e.Reply($"{key} 命令需要提供参数\n{m.Description}\n用法: \n{m.Usage}", true);
+                        e.Reply($"{key} 命令需要提供参数\n{m.Description}\n用法: \n{m.Usage}");
                         return;
                     }
-                    e.Reply(gcmds[key].Func(act), true);
+                    e.Reply(gcmds[key].Func(act));
                 }
                 else
-                    e.Reply("命令找不到");
+                    e.Reply(Strs.CmdNotFound);
             }
             catch (Exception ex)
             {
-                e.Reply(ex.Message);
+                e.Reply("发生错误\n"ex.Message);
             }
         }
 
