@@ -90,5 +90,10 @@ namespace Clansty.tianlang
         {
             new Loading().Show();
         }
+
+        private void 保存数据库ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Db.Commit();
+        }
     }
 }

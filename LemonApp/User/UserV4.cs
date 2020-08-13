@@ -5,7 +5,7 @@ namespace Clansty.tianlang
 {
     class User
     {
-        internal long Uin => (int)Row["id"];
+        internal long Uin => (long)Row["id"];
         internal DataRow Row { get; }
         internal User(long uin, bool createWhenNotFound = true)
         {
@@ -22,6 +22,7 @@ namespace Clansty.tianlang
                     throw new UserNotFoundException();
                 }
             }
+            _ = VerifyMsg;
         }
         internal string Name
         {
@@ -317,13 +318,14 @@ namespace Clansty.tianlang
         }
         internal string ToString(string title)
         {
+            _ = VerifyMsg;
             var ret = $"[{title}]\n" +
                       $"QQ: {Uin}\n" +
                       $"昵称: {Nick}\n" +
                       $"姓名: {Name}\n" +
                       $"入学年份: {Enrollment}\n" +
                       $"年级: {Grade}\n" +
-                      $"实名状态: {VerifyMsg}" +
+                      $"实名状态: {VerifyMsg}\n" +
                       $"是大群成员: {IsMember}\n";
             if (IsMember)
                 ret +=
@@ -337,7 +339,7 @@ namespace Clansty.tianlang
                       $"班级: {p.Class}\n" +
                       $"性别: {p.Gender}\n" +
                       $"校区: {(p.Branch ? "金阊" : "本部")}\n" +
-                      $"住校生: {p.Board}\n";
+                      $"住校生: {p.Board}";
             return ret;
         }
     }

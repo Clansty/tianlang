@@ -12,6 +12,7 @@ namespace Clansty.tianlang
         {
             C.AllocConsole();
             Console.Title = $@"甜狼 {C.Version}";
+            Db.Init();
             new Menu().Show();
         }
         internal static void Disable()

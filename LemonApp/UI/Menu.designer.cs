@@ -42,10 +42,10 @@ namespace Clansty.tianlang
             this.喀兰贸易ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.检查群名片ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.准备信息整理ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.开关选举记录ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.乌萨斯学生自治团ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.保存数据库ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -125,7 +125,7 @@ namespace Clansty.tianlang
             this.喀兰贸易ToolStripMenuItem1,
             this.检查群名片ToolStripMenuItem,
             this.准备信息整理ToolStripMenuItem,
-            this.开关选举记录ToolStripMenuItem});
+            this.保存数据库ToolStripMenuItem});
             this.喀兰贸易ToolStripMenuItem.Name = "喀兰贸易ToolStripMenuItem";
             this.喀兰贸易ToolStripMenuItem.Size = new System.Drawing.Size(130, 44);
             this.喀兰贸易ToolStripMenuItem.Text = "喀兰贸易";
@@ -133,30 +133,23 @@ namespace Clansty.tianlang
             // 喀兰贸易ToolStripMenuItem1
             // 
             this.喀兰贸易ToolStripMenuItem1.Name = "喀兰贸易ToolStripMenuItem1";
-            this.喀兰贸易ToolStripMenuItem1.Size = new System.Drawing.Size(291, 44);
+            this.喀兰贸易ToolStripMenuItem1.Size = new System.Drawing.Size(359, 44);
             this.喀兰贸易ToolStripMenuItem1.Text = "喀兰贸易";
             this.喀兰贸易ToolStripMenuItem1.Click += new System.EventHandler(this.喀兰贸易ToolStripMenuItem1_Click);
             // 
             // 检查群名片ToolStripMenuItem
             // 
             this.检查群名片ToolStripMenuItem.Name = "检查群名片ToolStripMenuItem";
-            this.检查群名片ToolStripMenuItem.Size = new System.Drawing.Size(291, 44);
+            this.检查群名片ToolStripMenuItem.Size = new System.Drawing.Size(359, 44);
             this.检查群名片ToolStripMenuItem.Text = "检查群名片";
             this.检查群名片ToolStripMenuItem.Click += new System.EventHandler(this.检查群名片ToolStripMenuItem_Click);
             // 
             // 准备信息整理ToolStripMenuItem
             // 
             this.准备信息整理ToolStripMenuItem.Name = "准备信息整理ToolStripMenuItem";
-            this.准备信息整理ToolStripMenuItem.Size = new System.Drawing.Size(291, 44);
+            this.准备信息整理ToolStripMenuItem.Size = new System.Drawing.Size(359, 44);
             this.准备信息整理ToolStripMenuItem.Text = "准备信息整理";
             this.准备信息整理ToolStripMenuItem.Click += new System.EventHandler(this.准备信息整理ToolStripMenuItem_Click);
-            // 
-            // 开关选举记录ToolStripMenuItem
-            // 
-            this.开关选举记录ToolStripMenuItem.Name = "开关选举记录ToolStripMenuItem";
-            this.开关选举记录ToolStripMenuItem.Size = new System.Drawing.Size(291, 44);
-            this.开关选举记录ToolStripMenuItem.Text = "开关选举记录";
-            this.开关选举记录ToolStripMenuItem.Click += new System.EventHandler(this.开关选举记录ToolStripMenuItem_Click);
             // 
             // 乌萨斯学生自治团ToolStripMenuItem
             // 
@@ -178,6 +171,13 @@ namespace Clansty.tianlang
             this.toolStripMenuItem3.Size = new System.Drawing.Size(130, 44);
             this.toolStripMenuItem3.Text = "准备就绪";
             this.toolStripMenuItem3.Click += new System.EventHandler(this.toolStripMenuItem3_Click);
+            // 
+            // 保存数据库ToolStripMenuItem
+            // 
+            this.保存数据库ToolStripMenuItem.Name = "保存数据库ToolStripMenuItem";
+            this.保存数据库ToolStripMenuItem.Size = new System.Drawing.Size(359, 44);
+            this.保存数据库ToolStripMenuItem.Text = "保存数据库";
+            this.保存数据库ToolStripMenuItem.Click += new System.EventHandler(this.保存数据库ToolStripMenuItem_Click);
             // 
             // Menu
             // 
@@ -208,7 +208,6 @@ namespace Clansty.tianlang
         private System.Windows.Forms.ToolStripMenuItem 检查群名片ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 喀兰贸易ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 喀兰贸易ToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem 开关选举记录ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 龙门ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 确认退出ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 退出ToolStripMenuItem;
@@ -219,5 +218,6 @@ namespace Clansty.tianlang
         #endregion
 
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
+        private System.Windows.Forms.ToolStripMenuItem 保存数据库ToolStripMenuItem;
     }
 }

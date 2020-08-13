@@ -1,6 +1,6 @@
 ﻿namespace Clansty.tianlang
 {
-    enum Gender : int
+    enum Gender : ushort
     {
         unknown = 0,
         male = 1,

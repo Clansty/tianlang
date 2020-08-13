@@ -83,13 +83,13 @@ namespace Clansty.tianlang
         {
             var u = User;
             if (u is null)
-                return $"ID: {Id}" +
-                       $"姓名: {Name}" +
-                       $"初中: {Junior}" +
-                       $"住校生: {Board}" +
-                       $"性别: {Gender}" +
-                       $"入学年份: {Enrollment}" +
-                       $"校区: {Branch}" +
+                return $"ID: {Id}\n" +
+                       $"姓名: {Name}\n" +
+                       $"初中: {Junior}\n" +
+                       $"住校生: {Board}\n" +
+                       $"性别: {Gender}\n" +
+                       $"入学年份: {Enrollment}\n" +
+                       $"校区: {Branch}\n" +
                        $"班级: {Class}";
             return u.ToString();
         }
