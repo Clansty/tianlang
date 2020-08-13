@@ -71,5 +71,17 @@ namespace Clansty.tianlang
         public int Class => (int)Row["class"];
         public int Enrollment => (int)Row["enrollment"];
         #endregion
+        public User User
+        {
+            get
+            {
+                var rows = Db.users.Select($"bind = {Id}");
+                if (rows.Length == 0)
+                    return null;
+                if (rows.Length > 1)
+                    throw new IncorrectDataException($"身份 {Id} 绑定到了两个不同用户");
+                return new User((long)rows[0]["id"]);
+            }
+        }
     }
 }

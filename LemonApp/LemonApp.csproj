@@ -127,6 +127,7 @@
     <Compile Include="Common\Events.cs" />
     <Compile Include="Common\Groups.cs" />
     <Compile Include="System\Db.cs" />
+    <Compile Include="System\IncorrectDataException.cs" />
     <Compile Include="User\INamedUser.cs" />
     <Compile Include="Lemon\GroupAddMemberArgs.cs" />
     <Compile Include="Lemon\GroupCardChangedArgs.cs" />
