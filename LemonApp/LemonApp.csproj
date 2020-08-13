@@ -151,11 +151,6 @@
     </Compile>
     <Compile Include="System\Rds.cs" />
     <Compile Include="User\UserNotFoundException.cs" />
-    <Compile Include="Verifying\RealName.cs" />
-    <Compile Include="Verifying\RealNameBindingResult.cs" />
-    <Compile Include="Verifying\RealNameCheckingResult.cs" />
-    <Compile Include="Verifying\RealNameStatus.cs" />
-    <Compile Include="Verifying\RealNameVerifingResult.cs" />
     <Compile Include="Modules\Repeater.cs" />
     <Compile Include="Common\Send.cs" />
     <Compile Include="UI\SendTest.cs">
@@ -177,6 +172,9 @@
     <Compile Include="User\UserInfo.cs" />
     <Compile Include="User\UserType.cs" />
     <Compile Include="User\UserV4.cs" />
+    <Compile Include="VerifyingV2\DuplicateNameException.cs" />
+    <Compile Include="VerifyingV2\Person.cs" />
+    <Compile Include="VerifyingV2\PersonNotFoundException.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

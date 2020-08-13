@@ -27,7 +27,7 @@ namespace Clansty.tianlang
         /// </summary>
         /// <param name="msg">消息内容</param>
         /// <param name="includeSrcMsg">是否引用原始消息，设为 true 相当于在 msg 开头加入 SrcMsg</param>
-        public void Reply(string msg, bool includeSrcMsg = false) => Robot.Send.Group(FromGroup, msg);
+        public void Reply(string msg, bool _ = false) => Robot.Send.Group(FromGroup, msg);
         //TODO 撤回
     }
 }
