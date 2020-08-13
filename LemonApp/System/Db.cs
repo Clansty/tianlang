@@ -52,8 +52,8 @@ namespace Clansty.tianlang
         private static MySqlDataAdapter daUsers = null;
         internal static void Init()
         {
-            var sqlUsers = "SELECT * FROM users";
-            var sqlPersons = "SELECT * FROM persons";
+            const string sqlUsers = "SELECT * FROM users";
+            const string sqlPersons = "SELECT * FROM persons";
             daUsers = new MySqlDataAdapter(sqlUsers, connStr);
             var daPersons = new MySqlDataAdapter(sqlPersons, connStr);
             new MySqlCommandBuilder(daUsers);
