@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Clansty.tianlang.VerifyingV2
+namespace Clansty.tianlang
 {
     enum VerifingResult
     {

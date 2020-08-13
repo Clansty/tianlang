@@ -150,7 +150,6 @@
     <Compile Include="UI\Menu.designer.cs">
       <DependentUpon>Menu.cs</DependentUpon>
     </Compile>
-    <Compile Include="System\Rds.cs" />
     <Compile Include="Exceptions\UserNotFoundException.cs" />
     <Compile Include="Modules\Repeater.cs" />
     <Compile Include="Common\Send.cs" />

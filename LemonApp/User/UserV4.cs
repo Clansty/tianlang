@@ -1,5 +1,4 @@
-﻿using Clansty.tianlang.VerifyingV2;
-using System;
+﻿using System;
 using System.Data;
 
 namespace Clansty.tianlang
@@ -261,10 +260,12 @@ namespace Clansty.tianlang
                 try
                 {
                     var p = Person.Get(Name);
-                    if (p.User != null)
-                        return VerifingResult.occupied;
-                    Row["bind"] = p.Id;
-                    return VerifingResult.succeed;
+                    if (p.User is null)
+                    {
+                        Row["bind"] = p.Id;
+                        return VerifingResult.succeed;
+                    }
+                    return VerifingResult.occupied;
                 }
                 catch (PersonNotFoundException)
                 {
@@ -277,10 +278,12 @@ namespace Clansty.tianlang
                     try
                     {
                         var p = Person.Get(Name, Enrollment);
-                        if (p.User != null)
-                            return VerifingResult.occupied;
-                        Row["bind"] = p.Id;
-                        return VerifingResult.succeed;
+                        if (p.User is null)
+                        {
+                            Row["bind"] = p.Id;
+                            return VerifingResult.succeed;
+                        }
+                        return VerifingResult.occupied;
                     }
                     catch (PersonNotFoundException)
                     {

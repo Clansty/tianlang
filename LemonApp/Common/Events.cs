@@ -20,15 +20,13 @@ namespace Clansty.tianlang
         }
         internal static void Msg(FriendMsgArgs e)
         {
-#if DEBUG
-#else
             var u = new User(e.FromQQ);
             if (u.Status == Status.setup)
                 Setup.Enter(e);
             else if (e.Msg == "whoami")
             {
                 UserInfo.CheckQmpAsync(u);
-                e.Reply(u.ToXml("你的信息"));
+                e.Reply(u.ToString("你的信息"));
             }
             else if (e.Msg.StartsWith("我叫"))
             {
@@ -40,48 +38,44 @@ namespace Clansty.tianlang
                     return;
                 }
 
-                if (u.VerifyMsg == RealNameVerifingResult.unsupported)
+                if (u.VerifyMsg == VerifingResult.unsupported)
                 {
                     //尝试进行验证
                     u.Name = name;
                     e.Reply(Strs.RnOK); // here set succeeded
                     //update in 3.0.14.2 notice the administration
-                    S.Si(u.ToXml("旧人补填姓名成功"));
+                    S.Si(u.ToString("旧人补填姓名成功"));
                     UserInfo.CheckQmpAsync(u);
                     return;
                 }
 
-                var chk = RealName.Check(name);
-
-                if (chk.Status == RealNameStatus.notFound)
+                try
+                {
+                    var p = Person.Get(name);
+                    if (p.User is null)
+                    {
+                        //尝试进行验证
+                        u.Name = name;
+                        if (u.Verified)
+                        {
+                            e.Reply(Strs.RnOK); // here set succeeded
+                                                //update in 3.0.14.2 notice the administration
+                            S.Si(u.ToString("旧人补填姓名成功"));
+                            return;
+                        }
+                        e.Reply(Strs.UnexceptedErr + u.VerifyMsg);
+                        UserInfo.CheckQmpAsync(u);
+                        return;
+                    }
+                    e.Reply(Strs.RnOccupied);
+                    return;
+                }
+                catch (PersonNotFoundException)
                 {
                     e.Reply(Strs.RnNotFound);
                     return;
                 }
-
-                if (chk.OccupiedQQ != null && chk.OccupiedQQ != e.FromQQ)
-                {
-                    e.Reply(Strs.RnOccupied);
-                    return;
-                }
-
-                if (chk.OccupiedQQ == null)
-                {
-                    //尝试进行验证
-                    u.Name = name;
-                    if (u.Verified)
-                    {
-                        e.Reply(Strs.RnOK); // here set succeeded
-                        //update in 3.0.14.2 notice the administration
-                        S.Si(u.ToXml("旧人补填姓名成功"));
-                        return;
-                    }
-
-                    e.Reply(Strs.UnexceptedErr + u.VerifyMsg);
-                    UserInfo.CheckQmpAsync(u);
-                }
             } // end manual name-filling handling
-#endif
         }
 
         internal static void GroupCardChanged(GroupCardChangedArgs e)
@@ -94,8 +88,6 @@ namespace Clansty.tianlang
 
         internal static void Msg(GroupMsgArgs e)
         {
-#if DEBUG
-#else
             if (e.FromGroup == G.si)
                 Cmds.SiEnter(e);
 
@@ -106,7 +98,6 @@ namespace Clansty.tianlang
                     Cmds.SudoEnter(e);
                 Repeater.Enter(e.Msg);
             }
-#endif
         }
         internal static void AddFriend(RequestAddFriendArgs e)
         {
@@ -114,8 +105,6 @@ namespace Clansty.tianlang
         }
         internal static void GroupAddMember(GroupAddMemberArgs e)
         {
-#if DEBUG
-#else
             if (e.Group == G.major)
             {
                 MemberList.major.Add(e.BeingOperateQQ);
@@ -129,7 +118,7 @@ namespace Clansty.tianlang
                 {
                     u.Namecard = u.ProperNamecard;
                     u.Status = Status.no;
-                    S.Si(u.ToXml(Strs.WizardSkip));
+                    S.Si(u.ToString(Strs.WizardSkip));
                 }
             }
 
@@ -141,12 +130,9 @@ namespace Clansty.tianlang
                     Robot.Send.Temp(G.g2020, e.BeingOperateQQ, Strs.InviteMajor);
                 }
             }
-#endif
         }
         internal static void JoinGroupRequest(RequestAddGroupArgs e)
         {
-#if DEBUG
-#else
             if (e.Group == G.major)
             {
                 var msg = e.Msg.Contains("答案：")
@@ -161,7 +147,7 @@ namespace Clansty.tianlang
                 if (u.Role == UserType.blackListed)
                 {
                     e.Reject("blacklisted");
-                    S.Si(u.ToXml(Strs.AddRejected + Strs.Blacklisted) + $"\n申请信息: {msg}");
+                    S.Si(u.ToString(Strs.AddRejected + Strs.Blacklisted) + $"\n申请信息: {msg}");
                     return;
                 }
 
@@ -171,7 +157,7 @@ namespace Clansty.tianlang
                     if (u.VerifyMsg == RealNameVerifingResult.succeed && u.Name == msg)
                     {
                         e.Accept();
-                        S.Si(u.ToXml(Strs.AddAccepted + "已实名用户") + $"\n申请信息: {msg}");
+                        S.Si(u.ToString(Strs.AddAccepted + "已实名用户") + $"\n申请信息: {msg}");
                         return;
                     }
 
@@ -180,7 +166,7 @@ namespace Clansty.tianlang
                         chk2.Status != RealNameStatus.notFound)
                     {
                         e.Reject(Strs.Occupied);
-                        S.Si(u.ToXml(Strs.AddRejected + Strs.AddReqOccupied) + $"\n申请信息: {msg}");
+                        S.Si(u.ToString(Strs.AddRejected + Strs.AddReqOccupied) + $"\n申请信息: {msg}");
                         return;
                     }
 
@@ -191,18 +177,18 @@ namespace Clansty.tianlang
                         if (u.Verified)
                         {
                             e.Accept();
-                            S.Si(u.ToXml(Strs.AddAccepted+Strs.RnOK) + $"\n申请信息: {msg}");
+                            S.Si(u.ToString(Strs.AddAccepted + Strs.RnOK) + $"\n申请信息: {msg}");
                             return;
                         }
 
                         var err = u.VerifyMsg;
                         e.Reject(Strs.UnexceptedErr);
-                        S.Si(u.ToXml(Strs.AddRejected+Strs.UnexceptedErr) + $"\n申请信息: {msg}\n未预期的错误: {err}");
+                        S.Si(u.ToString(Strs.AddRejected + Strs.UnexceptedErr) + $"\n申请信息: {msg}\n未预期的错误: {err}");
                         return;
                     }
 
                     e.Reject(Strs.FormatIncorrect);
-                    S.Si(u.ToXml(Strs.AddRejected+ Strs.FormatErr) + $"\n申请信息: {msg}");
+                    S.Si(u.ToString(Strs.AddRejected + Strs.FormatErr) + $"\n申请信息: {msg}");
                     return;
                 }
 
@@ -213,7 +199,7 @@ namespace Clansty.tianlang
                 {
                     e.Reject(
                         Strs.EnrFormatErr);
-                    S.Si(u.ToXml(Strs.AddRejected+ Strs.EnrFormatErr) + $"\n申请信息: {msg}");
+                    S.Si(u.ToString(Strs.AddRejected + Strs.EnrFormatErr) + $"\n申请信息: {msg}");
                     return;
                 }
 
@@ -223,7 +209,7 @@ namespace Clansty.tianlang
                 {
                     u.Name = name;
                     u.Junior = UserInfo.ParseJunior(msg.GetLeft(" "));
-                    S.Si(u.ToXml("此年级不支持自动审核") + $"\n申请信息: {msg}");
+                    S.Si(u.ToString("此年级不支持自动审核") + $"\n申请信息: {msg}");
                     return;
                 }
 
@@ -233,12 +219,12 @@ namespace Clansty.tianlang
                     {
                         e.Reject(
                             "已实名账户请用登记姓名加入，如有问题请联系管理员");
-                        S.Si(u.ToXml("加群申请已拒绝: 已实名账户尝试 override") + $"\n申请信息: {msg}");
+                        S.Si(u.ToString("加群申请已拒绝: 已实名账户尝试 override") + $"\n申请信息: {msg}");
                         return;
                     }
 
                     e.Accept();
-                    S.Si(u.ToXml("加群申请已同意: 已实名用户") + $"\n申请信息: {msg}");
+                    S.Si(u.ToString("加群申请已同意: 已实名用户") + $"\n申请信息: {msg}");
                     return;
                 }
 
@@ -247,7 +233,7 @@ namespace Clansty.tianlang
                 if (chk.Status == RealNameStatus.notFound)
                 {
                     e.Reject("查无此人");
-                    S.Si(u.ToXml("加群申请已拒绝: 查无此人") + $"\n申请信息: {msg}");
+                    S.Si(u.ToString("加群申请已拒绝: 查无此人") + $"\n申请信息: {msg}");
                     return;
                 }
 
@@ -255,7 +241,7 @@ namespace Clansty.tianlang
                 {
                     e.Reject(
                         "此身份已有一个账户加入，如有疑问请联系管理员");
-                    S.Si(u.ToXml("加群申请已拒绝: 此人已存在") + $"\n申请信息: {msg}");
+                    S.Si(u.ToString("加群申请已拒绝: 此人已存在") + $"\n申请信息: {msg}");
                     return;
                 }
 
@@ -263,31 +249,31 @@ namespace Clansty.tianlang
                 //if (chk.Status == RealNameStatus.e2017 && enr != 2017)
                 //{
                 //    e.Reject("姓名与年级不匹配，请检查");
-                //    S.Si(u.ToXml("加群申请已拒绝: 姓名与年级不匹配") + $"\n申请信息: {msg}");
+                //    S.Si(u.ToString("加群申请已拒绝: 姓名与年级不匹配") + $"\n申请信息: {msg}");
                 //    return;
                 //}
                 //if (chk.Status == RealNameStatus.e2018 && enr != 2018)
                 //{
                 //    e.Reject("姓名与年级不匹配，请检查");
-                //    S.Si(u.ToXml("加群申请已拒绝: 姓名与年级不匹配") + $"\n申请信息: {msg}");
+                //    S.Si(u.ToString("加群申请已拒绝: 姓名与年级不匹配") + $"\n申请信息: {msg}");
                 //    return;
                 //}
                 //if (chk.Status == RealNameStatus.e2018jc && enr != 2018)
                 //{
                 //    e.Reject("姓名与年级不匹配，请检查");
-                //    S.Si(u.ToXml("加群申请已拒绝: 姓名与年级不匹配") + $"\n申请信息: {msg}");
+                //    S.Si(u.ToString("加群申请已拒绝: 姓名与年级不匹配") + $"\n申请信息: {msg}");
                 //    return;
                 //}
                 //if (chk.Status == RealNameStatus.e2019 && enr != 2019)
                 //{
                 //    e.Reject("姓名与年级不匹配，请检查");
-                //    S.Si(u.ToXml("加群申请已拒绝: 姓名与年级不匹配") + $"\n申请信息: {msg}");
+                //    S.Si(u.ToString("加群申请已拒绝: 姓名与年级不匹配") + $"\n申请信息: {msg}");
                 //    return;
                 //}
                 //if (chk.Status == RealNameStatus.e2019jc && enr != 2019)
                 //{
                 //    e.Reject("姓名与年级不匹配，请检查");
-                //    S.Si(u.ToXml("加群申请已拒绝: 姓名与年级不匹配") + $"\n申请信息: {msg}");
+                //    S.Si(u.ToString("加群申请已拒绝: 姓名与年级不匹配") + $"\n申请信息: {msg}");
                 //    return;
                 //}
                 #endregion
@@ -300,21 +286,20 @@ namespace Clansty.tianlang
                     if (u.Verified)
                     {
                         e.Accept();
-                        S.Si(u.ToXml("加群申请已同意: 实名认证成功") + $"\n申请信息: {msg}");
+                        S.Si(u.ToString("加群申请已同意: 实名认证成功") + $"\n申请信息: {msg}");
                         return;
                     }
 
                     var err = u.VerifyMsg;
                     e.Reject(
                         "玄学错误，请联系管理员");
-                    S.Si(u.ToXml("加群申请已拒绝: 玄学错误，此错误不应该由本段代码处理\n" +
+                    S.Si(u.ToString("加群申请已拒绝: 玄学错误，此错误不应该由本段代码处理\n" +
                                  $"申请信息: {msg}\n未预期的错误: {err}"));
                     return;
                 }
 
-                S.Si(u.ToXml("申请用户信息"));
+                S.Si(u.ToString("申请用户信息"));
             }
-#endif
         }
         internal static void InviteGroupRequest(RequestAddGroupArgs e)
         {
