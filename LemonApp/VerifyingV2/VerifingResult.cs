@@ -21,6 +21,7 @@ namespace Clansty.tianlang
         /// </summary>
         occupied,
         succeed,
-        nameEmpty
+        nameEmpty,
+        error
     }
 }

@@ -67,6 +67,7 @@ namespace Clansty.tianlang
             try
             {
                 daUsers.Update(users);
+                C.WriteLn("数据库同步成功");
             }
             catch (Exception ex)
             {

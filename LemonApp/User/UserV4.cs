@@ -301,14 +301,16 @@ namespace Clansty.tianlang
                             return VerifingResult.unsupported;
                         return VerifingResult.notFound;
                     }
-                    catch
+                    catch (Exception ex)
                     {
-                        throw;
+                        C.WriteLn(ex);
+                        return VerifingResult.error;
                     }
                 }
-                catch
+                catch (Exception ex)
                 {
-                    throw;
+                    C.WriteLn(ex);
+                    return VerifingResult.error;
                 }
             }
         }
@@ -326,15 +328,15 @@ namespace Clansty.tianlang
                       $"入学年份: {Enrollment}\n" +
                       $"年级: {Grade}\n" +
                       $"实名状态: {VerifyMsg}\n" +
-                      $"是大群成员: {IsMember}\n";
+                      $"是大群成员: {IsMember}";
             if (IsMember)
-                ret +=
+                ret += "\n" +
                       $"群名片: {Namecard}\n" +
                       $"理想群名片: {ProperNamecard}\n" +
-                      $"身份: {Role}\n";
+                      $"身份: {Role}";
             var p = Person;
             if (p != null)
-                ret +=
+                ret += "\n" +
                       $"实名身份 ID: {p.Id}\n" +
                       $"班级: {p.Class}\n" +
                       $"性别: {p.Gender}\n" +

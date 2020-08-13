@@ -69,6 +69,12 @@ namespace Clansty.tianlang
                     e.Reply(Strs.RnNotFound);
                     return;
                 }
+                catch (Exception ex)
+                {
+                    C.WriteLn(ex);
+                    e.Reply(Strs.UnexceptedErr);
+                    return;
+                }
             } // end manual name-filling handling
         }
         internal static void GroupCardChanged(GroupCardChangedArgs e)
