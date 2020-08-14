@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Web.UI.WebControls;
 
 namespace Clansty.tianlang
 {
@@ -121,6 +122,40 @@ namespace Clansty.tianlang
                     return Person.Get(s).ToString();
                 }
             },
+            ["set"]=new GroupCommand()
+            {
+                Description="修改某个人的信息",
+                Usage="set [QQ号] [{name|nick|enrollment|junior|prefix|step|status|role}] [值]",
+                IsParamsNeeded = true,
+                Permission = UserType.administrator,
+                Func = s =>
+                {
+                    var arg = s.Split(new char[] { ' ' }, 3);
+                    var u = new User(long.Parse(arg[0]), false);
+                    switch (arg[1])
+                    {
+                        case "junior":
+                            var v = bool.Parse(arg[2]);
+                            u.Row[arg[1]] = v;
+                            break;
+                        case "name":
+                        case "nick":
+                        case "prefix":
+                            u.Row[arg[1]] = arg[2];
+                            break;
+                        case "enrollment":
+                        case "step":
+                        case "Status":
+                        case "role":
+                            var i = int.Parse(arg[2]);
+                            u.Row[arg[1]] = i;
+                            break;
+                        default:
+                            return "字段无效";
+                    }
+                    return "操作成功";
+                }
+            }
         };
         internal static void SiEnter(GroupMsgArgs e)
         {
