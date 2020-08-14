@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
@@ -15,32 +16,34 @@ namespace Clansty.tianlang
             foreach (var i in jo)
             {
                 var key = i.Value<string>("key");
-                if (!key.StartsWith("u"))
-                    continue;
-                var v = i["value"];
-                var name = v.Value<string>("name");
-                var nick = v.Value<string>("nick");
-                var junior = v.Value<string>("junior");
-                var enrollment = v.Value<string>("enrollment");
-                var role = v.Value<string>("role");
-                if (name == "" &&
-                    nick == "" &&
-                    junior == "0" &&
-                    enrollment == "-1" &&
-                    role == "0")
-                    continue;
-                var q = key.GetRight("u");
-                if (q.Length < 5)
-                    continue;
-                if (!long.TryParse(q, out var lq))
-                    continue;
-                var u = new User(lq);
-                u.Name = name;
-                u.Nick = nick;
-                u.Junior = junior == "1";
-                u.Enrollment = int.Parse(enrollment);
-                u.Role = (UserType)int.Parse(role);
-                C.WriteLn(lq);
+                if (key == "rn2017" ||
+                    key == "rn2018" ||
+                    key == "rn2018jc" ||
+                    key == "rn2019" ||
+                    key == "rn2019jc")
+                {
+                    C.WriteLn(key);
+                    var v = i["value"].ToObject<Dictionary<string, string>>();
+                    foreach (var kvp in v)
+                    {
+                        if (kvp.Value == "0")
+                            continue;
+                        var u = new User(long.Parse(kvp.Value));
+                        if (kvp.Key == "杨雨欣" ||
+                            kvp.Key == "林逐水" ||
+                            kvp.Key == "阮南烛" ||
+                            kvp.Key == "张欣怡" ||
+                            kvp.Key == "杨帆" ||
+                            kvp.Key == "陈昊" ||
+                            kvp.Key == "王宇轩" ||
+                            kvp.Key == "徐越" ||
+                            kvp.Key == "王睿葱" ||
+                            kvp.Key == "王奕")
+                            continue;
+                        var p = Person.Get(kvp.Key);
+                        u.Row["bind"] = p.Id;
+                    }
+                }
             }
             Db.Commit();
             while (true)
