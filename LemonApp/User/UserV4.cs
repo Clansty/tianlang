@@ -81,11 +81,11 @@ namespace Clansty.tianlang
         {
             get
             {
+                if (Enrollment == 2019)
+                    return (bool)Row["junior"];
                 var p = Person;
                 if (p is null)
                 {
-                    if (Enrollment == 2019)
-                        return (bool)Row["junior"];
                     return false;
                 }//2020
                 return p.Junior;
