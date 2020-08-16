@@ -81,7 +81,7 @@ namespace Clansty.tianlang
         {
             get
             {
-                if (Enrollment == 2019)
+                if (Enrollment == 2019 || Enrollment == 2016)
                     return (bool)Row["junior"];
                 var p = Person;
                 if (p is null)

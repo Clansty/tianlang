@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.UI.WebControls;
 
 namespace Clansty.tianlang
@@ -119,7 +120,23 @@ namespace Clansty.tianlang
                 Permission = UserType.powerUser,
                 Func = s =>
                 {
-                    return Person.Get(s).ToString();
+                    var ps = Person.GetPeople(s);
+                    var urs = Db.users.Select($"name='{s}'");
+                    var uls = new List<long>();
+                    var ss = new List<string>();
+                    foreach (var u in urs)
+                    {
+                        uls.Add((long)u["id"]);
+                        ss.Add(new User((long)u["id"]).ToString());
+                    }
+                    foreach (var p in ps)
+                    {
+                        if (p.User != null)
+                            if (uls.Contains(p.User.Uin))
+                                continue;
+                        ss.Add(p.ToString());
+                    }
+                    return string.Join("\n------\n", ss);
                 }
             },
             ["set"]=new GroupCommand()

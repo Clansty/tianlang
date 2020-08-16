@@ -219,4 +219,7 @@
   <Target Name="DllExportRPkgDynamicImport" BeforeTargets="PostBuildEvent" DependsOnTargets="GetFrameworkPaths" Condition="'$(DllExportModImported)' != 'true' And '$(DllExportRPkgDyn)' != 'false'">
     <MSBuild BuildInParallel="true" UseResultsCache="true" Projects="$(MSBuildProjectFullPath)" Properties="DllExportRPkgDyn=true" Targets="Build" />
   </Target>
+  <PropertyGroup>
+    <PostBuildEvent>signtool sign /a /v /fd SHA256 /t http://timestamp.digicert.com /f C:\Users\clans\OneDrive\Projects\cert\IvanSetupKey.pfx /p qwq233 $(TargetPath)</PostBuildEvent>
+  </PropertyGroup>
 </Project>
