@@ -136,7 +136,8 @@ namespace Clansty.tianlang
                                 continue;
                         ss.Add(p.ToString());
                     }
-                    return string.Join("\n------\n", ss);
+                    var r= string.Join("\n------\n", ss);
+                    return string.IsNullOrWhiteSpace(r) ? "无结果" : r;
                 }
             },
             ["set"]=new GroupCommand()
@@ -148,7 +149,7 @@ namespace Clansty.tianlang
                 Func = s =>
                 {
                     var arg = s.Split(new char[] { ' ' }, 3);
-                    var u = new User(long.Parse(arg[0]), false);
+                    var u = new User(long.Parse(arg[0]));
                     switch (arg[1])
                     {
                         case "junior":
@@ -172,14 +173,29 @@ namespace Clansty.tianlang
                     }
                     return "操作成功";
                 }
+            },
+            ["sync"] = new GroupCommand()
+            {
+                Description = "将对数据库的修改提交到 MySQL",
+                Usage = "sync",
+                IsParamsNeeded = false,
+                Permission = UserType.administrator,
+                Func = s =>
+                {
+                    Db.Commit();
+                    return "[LQ:emoji=2713]";
+                }
             }
         };
         internal static void SiEnter(GroupMsgArgs e)
         {
             try
             {
-                var key = (e.Msg.GetLeft(" ") == "" ? e.Msg.ToLower() : e.Msg.GetLeft(" ")).ToLower();
-                var act = e.Msg.GetRight(" ");
+                var msg = e.Msg.Trim();
+                var key = (msg.GetLeft(" ") == "" ? msg.ToLower() : msg.GetLeft(" ")).ToLower();
+                var act = "";
+                if (msg.Contains(" "))
+                    act = msg.GetRight(" ");
                 key = key.Trim(' ', '\r', '\n');
                 act = act.Trim(' ', '\r', '\n');
                 if (gcmds.ContainsKey(key))
