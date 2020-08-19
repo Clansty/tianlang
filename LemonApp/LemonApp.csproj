@@ -129,6 +129,7 @@
     </Compile>
     <Compile Include="Common\Test.cs" />
     <Compile Include="Modules\NetEase.cs" />
+    <Compile Include="Modules\Timers.cs" />
     <Compile Include="System\AppInfo.cs" />
     <Compile Include="Managing\Cmds.cs" />
     <Compile Include="Managing\Command.cs" />

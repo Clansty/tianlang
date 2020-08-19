@@ -81,7 +81,7 @@ namespace Clansty.tianlang
         private void toolStripMenuItem3_Click(object sender, EventArgs e)
         {
             toolStripMenuItem3.Visible = false;
-            UserInfo.InitQmpCheckTask();
+            Timers.Init();
             MemberList.UpdateMajor();
             C.WriteLn("Memberlist updated");
         }
