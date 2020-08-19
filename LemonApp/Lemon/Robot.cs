@@ -44,6 +44,8 @@ namespace Clansty.tianlang
         {
             if (recvQQ == sq)
                 return 0;
+            if (recvQQ != tianlang.AppInfo.self)
+                return 0;
             switch (type)
             {
                 case 1:
@@ -61,18 +63,24 @@ namespace Clansty.tianlang
         [DllExport(CallingConvention.StdCall)]
         static int _eventRequest_AddFriend(long qqid, int st, int q, string msg)
         {
+            if (qqid != tianlang.AppInfo.self)
+                return 0;
             Events.AddFriend(new RequestAddFriendArgs(q, msg));
             return 0;
         }
         [DllExport(CallingConvention.StdCall)]
         static int _eventSystem_GroupMemberIncrease(long a, int b, int c, long d, long e, long f)
         {
+            if (a != tianlang.AppInfo.self)
+                return 0;
             Events.GroupAddMember(new GroupAddMemberArgs(d, e, f));
             return 0;
         }
         [DllExport(CallingConvention.StdCall)]
         static int _eventRequest_AddGroup(long a, int b, string c, int d, long e, long f, long g, string h, int i)
         {
+            if (a != tianlang.AppInfo.self)
+                return 0;
             if (b == 104 || b == 102)
             {
                 Events.JoinGroupRequest(new RequestAddGroupArgs(c, e, f, i, h));
@@ -86,6 +94,8 @@ namespace Clansty.tianlang
         [DllExport(CallingConvention.StdCall)]
         static int _eventTipsMsg(long a, int b, long c, long d, long e, string f)
         {
+            if (a != tianlang.AppInfo.self)
+                return 0;
             if (b == 112)
             {
                 Events.GroupCardChanged(new GroupCardChangedArgs(c, d, f));
