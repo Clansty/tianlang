@@ -86,6 +86,8 @@ namespace Clansty.tianlang
         }
         internal static void Msg(GroupMsgArgs e)
         {
+            if (e.Msg.StartsWith("点歌"))
+                NetEase.Request(e);
             if (e.FromGroup == G.si)
                 Cmds.SiEnter(e);
 

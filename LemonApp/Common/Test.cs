@@ -1,6 +1,9 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using NeteaseCloudMusicApi;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.IO;
 using System.Text;
 
@@ -10,45 +13,69 @@ namespace Clansty.tianlang
     {
         public static void Do()
         {
-            Db.Init();
-            var json = File.ReadAllText(@"C:\Users\clans\Desktop\dump.json", Encoding.UTF8);
-            var jo = JToken.Parse(json);
-            foreach (var i in jo)
-            {
-                var key = i.Value<string>("key");
-                if (key == "rn2017" ||
-                    key == "rn2018" ||
-                    key == "rn2018jc" ||
-                    key == "rn2019" ||
-                    key == "rn2019jc")
+            var sn = "流年如歌";
+            CloudMusicApi api = new CloudMusicApi();
+            api.Request(CloudMusicApiProviders.Search,
+               new Dictionary<string, string>()
+               {
+                   ["keywords"] = sn,
+                   ["limit"] = "1"
+               },
+               out JObject jobj);
+            sn = jobj["result"]["songs"][0].Value<int>("id").ToString();
+            //现在 sn 是 ID
+            api.Request(CloudMusicApiProviders.SongDetail,
+                new Dictionary<string, string>()
                 {
-                    C.WriteLn(key);
-                    var v = i["value"].ToObject<Dictionary<string, string>>();
-                    foreach (var kvp in v)
+                    ["ids"] = sn
+                },
+                out jobj);
+            var name = jobj["songs"][0].Value<string>("name");
+            string res = "";
+            foreach (var i in jobj["songs"][0]["ar"])
+            { //适配多个歌手
+                res += i.Value<string>("name") + "/";
+            }
+            res = res.TrimEnd('/');
+            //res 是歌手
+            var pic = jobj["songs"][0]["al"].Value<string>("picUrl");
+            api.Request(CloudMusicApiProviders.SongUrl,
+                            new Dictionary<string, string>()
+                            {
+                                ["id"] = sn
+                            },
+                            out jobj);
+            var mp3 = jobj["data"][0].Value<string>("url");
+            var url = $"https://y.music.163.com/m/song?id={sn}";
+            var json = new
+            {
+                app = "com.tencent.structmsg",
+                desc = "音乐",
+                view = "music",
+                ver = "0.0.0.1",
+                prompt = $"[点歌]{name}",
+                meta = new
+                {
+                    music = new
                     {
-                        if (kvp.Value == "0")
-                            continue;
-                        var u = new User(long.Parse(kvp.Value));
-                        if (kvp.Key == "杨雨欣" ||
-                            kvp.Key == "林逐水" ||
-                            kvp.Key == "阮南烛" ||
-                            kvp.Key == "张欣怡" ||
-                            kvp.Key == "杨帆" ||
-                            kvp.Key == "陈昊" ||
-                            kvp.Key == "王宇轩" ||
-                            kvp.Key == "徐越" ||
-                            kvp.Key == "王睿葱" ||
-                            kvp.Key == "王奕")
-                            continue;
-                        var p = Person.Get(kvp.Key);
-                        u.Row["bind"] = p.Id;
+                        action = "",
+                        android_pkg_name = "",
+                        app_type = 1,
+                        appid = 100495085,
+                        desc = res,
+                        jumpUrl = url,
+                        musicUrl = mp3,
+                        preview = pic,
+                        sourceMsgId = "0",
+                        source_icon = "",
+                        source_url = "",
+                        tag = "Lemon音乐",
+                        title = name
                     }
                 }
-            }
-            Db.Commit();
-            while (true)
-                Console.ReadLine();
+            };
+            C.WriteLn("[LQ:json=" + JsonConvert.SerializeObject(json) + "]");
+            Console.ReadLine();
         }
-
     }
 }
