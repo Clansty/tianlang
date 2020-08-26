@@ -2,7 +2,6 @@
 using SpreadsheetLight;
 using System;
 using System.Data;
-using System.Linq;
 
 namespace Clansty.tianlang
 {
@@ -16,52 +15,55 @@ namespace Clansty.tianlang
             var daPersons = new MySqlDataAdapter(sqlPersons, connStr);
             var cb = new MySqlCommandBuilder(daPersons);
             daPersons.Fill(persons);
-            var dt = XlsxToDataTable(@"C:\Users\clans\Downloads\江苏省苏州第十中学金阊高中一年级(1)班学生名单_20200826.xlsx");
-            //3class 4name 5gender
             var exi = 0;
-            foreach (DataRow r in dt.Rows)
+            for (int i = 2; i < 6; i++)
             {
-                var name = (string)r[4];
-                var _class = int.Parse(((string)r[3]).Between("(", ")"));
-                var strGender = (string)r[5];
-                Gender gender;
-                switch (strGender)
+                var dt = XlsxToDataTable(@"C:\Users\clans\Downloads\江苏省苏州第十中学金阊高中一年级(" + i + ")班学生名单_20200826.xlsx");
+                //3class 4name 5gender
+                foreach (DataRow r in dt.Rows)
                 {
-                    case "男":
-                        gender = Gender.male;
-                        break;
-                    case "女":
-                        gender = Gender.female;
-                        break;
-                    case "LGBT":
-                    case "LGBTQ":
-                    case "LGBTQI":
-                    case "LGBTQIA":
-                    case "LGBTQIAP":
-                    case "LGBTQIAPK":
-                        gender = Gender.LGBTQIAPK;
-                        break;
-                    default:
-                        gender = Gender.unknown;
-                        break;
+                    var name = (string)r[4];
+                    var _class = int.Parse(((string)r[3]).Between("(", ")"));
+                    var strGender = (string)r[5];
+                    Gender gender;
+                    switch (strGender)
+                    {
+                        case "男":
+                            gender = Gender.male;
+                            break;
+                        case "女":
+                            gender = Gender.female;
+                            break;
+                        case "LGBT":
+                        case "LGBTQ":
+                        case "LGBTQI":
+                        case "LGBTQIA":
+                        case "LGBTQIAP":
+                        case "LGBTQIAPK":
+                            gender = Gender.LGBTQIAPK;
+                            break;
+                        default:
+                            gender = Gender.unknown;
+                            break;
+                    }
+                    var exist = persons.Select($"name='{r[4]}' AND " +
+                        $"gender={(ushort)gender} AND " +
+                         "enrollment=2017 AND " +
+                         "junior=1");//2017级初中，姓名相同，性别相同
+                    if (exist.Length == 1)
+                    {
+                        exi++;
+                        exist[0]["enrollment"] = 2020;
+                        exist[0]["branch"] = 1;
+                        exist[0]["class"] = _class;
+                        continue;
+                    }
+                    if (exist.Length > 1)
+                    {
+                        throw new Exception("wtf?");
+                    }
+                    persons.Rows.Add(null, name, 0, 1, 0, (ushort)gender, _class, 2020);
                 }
-                var exist = persons.Select($"name='{r[4]}' AND " +
-                    $"gender={(ushort)gender} AND " +
-                     "enrollment=2017 AND " +
-                     "junior=1");//2017级初中，姓名相同，性别相同
-                if(exist.Length==1)
-                {
-                    exi++;
-                    exist[0]["enrollment"] = 2020;
-                    exist[0]["branch"] = 1;
-                    exist[0]["class"] = _class;
-                    continue;
-                }
-                if (exist.Length > 1)
-                {
-                    throw new Exception("wtf?");
-                }
-                persons.Rows.Add(null, name, 0, 1, 0, (ushort)gender, _class, 2020);
             }
             Console.WriteLine(exi);
             daPersons.Update(persons);
