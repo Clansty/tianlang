@@ -1,11 +1,8 @@
-﻿using NeteaseCloudMusicApi;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using MySql.Data.MySqlClient;
+using SpreadsheetLight;
 using System;
-using System.Collections.Generic;
-using System.Drawing.Printing;
-using System.IO;
-using System.Text;
+using System.Data;
+using System.Linq;
 
 namespace Clansty.tianlang
 {
@@ -13,69 +10,95 @@ namespace Clansty.tianlang
     {
         public static void Do()
         {
-            var sn = "流年如歌";
-            CloudMusicApi api = new CloudMusicApi();
-            api.Request(CloudMusicApiProviders.Search,
-               new Dictionary<string, string>()
-               {
-                   ["keywords"] = sn,
-                   ["limit"] = "1"
-               },
-               out JObject jobj);
-            sn = jobj["result"]["songs"][0].Value<int>("id").ToString();
-            //现在 sn 是 ID
-            api.Request(CloudMusicApiProviders.SongDetail,
-                new Dictionary<string, string>()
-                {
-                    ["ids"] = sn
-                },
-                out jobj);
-            var name = jobj["songs"][0].Value<string>("name");
-            string res = "";
-            foreach (var i in jobj["songs"][0]["ar"])
-            { //适配多个歌手
-                res += i.Value<string>("name") + "/";
-            }
-            res = res.TrimEnd('/');
-            //res 是歌手
-            var pic = jobj["songs"][0]["al"].Value<string>("picUrl");
-            api.Request(CloudMusicApiProviders.SongUrl,
-                            new Dictionary<string, string>()
-                            {
-                                ["id"] = sn
-                            },
-                            out jobj);
-            var mp3 = jobj["data"][0].Value<string>("url");
-            var url = $"https://y.music.163.com/m/song?id={sn}";
-            var json = new
+            const string connStr = "server = cdb-pi7fvpvu.cd.tencentcdb.com; user = root; database = tianlang; port = 10058; password = t00rrooT";
+            DataTable persons = new DataTable();
+            const string sqlPersons = "SELECT * FROM persons";
+            var daPersons = new MySqlDataAdapter(sqlPersons, connStr);
+            var cb = new MySqlCommandBuilder(daPersons);
+            daPersons.Fill(persons);
+            var dt = XlsxToDataTable(@"C:\Users\clans\Downloads\江苏省苏州第十中学金阊高中一年级(1)班学生名单_20200826.xlsx");
+            //3class 4name 5gender
+            var exi = 0;
+            foreach (DataRow r in dt.Rows)
             {
-                app = "com.tencent.structmsg",
-                desc = "音乐",
-                view = "music",
-                ver = "0.0.0.1",
-                prompt = $"[点歌]{name}",
-                meta = new
+                var name = (string)r[4];
+                var _class = int.Parse(((string)r[3]).Between("(", ")"));
+                var strGender = (string)r[5];
+                Gender gender;
+                switch (strGender)
                 {
-                    music = new
-                    {
-                        action = "",
-                        android_pkg_name = "",
-                        app_type = 1,
-                        appid = 100495085,
-                        desc = res,
-                        jumpUrl = url,
-                        musicUrl = mp3,
-                        preview = pic,
-                        sourceMsgId = "0",
-                        source_icon = "",
-                        source_url = "",
-                        tag = "Lemon音乐",
-                        title = name
-                    }
+                    case "男":
+                        gender = Gender.male;
+                        break;
+                    case "女":
+                        gender = Gender.female;
+                        break;
+                    case "LGBT":
+                    case "LGBTQ":
+                    case "LGBTQI":
+                    case "LGBTQIA":
+                    case "LGBTQIAP":
+                    case "LGBTQIAPK":
+                        gender = Gender.LGBTQIAPK;
+                        break;
+                    default:
+                        gender = Gender.unknown;
+                        break;
                 }
-            };
-            C.WriteLn("[LQ:json=" + JsonConvert.SerializeObject(json) + "]");
+                var exist = persons.Select($"name='{r[4]}' AND " +
+                    $"gender={(ushort)gender} AND " +
+                     "enrollment=2017 AND " +
+                     "junior=1");//2017级初中，姓名相同，性别相同
+                if(exist.Length==1)
+                {
+                    exi++;
+                    exist[0]["enrollment"] = 2020;
+                    exist[0]["branch"] = 1;
+                    exist[0]["class"] = _class;
+                    continue;
+                }
+                if (exist.Length > 1)
+                {
+                    throw new Exception("wtf?");
+                }
+                persons.Rows.Add(null, name, 0, 1, 0, (ushort)gender, _class, 2020);
+            }
+            Console.WriteLine(exi);
+            daPersons.Update(persons);
             Console.ReadLine();
+        }
+        static DataTable XlsxToDataTable(string vFilePath)
+        {
+            DataTable dataTable = new DataTable();
+            try
+            {
+                SLDocument sldocument = new SLDocument(vFilePath);
+                dataTable.TableName = sldocument.GetSheetNames()[0];
+                SLWorksheetStatistics worksheetStatistics = sldocument.GetWorksheetStatistics();
+                int startColumnIndex = worksheetStatistics.StartColumnIndex;
+                int endColumnIndex = worksheetStatistics.EndColumnIndex;
+                int startRowIndex = worksheetStatistics.StartRowIndex;
+                int endRowIndex = worksheetStatistics.EndRowIndex;
+                for (int i = startColumnIndex; i <= endColumnIndex; i++)
+                {
+                    SLRstType cellValueAsRstType = sldocument.GetCellValueAsRstType(1, i);
+                    dataTable.Columns.Add(new DataColumn(cellValueAsRstType.GetText(), typeof(string)));
+                }
+                for (int j = startRowIndex + 1; j <= endRowIndex; j++)
+                {
+                    DataRow dataRow = dataTable.NewRow();
+                    for (int i = startColumnIndex; i <= endColumnIndex; i++)
+                    {
+                        dataRow[i - 1] = sldocument.GetCellValueAsString(j, i);
+                    }
+                    dataTable.Rows.Add(dataRow);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Xlsx to DataTable: \n" + ex.Message);
+            }
+            return dataTable;
         }
     }
 }
