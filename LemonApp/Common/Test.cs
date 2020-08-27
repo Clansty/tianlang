@@ -19,20 +19,20 @@ namespace Clansty.tianlang
             for (int i = 2; i < 6; i++)
             {
                 var dt = XlsxToDataTable(@"C:\Users\clans\Downloads\江苏省苏州第十中学金阊高中一年级(" + i + ")班学生名单_20200826.xlsx");
-                //3class 4name 5gender
+                //3class 4name 5sex
                 foreach (DataRow r in dt.Rows)
                 {
                     var name = (string)r[4];
                     var _class = int.Parse(((string)r[3]).Between("(", ")"));
-                    var strGender = (string)r[5];
-                    Gender gender;
-                    switch (strGender)
+                    var strSex = (string)r[5];
+                    Sex sex;
+                    switch (strSex)
                     {
                         case "男":
-                            gender = Gender.male;
+                            sex = Sex.male;
                             break;
                         case "女":
-                            gender = Gender.female;
+                            sex = Sex.female;
                             break;
                         case "LGBT":
                         case "LGBTQ":
@@ -40,14 +40,14 @@ namespace Clansty.tianlang
                         case "LGBTQIA":
                         case "LGBTQIAP":
                         case "LGBTQIAPK":
-                            gender = Gender.LGBTQIAPK;
+                            sex = Sex.LGBTQIAPK;
                             break;
                         default:
-                            gender = Gender.unknown;
+                            sex = Sex.unknown;
                             break;
                     }
                     var exist = persons.Select($"name='{r[4]}' AND " +
-                        $"gender={(ushort)gender} AND " +
+                        $"sex={(ushort)sex} AND " +
                          "enrollment=2017 AND " +
                          "junior=1");//2017级初中，姓名相同，性别相同
                     if (exist.Length == 1)
@@ -62,7 +62,7 @@ namespace Clansty.tianlang
                     {
                         throw new Exception("wtf?");
                     }
-                    persons.Rows.Add(null, name, 0, 1, 0, (ushort)gender, _class, 2020);
+                    persons.Rows.Add(null, name, 0, 1, 0, (ushort)sex, _class, 2020);
                 }
             }
             Console.WriteLine(exi);

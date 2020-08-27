@@ -62,7 +62,7 @@ namespace Clansty.tianlang
         internal bool Junior => (bool)Row["junior"];
         internal bool Branch => (bool)Row["branch"];
         internal bool Board => (bool)Row["board"];
-        internal Gender Gender => (Gender)Row["gender"];
+        internal Sex Sex => (Sex)Row["sex"];
         internal int Class => (int)Row["class"];
         internal int Enrollment => (int)Row["enrollment"];
         #endregion
@@ -87,7 +87,7 @@ namespace Clansty.tianlang
                        $"姓名: {Name}\n" +
                        $"初中: {Junior}\n" +
                        $"住校生: {Board}\n" +
-                       $"性别: {Gender}\n" +
+                       $"性别: {Sex}\n" +
                        $"入学年份: {Enrollment}\n" +
                        $"校区: {Branch}\n" +
                        $"班级: {Class}";
