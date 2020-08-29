@@ -143,6 +143,7 @@
       <DependentUpon>Strs.resx</DependentUpon>
     </Compile>
     <Compile Include="Common\Test.cs" />
+    <Compile Include="Lemon\GroupMemberRaw.cs" />
     <Compile Include="Modules\NetEase.cs" />
     <Compile Include="Modules\Timers.cs" />
     <Compile Include="System\AppInfo.cs" />

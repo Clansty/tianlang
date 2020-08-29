@@ -15,9 +15,9 @@ namespace Clansty.tianlang.SIAMC
             {
                 HashSet<long> uins = new HashSet<long>();
                 var members = Robot.GetGroupMembers(G.major);
-                foreach (var i in members)
+                foreach (var i in members.member)
                 {
-                    uins.Add(i);
+                    uins.Add(i.uin);
                 }
 
                 var rows = siamc.data.Rows;

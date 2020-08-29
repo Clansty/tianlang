@@ -1,4 +1,5 @@
 ﻿using LemonApp;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -146,17 +147,10 @@ namespace Clansty.tianlang
         }
         [DllImport("LqrHelper.dll")]
         extern static void Api_SetGroupMemberCard(long a, long b, long c, string d);
-        internal static List<long> GetGroupMembers(long group)
+        internal static GroupMemberRaw GetGroupMembers(long group)
         {
             var json = Marshal.PtrToStringAnsi(Api_GetGroupMemberList(Clansty.tianlang.AppInfo.self, group));
-            var jobj = JObject.Parse(json);
-            var members = jobj.SelectToken("members");
-            var dic = members.ToObject<Dictionary<string, object>>();
-            var keys = dic.Keys;
-            var ret = new List<long>();
-            foreach (var i in keys)
-                ret.Add(long.Parse(i));
-            return ret;
+            return JsonConvert.DeserializeObject<GroupMemberRaw>(json);
         }
         [DllImport("LqrHelper.dll")]
         extern static IntPtr Api_GetGroupMemberList(long a, long b);
