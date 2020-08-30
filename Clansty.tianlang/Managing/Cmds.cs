@@ -182,7 +182,7 @@ namespace Clansty.tianlang
                 Func = s =>
                 {
                     Db.Commit();
-                    return "[LQ:emoji=2713]";
+                    return "\\u2713";
                 }
             }
         };

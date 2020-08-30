@@ -129,7 +129,9 @@ namespace Clansty.tianlang
 #if DEBUG
                 return ProperNamecard;
 #else
-                return Robot.GetGroupMemberCard(G.major, Uin);
+                var t = C.Robot.GetGroupCard(G.major, Uin, false);
+                t.Wait();
+                return t.Result;
 #endif
             }
 
@@ -138,7 +140,7 @@ namespace Clansty.tianlang
 #if DEBUG
                 C.WriteLn($"{Uin} 群名片设置为 {value}");
 #else
-                Robot.SetGroupMemberCard(G.major, Uin, value);
+                C.Robot.SetGroupCard(G.major, Uin, value);
 #endif
             }
         }

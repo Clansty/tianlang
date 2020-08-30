@@ -1,5 +1,5 @@
 ﻿using CornSDK;
-using System;using System.Runtime.InteropServices;namespace Clansty.tianlang{    static class C    {        /*         * TODO:         */                internal const string Version = "4.1.1.3";//20200830#if DEBUG
+using System;using System.Runtime.InteropServices;namespace Clansty.tianlang{    static class C    {        /*         * TODO:         */                internal const string Version = "4.1.1.4";//20200830#if DEBUG
         internal const long self = 2981882373;
 #else
         internal const long self = 1980853671;
