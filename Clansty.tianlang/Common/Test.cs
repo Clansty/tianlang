@@ -46,21 +46,20 @@ namespace Clansty.tianlang
                 }
                 var exist = persons.Select($"name='{r[4]}' AND " +
                     $"sex={(ushort)sex} AND " +
-                     "enrollment=2017 AND " +
-                     "junior=1");//2017级初中，姓名相同，性别相同
+                     "enrollment=2020 AND " +
+                     "junior=1 AND " +
+                     "branch=1");//2017级初中，姓名相同，性别相同
                 if (exist.Length == 1)
                 {
                     exi++;
-                    exist[0]["enrollment"] = 2020;
-                    exist[0]["branch"] = 1;
-                    exist[0]["class"] = _class;
+                    exist[0]["branch"] = 0;
                     continue;
                 }
                 if (exist.Length > 1)
                 {
                     throw new Exception("wtf?");
                 }
-                persons.Rows.Add(null, name, 0, 1, 0, (ushort)sex, _class, 2020);
+                //persons.Rows.Add(null, name, 0, 1, 0, (ushort)sex, _class, 2020);
             }
             Console.WriteLine($"初中升上来的 {exi} 个\n数据库保存中");
             daPersons.Update(persons);
