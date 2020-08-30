@@ -43,6 +43,29 @@ using System.Threading;using System.Threading.Tasks;namespace Clansty.tianlan
 
                 C.WriteLn($"{u.Uin} modified: {card} -> {u.ProperNamecard}", ConsoleColor.Yellow);
                 return CheckQmpRes.modified;
-            });        }        internal enum CheckQmpRes        {            noNeed,            updated,            modified        }        internal static async Task CheckAllQmpAsync()        {            C.WriteLn("开始检查群名片");            var l = Robot.GetGroupMembers(G.major);
-            //这里要更新memberlist信息
-            MemberList.UpdateMajor(l);            int n = 0, u = 0, m = 0;            foreach (var member in l.member)            {                var r = await CheckQmpAsync(new User(member.uin), member.card);                switch (r)                {                    case CheckQmpRes.modified:                        m++;                        Thread.Sleep(5000);                        break;                    case CheckQmpRes.noNeed:                        n++;                        break;                    case CheckQmpRes.updated:                        u++;                        break;                }            }            C.WriteLn($"major: noneed{n}, updated{u}, modified{m}");        }        internal static bool NameVerify(string s)        {            foreach (var i in s.ToCharArray())            {                if (i < 0x4100 || i > 0x9fbb)                {                    return false;                }            }            if (s.Length > 4 || s.Length < 2)            {                return false;            }            return true;        }    }}
+            });        }        internal enum CheckQmpRes        {            noNeed,            updated,            modified        }        internal static Task CheckAllQmpAsync()        {            return Task.Run(async () =>
+            {
+                C.WriteLn("开始检查群名片");
+                var l = Robot.GetGroupMembers(G.major);
+                //这里要更新memberlist信息
+                MemberList.UpdateMajor(l);
+                int n = 0, u = 0, m = 0;
+                foreach (var member in l.member)
+                {
+                    var r = await CheckQmpAsync(new User(member.uin), member.card);
+                    switch (r)
+                    {
+                        case CheckQmpRes.modified:
+                            m++;
+                            Thread.Sleep(5000);
+                            break;
+                        case CheckQmpRes.noNeed:
+                            n++;
+                            break;
+                        case CheckQmpRes.updated:
+                            u++;
+                            break;
+                    }
+                }
+
+                C.WriteLn($"major: noneed{n}, updated{u}, modified{m}");            });        }        internal static bool NameVerify(string s)        {            foreach (var i in s.ToCharArray())            {                if (i < 0x4100 || i > 0x9fbb)                {                    return false;                }            }            if (s.Length > 4 || s.Length < 2)            {                return false;            }            return true;        }    }}

@@ -72,17 +72,11 @@ namespace Clansty.tianlang
             MessageBox.Show("???");
         }
 
-        private void 开关选举记录ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            C.recording = !C.recording;
-            C.WriteLn($"记录模式{(C.recording ? "开启" : "关闭")}");
-        }
-
-        private void toolStripMenuItem3_Click(object sender, EventArgs e)
+        private async void toolStripMenuItem3_Click(object sender, EventArgs e)
         {
             toolStripMenuItem3.Visible = false;
             Timers.Init();
-            MemberList.UpdateMajor();
+            await MemberList.UpdateMajor();
             C.WriteLn("Memberlist updated");
         }
 

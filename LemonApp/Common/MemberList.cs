@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Clansty.tianlang
 {
@@ -13,9 +14,12 @@ namespace Clansty.tianlang
                 major.Add(i.uin);
             }
         }
-        internal static void UpdateMajor()
+        internal static Task UpdateMajor()
         {
-            UpdateMajor(Robot.GetGroupMembers(G.major));
+            return Task.Run(() =>
+            {
+                UpdateMajor(Robot.GetGroupMembers(G.major));
+            });
         }
     }
 }
