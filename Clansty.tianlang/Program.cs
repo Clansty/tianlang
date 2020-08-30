@@ -12,6 +12,9 @@ namespace Clansty.tianlang
         /// </summary>
         static void Main()
         {
+#if DEBUG
+            Test.Do();
+#else
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
@@ -59,6 +62,7 @@ namespace Clansty.tianlang
                 }
             });
             Application.Run(new Menu());
+#endif
         }
     }
 }

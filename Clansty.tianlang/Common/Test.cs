@@ -16,57 +16,55 @@ namespace Clansty.tianlang
             var cb = new MySqlCommandBuilder(daPersons);
             daPersons.Fill(persons);
             var exi = 0;
-            for (int i = 2; i < 6; i++)
+            var dt = XlsxToDataTable(@"C:\Users\clans\Desktop\083017560345Sheet.xlsx");
+            //3class 4name 5sex
+            foreach (DataRow r in dt.Rows)
             {
-                var dt = XlsxToDataTable(@"C:\Users\clans\Downloads\江苏省苏州第十中学金阊高中一年级(" + i + ")班学生名单_20200826.xlsx");
-                //3class 4name 5sex
-                foreach (DataRow r in dt.Rows)
+                var name = (string)r[4];
+                var _class = int.Parse(((string)r[3]).Between("(", ")"));
+                var strSex = (string)r[5];
+                Sex sex;
+                switch (strSex)
                 {
-                    var name = (string)r[4];
-                    var _class = int.Parse(((string)r[3]).Between("(", ")"));
-                    var strSex = (string)r[5];
-                    Sex sex;
-                    switch (strSex)
-                    {
-                        case "男":
-                            sex = Sex.male;
-                            break;
-                        case "女":
-                            sex = Sex.female;
-                            break;
-                        case "LGBT":
-                        case "LGBTQ":
-                        case "LGBTQI":
-                        case "LGBTQIA":
-                        case "LGBTQIAP":
-                        case "LGBTQIAPK":
-                            sex = Sex.LGBTQIAPK;
-                            break;
-                        default:
-                            sex = Sex.unknown;
-                            break;
-                    }
-                    var exist = persons.Select($"name='{r[4]}' AND " +
-                        $"sex={(ushort)sex} AND " +
-                         "enrollment=2017 AND " +
-                         "junior=1");//2017级初中，姓名相同，性别相同
-                    if (exist.Length == 1)
-                    {
-                        exi++;
-                        exist[0]["enrollment"] = 2020;
-                        exist[0]["branch"] = 1;
-                        exist[0]["class"] = _class;
-                        continue;
-                    }
-                    if (exist.Length > 1)
-                    {
-                        throw new Exception("wtf?");
-                    }
-                    persons.Rows.Add(null, name, 0, 1, 0, (ushort)sex, _class, 2020);
+                    case "男":
+                        sex = Sex.male;
+                        break;
+                    case "女":
+                        sex = Sex.female;
+                        break;
+                    case "LGBT":
+                    case "LGBTQ":
+                    case "LGBTQI":
+                    case "LGBTQIA":
+                    case "LGBTQIAP":
+                    case "LGBTQIAPK":
+                        sex = Sex.LGBTQIAPK;
+                        break;
+                    default:
+                        sex = Sex.unknown;
+                        break;
                 }
+                var exist = persons.Select($"name='{r[4]}' AND " +
+                    $"sex={(ushort)sex} AND " +
+                     "enrollment=2017 AND " +
+                     "junior=1");//2017级初中，姓名相同，性别相同
+                if (exist.Length == 1)
+                {
+                    exi++;
+                    exist[0]["enrollment"] = 2020;
+                    exist[0]["branch"] = 1;
+                    exist[0]["class"] = _class;
+                    continue;
+                }
+                if (exist.Length > 1)
+                {
+                    throw new Exception("wtf?");
+                }
+                persons.Rows.Add(null, name, 0, 1, 0, (ushort)sex, _class, 2020);
             }
-            Console.WriteLine(exi);
+            Console.WriteLine($"初中升上来的 {exi} 个\n数据库保存中");
             daPersons.Update(persons);
+            Console.WriteLine("数据库保存成功");
             Console.ReadLine();
         }
         static DataTable XlsxToDataTable(string vFilePath)
