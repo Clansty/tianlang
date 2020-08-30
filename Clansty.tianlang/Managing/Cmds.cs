@@ -1,7 +1,6 @@
-﻿using System;
+﻿using CornSDK;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web.UI.WebControls;
 
 namespace Clansty.tianlang
 {
@@ -78,7 +77,7 @@ namespace Clansty.tianlang
                         if (u.Role >= UserType.powerUser)
                             return $"不能拉黑一个 {u.Role}";
                         u.Role = UserType.blackListed;
-                        Robot.GroupKickMember(G.major, i);
+                        C.Robot.GroupKickMember(G.major, i);//todo
                         return $"已拉黑 {u.ProperNamecard}({s})";
                     }
                     return $"{s} 不是有效的长整数";
@@ -98,7 +97,7 @@ namespace Clansty.tianlang
                         var u = new User(i);
                         if (u.Role >= UserType.powerUser)
                             return $"不能踢一个 {u.Role}";
-                        Robot.GroupKickMember(G.major, i);
+                        C.Robot.GroupKickMember(G.major, i);
                         return $"已踢 {u.ProperNamecard}({s})";
                     }
                     return $"{s} 不是有效的长整数";
@@ -136,14 +135,14 @@ namespace Clansty.tianlang
                                 continue;
                         ss.Add(p.ToString());
                     }
-                    var r= string.Join("\n------\n", ss);
+                    var r = string.Join("\n------\n", ss);
                     return string.IsNullOrWhiteSpace(r) ? "无结果" : r;
                 }
             },
-            ["set"]=new GroupCommand()
+            ["set"] = new GroupCommand()
             {
-                Description="修改某个人的信息",
-                Usage="set [QQ号] [{name|nick|enrollment|junior|prefix|step|status|role}] [值]",
+                Description = "修改某个人的信息",
+                Usage = "set [QQ号] [{name|nick|enrollment|junior|prefix|step|status|role}] [值]",
                 IsParamsNeeded = true,
                 Permission = UserType.administrator,
                 Func = s =>

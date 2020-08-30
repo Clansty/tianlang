@@ -1,25 +1,37 @@
-﻿using System;
+﻿using CornSDK;
+using System;
 
 namespace Clansty.tianlang
 {
-    static class Events
+    class Events : IFriendMsgHandler, 
+                   ITempMsgHandler, 
+                   IGroupMsgHandler, 
+                   IFriendRequestHandler, 
+                   IGroupInviteRequestHandler, 
+                   IGroupJoinRequestHandler, 
+                   IGroupAddMemberHandler
     {
-        internal static void Exit()
+        public void OnTempMsg(TempMsgArgs e)
         {
-            Db.Commit();
+            OnPrivateMsg(new PrivateMsgArgs()
+            {
+                FromQQ = e.FromQQ,
+                FromNick = e.FromNick,
+                Msg = e.Msg,
+                Robot = e.Robot
+            });
         }
-        internal static void Enable()
+        public void OnFriendMsg(FriendMsgArgs e)
         {
-            C.AllocConsole();
-            Console.Title = $@"甜狼 {C.Version}";
-            Db.Init();
-            new Menu().Show();
+            OnPrivateMsg(new PrivateMsgArgs()
+            {
+                FromQQ = e.FromQQ,
+                FromNick = e.FromNick,
+                Msg = e.Msg,
+                Robot = e.Robot
+            });
         }
-        internal static void Disable()
-        {
-            Db.Commit();
-        }
-        internal static void Msg(FriendMsgArgs e)
+        public void OnPrivateMsg(PrivateMsgArgs e)
         {
             var u = new User(e.FromQQ);
             if (u.Status == Status.setup)
@@ -77,14 +89,14 @@ namespace Clansty.tianlang
                 }
             } // end manual name-filling handling
         }
-        internal static void GroupCardChanged(GroupCardChangedArgs e)
-        {
-            if (e.Group == G.major)
-            {
-                UserInfo.CheckQmpAsync(new User(e.QQ), e.NewCard);
-            }
-        }
-        internal static void Msg(GroupMsgArgs e)
+        //internal void GroupCardChanged(GroupCardChangedArgs e)
+        //{
+        //    if (e.Group == G.major)
+        //    {
+        //        UserInfo.CheckQmpAsync(new User(e.QQ), e.NewCard);
+        //    }
+        //}
+        public void OnGroupMsg(GroupMsgArgs e)
         {
             if (e.Msg.StartsWith("点歌"))
                 NetEase.Request(e);
@@ -99,20 +111,20 @@ namespace Clansty.tianlang
                 Repeater.Enter(e.Msg);
             }
         }
-        internal static void AddFriend(RequestAddFriendArgs e)
+        public void OnFriendRequest(FriendRequestArgs e)
         {
             e.Accept();
         }
-        internal static void GroupAddMember(GroupAddMemberArgs e)
+        public void OnGroupAddMember(GroupMemberChangedArgs e)
         {
-            if (e.Group == G.major)
+            if (e.FromGroup == G.major)
             {
-                MemberList.major.Add(e.BeingOperateQQ);
-                var u = new User(e.BeingOperateQQ);
+                MemberList.major.Add(e.FromQQ);
+                var u = new User(e.FromQQ);
                 UserInfo.CheckQmpAsync(u);
                 if (u.IsFresh)
                 {
-                    Setup.New(e.BeingOperateQQ, true);
+                    Setup.New(e.FromQQ, true);
                 }
                 else
                 {
@@ -122,25 +134,25 @@ namespace Clansty.tianlang
                 }
             }
 
-            if (e.Group == G.g2020)
+            if (e.FromGroup == G.g2020)
             {
-                if (!MemberList.major.Contains(e.BeingOperateQQ))
+                if (!MemberList.major.Contains(e.FromQQ))
                 {
                     //这里由于不是大群成员所以需要以手动群临时方式发送
-                    Robot.Send.Temp(G.g2020, e.BeingOperateQQ, Strs.InviteMajor);
+                    e.Robot.SendTempMsg(G.g2020, e.FromQQ, Strs.InviteMajor);
                 }
             }
         }
-        internal static void JoinGroupRequest(RequestAddGroupArgs e)
+        public void OnGroupJoinRequest(GroupRequestArgs e)
         {
-            if (e.Group == G.major)
+            if (e.FromGroup == G.major)
             {
                 var msg = e.Msg.Contains("答案：")
                     ? e.Msg.GetRight("答案：").Trim()
                     : e.Msg;
-                var u = new User(e.QQ);
+                var u = new User(e.FromQQ);
                 C.Write("有人 ", ConsoleColor.DarkCyan);
-                C.Write(e.QQ, ConsoleColor.Cyan);
+                C.Write(e.FromQQ, ConsoleColor.Cyan);
                 C.Write(" 加群 ", ConsoleColor.DarkCyan);
                 C.Write(msg, ConsoleColor.Cyan);
                 C.WriteLn("");
@@ -216,9 +228,10 @@ namespace Clansty.tianlang
                 return;
             }
         }
-        internal static void InviteGroupRequest(RequestAddGroupArgs e)
+        public void OnGroupInviteRequest(GroupRequestArgs e)
         {
             e.Accept();
         }
+
     }
 }

@@ -14,10 +14,12 @@ namespace Clansty.tianlang.SIAMC
             Task.Run(() =>
             {
                 HashSet<long> uins = new HashSet<long>();
-                var members = Robot.GetGroupMembers(G.major);
-                foreach (var i in members.member)
+                var t = C.Robot.GetGroupMembers(G.major);
+                t.Wait();
+                var members = t.Result;
+                foreach (var i in members)
                 {
-                    uins.Add(i.uin);
+                    uins.Add(i.UIN);
                 }
 
                 var rows = siamc.data.Rows;

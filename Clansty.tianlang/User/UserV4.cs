@@ -55,7 +55,9 @@ namespace Clansty.tianlang
                 }
                 if (string.IsNullOrWhiteSpace(ret))
                 {
-                    ret = Robot.GetNick(Uin);
+                    var t = C.Robot.GetNick(Uin, false);
+                    t.Wait();
+                    ret = t.Result;
                     Nick = ret;
                 }
                 return ret;

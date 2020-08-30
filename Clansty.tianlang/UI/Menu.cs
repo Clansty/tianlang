@@ -25,36 +25,9 @@ namespace Clansty.tianlang
             Environment.Exit(0);
         }
 
-        private void NotifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            Show();
-        }
-
         private void 最小化ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Hide();
-        }
-
-        private void 喀兰贸易ToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            Task.Run(() =>
-            {
-                string em = Interaction.InputBox("*龙门粗口*");
-                try
-                {
-                    var key = (em.GetLeft(" ") == "" ? em : em.GetLeft(" ")).ToLower();
-                    var act = em.GetRight(" ");
-                    if (Cmds.gcmds.ContainsKey(key))
-                    {
-                        var m = Cmds.gcmds[key];
-                        C.WriteLn(Cmds.gcmds[key].Func(act));
-                    }
-                }
-                catch (Exception ex)
-                {
-                    C.WriteLn(ex.Message, ConsoleColor.Red);
-                }
-            });
         }
 
         private void 检查群名片ToolStripMenuItem_Click(object sender, EventArgs e)

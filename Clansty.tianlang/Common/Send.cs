@@ -4,12 +4,12 @@
     {
         internal static void Group(long group, string msg)
         {
-            Robot.Send.Group(group, msg);
+            C.Robot.SendGroupMsg(group, msg);
         }
 
         internal static void Private(long qq, string msg)
         {
-            Robot.Send.Friend(qq, msg);
+            C.Robot.SendTempMsg(G.major, qq, msg);
         }
 
         internal static void Major(string msg) => Group(G.major, msg);
