@@ -18,6 +18,8 @@ namespace Clansty.tianlang
             Console.CancelKeyPress += delegate
             {
                 Db.Commit();
+                System.Diagnostics.Process tt = System.Diagnostics.Process.GetProcessById(System.Diagnostics.Process.GetCurrentProcess().Id);
+                tt.Kill();
             };
             Console.Title = $@"ΜπΐΗ {C.Version}";
             var handler = new Events();
@@ -38,6 +40,8 @@ namespace Clansty.tianlang
                 while (true)
                 {
                     var em = Console.ReadLine();
+                    if (em is null)
+                        continue;
                     try
                     {
                         var key = (em.GetLeft(" ") == "" ? em : em.GetLeft(" ")).ToLower();

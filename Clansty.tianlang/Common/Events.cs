@@ -89,13 +89,6 @@ namespace Clansty.tianlang
                 }
             } // end manual name-filling handling
         }
-        //internal void GroupCardChanged(GroupCardChangedArgs e)
-        //{
-        //    if (e.Group == G.major)
-        //    {
-        //        UserInfo.CheckQmpAsync(new User(e.QQ), e.NewCard);
-        //    }
-        //}
         public void OnGroupMsg(GroupMsgArgs e)
         {
             if (e.Msg.StartsWith("点歌"))

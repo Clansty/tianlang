@@ -14,22 +14,6 @@ namespace Clansty.tianlang
             版本ToolStripMenuItem.Text = C.Version;
         }
 
-
-        private void ToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("???");
-        }
-
-        private void 确认退出ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Environment.Exit(0);
-        }
-
-        private void 最小化ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Hide();
-        }
-
         private void 检查群名片ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             UserInfo.CheckAllQmpAsync();
@@ -38,11 +22,6 @@ namespace Clansty.tianlang
         private void 乌萨斯学生自治团ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             new SendTest().Show();
-        }
-
-        private void 准备信息整理ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("???");
         }
 
         private async void toolStripMenuItem3_Click(object sender, EventArgs e)

@@ -33,14 +33,8 @@ namespace Clansty.tianlang
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.龙门ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.版本ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.最小化ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.退出ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.确认退出ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.喀兰贸易ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.检查群名片ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.准备信息整理ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.保存数据库ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.乌萨斯学生自治团ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
@@ -54,7 +48,6 @@ namespace Clansty.tianlang
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.龙门ToolStripMenuItem,
-            this.toolStripMenuItem1,
             this.喀兰贸易ToolStripMenuItem,
             this.乌萨斯学生自治团ToolStripMenuItem,
             this.toolStripMenuItem2,
@@ -69,10 +62,7 @@ namespace Clansty.tianlang
             // 龙门ToolStripMenuItem
             // 
             this.龙门ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.版本ToolStripMenuItem,
-            this.toolStripSeparator1,
-            this.最小化ToolStripMenuItem,
-            this.退出ToolStripMenuItem});
+            this.版本ToolStripMenuItem});
             this.龙门ToolStripMenuItem.Name = "龙门ToolStripMenuItem";
             this.龙门ToolStripMenuItem.Size = new System.Drawing.Size(82, 56);
             this.龙门ToolStripMenuItem.Text = "龙门";
@@ -81,48 +71,13 @@ namespace Clansty.tianlang
             // 
             this.版本ToolStripMenuItem.Enabled = false;
             this.版本ToolStripMenuItem.Name = "版本ToolStripMenuItem";
-            this.版本ToolStripMenuItem.Size = new System.Drawing.Size(219, 44);
+            this.版本ToolStripMenuItem.Size = new System.Drawing.Size(195, 44);
             this.版本ToolStripMenuItem.Text = "版本";
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(216, 6);
-            // 
-            // 最小化ToolStripMenuItem
-            // 
-            this.最小化ToolStripMenuItem.Name = "最小化ToolStripMenuItem";
-            this.最小化ToolStripMenuItem.Size = new System.Drawing.Size(219, 44);
-            this.最小化ToolStripMenuItem.Text = "最小化";
-            this.最小化ToolStripMenuItem.Click += new System.EventHandler(this.最小化ToolStripMenuItem_Click);
-            // 
-            // 退出ToolStripMenuItem
-            // 
-            this.退出ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.确认退出ToolStripMenuItem});
-            this.退出ToolStripMenuItem.Name = "退出ToolStripMenuItem";
-            this.退出ToolStripMenuItem.Size = new System.Drawing.Size(219, 44);
-            this.退出ToolStripMenuItem.Text = "退出";
-            // 
-            // 确认退出ToolStripMenuItem
-            // 
-            this.确认退出ToolStripMenuItem.Name = "确认退出ToolStripMenuItem";
-            this.确认退出ToolStripMenuItem.Size = new System.Drawing.Size(243, 44);
-            this.确认退出ToolStripMenuItem.Text = "确认退出";
-            this.确认退出ToolStripMenuItem.Click += new System.EventHandler(this.确认退出ToolStripMenuItem_Click);
-            // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(130, 56);
-            this.toolStripMenuItem1.Text = "企鹅物流";
-            this.toolStripMenuItem1.Click += new System.EventHandler(this.ToolStripMenuItem1_Click);
             // 
             // 喀兰贸易ToolStripMenuItem
             // 
             this.喀兰贸易ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.检查群名片ToolStripMenuItem,
-            this.准备信息整理ToolStripMenuItem,
             this.保存数据库ToolStripMenuItem});
             this.喀兰贸易ToolStripMenuItem.Name = "喀兰贸易ToolStripMenuItem";
             this.喀兰贸易ToolStripMenuItem.Size = new System.Drawing.Size(130, 56);
@@ -131,21 +86,14 @@ namespace Clansty.tianlang
             // 检查群名片ToolStripMenuItem
             // 
             this.检查群名片ToolStripMenuItem.Name = "检查群名片ToolStripMenuItem";
-            this.检查群名片ToolStripMenuItem.Size = new System.Drawing.Size(291, 44);
+            this.检查群名片ToolStripMenuItem.Size = new System.Drawing.Size(267, 44);
             this.检查群名片ToolStripMenuItem.Text = "检查群名片";
             this.检查群名片ToolStripMenuItem.Click += new System.EventHandler(this.检查群名片ToolStripMenuItem_Click);
-            // 
-            // 准备信息整理ToolStripMenuItem
-            // 
-            this.准备信息整理ToolStripMenuItem.Name = "准备信息整理ToolStripMenuItem";
-            this.准备信息整理ToolStripMenuItem.Size = new System.Drawing.Size(291, 44);
-            this.准备信息整理ToolStripMenuItem.Text = "准备信息整理";
-            this.准备信息整理ToolStripMenuItem.Click += new System.EventHandler(this.准备信息整理ToolStripMenuItem_Click);
             // 
             // 保存数据库ToolStripMenuItem
             // 
             this.保存数据库ToolStripMenuItem.Name = "保存数据库ToolStripMenuItem";
-            this.保存数据库ToolStripMenuItem.Size = new System.Drawing.Size(291, 44);
+            this.保存数据库ToolStripMenuItem.Size = new System.Drawing.Size(267, 44);
             this.保存数据库ToolStripMenuItem.Text = "保存数据库";
             this.保存数据库ToolStripMenuItem.Click += new System.EventHandler(this.保存数据库ToolStripMenuItem_Click);
             // 
@@ -192,18 +140,12 @@ namespace Clansty.tianlang
         }
 
         private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem 版本ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 检查群名片ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 喀兰贸易ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 龙门ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 确认退出ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 退出ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 乌萨斯学生自治团ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 准备信息整理ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 最小化ToolStripMenuItem;
 
         #endregion
 
