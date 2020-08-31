@@ -98,7 +98,7 @@ namespace Clansty.tianlang
 
             if (e.FromGroup == G.major)
             {
-                //UserInfo.CheckQmpAsync(new User(e.FromQQ), e.Card);
+                UserInfo.CheckQmpAsync(new User(e.FromQQ), e.FromCard);
                 if (e.Msg.StartsWith("sudo "))
                     Cmds.SudoEnter(e);
                 Repeater.Enter(e.Msg);
