@@ -32,7 +32,7 @@ namespace Clansty.tianlang
             if (ps.Length == 0)
                 throw new PersonNotFoundException();
             if (ps.Length > 1)
-                throw new DuplicateNameException();
+                throw new DuplicateNameException(name);
             return ps[0];
         }
         /// <exception cref="PersonNotFoundException"></exception>
@@ -43,7 +43,7 @@ namespace Clansty.tianlang
             if (rows.Length == 0)
                 throw new PersonNotFoundException();
             if (rows.Length > 1)
-                throw new DuplicateNameException();
+                throw new DuplicateNameException(name, enrollment);
             return new Person(rows[0]);
         }
         /// <exception cref="PersonNotFoundException"></exception>
