@@ -13,10 +13,9 @@ namespace Clansty.tianlang
             DataTable persons = new DataTable();
             const string sqlPersons = "SELECT * FROM persons";
             var daPersons = new MySqlDataAdapter(sqlPersons, connStr);
-            var cb = new MySqlCommandBuilder(daPersons);
+            new MySqlCommandBuilder(daPersons);
             daPersons.Fill(persons);
-            var exi = 0;
-            var dt = XlsxToDataTable(@"C:\Users\clans\Desktop\083017560345Sheet.xlsx");
+            var dt = XlsxToDataTable(@"C:\Users\clans\Desktop\090310130139Sheet.xlsx");
             //3class 4name 5sex
             foreach (DataRow r in dt.Rows)
             {
@@ -44,27 +43,26 @@ namespace Clansty.tianlang
                         sex = Sex.unknown;
                         break;
                 }
+                //到这里解析的内容已经结束，下面开始写处理代码
                 var exist = persons.Select($"name='{r[4]}' AND " +
                     $"sex={(ushort)sex} AND " +
-                     "enrollment=2020 AND " +
-                     "junior=1 AND " +
-                     "branch=1");//2017级初中，姓名相同，性别相同
+                     "enrollment=2019 AND " +
+                     "branch=0");
                 if (exist.Length == 1)
                 {
-                    exi++;
-                    exist[0]["branch"] = 0;
+                    exist[0]["former_class"] = exist[0]["class"];
+                    exist[0]["class"] = _class;
                     continue;
                 }
                 if (exist.Length > 1)
                 {
-                    throw new Exception("wtf?");
+                    throw new DuplicateNameException(name);
                 }
+                C.WriteLn($"有新人 {name}");
                 //persons.Rows.Add(null, name, 0, 1, 0, (ushort)sex, _class, 2020);
             }
-            Console.WriteLine($"初中升上来的 {exi} 个\n数据库保存中");
             daPersons.Update(persons);
             Console.WriteLine("数据库保存成功");
-            Console.ReadLine();
         }
         static DataTable XlsxToDataTable(string vFilePath)
         {

@@ -343,6 +343,7 @@ namespace Clansty.tianlang
                 ret += "\n" +
                       $"实名身份 ID: {p.Id}\n" +
                       $"班级: {p.Class}\n" +
+                      (p.FormerClass is null ? "" : $"曾经班级: {p.FormerClass}\n") +
                       $"性别: {p.Sex}\n" +
                       $"校区: {(p.Branch ? "金阊" : "本部")}\n" +
                       $"住校生: {p.Board}";

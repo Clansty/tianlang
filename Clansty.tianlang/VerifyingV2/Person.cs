@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 using System.IO;
 
 namespace Clansty.tianlang
@@ -64,6 +65,7 @@ namespace Clansty.tianlang
         internal bool Board => (bool)Row["board"];
         internal Sex Sex => (Sex)Row["sex"];
         internal int Class => (int)Row["class"];
+        internal int? FormerClass => Row["former_class"] == DBNull.Value ? null : (int?)Row["former_class"];
         internal int Enrollment => (int)Row["enrollment"];
         #endregion
         /// <exception cref="InvalidDataException"></exception>
@@ -90,7 +92,8 @@ namespace Clansty.tianlang
                        $"性别: {Sex}\n" +
                        $"入学年份: {Enrollment}\n" +
                        $"校区: {Branch}\n" +
-                       $"班级: {Class}";
+                       $"班级: {Class}" +
+                       (FormerClass is null ? "" : $"\n曾经班级: {FormerClass}");
             return u.ToString();
         }
     }
