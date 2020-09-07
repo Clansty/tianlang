@@ -10,7 +10,7 @@ namespace Clansty.tianlang
         public static void Do()
         {
             const string connStr = "server = cdb-pi7fvpvu.cd.tencentcdb.com; user = root; database = tianlang; port = 10058; password = t00rrooT";
-            DataTable persons = new DataTable();
+            var persons = new DataTable();
             const string sqlPersons = "SELECT * FROM persons";
             var daPersons = new MySqlDataAdapter(sqlPersons, connStr);
             new MySqlCommandBuilder(daPersons);
@@ -66,25 +66,25 @@ namespace Clansty.tianlang
         }
         static DataTable XlsxToDataTable(string vFilePath)
         {
-            DataTable dataTable = new DataTable();
+            var dataTable = new DataTable();
             try
             {
-                SLDocument sldocument = new SLDocument(vFilePath);
+                var sldocument = new SLDocument(vFilePath);
                 dataTable.TableName = sldocument.GetSheetNames()[0];
-                SLWorksheetStatistics worksheetStatistics = sldocument.GetWorksheetStatistics();
-                int startColumnIndex = worksheetStatistics.StartColumnIndex;
-                int endColumnIndex = worksheetStatistics.EndColumnIndex;
-                int startRowIndex = worksheetStatistics.StartRowIndex;
-                int endRowIndex = worksheetStatistics.EndRowIndex;
-                for (int i = startColumnIndex; i <= endColumnIndex; i++)
+                var worksheetStatistics = sldocument.GetWorksheetStatistics();
+                var startColumnIndex = worksheetStatistics.StartColumnIndex;
+                var endColumnIndex = worksheetStatistics.EndColumnIndex;
+                var startRowIndex = worksheetStatistics.StartRowIndex;
+                var endRowIndex = worksheetStatistics.EndRowIndex;
+                for (var i = startColumnIndex; i <= endColumnIndex; i++)
                 {
-                    SLRstType cellValueAsRstType = sldocument.GetCellValueAsRstType(1, i);
+                    var cellValueAsRstType = sldocument.GetCellValueAsRstType(1, i);
                     dataTable.Columns.Add(new DataColumn(cellValueAsRstType.GetText(), typeof(string)));
                 }
-                for (int j = startRowIndex + 1; j <= endRowIndex; j++)
+                for (var j = startRowIndex + 1; j <= endRowIndex; j++)
                 {
-                    DataRow dataRow = dataTable.NewRow();
-                    for (int i = startColumnIndex; i <= endColumnIndex; i++)
+                    var dataRow = dataTable.NewRow();
+                    for (var i = startColumnIndex; i <= endColumnIndex; i++)
                     {
                         dataRow[i - 1] = sldocument.GetCellValueAsString(j, i);
                     }

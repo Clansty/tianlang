@@ -5,8 +5,9 @@ namespace Clansty.tianlang
 {
     class User
     {
-        internal long Uin => (long)Row["id"];
+        internal long Uin => (long) Row["id"];
         internal DataRow Row { get; }
+
         internal User(long uin, bool createWhenNotFound = true)
         {
             Row = Db.users.Rows.Find(uin);
@@ -22,8 +23,10 @@ namespace Clansty.tianlang
                     throw new UserNotFoundException();
                 }
             }
+
             _ = VerifyMsg;
         }
+
         internal string Name
         {
             get
@@ -34,13 +37,15 @@ namespace Clansty.tianlang
                     var r = Row["name"];
                     if (r == DBNull.Value)
                         return "";
-                    return (string)Row["name"];
+                    return (string) Row["name"];
                 }
+
                 return p.Name;
             }
 
             set => Row["name"] = value;
         }
+
         internal string Nick
         {
             get
@@ -51,8 +56,9 @@ namespace Clansty.tianlang
                 string ret = null;
                 if (r != DBNull.Value)
                 {
-                    ret = (string)r;
+                    ret = (string) r;
                 }
+
                 if (string.IsNullOrWhiteSpace(ret))
                 {
                     var t = C.Robot.GetNick(Uin, false);
@@ -60,11 +66,13 @@ namespace Clansty.tianlang
                     ret = t.Result;
                     Nick = ret;
                 }
+
                 return ret;
             }
 
             set => Row["nick"] = value;
         }
+
         internal bool Branch
         {
             get
@@ -75,44 +83,49 @@ namespace Clansty.tianlang
                 return p.Branch;
             }
         }
+
         /// <summary>
         /// 标识实名认证成功验证，此时不应该能自己修改姓名
         /// </summary>
         internal bool Verified => VerifyMsg == VerifingResult.succeed || VerifyMsg == VerifingResult.unsupported;
+
         internal bool Junior
         {
             get
             {
                 if (Enrollment == 2019 || Enrollment == 2016)
-                    return (bool)Row["junior"];
+                    return (bool) Row["junior"];
                 var p = Person;
                 if (p is null)
                 {
                     return false;
-                }//2020
+                } //2020
+
                 return p.Junior;
             }
 
             set => Row["junior"] = value;
         }
+
         internal int Enrollment
         {
             get
             {
                 var p = Person;
                 if (p is null)
-                    return (int)Row["enrollment"];
+                    return (int) Row["enrollment"];
                 return p.Enrollment;
             }
             set => Row["enrollment"] = value;
         }
+
         internal int Step
         {
             get
             {
                 try
                 {
-                    return (int)Row["step"];
+                    return (int) Row["step"];
                 }
                 catch
                 {
@@ -122,6 +135,7 @@ namespace Clansty.tianlang
             }
             set => Row["step"] = value;
         }
+
         internal string Namecard
         {
             get
@@ -144,13 +158,14 @@ namespace Clansty.tianlang
 #endif
             }
         }
+
         internal Status Status
         {
             get
             {
                 try
                 {
-                    return (Status)Row["status"];
+                    return (Status) Row["status"];
                 }
                 catch
                 {
@@ -158,15 +173,16 @@ namespace Clansty.tianlang
                     return Status.no;
                 }
             }
-            set => Row["status"] = (int)value;
+            set => Row["status"] = (int) value;
         }
+
         internal UserType Role
         {
             get
             {
                 try
                 {
-                    return (UserType)Row["role"];
+                    return (UserType) Row["role"];
                 }
                 catch
                 {
@@ -174,8 +190,9 @@ namespace Clansty.tianlang
                     return UserType.user;
                 }
             }
-            set => Row["role"] = (int)value;
+            set => Row["role"] = (int) value;
         }
+
         internal string Grade
         {
             get
@@ -197,7 +214,7 @@ namespace Clansty.tianlang
                         var p = Row["prefix"];
                         var prefix = "未定义";
                         if (p != DBNull.Value)
-                            prefix = (string)p;
+                            prefix = (string) p;
                         if (prefix == null)
                             prefix = "";
                         return prefix;
@@ -223,6 +240,7 @@ namespace Clansty.tianlang
                 return r;
             }
         }
+
         internal string ProperNamecard
         {
             get
@@ -238,8 +256,10 @@ namespace Clansty.tianlang
                 return r;
             }
         }
+
         internal bool IsFresh => Name == ""; //紧急 fix
         internal bool IsMember => MemberList.major.Contains(Uin);
+
         internal Person Person
         {
             get
@@ -247,12 +267,13 @@ namespace Clansty.tianlang
                 var rb = Row["bind"];
                 var b = 0;
                 if (rb != DBNull.Value)
-                    b = (int)rb;
+                    b = (int) rb;
                 if (b == 0)
                     return null;
                 return Person.Get(b);
             }
         }
+
         internal VerifingResult VerifyMsg
         {
             get
@@ -260,7 +281,7 @@ namespace Clansty.tianlang
                 var rb = Row["bind"];
                 var b = 0;
                 if (rb != DBNull.Value)
-                    b = (int)rb;
+                    b = (int) rb;
                 if (b != 0)
                     return VerifingResult.succeed;
                 if (string.IsNullOrWhiteSpace(Name))
@@ -275,15 +296,16 @@ namespace Clansty.tianlang
                         Row["bind"] = p.Id;
                         return VerifingResult.succeed;
                     }
-                    if (!SupportedEnrollment.Contains(Enrollment))
-                        return VerifingResult.unsupported;//已占用但是年级不一样且不支持，其实是重名了
-                    return VerifingResult.occupied;
+
+                    return !SupportedEnrollment.Contains(Enrollment)
+                        ? VerifingResult.unsupported
+                        : VerifingResult.occupied;
                 }
                 catch (PersonNotFoundException)
                 {
-                    if (!SupportedEnrollment.Contains(Enrollment))
-                        return VerifingResult.unsupported;
-                    return VerifingResult.notFound;
+                    return !SupportedEnrollment.Contains(Enrollment)
+                        ? VerifingResult.unsupported
+                        : VerifingResult.notFound;
                 }
                 catch (DuplicateNameException)
                 {
@@ -295,15 +317,16 @@ namespace Clansty.tianlang
                             Row["bind"] = p.Id;
                             return VerifingResult.succeed;
                         }
-                        if (!SupportedEnrollment.Contains(Enrollment))
-                            return VerifingResult.unsupported;//已占用但是年级不一样且不支持，其实是重名了
-                        return VerifingResult.occupied;
+
+                        return !SupportedEnrollment.Contains(Enrollment)
+                            ? VerifingResult.unsupported
+                            : VerifingResult.occupied;
                     }
                     catch (PersonNotFoundException)
                     {
-                        if (!SupportedEnrollment.Contains(Enrollment))
-                            return VerifingResult.unsupported;
-                        return VerifingResult.notFound;
+                        return !SupportedEnrollment.Contains(Enrollment)
+                            ? VerifingResult.unsupported
+                            : VerifingResult.notFound;
                     }
                     catch (Exception ex)
                     {
@@ -318,10 +341,12 @@ namespace Clansty.tianlang
                 }
             }
         }
+
         public override string ToString()
         {
             return ToString("用户信息");
         }
+
         internal string ToString(string title)
         {
             _ = VerifyMsg;
@@ -335,18 +360,18 @@ namespace Clansty.tianlang
                       $"是大群成员: {IsMember}";
             if (IsMember)
                 ret += "\n" +
-                      $"群名片: {Namecard}\n" +
-                      $"理想群名片: {ProperNamecard}\n" +
-                      $"身份: {Role}";
+                       $"群名片: {Namecard}\n" +
+                       $"理想群名片: {ProperNamecard}\n" +
+                       $"身份: {Role}";
             var p = Person;
             if (p != null)
                 ret += "\n" +
-                      $"实名身份 ID: {p.Id}\n" +
-                      $"班级: {p.Class}\n" +
-                      (p.FormerClass is null ? "" : $"曾经班级: {p.FormerClass}\n") +
-                      $"性别: {p.Sex}\n" +
-                      $"校区: {(p.Branch ? "金阊" : "本部")}\n" +
-                      $"住校生: {p.Board}";
+                       $"实名身份 ID: {p.Id}\n" +
+                       $"班级: {p.Class}\n" +
+                       (p.FormerClass is null ? "" : $"曾经班级: {p.FormerClass}\n") +
+                       (p.Sex == Sex.unknown ? "" : $"性别: {p.Sex}\n") +
+                       $"校区: {(p.Branch ? "金阊" : "本部")}\n" +
+                       $"住校生: {p.Board}";
             return ret;
         }
     }

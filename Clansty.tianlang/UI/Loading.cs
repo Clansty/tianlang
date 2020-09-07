@@ -13,7 +13,7 @@ namespace Clansty.tianlang.SIAMC
             var siamc = new Siamc();
             Task.Run(() =>
             {
-                HashSet<long> uins = new HashSet<long>();
+                var uins = new HashSet<long>();
                 var t = C.Robot.GetGroupMembers(G.major);
                 t.Wait();
                 var members = t.Result;

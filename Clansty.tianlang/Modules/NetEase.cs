@@ -16,14 +16,14 @@ namespace Clansty.tianlang
             try
             {
                 var sn = e.Msg.GetRight("点歌").Trim();
-                CloudMusicApi api = new CloudMusicApi();
+                var api = new CloudMusicApi();
                 api.Request(CloudMusicApiProviders.Search,
                    new Dictionary<string, string>()
                    {
                        ["keywords"] = sn,
                        ["limit"] = "1"
                    },
-                   out JObject jobj);
+                   out var jobj);
                 sn = jobj["result"]["songs"][0].Value<int>("id").ToString();
                 //现在 sn 是 ID
                 api.Request(CloudMusicApiProviders.SongDetail,
@@ -33,7 +33,7 @@ namespace Clansty.tianlang
                     },
                     out jobj);
                 var name = jobj["songs"][0].Value<string>("name");
-                string res = "";
+                var res = "";
                 foreach (var i in jobj["songs"][0]["ar"])
                 { //适配多个歌手
                     res += i.Value<string>("name") + "/";
