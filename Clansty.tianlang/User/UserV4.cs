@@ -16,7 +16,7 @@ namespace Clansty.tianlang
                 if (createWhenNotFound)
                 {
                     //数据结构修改时这里要改
-                    Row = Db.users.Rows.Add(uin, "", "", 0, 0, "", 0, 0, 0, 0);
+                    Row = Db.users.Rows.Add(uin, "", "", 0, 0, "", 0, 0, 0, 0, 0);
                 }
                 else
                 {
@@ -342,6 +342,23 @@ namespace Clansty.tianlang
             }
         }
 
+        internal int TgUid
+        {
+            get
+            {
+                try
+                {
+                    return (int) Row["tg"];
+                }
+                catch
+                {
+                    TgUid = 0;
+                    return 0;
+                }
+            }
+            set => Row["tg"] = value;
+        }
+
         public override string ToString()
         {
             return ToString("用户信息");
@@ -355,11 +372,12 @@ namespace Clansty.tianlang
                       $"昵称: {Nick}\n" +
                       $"姓名: {Name}\n" +
                       $"入学年份: {Enrollment}\n" +
-                      $"年级: {Grade}\n" +
+                      $"年级: {Grade}\n" + 
+                      $"Telegram Uid: {TgUid}\n" +
                       $"实名状态: {VerifyMsg}\n" +
                       $"是大群成员: {IsMember}";
             if (IsMember)
-                ret += "\n" +
+                ret += "\n" + 
                        $"群名片: {Namecard}\n" +
                        $"理想群名片: {ProperNamecard}\n" +
                        $"身份: {Role}";
