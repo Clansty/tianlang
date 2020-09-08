@@ -39,8 +39,9 @@ namespace Clansty.tianlang
                              $"{cmd.Value.Description}\n" +
                              $"需要参数: {cmd.Value.IsParamsNeeded}\n" +
                              $"需要的权限级别: {cmd.Value.Permission}\n" +
-                              "---\n";
+                             "---\n";
                     }
+
                     r += $"甜狼 {C.Version}";
                     return r;
                 }
@@ -59,6 +60,7 @@ namespace Clansty.tianlang
                         Setup.New(i);
                         return $"新人向导已对 {new User(i).Namecard}({s}) 启动";
                     }
+
                     return $"{s} 不是有效的长整数";
                 }
             },
@@ -77,9 +79,10 @@ namespace Clansty.tianlang
                         if (u.Role >= UserType.powerUser)
                             return $"不能拉黑一个 {u.Role}";
                         u.Role = UserType.blackListed;
-                        C.Robot.GroupKickMember(G.major, i);//todo
+                        C.Robot.GroupKickMember(G.major, i); //todo
                         return $"已拉黑 {u.ProperNamecard}({s})";
                     }
+
                     return $"{s} 不是有效的长整数";
                 }
             },
@@ -100,6 +103,7 @@ namespace Clansty.tianlang
                         C.Robot.GroupKickMember(G.major, i);
                         return $"已踢 {u.ProperNamecard}({s})";
                     }
+
                     return $"{s} 不是有效的长整数";
                 }
             },
@@ -125,9 +129,10 @@ namespace Clansty.tianlang
                     var ss = new List<string>();
                     foreach (var u in urs)
                     {
-                        uls.Add((long)u["id"]);
-                        ss.Add(new User((long)u["id"]).ToString());
+                        uls.Add((long) u["id"]);
+                        ss.Add(new User((long) u["id"]).ToString());
                     }
+
                     foreach (var p in ps)
                     {
                         if (p.User != null)
@@ -135,6 +140,7 @@ namespace Clansty.tianlang
                                 continue;
                         ss.Add(p.ToString());
                     }
+
                     var r = string.Join("\n------\n", ss);
                     return string.IsNullOrWhiteSpace(r) ? "无结果" : r;
                 }
@@ -147,7 +153,7 @@ namespace Clansty.tianlang
                 Permission = UserType.administrator,
                 Func = s =>
                 {
-                    var arg = s.Split(new char[] { ' ' }, 3);
+                    var arg = s.Split(new char[] {' '}, 3);
                     var u = new User(long.Parse(arg[0]));
                     switch (arg[1])
                     {
@@ -170,7 +176,9 @@ namespace Clansty.tianlang
                         default:
                             return "字段无效";
                     }
-                    return "操作成功";
+
+                    var chkQmp = UserInfo.CheckQmpAsync(u);
+                    return $"操作成功，群名片 {chkQmp.Result}";
                 }
             },
             ["sync"] = new GroupCommand()
@@ -186,6 +194,7 @@ namespace Clansty.tianlang
                 }
             }
         };
+
         internal static void SiEnter(GroupMsgArgs e)
         {
             try
@@ -206,20 +215,22 @@ namespace Clansty.tianlang
                         e.Reply($"权限不够\n{key} 需要 {m.Permission}，而你属于{u.Role}");
                         return;
                     }
+
                     if (act.Trim() == "" && m.IsParamsNeeded)
                     {
                         e.Reply($"{key} 命令需要提供参数\n{m.Description}\n用法: \n{m.Usage}");
                         return;
                     }
+
                     e.Reply(gcmds[key].Func(act));
                 }
-
             }
             catch (Exception ex)
             {
                 e.Reply("发生错误\n" + ex.Message);
             }
         }
+
         internal static void SudoEnter(GroupMsgArgs e)
         {
             try
@@ -238,11 +249,13 @@ namespace Clansty.tianlang
                         e.Reply($"权限不够\n{key} 需要 {m.Permission}，而你属于{u.Role}");
                         return;
                     }
+
                     if (act.Trim() == "" && m.IsParamsNeeded)
                     {
                         e.Reply($"{key} 命令需要提供参数\n{m.Description}\n用法: \n{m.Usage}");
                         return;
                     }
+
                     e.Reply(gcmds[key].Func(act));
                 }
                 else
@@ -253,6 +266,5 @@ namespace Clansty.tianlang
                 e.Reply("发生错误\n" + ex.Message);
             }
         }
-
     }
 }
