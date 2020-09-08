@@ -1,7 +1,5 @@
 using CornSDK;
 using System;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Clansty.tianlang
 {
@@ -15,9 +13,6 @@ namespace Clansty.tianlang
 #if DEBUG
             Test.Do();
 #else
-            Application.SetHighDpiMode(HighDpiMode.SystemAware);
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
             Console.CancelKeyPress += delegate
             {
                 Db.Commit();
