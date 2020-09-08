@@ -13,13 +13,7 @@ namespace Clansty.tianlang
 #if DEBUG
             Test.Do();
 #else
-            Console.CancelKeyPress += delegate
-            {
-                Db.Commit();
-                System.Diagnostics.Process tt =
-                    System.Diagnostics.Process.GetProcessById(System.Diagnostics.Process.GetCurrentProcess().Id);
-                tt.Kill();
-            };
+            Console.CancelKeyPress += Exit;
             Console.Title = $@"甜狼 {C.Version}";
             var handler = new Events();
             C.Robot = new Corn(new CornConfig()
@@ -58,6 +52,14 @@ namespace Clansty.tianlang
                 }
             }
 #endif
+        }
+
+        internal static void Exit(object a = null, object b = null)
+        {
+            Db.Commit();
+            System.Diagnostics.Process tt =
+                System.Diagnostics.Process.GetProcessById(System.Diagnostics.Process.GetCurrentProcess().Id);
+            tt.Kill();
         }
     }
 }

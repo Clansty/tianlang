@@ -148,9 +148,9 @@ namespace Clansty.tianlang
             ["set"] = new GroupCommand()
             {
                 Description = "修改某个人的信息",
-                Usage = "set [QQ号] [{name|nick|enrollment|junior|prefix|step|status|role}] [值]",
+                Usage = "set [QQ号] [{name|nick|enrollment|junior|prefix|step|status|role|tguid}] [值]",
                 IsParamsNeeded = true,
-                Permission = UserType.administrator,
+                Permission = UserType.powerUser,
                 Func = s =>
                 {
                     var arg = s.Split(new char[] {' '}, 3);
@@ -173,6 +173,10 @@ namespace Clansty.tianlang
                             var i = int.Parse(arg[2]);
                             u.Row[arg[1]] = i;
                             break;
+                        case "tguid":
+                            var l = long.Parse(arg[2]);
+                            u.Row["tg"] = l;
+                            break;
                         default:
                             return "字段无效";
                     }
@@ -186,11 +190,35 @@ namespace Clansty.tianlang
                 Description = "将对数据库的修改提交到 MySQL",
                 Usage = "sync",
                 IsParamsNeeded = false,
-                Permission = UserType.administrator,
+                Permission = UserType.powerUser,
                 Func = s =>
                 {
                     Db.Commit();
                     return "\\u2713";
+                }
+            },
+            ["chkqmp"] = new GroupCommand()
+            {
+                Description = "扫描全群的群名片，请勿频繁使用",
+                Usage = "chkqmp",
+                IsParamsNeeded = false,
+                Permission = UserType.administrator,
+                Func = s =>
+                {
+                    UserInfo.CheckAllQmpAsync();
+                    return "已开始扫描";
+                }
+            },
+            ["exit"] = new GroupCommand()
+            {
+                Description = "结束甜狼进程",
+                Usage = "exit",
+                IsParamsNeeded = false,
+                Permission = UserType.administrator,
+                Func = s =>
+                {
+                    Program.Exit();
+                    return null;
                 }
             }
         };
