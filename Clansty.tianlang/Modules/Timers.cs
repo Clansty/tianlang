@@ -21,7 +21,6 @@ namespace Clansty.tianlang
             };
             t.AutoReset = true;
             t.Enabled = true;
-            C.WriteLn("init timer");
         }
     }
 }

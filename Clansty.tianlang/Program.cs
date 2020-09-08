@@ -24,7 +24,7 @@ namespace Clansty.tianlang
                 System.Diagnostics.Process tt = System.Diagnostics.Process.GetProcessById(System.Diagnostics.Process.GetCurrentProcess().Id);
                 tt.Kill();
             };
-            Console.Title = $@"ΜπΐΗ {C.Version}";
+            Console.Title = $@"η”η‹Ό {C.Version}";
             var handler = new Events();
             C.Robot = new Corn(new CornConfig()
             {
@@ -38,6 +38,9 @@ namespace Clansty.tianlang
                 tempMsgHandler = handler
             });
             Db.Init();
+            Timers.Init();
+            MemberList.UpdateMajor();
+
             Task.Run(() =>
             {
                 while (true)

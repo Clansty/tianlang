@@ -24,14 +24,6 @@ namespace Clansty.tianlang
             new SendTest().Show();
         }
 
-        private async void toolStripMenuItem3_Click(object sender, EventArgs e)
-        {
-            toolStripMenuItem3.Visible = false;
-            Timers.Init();
-            await MemberList.UpdateMajor();
-            C.WriteLn("Memberlist updated");
-        }
-
         private void toolStripMenuItem2_Click(object sender, EventArgs e)
         {
             new Loading().Show();
