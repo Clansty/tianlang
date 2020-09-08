@@ -21,7 +21,8 @@ namespace Clansty.tianlang
             Console.CancelKeyPress += delegate
             {
                 Db.Commit();
-                System.Diagnostics.Process tt = System.Diagnostics.Process.GetProcessById(System.Diagnostics.Process.GetCurrentProcess().Id);
+                System.Diagnostics.Process tt =
+                    System.Diagnostics.Process.GetProcessById(System.Diagnostics.Process.GetCurrentProcess().Id);
                 tt.Kill();
             };
             Console.Title = $@"甜狼 {C.Version}";
@@ -41,30 +42,26 @@ namespace Clansty.tianlang
             Timers.Init();
             MemberList.UpdateMajor();
 
-            Task.Run(() =>
+            while (true)
             {
-                while (true)
+                var em = Console.ReadLine();
+                if (em is null)
+                    continue;
+                try
                 {
-                    var em = Console.ReadLine();
-                    if (em is null)
-                        continue;
-                    try
+                    var key = (em.GetLeft(" ") == "" ? em : em.GetLeft(" ")).ToLower();
+                    var act = em.GetRight(" ");
+                    if (Cmds.gcmds.ContainsKey(key))
                     {
-                        var key = (em.GetLeft(" ") == "" ? em : em.GetLeft(" ")).ToLower();
-                        var act = em.GetRight(" ");
-                        if (Cmds.gcmds.ContainsKey(key))
-                        {
-                            var m = Cmds.gcmds[key];
-                            C.WriteLn(Cmds.gcmds[key].Func(act));
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        C.WriteLn(ex.Message, ConsoleColor.Red);
+                        var m = Cmds.gcmds[key];
+                        C.WriteLn(Cmds.gcmds[key].Func(act));
                     }
                 }
-            });
-            Application.Run(new Menu());
+                catch (Exception ex)
+                {
+                    C.WriteLn(ex.Message, ConsoleColor.Red);
+                }
+            }
 #endif
         }
     }
