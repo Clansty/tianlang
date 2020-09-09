@@ -265,7 +265,7 @@ namespace Clansty.tianlang
                     if(s.StartsWith("sudo rm"))
                         throw new Exception("操作被禁止");
                     var args = s.Split(' ', 2);
-                    if (args.Length != 2)
+                    if (args.Length < 1)
                         return "参数不够";
                     var p = Process.Start(new ProcessStartInfo(args[0], args[1])
                     {
@@ -344,7 +344,7 @@ namespace Clansty.tianlang
                         return;
                     }
 
-                    e.Reply(gcmds[key].Func(act));
+                    e.Reply(gcmds[key].Func(act).Trim(' ', '\r', '\n'));
                 }
                 else
                     e.Reply(Strs.CmdNotFound);
