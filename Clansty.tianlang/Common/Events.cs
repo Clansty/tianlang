@@ -100,19 +100,6 @@ namespace Clansty.tianlang
         }
         public void OnGroupMsg(GroupMsgArgs e)
         {
-            if (e.Msg.StartsWith("点歌"))
-                NetEase.Request(e);
-            if (e.FromGroup == G.si)
-                Cmds.SiEnter(e);
-
-            if (e.FromGroup == G.major)
-            {
-                UserInfo.CheckQmpAsync(new User(e.FromQQ), e.FromCard);
-                if (e.Msg.StartsWith("sudo "))
-                    Cmds.SudoEnter(e);
-                Repeater.Enter(e.Msg);
-            }
-            
             //start Q2tg
             if (!G.Map.ContainsKey(e.FromGroup)) return;
             
@@ -157,6 +144,21 @@ namespace Clansty.tianlang
                 C.TG.SendTextMessageAsync(G.Map[e.FromGroup],
                     from + ":\n" + Utf.Decode(msg));
             }
+            //End Q2tg
+            
+            if (e.Msg.StartsWith("点歌"))
+                NetEase.Request(e);
+            if (e.FromGroup == G.si)
+                Cmds.SiEnter(e);
+
+            if (e.FromGroup == G.major)
+            {
+                UserInfo.CheckQmpAsync(new User(e.FromQQ), e.FromCard);
+                if (e.Msg.StartsWith("sudo "))
+                    Cmds.SudoEnter(e);
+                Repeater.Enter(e.Msg);
+            }
+
 
         }
         public void OnFriendRequest(FriendRequestArgs e)
