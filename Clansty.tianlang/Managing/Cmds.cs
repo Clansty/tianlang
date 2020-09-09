@@ -257,7 +257,7 @@ namespace Clansty.tianlang
             ["shell"] = new GroupCommand()
             {
                 Description = "运行 shell 命令（危",
-                Usage = "update",
+                Usage = "shell",
                 IsParamsNeeded = false,
                 Permission = UserType.administrator,
                 Func = s =>
@@ -311,22 +311,26 @@ namespace Clansty.tianlang
                         return;
                     }
 
-                    var res = gcmds[key].Func(act).Trim(' ', '\r', '\n').Split('\n');
+                    var ret = gcmds[key].Func(act).Trim(' ', '\r', '\n');
+                    var res = ret.Split('\n');
                     if (res.Length == 1 && res[0] == "")
                     {
                         e.Reply("返回内容为空");
+                        S.TG.Si("返回内容为空");
                         return;
                     }
 
+                    S.TG.Si(ret);
                     var lines = 0;
                     var comb = ""; //字符串十行十行的发
                     foreach (var line in res)
                     {
                         lines++;
-                        if (lines == 10)
+                        if (lines == 20)
                         {
                             comb += line;
                             e.Reply(comb);
+                            Thread.Sleep(500);
                             lines = 0;
                             comb = "";
                         }
@@ -372,23 +376,28 @@ namespace Clansty.tianlang
                         return;
                     }
 
-                    var res = gcmds[key].Func(act).Trim(' ', '\r', '\n').Split('\n');
+                    var ret = gcmds[key].Func(act).Trim(' ', '\r', '\n');
+                    var res = ret.Split('\n');
                     if (res.Length == 1 && res[0] == "")
                     {
                         e.Reply("返回内容为空");
+                        S.TG.Major("返回内容为空");
                         return;
                     }
 
+                    S.TG.Major(ret);
                     var lines = 0;
                     var comb = ""; //字符串十行十行的发
                     foreach (var line in res)
                     {
                         lines++;
-                        if (lines == 10)
+                        if (lines == 20)
                         {
                             comb += line;
                             e.Reply(comb);
+                            Thread.Sleep(500);
                             lines = 0;
+                            comb = "";
                         }
                         else
                         {
