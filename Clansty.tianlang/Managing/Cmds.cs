@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing.Drawing2D;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -43,7 +44,6 @@ namespace Clansty.tianlang
                              $"需要参数: {cmd.Value.IsParamsNeeded}\n" +
                              $"需要的权限级别: {cmd.Value.Permission}\n" +
                              "---\n";
-                        
                     }
 
                     r += $"甜狼 {C.Version}";
@@ -260,9 +260,9 @@ namespace Clansty.tianlang
                 Permission = UserType.administrator,
                 Func = s =>
                 {
-                    if(s.StartsWith("rm"))
+                    if (s.StartsWith("rm"))
                         throw new Exception("操作被禁止");
-                    if(s.StartsWith("sudo rm"))
+                    if (s.StartsWith("sudo rm"))
                         throw new Exception("操作被禁止");
                     var args = s.Split(' ', 2);
                     if (args.Length < 1)
@@ -280,7 +280,6 @@ namespace Clansty.tianlang
                     return ret;
                 }
             }
-
         };
 
         internal static void SiEnter(GroupMsgArgs e)
@@ -310,7 +309,33 @@ namespace Clansty.tianlang
                         return;
                     }
 
-                    e.Reply(gcmds[key].Func(act));
+                    var res = gcmds[key].Func(act).Trim(' ', '\r', '\n').Split('\n');
+                    if (res.Length == 1 && res[0] == "")
+                    {
+                        e.Reply("返回内容为空");
+                        return;
+                    }
+
+                    var lines = 0;
+                    var comb = ""; //字符串十行十行的发
+                    foreach (var line in res)
+                    {
+                        lines++;
+                        if (lines == 10)
+                        {
+                            comb += line;
+                            e.Reply(comb);
+                            lines = 0;
+                        }
+                        else
+                        {
+                            comb += line;
+                            comb += "\n";
+                        }
+                    }
+
+                    if (comb.Trim() != "")
+                        e.Reply(comb);
                 }
             }
             catch (Exception ex)
@@ -344,7 +369,33 @@ namespace Clansty.tianlang
                         return;
                     }
 
-                    e.Reply(gcmds[key].Func(act).Trim(' ', '\r', '\n'));
+                    var res = gcmds[key].Func(act).Trim(' ', '\r', '\n').Split('\n');
+                    if (res.Length == 1 && res[0] == "")
+                    {
+                        e.Reply("返回内容为空");
+                        return;
+                    }
+
+                    var lines = 0;
+                    var comb = ""; //字符串十行十行的发
+                    foreach (var line in res)
+                    {
+                        lines++;
+                        if (lines == 10)
+                        {
+                            comb += line;
+                            e.Reply(comb);
+                            lines = 0;
+                        }
+                        else
+                        {
+                            comb += line;
+                            comb += "\n";
+                        }
+                    }
+
+                    if (comb.Trim() != "")
+                        e.Reply(comb);
                 }
                 else
                     e.Reply(Strs.CmdNotFound);
