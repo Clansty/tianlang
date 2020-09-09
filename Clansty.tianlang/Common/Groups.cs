@@ -16,13 +16,20 @@ namespace Clansty.tianlang
         internal const long g2020 = 1132458399;
         public static readonly Dictionary<long, long> Map = new Dictionary<long, long>()
         {
-            [342975953] = -1001218396541,
-            [828390342] = -346751886,
-            [-346751886] = 828390342,
-            [-1001218396541] = 342975953,
-            [690696283] = -1001198326304,
-            [-1001198326304] = 690696283
+            [iDE] = TG.iDE,
+            [test] = TG.test,
+            [TG.test] = test,
+            [TG.iDE] = iDE,
+            [si] = TG.si,
+            [TG.si] = si
         };
 
+        public static class TG
+        {
+            internal const long iDE = -1001218396541;
+            internal const long test = -346751886;
+            internal const long si = -1001198326304;
+            internal const long major = -1001414122709;
+        }
     }
 }
