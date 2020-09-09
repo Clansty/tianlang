@@ -43,6 +43,7 @@ namespace Clansty.tianlang
                              $"需要参数: {cmd.Value.IsParamsNeeded}\n" +
                              $"需要的权限级别: {cmd.Value.Permission}\n" +
                              "---\n";
+                        
                     }
 
                     r += $"甜狼 {C.Version}";
@@ -250,7 +251,36 @@ namespace Clansty.tianlang
                     });
                     return ret;
                 }
+            },
+            ["shell"] = new GroupCommand()
+            {
+                Description = "运行 shell 命令（危",
+                Usage = "update",
+                IsParamsNeeded = false,
+                Permission = UserType.administrator,
+                Func = s =>
+                {
+                    if(s.StartsWith("rm"))
+                        throw new Exception("操作被禁止");
+                    if(s.StartsWith("sudo rm"))
+                        throw new Exception("操作被禁止");
+                    var args = s.Split(' ', 2);
+                    if (args.Length != 2)
+                        return "参数不够";
+                    var p = Process.Start(new ProcessStartInfo(args[0], args[1])
+                    {
+                        RedirectStandardOutput = true,
+                        RedirectStandardError = true,
+                        WorkingDirectory = "/srv/lw/NthsBot"
+                    });
+                    p.WaitForExit();
+                    var ret = p.StandardOutput.ReadToEnd() + p.StandardError.ReadToEnd();
+                    if (p.ExitCode != 0)
+                        throw new Exception(ret);
+                    return ret;
+                }
             }
+
         };
 
         internal static void SiEnter(GroupMsgArgs e)
