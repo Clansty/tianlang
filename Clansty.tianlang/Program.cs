@@ -41,7 +41,7 @@ namespace Clansty.tianlang
 
             if (File.Exists("/srv/lw/tmp/tlupdate"))
             {
-                var oldver = File.ReadAllText("/srv/lw/tmp/tlupdate");
+                var oldver = File.ReadAllText("/srv/lw/tmp/tlupdate").Trim(' ', '\r', '\n');
                 File.Delete("/srv/lw/tmp/tlupdate");
                 S.Si($"更新已完成:\n{oldver} -> {C.Version}");
             }
