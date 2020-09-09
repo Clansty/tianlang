@@ -79,7 +79,7 @@ namespace Clansty.tianlang
                         if (u.Role >= UserType.powerUser)
                             return $"不能拉黑一个 {u.Role}";
                         u.Role = UserType.blackListed;
-                        C.Robot.GroupKickMember(G.major, i); //todo
+                        C.QQ.GroupKickMember(G.major, i); //todo
                         return $"已拉黑 {u.ProperNamecard}({s})";
                     }
 
@@ -100,7 +100,7 @@ namespace Clansty.tianlang
                         var u = new User(i);
                         if (u.Role >= UserType.powerUser)
                             return $"不能踢一个 {u.Role}";
-                        C.Robot.GroupKickMember(G.major, i);
+                        C.QQ.GroupKickMember(G.major, i);
                         return $"已踢 {u.ProperNamecard}({s})";
                     }
 
@@ -214,7 +214,7 @@ namespace Clansty.tianlang
                 Description = "结束甜狼进程",
                 Usage = "exit",
                 IsParamsNeeded = false,
-                Permission = UserType.administrator,
+                Permission = UserType.console,
                 Func = s =>
                 {
                     Program.Exit();

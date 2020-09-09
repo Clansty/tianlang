@@ -61,7 +61,7 @@ namespace Clansty.tianlang
 
                 if (string.IsNullOrWhiteSpace(ret))
                 {
-                    var t = C.Robot.GetNick(Uin, false);
+                    var t = C.QQ.GetNick(Uin, false);
                     t.Wait();
                     ret = t.Result;
                     Nick = ret;
@@ -143,7 +143,7 @@ namespace Clansty.tianlang
 #if DEBUG
                 return ProperNamecard;
 #else
-                var t = C.Robot.GetGroupCard(G.major, Uin, false);
+                var t = C.QQ.GetGroupCard(G.major, Uin, false);
                 t.Wait();
                 return t.Result;
 #endif
@@ -154,7 +154,7 @@ namespace Clansty.tianlang
 #if DEBUG
                 C.WriteLn($"{Uin} 群名片设置为 {value}");
 #else
-                C.Robot.SetGroupCard(G.major, Uin, value);
+                C.QQ.SetGroupCard(G.major, Uin, value);
 #endif
             }
         }

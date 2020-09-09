@@ -17,7 +17,7 @@ namespace Clansty.tianlang
         }
         internal static async Task UpdateMajor()
         {
-            UpdateMajor(await C.Robot.GetGroupMembers(G.major));
+            UpdateMajor(await C.QQ.GetGroupMembers(G.major));
         }
     }
 }

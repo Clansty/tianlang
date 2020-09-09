@@ -1,5 +1,6 @@
 ﻿using CornSDK;
 using System;
+using System.Text.RegularExpressions;
 
 namespace Clansty.tianlang
 {
@@ -11,6 +12,13 @@ namespace Clansty.tianlang
                    IGroupJoinRequestHandler, 
                    IGroupAddMemberHandler
     {
+        readonly string[] botCodes = {"[Audio", 
+            "[file", 
+            "[redpack", 
+            "{\"app\":",
+            "[bigFace", 
+            "[Graffiti", 
+            "[picShow"};
         public void OnTempMsg(TempMsgArgs e)
         {
             OnPrivateMsg(new PrivateMsgArgs()
@@ -31,7 +39,8 @@ namespace Clansty.tianlang
                 Robot = e.Robot
             });
         }
-        public void OnPrivateMsg(PrivateMsgArgs e)
+
+        private static void OnPrivateMsg(PrivateMsgArgs e)
         {
             var u = new User(e.FromQQ);
             if (u.Status == Status.setup)
@@ -103,6 +112,52 @@ namespace Clansty.tianlang
                     Cmds.SudoEnter(e);
                 Repeater.Enter(e.Msg);
             }
+            
+            //start Q2tg
+            if (!G.Map.ContainsKey(e.FromGroup)) return;
+            
+            var msg = e.Msg.Trim();
+            var from = Utf.Decode(e.FromCard);
+            
+            if (msg.StartsWith("[Reply"))
+                msg = msg.GetRight("]").Trim();
+            if (msg.StartsWith("<?xml") || msg.StartsWith("链接<?xml"))
+            {
+                if (msg.Contains("url=\""))
+                {
+                    msg = msg.Between("url=\"", "\"");
+                }
+                else return;
+            }
+
+            if (msg.Contains("<?xml"))
+                msg = msg.GetLeft("<?xml");
+            
+            foreach (var i in botCodes)
+            {
+                if (msg.StartsWith(i))
+                    return;
+            }
+
+            var pic = new Regex(@"\[pic,hash=\w+\]");
+            if (pic.IsMatch(msg))
+            {
+                var hash = pic.Match(msg).Groups[0].Value;
+                var purl = C.QQ.GetPicUrl(hash, e.FromGroup);
+                msg = pic.Replace(msg, "");
+                msg = msg.Trim(' ', '\r', '\n', '\t');
+                if (!string.IsNullOrEmpty(msg))
+                    msg = "\n" + Utf.Decode(msg);
+                C.TG.SendPhotoAsync(G.Map[e.FromGroup],
+                    purl.Result,
+                    from + ":" + msg);
+            }
+            else
+            {
+                C.TG.SendTextMessageAsync(G.Map[e.FromGroup],
+                    from + ":\n" + Utf.Decode(msg));
+            }
+
         }
         public void OnFriendRequest(FriendRequestArgs e)
         {
