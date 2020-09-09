@@ -235,10 +235,13 @@ namespace Clansty.tianlang
                     var p = Process.Start(new ProcessStartInfo("git", "pull")
                     {
                         RedirectStandardOutput = true,
+                        RedirectStandardError = true,
                         WorkingDirectory = "/srv/lw/NthsBot"
                     });
                     p.WaitForExit();
-                    var ret = p.StandardOutput.ReadToEnd();
+                    var ret = p.StandardOutput.ReadToEnd() + p.StandardError.ReadToEnd();
+                    if (p.ExitCode != 0)
+                        throw new Exception(ret);
                     ret += "\n三秒后重启...";
                     Task.Run(() =>
                     {
