@@ -1,6 +1,9 @@
 ﻿using CornSDK;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Clansty.tianlang
 {
@@ -219,6 +222,30 @@ namespace Clansty.tianlang
                 {
                     Program.Exit();
                     return null;
+                }
+            },
+            ["update"] = new GroupCommand()
+            {
+                Description = "从 Git 存储库编译并更新自己",
+                Usage = "update",
+                IsParamsNeeded = false,
+                Permission = UserType.administrator,
+                Func = s =>
+                {
+                    var p = Process.Start(new ProcessStartInfo("git", "pull")
+                    {
+                        RedirectStandardOutput = true,
+                        WorkingDirectory = "/srv/lw/NthsBot"
+                    });
+                    p.WaitForExit();
+                    var ret = p.StandardOutput.ReadToEnd();
+                    ret += "\n三秒后重启...";
+                    Task.Run(() =>
+                    {
+                        Thread.Sleep(3000);
+                        Process.Start("supervisorctl", "restart nthsbot");
+                    });
+                    return ret;
                 }
             }
         };
