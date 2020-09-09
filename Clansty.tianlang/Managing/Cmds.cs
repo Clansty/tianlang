@@ -284,11 +284,11 @@ namespace Clansty.tianlang
             }
         };
 
-        internal static void SiEnter(GroupMsgArgs e)
+        internal static void Enter(string msg, long user, bool isMajor)
         {
             try
             {
-                var msg = e.Msg.Trim();
+                msg = msg.Trim();
                 var key = (msg.GetLeft(" ") == "" ? msg.ToLower() : msg.GetLeft(" ")).ToLower();
                 var act = "";
                 if (msg.Contains(" "))
@@ -298,16 +298,38 @@ namespace Clansty.tianlang
                 if (gcmds.ContainsKey(key))
                 {
                     var m = gcmds[key];
-                    var u = new User(e.FromQQ);
+                    var u = new User(user);
                     if (u.Role < m.Permission)
                     {
-                        e.Reply($"权限不够\n{key} 需要 {m.Permission}，而你属于{u.Role}");
+                        var toSend = $"权限不够\n{key} 需要 {m.Permission}，而你属于{u.Role}";
+                        if (isMajor)
+                        {
+                            S.Major(toSend);
+                            S.TG.Major(toSend);
+                        }
+                        else
+                        {
+                            S.Si(toSend);
+                            S.TG.Si(toSend);
+                        }
+
                         return;
                     }
 
                     if (act.Trim() == "" && m.IsParamsNeeded)
                     {
-                        e.Reply($"{key} 命令需要提供参数\n{m.Description}\n用法: \n{m.Usage}");
+                        var toSend = $"{key} 命令需要提供参数\n{m.Description}\n用法: \n{m.Usage}";
+                        if (isMajor)
+                        {
+                            S.Major(toSend);
+                            S.TG.Major(toSend);
+                        }
+                        else
+                        {
+                            S.Si(toSend);
+                            S.TG.Si(toSend);
+                        }
+
                         return;
                     }
 
@@ -315,12 +337,30 @@ namespace Clansty.tianlang
                     var res = ret.Split('\n');
                     if (res.Length == 1 && res[0] == "")
                     {
-                        e.Reply("返回内容为空");
-                        S.TG.Si("返回内容为空");
+                        const string toSend = "返回内容为空";
+                        if (isMajor)
+                        {
+                            S.Major(toSend);
+                            S.TG.Major(toSend);
+                        }
+                        else
+                        {
+                            S.Si(toSend);
+                            S.TG.Si(toSend);
+                        }
+
                         return;
                     }
 
-                    S.TG.Si(ret);
+                    if (isMajor)
+                    {
+                        S.TG.Major(ret);
+                    }
+                    else
+                    {
+                        S.TG.Si(ret);
+                    }
+
                     var lines = 0;
                     var comb = ""; //字符串十行十行的发
                     foreach (var line in res)
@@ -329,7 +369,15 @@ namespace Clansty.tianlang
                         if (lines == 20)
                         {
                             comb += line;
-                            e.Reply(comb);
+                            if (isMajor)
+                            {
+                                S.Major(comb);
+                            }
+                            else
+                            {
+                                S.Si(comb);
+                            }
+
                             Thread.Sleep(500);
                             lines = 0;
                             comb = "";
@@ -340,83 +388,36 @@ namespace Clansty.tianlang
                             comb += "\n";
                         }
                     }
-                    
+
                     comb = comb.Trim('\r', '\n');
                     if (comb.Trim() != "")
-                        e.Reply(comb);
+                        if (isMajor)
+                        {
+                            S.Major(comb);
+                        }
+                        else
+                        {
+                            S.Si(comb);
+                        }
+                }
+                else if (isMajor)
+                {
+                    S.Major(Strs.CmdNotFound);
                 }
             }
             catch (Exception ex)
             {
-                e.Reply("发生错误\n" + ex.Message);
-            }
-        }
-
-        internal static void SudoEnter(GroupMsgArgs e)
-        {
-            try
-            {
-                var s = e.Msg.GetRight("sudo ").Trim();
-                var key = (s.GetLeft(" ") == "" ? s.ToLower() : s.GetLeft(" ")).ToLower();
-                var act = s.GetRight(" ");
-                key = key.Trim(' ', '\r', '\n');
-                act = act.Trim(' ', '\r', '\n');
-                if (gcmds.ContainsKey(key))
+                var toSend = "发生错误\n" + ex.Message;
+                if (isMajor)
                 {
-                    var m = gcmds[key];
-                    var u = new User(e.FromQQ);
-                    if (u.Role < m.Permission)
-                    {
-                        e.Reply($"权限不够\n{key} 需要 {m.Permission}，而你属于{u.Role}");
-                        return;
-                    }
-
-                    if (act.Trim() == "" && m.IsParamsNeeded)
-                    {
-                        e.Reply($"{key} 命令需要提供参数\n{m.Description}\n用法: \n{m.Usage}");
-                        return;
-                    }
-
-                    var ret = gcmds[key].Func(act).Trim(' ', '\r', '\n');
-                    var res = ret.Split('\n');
-                    if (res.Length == 1 && res[0] == "")
-                    {
-                        e.Reply("返回内容为空");
-                        S.TG.Major("返回内容为空");
-                        return;
-                    }
-
-                    S.TG.Major(ret);
-                    var lines = 0;
-                    var comb = ""; //字符串十行十行的发
-                    foreach (var line in res)
-                    {
-                        lines++;
-                        if (lines == 20)
-                        {
-                            comb += line;
-                            e.Reply(comb);
-                            Thread.Sleep(500);
-                            lines = 0;
-                            comb = "";
-                        }
-                        else
-                        {
-                            comb += line;
-                            comb += "\n";
-                        }
-                    }
-
-                    comb = comb.Trim('\r', '\n');
-                    if (comb.Trim() != "")
-                        e.Reply(comb);
+                    S.Major(toSend);
+                    S.TG.Major(toSend);
                 }
                 else
-                    e.Reply(Strs.CmdNotFound);
-            }
-            catch (Exception ex)
-            {
-                e.Reply("发生错误\n" + ex.Message);
+                {
+                    S.Si(toSend);
+                    S.TG.Si(toSend);
+                }
             }
         }
     }

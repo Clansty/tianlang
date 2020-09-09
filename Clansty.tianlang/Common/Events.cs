@@ -149,13 +149,13 @@ namespace Clansty.tianlang
             if (e.Msg.StartsWith("点歌"))
                 NetEase.Request(e);
             if (e.FromGroup == G.si)
-                Cmds.SiEnter(e);
+                Cmds.Enter(e.Msg, e.FromQQ, false);
 
             if (e.FromGroup == G.major)
             {
                 UserInfo.CheckQmpAsync(new User(e.FromQQ), e.FromCard);
                 if (e.Msg.StartsWith("sudo "))
-                    Cmds.SudoEnter(e);
+                    Cmds.Enter(e.Msg.GetRight("sudo "), e.FromQQ, true);
                 Repeater.Enter(e.Msg);
             }
 
