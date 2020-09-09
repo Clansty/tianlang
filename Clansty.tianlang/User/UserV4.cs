@@ -342,13 +342,13 @@ namespace Clansty.tianlang
             }
         }
 
-        internal int TgUid
+        internal long TgUid
         {
             get
             {
                 try
                 {
-                    return (int) Row["tg"];
+                    return (long) Row["tg"];
                 }
                 catch
                 {
