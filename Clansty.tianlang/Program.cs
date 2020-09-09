@@ -20,6 +20,9 @@ namespace Clansty.tianlang
             C.QQ = new Corn(new CornConfig()
             {
                 selfQQ = C.self,
+                ip = "172.16.100.6",
+                listenIp = "172.16.100.1",
+                listenPort = 7284,
                 friendMsgHandler = handler,
                 groupAddMemberHandler = handler,
                 groupInviteRequestHandler = handler,
