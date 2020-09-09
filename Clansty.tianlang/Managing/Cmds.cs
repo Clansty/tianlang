@@ -234,6 +234,7 @@ namespace Clansty.tianlang
                 Permission = UserType.administrator,
                 Func = s =>
                 {
+                    Db.Commit();
                     var p = Process.Start(new ProcessStartInfo("git", "pull")
                     {
                         RedirectStandardOutput = true,
@@ -243,7 +244,7 @@ namespace Clansty.tianlang
                     p.WaitForExit();
                     var ret = p.StandardOutput.ReadToEnd() + p.StandardError.ReadToEnd();
                     if (p.ExitCode != 0)
-                        throw new Exception(ret);
+                        throw new Exception(ret.Trim(' ', '\r', '\n'));
                     ret += "\n三秒后重启...";
                     File.WriteAllText("/srv/lw/tmp/tlupdate", C.Version);
                     Task.Run(() =>
@@ -251,7 +252,7 @@ namespace Clansty.tianlang
                         Thread.Sleep(3000);
                         Process.Start("supervisorctl", "restart nthsbot");
                     });
-                    return ret;
+                    return ret.Trim(' ', '\r', '\n');
                 }
             },
             ["shell"] = new GroupCommand()
@@ -269,16 +270,26 @@ namespace Clansty.tianlang
                     var args = s.Split(' ', 2);
                     if (args.Length < 1)
                         return "参数不够";
-                    var p = Process.Start(new ProcessStartInfo(args[0], args[1])
-                    {
-                        RedirectStandardOutput = true,
-                        RedirectStandardError = true,
-                        WorkingDirectory = "/srv/lw/NthsBot"
-                    });
+                    Process p;
+                    if (args.Length == 2)
+                        p = Process.Start(new ProcessStartInfo(args[0], args[1])
+                        {
+                            RedirectStandardOutput = true,
+                            RedirectStandardError = true,
+                            WorkingDirectory = "/srv/lw/NthsBot"
+                        });
+
+                    else
+                        p = Process.Start(new ProcessStartInfo(args[0])
+                        {
+                            RedirectStandardOutput = true,
+                            RedirectStandardError = true,
+                            WorkingDirectory = "/srv/lw/NthsBot"
+                        });
                     p.WaitForExit();
                     var ret = p.StandardOutput.ReadToEnd() + p.StandardError.ReadToEnd();
                     if (p.ExitCode != 0)
-                        throw new Exception(ret);
+                        throw new Exception(ret.Trim(' ', '\r', '\n'));
                     return ret;
                 }
             }
