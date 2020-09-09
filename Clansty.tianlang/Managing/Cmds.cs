@@ -340,7 +340,8 @@ namespace Clansty.tianlang
                             comb += "\n";
                         }
                     }
-
+                    
+                    comb = comb.Trim('\r', '\n');
                     if (comb.Trim() != "")
                         e.Reply(comb);
                 }
@@ -406,6 +407,7 @@ namespace Clansty.tianlang
                         }
                     }
 
+                    comb = comb.Trim('\r', '\n');
                     if (comb.Trim() != "")
                         e.Reply(comb);
                 }
