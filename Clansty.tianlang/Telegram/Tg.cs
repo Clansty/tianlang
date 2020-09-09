@@ -22,15 +22,24 @@ namespace Clansty.tianlang
                         return;
                 }
 
-                ;
+                //文本转发 tg2q
                 if (G.Map.ContainsKey(e.Message.Chat.Id))
                 {
                     C.QQ.SendGroupMsg(G.Map[e.Message.Chat.Id],
                         e.Message.From.FirstName + ":\n" +
                         Utf.Encode(e.Message.Text));
                 }
+                //命令
+                if (e.Message.Chat.Id == G.TG.si)
+                    Cmds.Enter(e.Message.Text, 839827911, false);
+
+                if (e.Message.Chat.Id == G.TG.major)
+                {
+                }
+
             }
 
+            //图片转发
             string ps = null;
             if (e.Message.Photo != null)
             {
