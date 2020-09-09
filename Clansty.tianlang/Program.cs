@@ -1,5 +1,6 @@
 using CornSDK;
 using System;
+using System.IO;
 using Telegram.Bot;
 
 namespace Clansty.tianlang
@@ -37,6 +38,13 @@ namespace Clansty.tianlang
             Timers.Init();
             MemberList.UpdateMajor();
             C.TG.StartReceiving();
+
+            if (File.Exists("/srv/lw/tmp/tlupdate"))
+            {
+                var oldver = File.ReadAllText("/srv/lw/tmp/tlupdate");
+                File.Delete("/srv/lw/tmp/tlupdate");
+                S.Si($"更新已完成:\n{oldver} -> {C.Version}");
+            }
 
             while (true)
             {

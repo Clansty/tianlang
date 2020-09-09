@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing.Drawing2D;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -244,6 +245,7 @@ namespace Clansty.tianlang
                     if (p.ExitCode != 0)
                         throw new Exception(ret);
                     ret += "\n三秒后重启...";
+                    File.WriteAllText("/srv/lw/tmp/tlupdate", C.Version);
                     Task.Run(() =>
                     {
                         Thread.Sleep(3000);
@@ -326,6 +328,7 @@ namespace Clansty.tianlang
                             comb += line;
                             e.Reply(comb);
                             lines = 0;
+                            comb = "";
                         }
                         else
                         {
