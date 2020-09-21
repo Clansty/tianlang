@@ -1,24 +1,29 @@
 ﻿using CornSDK;
 using System;
 using System.Text.RegularExpressions;
+using Telegram.Bot.Requests;
 
 namespace Clansty.tianlang
 {
-    class Events : IFriendMsgHandler, 
-                   ITempMsgHandler, 
-                   IGroupMsgHandler, 
-                   IFriendRequestHandler, 
-                   IGroupInviteRequestHandler, 
-                   IGroupJoinRequestHandler, 
-                   IGroupAddMemberHandler
+    class Events : IFriendMsgHandler,
+        ITempMsgHandler,
+        IGroupMsgHandler,
+        IFriendRequestHandler,
+        IGroupInviteRequestHandler,
+        IGroupJoinRequestHandler,
+        IGroupAddMemberHandler
     {
-        readonly string[] botCodes = {"[Audio", 
-            "[file", 
-            "[redpack", 
+        readonly string[] botCodes =
+        {
+            "[Audio",
+            "[file",
+            "[redpack",
             "{\"app\":",
-            "[bigFace", 
-            "[Graffiti", 
-            "[picShow"};
+            "[bigFace",
+            "[Graffiti",
+            "[picShow"
+        };
+
         public void OnTempMsg(TempMsgArgs e)
         {
             OnPrivateMsg(new PrivateMsgArgs()
@@ -29,6 +34,7 @@ namespace Clansty.tianlang
                 Robot = e.Robot
             });
         }
+
         public void OnFriendMsg(FriendMsgArgs e)
         {
             OnPrivateMsg(new PrivateMsgArgs()
@@ -78,10 +84,12 @@ namespace Clansty.tianlang
                             S.Si(u.ToString(Strs.NameFillInSucceeded));
                             return;
                         }
+
                         e.Reply(Strs.UnexceptedErr + u.VerifyMsg);
                         UserInfo.CheckQmpAsync(u);
                         return;
                     }
+
                     e.Reply(Strs.RnOccupied);
                     return;
                 }
@@ -98,14 +106,16 @@ namespace Clansty.tianlang
                 }
             } // end manual name-filling handling
         }
+
         public void OnGroupMsg(GroupMsgArgs e)
         {
-            //start Q2tg
+            #region start Q2tg
+
             if (!G.Map.ContainsKey(e.FromGroup)) return;
-            
+
             var msg = e.Msg.Trim();
             var from = Utf.Decode(e.FromCard);
-            
+
             if (msg.StartsWith("[Reply"))
                 msg = msg.GetRight("]").Trim();
             if (msg.StartsWith("<?xml") || msg.StartsWith("链接<?xml"))
@@ -119,7 +129,7 @@ namespace Clansty.tianlang
 
             if (msg.Contains("<?xml"))
                 msg = msg.GetLeft("<?xml");
-            
+
             foreach (var i in botCodes)
             {
                 if (msg.StartsWith(i))
@@ -144,8 +154,9 @@ namespace Clansty.tianlang
                 C.TG.SendTextMessageAsync(G.Map[e.FromGroup],
                     from + ":\n" + Utf.Decode(msg));
             }
-            //End Q2tg
-            
+
+            #endregion
+
             if (e.Msg.StartsWith("点歌"))
                 NetEase.Request(e);
             if (e.FromGroup == G.si)
@@ -159,12 +170,17 @@ namespace Clansty.tianlang
                 Repeater.Enter(e.Msg);
             }
 
-
+            if (e.FromGroup == G.parents)
+            {
+                S.Group(G.parentsFwd, e.FromCard + ":\n" + e.Msg);
+            }
         }
+
         public void OnFriendRequest(FriendRequestArgs e)
         {
             e.Accept();
         }
+
         public void OnGroupAddMember(GroupMemberChangedArgs e)
         {
             if (e.FromGroup == G.major)
@@ -193,6 +209,7 @@ namespace Clansty.tianlang
                 }
             }
         }
+
         public void OnGroupJoinRequest(GroupRequestArgs e)
         {
             if (e.FromGroup == G.major)
@@ -213,7 +230,7 @@ namespace Clansty.tianlang
                     return;
                 }
 
-                if (u.VerifyMsg == VerifingResult.succeed)//本身就实名好了，填什么都给进
+                if (u.VerifyMsg == VerifingResult.succeed) //本身就实名好了，填什么都给进
                 {
                     e.Accept();
                     S.Si(u.ToString(Strs.AddAccepted + Strs.VerifiedUser) + $"\n申请信息: {msg}");
@@ -223,7 +240,7 @@ namespace Clansty.tianlang
                 string name;
                 int enr;
                 //现在这样，直接把姓名赋值给 u.Name，要是 succeed 就给进，occupied notFound unsupported 都不给进
-                if (msg.IndexOf(" ", StringComparison.Ordinal) < 0)//没有空格的情况，20200813 直接用 parseNick 解析吧
+                if (msg.IndexOf(" ", StringComparison.Ordinal) < 0) //没有空格的情况，20200813 直接用 parseNick 解析吧
                 {
                     enr = UserInfo.ParseEnrollment(msg);
                     name = UserInfo.ParseNick(msg);
@@ -241,30 +258,37 @@ namespace Clansty.tianlang
                     S.Si(u.ToString(Strs.AddRejected + Strs.FormatErr) + $"\n申请信息: {msg}");
                     return;
                 }
+
                 //emptyName 这里已经处理过了接下来不会有
                 if (enr > 2000)
                     u.Enrollment = enr;
                 u.Name = name;
+
                 #region 这三种情况都是人在受支持的年级的
+
                 if (u.VerifyMsg == VerifingResult.succeed)
                 {
                     e.Accept();
                     S.Si(u.ToString(Strs.AddAccepted + Strs.RnOK) + $"\n申请信息: {msg}");
                     return;
                 }
+
                 if (u.VerifyMsg == VerifingResult.occupied)
                 {
                     e.Reject(Strs.JoinChkOccupied);
                     S.Si(u.ToString(Strs.AddRejected + Strs.AddReqOccupied) + $"\n申请信息: {msg}");
                     return;
                 }
+
                 if (u.VerifyMsg == VerifingResult.notFound)
                 {
                     e.Reject(Strs.PersonNotFound);
                     S.Si(u.ToString(Strs.AddRejected + Strs.PersonNotFound) + $"\n申请信息: {msg}");
                     return;
                 }
+
                 #endregion
+
                 //接下来是 unsupported 再做细分
                 if (u.Enrollment < 2000)
                 {
@@ -272,16 +296,17 @@ namespace Clansty.tianlang
                     S.Si(u.ToString(Strs.AddRejected + Strs.EnrFormatErr) + $"\n申请信息: {msg}");
                     return;
                 }
+
                 //由于年级受支持的一定会返回上面三种情况，所以这里不用判断一定是年级不受支持的
                 u.Junior = UserInfo.ParseJunior(msg.GetLeft(" "));
                 S.Si(u.ToString(Strs.EnrUnsupported) + $"\n申请信息: {msg}");
                 return;
             }
         }
+
         public void OnGroupInviteRequest(GroupRequestArgs e)
         {
             e.Accept();
         }
-
     }
 }

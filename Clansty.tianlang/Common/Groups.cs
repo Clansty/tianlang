@@ -14,6 +14,8 @@ namespace Clansty.tianlang
         internal const long test = 828390342;
         internal const long iDE = 342975953;
         internal const long g2020 = 1132458399;
+        internal const long parents = 1034335441;
+        internal const long parentsFwd = 654690796;
         public static readonly Dictionary<long, long> Map = new Dictionary<long, long>()
         {
             [iDE] = TG.iDE,
