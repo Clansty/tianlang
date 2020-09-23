@@ -170,7 +170,7 @@ namespace Clansty.tianlang
                 Repeater.Enter(e.Msg);
             }
 
-            if (e.FromGroup == G.parents)
+            if (e.FromGroup == G.parents || e.FromGroup==G.test)
             {
                 S.Group(G.parentsFwd, e.FromCard + ":\n" + e.Msg);
             }
