@@ -170,7 +170,7 @@ namespace Clansty.tianlang
                 Repeater.Enter(e.Msg);
             }
 
-            if (e.FromGroup == G.parents || e.FromGroup==G.test)
+            if (e.FromGroup == G.parents || e.FromGroupName.Contains("2020级软合家长群"))
             {
                 S.Group(G.parentsFwd, e.FromCard + ":\n" + e.Msg);
             }
