@@ -1,7 +1,6 @@
 ﻿using CornSDK;
 using System;
 using System.Text.RegularExpressions;
-using Telegram.Bot.Requests;
 
 namespace Clansty.tianlang
 {
@@ -111,48 +110,51 @@ namespace Clansty.tianlang
         {
             #region start Q2tg
 
-            if (!G.Map.ContainsKey(e.FromGroup)) return;
-
-            var msg = e.Msg.Trim();
-            var from = Utf.Decode(e.FromCard);
-
-            if (msg.StartsWith("[Reply"))
-                msg = msg.GetRight("]").Trim();
-            if (msg.StartsWith("<?xml") || msg.StartsWith("链接<?xml"))
+            if (G.Map.ContainsKey(e.FromGroup))
             {
-                if (msg.Contains("url=\""))
+
+
+                var msg = e.Msg.Trim();
+                var from = Utf.Decode(e.FromCard);
+
+                if (msg.StartsWith("[Reply"))
+                    msg = msg.GetRight("]").Trim();
+                if (msg.StartsWith("<?xml") || msg.StartsWith("链接<?xml"))
                 {
-                    msg = msg.Between("url=\"", "\"");
+                    if (msg.Contains("url=\""))
+                    {
+                        msg = msg.Between("url=\"", "\"");
+                    }
+                    else return;
                 }
-                else return;
-            }
 
-            if (msg.Contains("<?xml"))
-                msg = msg.GetLeft("<?xml");
+                if (msg.Contains("<?xml"))
+                    msg = msg.GetLeft("<?xml");
 
-            foreach (var i in botCodes)
-            {
-                if (msg.StartsWith(i))
-                    return;
-            }
+                foreach (var i in botCodes)
+                {
+                    if (msg.StartsWith(i))
+                        return;
+                }
 
-            var pic = new Regex(@"\[pic,hash=\w+\]");
-            if (pic.IsMatch(msg))
-            {
-                var hash = pic.Match(msg).Groups[0].Value;
-                var purl = C.QQ.GetPicUrl(hash, e.FromGroup);
-                msg = pic.Replace(msg, "");
-                msg = msg.Trim(' ', '\r', '\n', '\t');
-                if (!string.IsNullOrEmpty(msg))
-                    msg = "\n" + Utf.Decode(msg);
-                C.TG.SendPhotoAsync(G.Map[e.FromGroup],
-                    purl.Result,
-                    from + ":" + msg);
-            }
-            else
-            {
-                C.TG.SendTextMessageAsync(G.Map[e.FromGroup],
-                    from + ":\n" + Utf.Decode(msg));
+                var pic = new Regex(@"\[pic,hash=\w+\]");
+                if (pic.IsMatch(msg))
+                {
+                    var hash = pic.Match(msg).Groups[0].Value;
+                    var purl = C.QQ.GetPicUrl(hash, e.FromGroup);
+                    msg = pic.Replace(msg, "");
+                    msg = msg.Trim(' ', '\r', '\n', '\t');
+                    if (!string.IsNullOrEmpty(msg))
+                        msg = "\n" + Utf.Decode(msg);
+                    C.TG.SendPhotoAsync(G.Map[e.FromGroup],
+                        purl.Result,
+                        from + ":" + msg);
+                }
+                else
+                {
+                    C.TG.SendTextMessageAsync(G.Map[e.FromGroup],
+                        from + ":\n" + Utf.Decode(msg));
+                }
             }
 
             #endregion
