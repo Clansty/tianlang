@@ -76,7 +76,7 @@ namespace Clansty.tianlang
                         }
                     }
                 };
-                e.Reply("[LQ:json=" + JsonConvert.SerializeObject(json).Replace("https://", "http://") + "]");
+                e.Robot.SendGroupJsonMsg(e.FromGroup, JsonConvert.SerializeObject(json).Replace("https://", "http://"));
             }
             catch (System.Exception ex)
             {
