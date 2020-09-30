@@ -12,10 +12,33 @@
             C.QQ.SendTempMsg(G.major, qq, msg);
         }
 
-        internal static void Major(string msg) => Group(G.major, msg);
-        internal static void Si(string msg) => Group(G.si, msg);
-        internal static void Test(string msg) => Group(G.test, msg);
-        internal static void IDE(string msg) => Group(G.iDE, msg);
+        internal static void Major(string msg, bool syncToTg = true)
+        {
+            Group(G.major, msg);
+            if(syncToTg)
+                TG.Major(msg);
+        }
+
+        internal static void Si(string msg, bool syncToTg = true)
+        {
+            Group(G.si, msg);
+            if(syncToTg)
+                TG.Si(msg);
+        }
+
+        internal static void Test(string msg, bool syncToTg = true)
+        {
+            Group(G.test, msg);
+            if(syncToTg)
+                TG.Test(msg);
+        }
+
+        internal static void IDE(string msg, bool syncToTg = true)
+        {
+            Group(G.iDE, msg);
+            if(syncToTg)
+                TG.IDE(msg);
+        }
 
         /// <summary>
         /// 少用这个

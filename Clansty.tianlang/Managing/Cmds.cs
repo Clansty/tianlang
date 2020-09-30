@@ -316,12 +316,10 @@ namespace Clansty.tianlang
                         if (isMajor)
                         {
                             S.Major(toSend);
-                            S.TG.Major(toSend);
                         }
                         else
                         {
                             S.Si(toSend);
-                            S.TG.Si(toSend);
                         }
 
                         return;
@@ -333,12 +331,10 @@ namespace Clansty.tianlang
                         if (isMajor)
                         {
                             S.Major(toSend);
-                            S.TG.Major(toSend);
                         }
                         else
                         {
                             S.Si(toSend);
-                            S.TG.Si(toSend);
                         }
 
                         return;
@@ -352,12 +348,10 @@ namespace Clansty.tianlang
                         if (isMajor)
                         {
                             S.Major(toSend);
-                            S.TG.Major(toSend);
                         }
                         else
                         {
                             S.Si(toSend);
-                            S.TG.Si(toSend);
                         }
 
                         return;
@@ -382,11 +376,11 @@ namespace Clansty.tianlang
                             comb += line;
                             if (isMajor)
                             {
-                                S.Major(comb);
+                                S.Major(comb, false);
                             }
                             else
                             {
-                                S.Si(comb);
+                                S.Si(comb, false);
                             }
 
                             Thread.Sleep(500);
@@ -404,11 +398,11 @@ namespace Clansty.tianlang
                     if (comb.Trim() != "")
                         if (isMajor)
                         {
-                            S.Major(comb);
+                            S.Major(comb, false);
                         }
                         else
                         {
-                            S.Si(comb);
+                            S.Si(comb, false);
                         }
                 }
                 else if (isMajor)
@@ -422,12 +416,10 @@ namespace Clansty.tianlang
                 if (isMajor)
                 {
                     S.Major(toSend);
-                    S.TG.Major(toSend);
                 }
                 else
                 {
                     S.Si(toSend);
-                    S.TG.Si(toSend);
                 }
             }
         }
