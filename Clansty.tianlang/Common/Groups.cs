@@ -16,6 +16,8 @@ namespace Clansty.tianlang
         internal const long g2020 = 1132458399;
         internal const long parents = 1034335441;
         internal const long parentsFwd = 654690796;
+        internal const long dorm = 543652326;
+
         public static readonly Dictionary<long, long> Map = new Dictionary<long, long>()
         {
             [iDE] = TG.iDE,
@@ -23,7 +25,9 @@ namespace Clansty.tianlang
             [TG.test] = test,
             [TG.iDE] = iDE,
             [si] = TG.si,
-            [TG.si] = si
+            [TG.si] = si,
+            [TG.dorm] = dorm,
+            [dorm] = TG.dorm
         };
 
         public static class TG
@@ -32,6 +36,7 @@ namespace Clansty.tianlang
             internal const long test = -346751886;
             internal const long si = -1001198326304;
             internal const long major = -1001414122709;
+            internal const long dorm = -389685119;
         }
     }
 }
