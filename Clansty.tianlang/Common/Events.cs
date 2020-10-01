@@ -12,17 +12,6 @@ namespace Clansty.tianlang
         IGroupJoinRequestHandler,
         IGroupAddMemberHandler
     {
-        readonly string[] botCodes =
-        {
-            "[Audio",
-            "[file",
-            "[redpack",
-            "{\"app\":",
-            "[bigFace",
-            "[Graffiti",
-            "[picShow"
-        };
-
         public void OnTempMsg(TempMsgArgs e)
         {
             OnPrivateMsg(new PrivateMsgArgs()
@@ -108,57 +97,8 @@ namespace Clansty.tianlang
 
         public void OnGroupMsg(GroupMsgArgs e)
         {
-            #region start Q2tg
-
-            if (G.Map.ContainsKey(e.FromGroup))
-            {
-
-
-                var msg = e.Msg.Trim();
-                var from = Utf.Decode(e.FromCard);
-
-                if (msg.StartsWith("[Reply"))
-                    msg = msg.GetRight("]").Trim();
-                if (msg.StartsWith("<?xml") || msg.StartsWith("链接<?xml"))
-                {
-                    if (msg.Contains("url=\""))
-                    {
-                        msg = msg.Between("url=\"", "\"");
-                    }
-                    else return;
-                }
-
-                if (msg.Contains("<?xml"))
-                    msg = msg.GetLeft("<?xml");
-
-                foreach (var i in botCodes)
-                {
-                    if (msg.StartsWith(i))
-                        return;
-                }
-
-                var pic = new Regex(@"\[pic,hash=\w+\]");
-                if (pic.IsMatch(msg))
-                {
-                    var hash = pic.Match(msg).Groups[0].Value;
-                    var purl = C.QQ.GetPicUrl(hash, e.FromGroup);
-                    msg = pic.Replace(msg, "");
-                    msg = msg.Trim(' ', '\r', '\n', '\t');
-                    if (!string.IsNullOrEmpty(msg))
-                        msg = "\n" + Utf.Decode(msg);
-                    C.TG.SendPhotoAsync(G.Map[e.FromGroup],
-                        purl.Result,
-                        from + ":" + msg);
-                }
-                else
-                {
-                    C.TG.SendTextMessageAsync(G.Map[e.FromGroup],
-                        from + ":\n" + Utf.Decode(msg));
-                }
-            }
-
-            #endregion
-
+            Q2Tg.NewGroupMsg(e);
+            
             if (e.Msg.StartsWith("点歌"))
                 NetEase.Request(e);
             if (e.FromGroup == G.si)
@@ -172,7 +112,7 @@ namespace Clansty.tianlang
                 Repeater.Enter(e.Msg);
             }
 
-            if (e.FromGroup == G.parents || e.FromGroupName.Contains("2020级软合家长群"))
+            if (e.FromGroup == G.parents)
             {
                 C.WriteLn(e.FromCard + ":\n" + e.Msg);
                 S.Group(G.parentsFwd, e.FromCard + ":\n" + e.Msg);
