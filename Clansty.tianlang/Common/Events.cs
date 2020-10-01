@@ -160,6 +160,8 @@ namespace Clansty.tianlang
                 var msg = e.Msg.Contains("答案：")
                     ? e.Msg.GetRight("答案：").Trim()
                     : e.Msg;
+                if(msg.Contains('['))
+                    msg = msg.GetLeft("[");
                 var u = new User(e.FromQQ);
                 C.Write("有人 ", ConsoleColor.DarkCyan);
                 C.Write(e.FromQQ, ConsoleColor.Cyan);
