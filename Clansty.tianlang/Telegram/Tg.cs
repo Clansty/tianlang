@@ -39,6 +39,9 @@ namespace Clansty.tianlang
                             $"用户 ID: {e.Message.From.Id}");
                         return;
                     case "/start":
+                        if (e.Message.From.Id != e.Message.Chat.Id) return;
+                        C.TG.SendTextMessageAsync(e.Message.Chat,
+                            "请发送绑定码");
                         return;
                     case "bind":
                         TgBinding.Bind(e);
@@ -75,7 +78,12 @@ namespace Clansty.tianlang
 
                 if (e.Message.Chat.Id == G.TG.major)
                 {
-                    Cmds.Enter(e.Message.Text.GetRight("sudo "), 839827911, true);
+                    if (e.Message.Text.StartsWith("sudo "))
+                    {
+                        var rows = Db.users.Select($"tg={e.Message.From.Id}");
+                        var u = new User(rows[0]);
+                        Cmds.Enter(e.Message.Text.GetRight("sudo "), u.Uin, true);
+                    }
                 }
             }
 
