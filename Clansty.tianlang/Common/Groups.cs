@@ -27,7 +27,9 @@ namespace Clansty.tianlang
             [si] = TG.si,
             [TG.si] = si,
             [TG.dorm] = dorm,
-            [dorm] = TG.dorm
+            [dorm] = TG.dorm,
+            [major] = TG.major,
+            [TG.major] = major
         };
 
         public static class TG
