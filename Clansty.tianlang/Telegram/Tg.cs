@@ -41,40 +41,7 @@ namespace Clansty.tianlang
                     case "/start":
                         return;
                     case "/bind":
-                        if (e.Message.From.Id != e.Message.Chat.Id) return;
-                        action = e.Message.Text.Split(' ')[1];
-                        if (action.Contains("!"))
-                            action = action.GetLeft("!");
-                        if (!long.TryParse(action, NumberStyles.HexNumber, null, out var bindCode))
-                        {
-                            C.TG.SendTextMessageAsync(e.Message.Chat,
-                                "绑定码不正确");
-                            return;
-                        }
-
-                        if (bindCode > -1)
-                        {
-                            C.TG.SendTextMessageAsync(e.Message.Chat,
-                                "绑定码不正确");
-                            return;
-                        }
-
-                        var rows = Db.users.Select($"tg={bindCode}");
-                        if (rows.Length != 1)
-                        {
-                            C.TG.SendTextMessageAsync(e.Message.Chat,
-                                "绑定码不正确");
-                            return;
-                        }
-
-                        var u = new User(rows[0]);
-                        u.TgUid = e.Message.From.Id;
-                        C.TG.UnbanChatMemberAsync(G.TG.major, e.Message.From.Id);
-                        S.Private(u, $"你已经与 Telegram 账号 {e.Message.From.FirstName} 绑定成功");
-                        C.TG.SendTextMessageAsync(e.Message.Chat,
-                            $"你的 Telegram 与 {u.ProperNamecard}({u.Uin})绑定成功\n" +
-                            "点击链接加入大群:\n" +
-                            C.link);
+                        TgBinding.Bind(e);
                         return;
                 }
             }
