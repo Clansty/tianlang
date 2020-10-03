@@ -8,6 +8,18 @@ namespace Clansty.tianlang
         internal const string Token = "712657902:AAG4eachKPVtfZeLpeR-8lAbDVy_6AMwASg";
         internal static async void OnMsg(object sender, MessageEventArgs e)
         {
+            if (e.Message.NewChatMembers != null)
+            {
+                if (e.Message.Chat.Id == G.TG.major)
+                {
+                    var rows = Db.users.Select($"tg={e.Message.From.Id}");
+                    if (rows.Length != 1)
+                    {
+                        //大群必须验证后加入
+                        C.TG.KickChatMemberAsync(G.TG.major, e.Message.From.Id);
+                    }
+                }
+            }
             if (e.Message.Text != null)
             {
                 var action = e.Message.Text.Split(' ')[0];
