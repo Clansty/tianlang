@@ -13,7 +13,8 @@ namespace Clansty.tianlang
             "{\"app\":",
             "[bigFace",
             "[Graffiti",
-            "[picShow"
+            "[picShow",
+            "[litleVideo,"
         };
 
         public static void NewGroupMsg(GroupMsgArgs e)
