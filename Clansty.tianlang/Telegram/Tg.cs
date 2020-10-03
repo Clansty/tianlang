@@ -40,7 +40,7 @@ namespace Clansty.tianlang
                         return;
                     case "/start":
                         return;
-                    case "/bind":
+                    case "bind":
                         TgBinding.Bind(e);
                         return;
                 }
