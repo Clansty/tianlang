@@ -299,7 +299,11 @@ namespace Clansty.tianlang
                 Usage = "logecho [要输出的内容]",
                 IsParamsNeeded = true,
                 Permission = UserType.powerUser,
-                Func = s => s
+                Func = s =>
+                {
+                    C.WriteLn(s);
+                    return s;
+                }
             },
         };
 
