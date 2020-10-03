@@ -292,7 +292,15 @@ namespace Clansty.tianlang
                         throw new Exception(ret.Trim(' ', '\r', '\n'));
                     return ret;
                 }
-            }
+            },
+            ["logecho"] = new GroupCommand
+            {
+                Description = "原样输出文本消息并在控制台打印",
+                Usage = "logecho [要输出的内容]",
+                IsParamsNeeded = true,
+                Permission = UserType.powerUser,
+                Func = s => s
+            },
         };
 
         internal static void Enter(string msg, long user, bool isMajor)
