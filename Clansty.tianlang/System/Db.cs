@@ -7,9 +7,9 @@ namespace Clansty.tianlang
     static class Db
     {
 #if DEBUG
-        const string connStr = "server = cdb-pi7fvpvu.cd.tencentcdb.com; user = root; database = tianlang_dev; port = 10058; password = t00rrooT";
+        const string connStr = "server = cdb-pi7fvpvu.cd.tencentcdb.com; user = root; database = tianlang_dev; port = 10058; password = gvm63Vbq9rT9uH29";
 #else
-        const string connStr = "server = cdb-pi7fvpvu.cd.tencentcdb.com; user = root; database = tianlang; port = 10058; password = t00rrooT";
+        const string connStr = "server = cdb-pi7fvpvu.cd.tencentcdb.com; user = root; database = tianlang; port = 10058; password = gvm63Vbq9rT9uH29";
 #endif
         internal static DataTable users = new DataTable();
         internal static DataTable persons = new DataTable();
