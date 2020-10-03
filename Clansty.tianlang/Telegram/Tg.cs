@@ -12,11 +12,14 @@ namespace Clansty.tianlang
             {
                 if (e.Message.Chat.Id == G.TG.major)
                 {
-                    var rows = Db.users.Select($"tg={e.Message.From.Id}");
-                    if (rows.Length != 1)
+                    foreach (var usr in e.Message.NewChatMembers)
                     {
-                        //大群必须验证后加入
-                        C.TG.KickChatMemberAsync(G.TG.major, e.Message.From.Id);
+                        var rows = Db.users.Select($"tg={usr.Id}");
+                        if (rows.Length != 1)
+                        {
+                            //大群必须验证后加入
+                            C.TG.KickChatMemberAsync(G.TG.major, usr.Id);
+                        }
                     }
                 }
             }
