@@ -19,7 +19,6 @@ namespace Clansty.tianlang
             while (Db.users.Select($"tg={bindCode}").Length > 0)
                 bindCode = (long) int.MinValue - new Random().Next(); //不重复
             u.TgUid = bindCode;
-            C.WriteLn($"/bind {bindCode:x}:\n请完整复制此条消息\n在 Telegram 中搜索\"@tianlangBot\"并发送此文本");
             S.Private(u, $"bind {bindCode:x}:\n请完整复制此条消息\n在 Telegram 中搜索\"@tianlangBot\"并发送此文本");
         }
 
