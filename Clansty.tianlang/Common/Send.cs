@@ -12,31 +12,36 @@
             C.QQ.SendTempMsg(G.major, qq, msg);
         }
 
+        internal static void Private(User u, string msg)
+        {
+            C.QQ.SendTempMsg(G.major, u.Uin, msg);
+        }
+
         internal static void Major(string msg, bool syncToTg = true)
         {
             Group(G.major, msg);
-            if(syncToTg)
+            if (syncToTg)
                 TG.Major(msg);
         }
 
         internal static void Si(string msg, bool syncToTg = true)
         {
             Group(G.si, msg);
-            if(syncToTg)
+            if (syncToTg)
                 TG.Si(msg);
         }
 
         internal static void Test(string msg, bool syncToTg = true)
         {
             Group(G.test, msg);
-            if(syncToTg)
+            if (syncToTg)
                 TG.Test(msg);
         }
 
         internal static void IDE(string msg, bool syncToTg = true)
         {
             Group(G.iDE, msg);
-            if(syncToTg)
+            if (syncToTg)
                 TG.IDE(msg);
         }
 
@@ -49,6 +54,7 @@
             {
                 C.TG.SendTextMessageAsync(id, msg);
             }
+
             internal static void Major(string msg) => Text(G.TG.major, msg);
             internal static void Si(string msg) => Text(G.TG.si, msg);
             internal static void Test(string msg) => Text(G.TG.test, msg);

@@ -27,6 +27,11 @@ namespace Clansty.tianlang
             _ = VerifyMsg;
         }
 
+        internal User(DataRow row)
+        {
+            Row = row;
+        }
+
         internal string Name
         {
             get

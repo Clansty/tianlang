@@ -93,12 +93,20 @@ namespace Clansty.tianlang
                     return;
                 }
             } // end manual name-filling handling
+            else if (e.Msg == "tg")
+            {
+                TgBinding.Init(u);
+            }
+            else if (e.Msg.StartsWith("你已经绑定了一个 Telegram 账号"))
+            {
+                TgBinding.Init(u, true);
+            }
         }
 
         public void OnGroupMsg(GroupMsgArgs e)
         {
             Q2Tg.NewGroupMsg(e);
-            
+
             if (e.Msg.StartsWith("点歌"))
                 NetEase.Request(e);
             if (e.FromGroup == G.si)
@@ -160,7 +168,7 @@ namespace Clansty.tianlang
                 var msg = e.Msg.Contains("答案：")
                     ? e.Msg.GetRight("答案：").Trim()
                     : e.Msg;
-                if(msg.Contains('['))
+                if (msg.Contains('['))
                     msg = msg.GetLeft("[");
                 var u = new User(e.FromQQ);
                 C.Write("有人 ", ConsoleColor.DarkCyan);
