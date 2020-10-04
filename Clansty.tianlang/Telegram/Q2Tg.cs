@@ -31,7 +31,7 @@ namespace Clansty.tianlang
             if (replyRegex.IsMatch(msg))
             {
                 var match = replyRegex.Match(msg);
-                var qtime = match.Groups[2].Value;
+                var qtime = match.Groups[1].Value;
                 Console.WriteLine(qtime);
                 replyIdStr = Db.qtime2tgmsgid.Get(qtime);
                 msg = replyRegex.Replace(msg, "");
