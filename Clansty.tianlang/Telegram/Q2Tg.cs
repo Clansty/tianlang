@@ -23,6 +23,8 @@ namespace Clansty.tianlang
             var msg = e.Msg.Trim();
             var from = Utf.Decode(e.FromCard);
 
+            var reply=new Regex(@"\[Reply,.+,SendTime=(\d+).*\]");
+            
             if (msg.StartsWith("[Reply"))
                 msg = msg.GetRight("]").Trim();
             if (msg.StartsWith("<?xml") || msg.StartsWith("链接<?xml"))
