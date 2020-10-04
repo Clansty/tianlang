@@ -31,9 +31,11 @@ namespace CornSDK
             listener.BeginGetContext(new AsyncCallback(GetContextCallBack), listener);
             Log("客户端初始化完成", CornLogLevel.Succeed);
         }
+
         void Log(string text, CornLogLevel level = CornLogLevel.Info) => config.logger.Log(text, level);
 
         #region HTTP 服务器辅助方法
+
         void GetContextCallBack(IAsyncResult ar)
         {
             try
@@ -48,6 +50,7 @@ namespace CornSDK
                     var msg = Encoding.Default.GetString(currentChunk).Replace("�", "");
                     HandleMsg(msg);
                 }
+
                 Response(context.Response, "");
             }
             catch
@@ -55,16 +58,18 @@ namespace CornSDK
                 // ignored
             }
         }
+
         byte[] ReadLineAsBytes(Stream SourceStream)
         {
             var resultStream = new MemoryStream();
             while (true)
             {
                 int data = SourceStream.ReadByte();
-                resultStream.WriteByte((byte)data);
+                resultStream.WriteByte((byte) data);
                 if (data <= 10)
                     break;
             }
+
             resultStream.Position = 0;
             byte[] dataBytes = new byte[resultStream.Length];
             resultStream.Read(dataBytes, 0, dataBytes.Length);
@@ -82,8 +87,13 @@ namespace CornSDK
             output.Write(buffer, 0, buffer.Length);
             output.Close();
         }
-        internal Task<string> Post(string whattodo, object body) => $"http://{config.ip}:{config.port}/{whattodo}".PostUrlEncodedAsync(body).ReceiveString();
-        internal Task<TAT> Post<TAT>(string whattodo, object body) => $"http://{config.ip}:{config.port}/{whattodo}".PostUrlEncodedAsync(body).ReceiveJson<TAT>();
+
+        internal Task<string> Post(string whattodo, object body) => $"http://{config.ip}:{config.port}/{whattodo}"
+            .PostUrlEncodedAsync(body).ReceiveString();
+
+        internal Task<TAT> Post<TAT>(string whattodo, object body) => $"http://{config.ip}:{config.port}/{whattodo}"
+            .PostUrlEncodedAsync(body).ReceiveJson<TAT>();
+
         #endregion
 
         /// <summary>
@@ -251,6 +261,7 @@ namespace CornSDK
         }
 
         #region 操作
+
         /// <summary>
         /// 发送私聊消息
         /// </summary>
@@ -263,19 +274,26 @@ namespace CornSDK
             toqq = toQQ,
             text = content
         });
+
         /// <summary>
         /// 发送群消息
         /// </summary>
         /// <param name="toGroup"></param>
         /// <param name="content"></param>
-        /// <returns></returns>
-        public Task SendGroupMsg(long toGroup, string content, bool anonymous = false) => Post("sendgroupmsg", new
+        /// <returns>time</returns>
+        public async Task<int> SendGroupMsg(long toGroup, string content, bool anonymous = false)
         {
-            fromqq = config.selfQQ,
-            togroup = toGroup,
-            text = content,
-            anonymous = anonymous.ToString().ToLower()
-        });
+            string ret = (await Post<dynamic>("sendgroupmsg", new
+            {
+                fromqq = config.selfQQ,
+                togroup = toGroup,
+                text = content,
+                anonymous = anonymous.ToString().ToLower()
+            })).ret;
+            var jobj = JObject.Parse(ret);
+            return jobj.Value<int>("time");
+        }
+
         /// <summary>
         /// 发送群临时消息
         /// </summary>
@@ -290,6 +308,7 @@ namespace CornSDK
             toqq = toQQ,
             text = content
         });
+
         /// <summary>
         /// 添加好友
         /// </summary>
@@ -303,6 +322,7 @@ namespace CornSDK
             text = content,
             remark = remark
         });
+
         /// <summary>
         /// 添加群
         /// </summary>
@@ -315,6 +335,7 @@ namespace CornSDK
             togroup = toGroup,
             text = content
         });
+
         /// <summary>
         /// 删好友
         /// </summary>
@@ -325,6 +346,7 @@ namespace CornSDK
             fromqq = config.selfQQ,
             toqq = toQQ,
         });
+
         /// <summary>
         /// 屏蔽好友
         /// </summary>
@@ -336,6 +358,7 @@ namespace CornSDK
             toqq = toQQ,
             ignore = "true"
         });
+
         /// <summary>
         /// 解除屏蔽好友
         /// </summary>
@@ -347,6 +370,7 @@ namespace CornSDK
             toqq = toQQ,
             ignore = "false"
         });
+
         /// <summary>
         /// 特别关心
         /// </summary>
@@ -358,6 +382,7 @@ namespace CornSDK
             toqq = toQQ,
             care = "true"
         });
+
         /// <summary>
         /// 解除特别关心
         /// </summary>
@@ -369,6 +394,7 @@ namespace CornSDK
             toqq = toQQ,
             care = "false"
         });
+
         /// <summary>
         /// 发送私聊 JSON 卡片
         /// </summary>
@@ -381,6 +407,7 @@ namespace CornSDK
             toqq = toQQ,
             json = content
         });
+
         /// <summary>
         /// 发送群聊 JSON 卡片
         /// </summary>
@@ -388,13 +415,15 @@ namespace CornSDK
         /// <param name="content"></param>
         /// <param name="anonymous"></param>
         /// <returns></returns>
-        public Task SendGroupJsonMsg(long toGroup, string content, bool anonymous = false) => Post("sendgroupjsonmsg", new
-        {
-            fromqq = config.selfQQ,
-            togroup = toGroup,
-            json = content,
-            anonymous = anonymous.ToString().ToLower()
-        });
+        public Task SendGroupJsonMsg(long toGroup, string content, bool anonymous = false) => Post("sendgroupjsonmsg",
+            new
+            {
+                fromqq = config.selfQQ,
+                togroup = toGroup,
+                json = content,
+                anonymous = anonymous.ToString().ToLower()
+            });
+
         //TODO sendprivatepic sendgrouppic sendprivateaudio sendgroupaudio uploadfacepic uploadgroupfacepic
         /// <summary>
         /// 设置群名片
@@ -410,6 +439,7 @@ namespace CornSDK
             toqq = toQQ,
             card = content
         });
+
         /// <summary>
         /// 群踢人
         /// </summary>
@@ -417,13 +447,14 @@ namespace CornSDK
         /// <param name="toQQ"></param>
         /// <param name="ignoreAddGRequest">拒绝再加群申请</param>
         /// <returns></returns>
-        public Task GroupKickMember(long toGroup, long toQQ, bool ignoreAddGRequest = false) => Post("kickgroupmember", new
-        {
-            fromqq = config.selfQQ,
-            group = toGroup,
-            toqq = toQQ,
-            ignoreaddgrequest = ignoreAddGRequest.ToString().ToLower()
-        });
+        public Task GroupKickMember(long toGroup, long toQQ, bool ignoreAddGRequest = false) => Post("kickgroupmember",
+            new
+            {
+                fromqq = config.selfQQ,
+                group = toGroup,
+                toqq = toQQ,
+                ignoreaddgrequest = ignoreAddGRequest.ToString().ToLower()
+            });
 
         /// <summary>
         /// 取昵称
@@ -437,6 +468,7 @@ namespace CornSDK
             toqq = toQQ,
             fromcache = fromcache.ToString().ToLower()
         })).ret;
+
         /// <summary>
         /// 取群名
         /// </summary>
@@ -446,16 +478,19 @@ namespace CornSDK
         {
             group
         })).ret;
+
         /// <summary>
         /// 取群成员
         /// </summary>
         /// <param name="group"></param>
         /// <returns></returns>
-        public async Task<List<GroupMember>> GetGroupMembers(long group) => (await Post<GroupMembers>("getgroupmemberlist", new
-        {
-            logonqq = config.selfQQ,
-            group
-        })).List;
+        public async Task<List<GroupMember>> GetGroupMembers(long group) => (await Post<GroupMembers>(
+            "getgroupmemberlist", new
+            {
+                logonqq = config.selfQQ,
+                group
+            })).List;
+
         /// <summary>
         /// 取群名片
         /// </summary>
@@ -463,12 +498,14 @@ namespace CornSDK
         /// <param name="toQQ"></param>
         /// <param name="fromcache"></param>
         /// <returns></returns>
-        public async Task<string> GetGroupCard(long group, long toQQ, bool fromcache = false) => (await Post<dynamic>("getgroupcard", new
-        {
-            fromqq = config.selfQQ,
-            toqq = toQQ,
-            group
-        })).ret;
+        public async Task<string> GetGroupCard(long group, long toQQ, bool fromcache = false) => (await Post<dynamic>(
+            "getgroupcard", new
+            {
+                fromqq = config.selfQQ,
+                toqq = toQQ,
+                group
+            })).ret;
+
         /// <summary>
         /// 取好友
         /// </summary>
@@ -477,6 +514,7 @@ namespace CornSDK
         {
             logonqq = config.selfQQ,
         })).List;
+
         /// <summary>
         /// 取加入的群
         /// </summary>
@@ -485,6 +523,7 @@ namespace CornSDK
         {
             logonqq = config.selfQQ,
         })).List;
+
         /// <summary>
         /// 上传群图片，获得一个 hash 到时候当成图片发
         /// </summary>
@@ -496,6 +535,7 @@ namespace CornSDK
             fromtype = 2,
             url
         })).ret;
+
         /// <summary>
         /// 上传私聊图片，获得一个 hash 到时候当成图片发
         /// </summary>
@@ -507,6 +547,7 @@ namespace CornSDK
             fromtype = 2,
             url
         })).ret;
+
         public async Task<string> GetPicUrl(string pic, long group = 0) => (await Post<dynamic>("getphotourl", new
         {
             group,
@@ -515,6 +556,7 @@ namespace CornSDK
         })).ret;
 
         //TODO rest
+
         #endregion
     }
 }
