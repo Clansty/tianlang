@@ -32,13 +32,11 @@ namespace Clansty.tianlang
             {
                 var match = replyRegex.Match(msg);
                 var qtime = match.Groups[1].Value;
-                Console.WriteLine(qtime);
                 replyIdStr = Db.qtime2tgmsgid.Get(qtime);
                 msg = replyRegex.Replace(msg, "");
             }
 
             var replyId = 0;
-            Console.WriteLine(replyIdStr);
             if (!string.IsNullOrWhiteSpace(replyIdStr))
                 replyId = int.Parse(replyIdStr);
 
@@ -60,6 +58,8 @@ namespace Clansty.tianlang
                     return;
             }
 
+            msg = msg.Trim();
+            
             var picRegex = new Regex(@"\[pic,hash=\w+\]");
             Message message;
             if (picRegex.IsMatch(msg))

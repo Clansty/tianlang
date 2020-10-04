@@ -1,6 +1,9 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using System.Linq;
+using Newtonsoft.Json.Converters;
 using Telegram.Bot.Args;
+using Telegram.Bot.Helpers;
 
 namespace Clansty.tianlang
 {
@@ -65,6 +68,29 @@ namespace Clansty.tianlang
 
                 var u = new User(usrs[0]);
                 sdr = u.ProperNamecard;
+            }
+
+            if (e.Message.ReplyToMessage != null)
+            {
+                var rmsg = e.Message.ReplyToMessage;
+                if (rmsg.From.Id == C.tguid)
+                {
+                    if (rmsg.Text != null)
+                        sdr =
+                            $"[Reply,Content={rmsg.Text}," +
+                            $"SendQQID={C.self},Req=0,Random=0,SendTime={DateTimeOffset.Now.ToUnixTimeSeconds()}] {sdr}";
+                    else if (rmsg.Caption != null)
+                        sdr =
+                            $"[Reply,Content={rmsg.Caption} [图片]," +
+                            $"SendQQID={C.self},Req=0,Random=0,SendTime={DateTimeOffset.Now.ToUnixTimeSeconds()}] {sdr}";
+                }
+                else
+                {
+                    if (rmsg.Text != null)
+                        sdr =
+                            $"[Reply,Content={rmsg.From.FirstName}:\n{rmsg.Text}," +
+                            $"SendQQID={C.self},Req=0,Random=0,SendTime={DateTimeOffset.Now.ToUnixTimeSeconds()}] {sdr}";
+                }
             }
 
             if (e.Message.Text != null)
