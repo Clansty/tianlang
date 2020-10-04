@@ -18,6 +18,7 @@ namespace Clansty.tianlang
         internal const long parentsFwd = 654690796;
         internal const long dorm = 543652326;
         internal const long ddf = 907283835;
+        internal const long wxb = 904645614;
 
         public static readonly Dictionary<long, long> Map = new Dictionary<long, long>()
         {
@@ -32,7 +33,9 @@ namespace Clansty.tianlang
             [major] = TG.major,
             [TG.major] = major,
             [ddf] = TG.ddf,
-            [TG.ddf] = ddf
+            [TG.ddf] = ddf,
+            [wxb] = TG.wxb,
+            [TG.wxb] = wxb
         };
 
         public static class TG
@@ -43,6 +46,7 @@ namespace Clansty.tianlang
             internal const long major = -1001414122709;
             internal const long dorm = -1001499507096;
             internal const long ddf = -1001225767506;
+            internal const long wxb = -1001311008059;
         }
     }
 }
