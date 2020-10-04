@@ -51,6 +51,7 @@ namespace Clansty.tianlang
 
             //规则转发
             if (!G.Map.ContainsKey(e.Message.Chat.Id)) return;
+            long qtime;
             var sdr = e.Message.From.FirstName;
             if (e.Message.Chat.Id == G.TG.major)
             {
@@ -69,9 +70,10 @@ namespace Clansty.tianlang
             if (e.Message.Text != null)
             {
                 //文本转发 tg2q
-                C.QQ.SendGroupMsg(G.Map[e.Message.Chat.Id],
+                qtime = await C.QQ.SendGroupMsg(G.Map[e.Message.Chat.Id],
                     sdr + ":\n" +
                     Utf.Encode(e.Message.Text));
+                Db.qtime2tgmsgid.Put(qtime.ToString(), e.Message.MessageId.ToString());
                 //命令
                 if (e.Message.Chat.Id == G.TG.si)
                     Cmds.Enter(e.Message.Text, 839827911, false);
@@ -111,7 +113,8 @@ namespace Clansty.tianlang
 
             tos = Utf.Encode(tos);
             tos += hash;
-            C.QQ.SendGroupMsg(targ, tos);
+            qtime = await C.QQ.SendGroupMsg(targ, tos);
+            Db.qtime2tgmsgid.Put(qtime.ToString(), e.Message.MessageId.ToString());
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Data;
+using LevelDB;
 
 namespace Clansty.tianlang
 {
@@ -13,6 +14,7 @@ namespace Clansty.tianlang
 #endif
         internal static DataTable users = new DataTable();
         internal static DataTable persons = new DataTable();
+        internal static DB qtime2tgmsgid = null;
         private static MySqlDataAdapter daUsers = null;
         internal static void Init()
         {
@@ -25,6 +27,8 @@ namespace Clansty.tianlang
             daPersons.FillAsync(persons);
             users.PrimaryKey = new DataColumn[] { users.Columns[0] };
             persons.PrimaryKey = new DataColumn[] { persons.Columns[0] };
+            var options = new Options { CreateIfMissing = true };
+            qtime2tgmsgid = new DB(options, "/srv/lw/ldb/qtime2tgmsgid");
         }
         internal static void Commit()
         {

@@ -159,7 +159,8 @@ namespace CornSDK
                         FromCard = gm.FromQQ.Card,
                         FromTitle = gm.FromQQ.SpecTitle,
                         Msg = gm.Msg.Text,
-                        ReplyMsg = gm.Msg.Text_Reply
+                        ReplyMsg = gm.Msg.Text_Reply,
+                        Time = gm.TimeStamp.Send
                     };
                     config.groupMsgHandler.OnGroupMsg(args);
                 }
@@ -281,7 +282,7 @@ namespace CornSDK
         /// <param name="toGroup"></param>
         /// <param name="content"></param>
         /// <returns>time</returns>
-        public async Task<int> SendGroupMsg(long toGroup, string content, bool anonymous = false)
+        public async Task<long> SendGroupMsg(long toGroup, string content, bool anonymous = false)
         {
             string ret = (await Post<dynamic>("sendgroupmsg", new
             {
@@ -291,7 +292,7 @@ namespace CornSDK
                 anonymous = anonymous.ToString().ToLower()
             })).ret;
             var jobj = JObject.Parse(ret);
-            return jobj.Value<int>("time");
+            return jobj.Value<long>("time");
         }
 
         /// <summary>

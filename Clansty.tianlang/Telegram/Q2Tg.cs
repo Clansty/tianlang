@@ -1,5 +1,7 @@
 ﻿using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using CornSDK;
+using Telegram.Bot.Types;
 
 namespace Clansty.tianlang
 {
@@ -17,14 +19,14 @@ namespace Clansty.tianlang
             "[litleVideo,"
         };
 
-        public static void NewGroupMsg(GroupMsgArgs e)
+        public static async Task NewGroupMsg(GroupMsgArgs e)
         {
             if (!G.Map.ContainsKey(e.FromGroup)) return;
             var msg = e.Msg.Trim();
             var from = Utf.Decode(e.FromCard);
 
-            var reply=new Regex(@"\[Reply,.+,SendTime=(\d+).*\]");
-            
+            var reply = new Regex(@"\[Reply,.+,SendTime=(\d+).*\]");
+
             if (msg.StartsWith("[Reply"))
                 msg = msg.GetRight("]").Trim();
             if (msg.StartsWith("<?xml") || msg.StartsWith("链接<?xml"))
@@ -46,6 +48,7 @@ namespace Clansty.tianlang
             }
 
             var pic = new Regex(@"\[pic,hash=\w+\]");
+            Message message;
             if (pic.IsMatch(msg))
             {
                 var hash = pic.Match(msg).Groups[0].Value;
@@ -54,15 +57,19 @@ namespace Clansty.tianlang
                 msg = msg.Trim(' ', '\r', '\n', '\t');
                 if (!string.IsNullOrEmpty(msg))
                     msg = "\n" + Utf.Decode(msg);
-                C.TG.SendPhotoAsync(G.Map[e.FromGroup],
+                message = await C.TG.SendPhotoAsync(G.Map[e.FromGroup],
                     purl.Result,
                     from + ":" + msg);
             }
             else
             {
-                C.TG.SendTextMessageAsync(G.Map[e.FromGroup],
+                message = await C.TG.SendTextMessageAsync(G.Map[e.FromGroup],
                     from + ":\n" + Utf.Decode(msg));
             }
+
+            var msgid = message.MessageId;
+            C.WriteLn($"{e.Time}->{msgid}");
+            Db.qtime2tgmsgid.Put(e.Time.ToString(), msgid.ToString());
         }
     }
 }

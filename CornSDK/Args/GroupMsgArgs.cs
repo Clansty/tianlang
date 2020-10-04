@@ -10,6 +10,7 @@ namespace CornSDK
 
         public long FromQQ { get; internal set; }
         public long FromGroup { get; internal set; }
+        public long Time { get; internal set; }
         public string FromGroupName { get; internal set; }
         public string FromCard { get; internal set; }
         public string FromTitle { get; internal set; }
