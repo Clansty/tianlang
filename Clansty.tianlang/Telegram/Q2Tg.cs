@@ -25,10 +25,20 @@ namespace Clansty.tianlang
             var msg = e.Msg.Trim();
             var from = Utf.Decode(e.FromCard);
 
-            var reply = new Regex(@"\[Reply,.+,SendTime=(\d+).*\]");
+            var replyRegex = new Regex(@"\[Reply,.+,SendTime=(\d+).*\]");
+            string replyIdStr = null;
+            if (replyRegex.IsMatch(msg))
+            {
+                var match = replyRegex.Match(msg);
+                var qtime = match.Groups[2].Value;
+                replyIdStr = Db.qtime2tgmsgid.Get(qtime);
+                replyRegex.Replace(msg, "");
+            }
 
-            if (msg.StartsWith("[Reply"))
-                msg = msg.GetRight("]").Trim();
+            var replyId = 0;
+            if (!string.IsNullOrWhiteSpace(replyIdStr))
+                replyId = int.Parse(replyIdStr);
+
             if (msg.StartsWith("<?xml") || msg.StartsWith("链接<?xml"))
             {
                 if (msg.Contains("url=\""))
@@ -47,24 +57,26 @@ namespace Clansty.tianlang
                     return;
             }
 
-            var pic = new Regex(@"\[pic,hash=\w+\]");
+            var picRegex = new Regex(@"\[pic,hash=\w+\]");
             Message message;
-            if (pic.IsMatch(msg))
+            if (picRegex.IsMatch(msg))
             {
-                var hash = pic.Match(msg).Groups[0].Value;
+                var hash = picRegex.Match(msg).Groups[0].Value;
                 var purl = C.QQ.GetPicUrl(hash, e.FromGroup);
-                msg = pic.Replace(msg, "");
+                msg = picRegex.Replace(msg, "");
                 msg = msg.Trim(' ', '\r', '\n', '\t');
                 if (!string.IsNullOrEmpty(msg))
                     msg = "\n" + Utf.Decode(msg);
                 message = await C.TG.SendPhotoAsync(G.Map[e.FromGroup],
                     purl.Result,
-                    from + ":" + msg);
+                    from + ":" + msg,
+                    replyToMessageId: replyId);
             }
             else
             {
                 message = await C.TG.SendTextMessageAsync(G.Map[e.FromGroup],
-                    from + ":\n" + Utf.Decode(msg));
+                    from + ":\n" + Utf.Decode(msg),
+                    replyToMessageId: replyId);
             }
 
             var msgid = message.MessageId;
