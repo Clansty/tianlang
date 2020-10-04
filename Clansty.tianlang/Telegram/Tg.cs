@@ -78,18 +78,18 @@ namespace Clansty.tianlang
                     if (rmsg.Text != null)
                         sdr =
                             $"[Reply,Content={Utf.Encode(rmsg.Text)}," +
-                            $"SendQQID={C.self},Req=0,Random=0,SendTime={DateTimeOffset.Now.ToUnixTimeSeconds()}] {sdr}";
+                            $"SendQQID={C.self},Req=0,Random=0,SendTime={DateTimeOffset.Now.ToUnixTimeSeconds()}]{sdr}";
                     else if (rmsg.Caption != null)
                         sdr =
-                            $"[Reply,Content={Utf.Encode(rmsg.Caption)} [图片]," +
-                            $"SendQQID={C.self},Req=0,Random=0,SendTime={DateTimeOffset.Now.ToUnixTimeSeconds()}] {sdr}";
+                            $"[Reply,Content={Utf.Encode(rmsg.Caption)}\\u56fe\\u7247," +
+                            $"SendQQID={C.self},Req=0,Random=0,SendTime={DateTimeOffset.Now.ToUnixTimeSeconds()}]{sdr}";
                 }
                 else
                 {
                     if (rmsg.Text != null)
                         sdr =
                             $"[Reply,Content={Utf.Encode(rmsg.From.FirstName)}:\\n{Utf.Encode(rmsg.Text)}," +
-                            $"SendQQID={C.self},Req=0,Random=0,SendTime={DateTimeOffset.Now.ToUnixTimeSeconds()}] {sdr}";
+                            $"SendQQID={C.self},Req=0,Random=0,SendTime={DateTimeOffset.Now.ToUnixTimeSeconds()}]{sdr}";
                 }
             }
 

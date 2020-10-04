@@ -7,7 +7,7 @@ namespace Clansty.tianlang
     {
         public static string Encode(string s)
         {
-            var reUnicodeChar = new Regex(@"[^\u0000-\u00ff]", RegexOptions.Compiled);
+            var reUnicodeChar = new Regex(@".", RegexOptions.Compiled);
             return reUnicodeChar.Replace(s, m => string.Format(@"\u{0:x4}", (short) m.Value[0]));
         }
 
