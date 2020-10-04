@@ -76,20 +76,20 @@ namespace Clansty.tianlang
                 if (rmsg.From.Id == C.tguid)
                 {
                     if (rmsg.Text != null)
-                        sdr =
-                            $"[Reply,Content={Utf.Encode(rmsg.Text)}," +
-                            $"SendQQID={C.self},Req=0,Random=0,SendTime={DateTimeOffset.Now.ToUnixTimeSeconds()}]{sdr}";
+                        sdr = $"「{rmsg.Text}」\n{sdr}";
                     else if (rmsg.Caption != null)
-                        sdr =
-                            $"[Reply,Content={Utf.Encode(rmsg.Caption)}\\u56fe\\u7247," +
-                            $"SendQQID={C.self},Req=0,Random=0,SendTime={DateTimeOffset.Now.ToUnixTimeSeconds()}]{sdr}";
+                        sdr = $"「{rmsg.Caption}\n[图片]」\n{sdr}";
                 }
                 else
                 {
                     if (rmsg.Text != null)
-                        sdr =
-                            $"[Reply,Content={Utf.Encode(rmsg.From.FirstName)}:\\n{Utf.Encode(rmsg.Text)}," +
-                            $"SendQQID={C.self},Req=0,Random=0,SendTime={DateTimeOffset.Now.ToUnixTimeSeconds()}]{sdr}";
+                        sdr = $"「{rmsg.From.FirstName}:\n{rmsg.Text}」\n{sdr}";
+                    else if (rmsg.Caption != null)
+                        sdr = $"「{rmsg.From.FirstName}:\n{rmsg.Caption}\n[图片]」\n{sdr}";
+                    else if (rmsg.Sticker != null)
+                        sdr = $"「{rmsg.From.FirstName}:\n[表情]」\n{sdr}";
+                    else if (rmsg.Photo != null)
+                        sdr = $"「{rmsg.From.FirstName}:\n[图片]」\n{sdr}";
                 }
             }
 
