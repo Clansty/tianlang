@@ -35,7 +35,7 @@ namespace Clansty.tianlang
         public static class TG
         {
             internal const long iDE = -1001218396541;
-            internal const long test = -346751886;
+            internal const long test = -1001476579335;
             internal const long si = -1001198326304;
             internal const long major = -1001414122709;
             internal const long dorm = -1001499507096;
