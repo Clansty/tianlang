@@ -12,7 +12,7 @@ namespace Clansty.tianlang
         {
             var reply = new Regex(@"\[Reply,.+,SendTime=(\d+).*\]");
             var sample =
-                "[Reply,Content=[分享]Depression Questionnaire,SendQQID=2930491949,Req=221679,Random=0,SendTime=1601777125]";
+                "[Reply,Content=Clansty: 测试一下回复,SendQQID=1980853671,Req=5489,Random=72057595639747560,SendTime=1601795347] b";
             var a = reply.Match(sample);
 
         }

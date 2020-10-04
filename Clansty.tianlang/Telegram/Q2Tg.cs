@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using CornSDK;
 using Telegram.Bot.Types;
@@ -31,11 +32,13 @@ namespace Clansty.tianlang
             {
                 var match = replyRegex.Match(msg);
                 var qtime = match.Groups[2].Value;
+                Console.WriteLine(qtime);
                 replyIdStr = Db.qtime2tgmsgid.Get(qtime);
-                replyRegex.Replace(msg, "");
+                msg = replyRegex.Replace(msg, "");
             }
 
             var replyId = 0;
+            Console.WriteLine(replyIdStr);
             if (!string.IsNullOrWhiteSpace(replyIdStr))
                 replyId = int.Parse(replyIdStr);
 
@@ -80,7 +83,6 @@ namespace Clansty.tianlang
             }
 
             var msgid = message.MessageId;
-            C.WriteLn($"{e.Time}->{msgid}");
             Db.qtime2tgmsgid.Put(e.Time.ToString(), msgid.ToString());
         }
     }
