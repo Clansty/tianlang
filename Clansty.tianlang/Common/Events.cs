@@ -122,7 +122,6 @@ namespace Clansty.tianlang
 
             if (e.FromGroup == G.parents)
             {
-                C.WriteLn(e.FromCard + ":\n" + e.Msg);
                 S.Group(G.parentsFwd, e.FromCard + ":\n" + e.Msg);
             }
         }

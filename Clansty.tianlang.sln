@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Clansty.tianlang", "Clansty.tianlang\Clansty.tianlang.csproj", "{D3B49BF3-E55A-4E3E-9652-DDCCB11C4653}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CornSDK", "CornSDK\CornSDK.csproj", "{A4E54639-1B6F-44AB-9314-FB4E8C3F616B}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -17,10 +15,6 @@ Global
 		{D3B49BF3-E55A-4E3E-9652-DDCCB11C4653}.Debug|x64.Build.0 = Debug|x64
 		{D3B49BF3-E55A-4E3E-9652-DDCCB11C4653}.Release|x64.ActiveCfg = Release|x64
 		{D3B49BF3-E55A-4E3E-9652-DDCCB11C4653}.Release|x64.Build.0 = Release|x64
-		{A4E54639-1B6F-44AB-9314-FB4E8C3F616B}.Debug|x64.ActiveCfg = Debug|x64
-		{A4E54639-1B6F-44AB-9314-FB4E8C3F616B}.Debug|x64.Build.0 = Debug|x64
-		{A4E54639-1B6F-44AB-9314-FB4E8C3F616B}.Release|x64.ActiveCfg = Release|x64
-		{A4E54639-1B6F-44AB-9314-FB4E8C3F616B}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
