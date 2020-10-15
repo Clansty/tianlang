@@ -95,6 +95,11 @@ namespace Clansty.tianlang
             {
                 TgBinding.Init(u, true);
             }
+            else if (e.FromQQ == 839827911 && e.Msg == "update")
+            {
+                var ret = Cmds.gcmds["update"].Func(null);
+                e.Reply(ret);
+            }
         }
 
         public void OnGroupMsg(GroupMsgArgs e)

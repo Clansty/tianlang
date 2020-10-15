@@ -49,6 +49,11 @@ namespace Clansty.tianlang
                     case "bind":
                         TgBinding.Bind(e);
                         return;
+                    case "/update":
+                        if (e.Message.Chat.Id != 351768429) return;
+                        var ret = Cmds.gcmds["update"].Func(null);
+                        C.TG.SendTextMessageAsync(e.Message.Chat, ret);
+                        return;
                 }
             }
 
