@@ -148,7 +148,7 @@ namespace Clansty.tianlang
 #if DEBUG
                 return ProperNamecard;
 #else
-                var t = C.QQ.GetGroupCard(G.major, Uin, false);
+                var t = C.QQ.GetGroupCard(G.major, Uin);
                 t.Wait();
                 return t.Result;
 #endif

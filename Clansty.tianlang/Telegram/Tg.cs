@@ -53,94 +53,98 @@ namespace Clansty.tianlang
             }
 
             //规则转发
-            if (!G.Map.ContainsKey(e.Message.Chat.Id)) return;
-            long qtime;
-            var sdr = e.Message.From.FirstName;
-            if (e.Message.Chat.Id == G.TG.major)
+            if (G.Map.ContainsKey(e.Message.Chat.Id))
             {
-                //特殊处理发信人
-                var usrs = Db.users.Select($"tg={e.Message.From.Id}");
-                if (usrs.Length != 1)
-                {
-                    C.TG.KickChatMemberAsync(G.TG.major, e.Message.From.Id);
-                    return;
-                }
-
-                var u = new User(usrs[0]);
-                sdr = u.ProperNamecard;
-            }
-
-            if (e.Message.ReplyToMessage != null)
-            {
-                var rmsg = e.Message.ReplyToMessage;
-                if (rmsg.From.Id == C.tguid)
-                {
-                    if (rmsg.Text != null)
-                        sdr = $"「{rmsg.Text}」\n{sdr}";
-                    else if (rmsg.Caption != null)
-                        sdr = $"「{rmsg.Caption}\n[图片]」\n{sdr}";
-                }
-                else
-                {
-                    if (rmsg.Text != null)
-                        sdr = $"「{rmsg.From.FirstName}:\n{rmsg.Text}」\n{sdr}";
-                    else if (rmsg.Caption != null)
-                        sdr = $"「{rmsg.From.FirstName}:\n{rmsg.Caption}\n[图片]」\n{sdr}";
-                    else if (rmsg.Sticker != null)
-                        sdr = $"「{rmsg.From.FirstName}:\n[表情]」\n{sdr}";
-                    else if (rmsg.Photo != null)
-                        sdr = $"「{rmsg.From.FirstName}:\n[图片]」\n{sdr}";
-                }
-            }
-
-            if (e.Message.Text != null)
-            {
-                //文本转发 tg2q
-                qtime = await C.QQ.SendGroupMsg(G.Map[e.Message.Chat.Id],
-                    sdr + ":\n" +
-                    Utf.Encode(e.Message.Text));
-                Db.qtime2tgmsgid.Put(qtime.ToString(), e.Message.MessageId.ToString());
-                //命令
-                if (e.Message.Chat.Id == G.TG.si)
-                    Cmds.Enter(e.Message.Text, 839827911, false);
-
+                long qtime;
+                var sdr = e.Message.From.FirstName;
                 if (e.Message.Chat.Id == G.TG.major)
                 {
-                    if (e.Message.Text.StartsWith("sudo "))
+                    //特殊处理发信人
+                    var usrs = Db.users.Select($"tg={e.Message.From.Id}");
+                    if (usrs.Length != 1)
                     {
-                        var rows = Db.users.Select($"tg={e.Message.From.Id}");
-                        var u = new User(rows[0]);
-                        Cmds.Enter(e.Message.Text.GetRight("sudo "), u.Uin, true);
+                        C.TG.KickChatMemberAsync(G.TG.major, e.Message.From.Id);
+                        return;
+                    }
+
+                    var u = new User(usrs[0]);
+                    sdr = u.ProperNamecard;
+                }
+
+                if (e.Message.ReplyToMessage != null)
+                {
+                    var rmsg = e.Message.ReplyToMessage;
+                    if (rmsg.From.Id == C.tguid)
+                    {
+                        if (rmsg.Text != null)
+                            sdr = $"「{rmsg.Text}」\n{sdr}";
+                        else if (rmsg.Caption != null)
+                            sdr = $"「{rmsg.Caption}\n[图片]」\n{sdr}";
+                    }
+                    else
+                    {
+                        if (rmsg.Text != null)
+                            sdr = $"「{rmsg.From.FirstName}:\n{rmsg.Text}」\n{sdr}";
+                        else if (rmsg.Caption != null)
+                            sdr = $"「{rmsg.From.FirstName}:\n{rmsg.Caption}\n[图片]」\n{sdr}";
+                        else if (rmsg.Sticker != null)
+                            sdr = $"「{rmsg.From.FirstName}:\n[表情]」\n{sdr}";
+                        else if (rmsg.Photo != null)
+                            sdr = $"「{rmsg.From.FirstName}:\n[图片]」\n{sdr}";
                     }
                 }
-            }
 
-            //图片转发
-            string ps = null;
-            if (e.Message.Photo != null)
-            {
-                ps = e.Message.Photo.Last().FileId;
-            }
+                if (e.Message.Text != null)
+                {
+                    //文本转发 tg2q
+                    qtime = await C.QQ.SendGroupMsg(G.Map[e.Message.Chat.Id],
+                        sdr + ":\n" +
+                        Utf.Encode(e.Message.Text));
+                    Db.qtime2tgmsgid.Put(qtime.ToString(), e.Message.MessageId.ToString());
+                    //命令
+                    if (e.Message.Chat.Id == G.TG.si)
+                        Cmds.Enter(e.Message.Text, 839827911, false);
 
-            if (e.Message.Sticker != null)
-            {
-                ps = e.Message.Sticker.FileId;
-            }
+                    if (e.Message.Chat.Id == G.TG.major)
+                    {
+                        if (e.Message.Text.StartsWith("sudo "))
+                        {
+                            var rows = Db.users.Select($"tg={e.Message.From.Id}");
+                            var u = new User(rows[0]);
+                            Cmds.Enter(e.Message.Text.GetRight("sudo "), u.Uin, true);
+                        }
+                    }
+                }
 
-            if (ps is null) return;
-            var targ = G.Map[e.Message.Chat.Id];
-            var pf = await C.TG.GetFileAsync(ps);
-            var hash = await C.QQ.UploadGroupPic(targ, $"https://api.telegram.org/file/bot{Token}/{pf.FilePath}");
-            var tos = sdr + ":\n";
-            if (!string.IsNullOrWhiteSpace(e.Message.Caption))
-            {
-                tos += e.Message.Caption + "\n";
-            }
+                //图片转发
+                string ps = null;
+                if (e.Message.Photo != null)
+                {
+                    ps = e.Message.Photo.Last().FileId;
+                }
 
-            tos = Utf.Encode(tos);
-            tos += hash;
-            qtime = await C.QQ.SendGroupMsg(targ, tos);
-            Db.qtime2tgmsgid.Put(qtime.ToString(), e.Message.MessageId.ToString());
+                if (e.Message.Sticker != null)
+                {
+                    ps = e.Message.Sticker.FileId;
+                }
+
+                if (ps is null) return;
+                var targ = G.Map[e.Message.Chat.Id];
+                var pf = await C.TG.GetFileAsync(ps);
+                var hash = await C.QQ.UploadGroupPic(targ, $"https://api.telegram.org/file/bot{Token}/{pf.FilePath}");
+                var tos = sdr + ":\n";
+                if (!string.IsNullOrWhiteSpace(e.Message.Caption))
+                {
+                    tos += e.Message.Caption + "\n";
+                }
+
+                tos = Utf.Encode(tos);
+                tos += hash;
+                qtime = await C.QQ.SendGroupMsg(targ, tos);
+                Db.qtime2tgmsgid.Put(qtime.ToString(), e.Message.MessageId.ToString());
+            }
+            
+            
         }
     }
 }

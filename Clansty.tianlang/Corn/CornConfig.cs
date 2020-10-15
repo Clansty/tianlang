@@ -1,4 +1,7 @@
-﻿namespace CornSDK
+﻿using System;
+using System.Collections.Generic;
+
+namespace CornSDK
 {
     /// <summary>
     /// 客户端配置
@@ -22,29 +25,10 @@
         /// </summary>
         public int listenPort = 8080;
         /// <summary>
-        /// 机器人 QQ 号
-        /// </summary>
-        public long selfQQ = 0;
-        /// <summary>
         /// 日志记录器
         /// </summary>
         public ICronLogger logger = new DefaultCronLogger();
-        /// <summary>
-        /// 指定处理好友消息的处理器
-        /// </summary>
-        public IFriendMsgHandler friendMsgHandler = new DoNothingHandler();
-        /// <summary>
-        /// 
-        /// </summary>
-        public ITempMsgHandler tempMsgHandler = new DoNothingHandler();
-        /// <summary>
-        /// 
-        /// </summary>
-        public IGroupMsgHandler groupMsgHandler = new DoNothingHandler();
-        public IFriendRequestHandler friendRequestHandler = new DoNothingHandler();
-        public IGroupInviteRequestHandler groupInviteRequestHandler = new DoNothingHandler();
-        public IGroupJoinRequestHandler groupJoinRequestHandler = new DoNothingHandler();
-        public IGroupAddMemberHandler groupAddMemberHandler = new DoNothingHandler();
-        public IGroupLeftMemberHandler groupLeftMemberHandler = new DoNothingHandler();
+
+        public Dictionary<long, ICornEventHandler> handlers;
     }
 }

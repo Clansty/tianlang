@@ -18,9 +18,10 @@ namespace CornSDK
         public string Msg { get; internal set; }
         internal int Type { get; set; }
         internal long Seq { get; set; }
+        internal long fromqq { private get; set; }
         public Task Accept() => Robot.Post("setgroupaddrequest", new
         {
-            fromqq = Robot.config.selfQQ,
+            fromqq,
             group = FromGroup,
             qq = FromQQ,
             seq = Seq,
@@ -29,7 +30,7 @@ namespace CornSDK
         });
         public Task Reject(string reason = "") => Robot.Post("setgroupaddrequest", new
         {
-            fromqq = Robot.config.selfQQ,
+            fromqq,
             group = FromGroup,
             qq = FromQQ,
             seq = Seq,

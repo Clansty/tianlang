@@ -7,6 +7,7 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Clansty.tianlang;
 
 namespace CornSDK
 {
@@ -111,7 +112,7 @@ namespace CornSDK
                 if (jobj.Value<string>("Type") == "PrivateMsg")
                 {
                     var pm = jobj.ToObject<PMRecv>();
-                    if (pm.LogonQQ != config.selfQQ || pm.LogonQQ == pm.FromQQ.UIN)
+                    if (!config.handlers.ContainsKey(pm.LogonQQ) || pm.LogonQQ == pm.FromQQ.UIN)
                         return;
                     switch (pm.Msg.Type)
                     {
@@ -125,7 +126,7 @@ namespace CornSDK
                                 FromNick = pm.FromQQ.NickName,
                                 Msg = pm.Msg.Text
                             };
-                            config.friendMsgHandler.OnFriendMsg(args);
+                            config.handlers[pm.LogonQQ].OnFriendMsg(args);
                             break;
                         }
                         //#消息类型_临时会话
@@ -139,7 +140,7 @@ namespace CornSDK
                                 FromNick = pm.FromQQ.NickName,
                                 Msg = pm.Msg.Text
                             };
-                            config.tempMsgHandler.OnTempMsg(args);
+                            config.handlers[pm.LogonQQ].OnTempMsg(args);
                             break;
                         }
                     }
@@ -147,7 +148,7 @@ namespace CornSDK
                 else if (jobj.Value<string>("Type") == "GroupMsg")
                 {
                     var gm = jobj.ToObject<GMRecv>();
-                    if (gm.LogonQQ != config.selfQQ || gm.LogonQQ == gm.FromQQ.UIN)
+                    if (!config.handlers.ContainsKey(gm.LogonQQ) || gm.LogonQQ == gm.FromQQ.UIN)
                         return;
                     if (gm.Msg.SubType != 134) return;
                     var args = new GroupMsgArgs()
@@ -162,12 +163,12 @@ namespace CornSDK
                         ReplyMsg = gm.Msg.Text_Reply,
                         Time = gm.TimeStamp.Send
                     };
-                    config.groupMsgHandler.OnGroupMsg(args);
+                    config.handlers[gm.LogonQQ].OnGroupMsg(args);
                 }
                 else if (jobj.Value<string>("Type") == "EventMsg")
                 {
                     var em = jobj.ToObject<EMRecv>();
-                    if (em.LogonQQ != config.selfQQ)
+                    if (!config.handlers.ContainsKey(em.LogonQQ))
                         return;
                     switch (em.Msg.Type)
                     {
@@ -180,9 +181,10 @@ namespace CornSDK
                                 FromQQ = em.FromQQ.UIN,
                                 FromNick = em.FromQQ.NickName,
                                 Msg = em.Msg.Text,
-                                Seq = em.Msg.Seq
+                                Seq = em.Msg.Seq,
+                                fromqq = em.LogonQQ
                             };
-                            config.friendRequestHandler.OnFriendRequest(args);
+                            config.handlers[em.LogonQQ].OnFriendRequest(args);
                             break;
                         }
                         //机器人被邀请加群
@@ -199,9 +201,10 @@ namespace CornSDK
                                 FromGroupName = em.FromGroup.Name,
                                 Type = 1,
                                 Msg = em.Msg.Text,
-                                Seq = em.Msg.Seq
+                                Seq = em.Msg.Seq,
+                                fromqq = em.LogonQQ
                             };
-                            config.groupInviteRequestHandler.OnGroupInviteRequest(args);
+                            config.handlers[em.LogonQQ].OnGroupInviteRequest(args);
                             break;
                         }
                         //有人申请加群
@@ -218,9 +221,10 @@ namespace CornSDK
                                 FromGroupName = em.FromGroup.Name,
                                 Type = 3,
                                 Msg = em.Msg.Text,
-                                Seq = em.Msg.Seq
+                                Seq = em.Msg.Seq,
+                                fromqq = em.LogonQQ
                             };
-                            config.groupJoinRequestHandler.OnGroupJoinRequest(args);
+                            config.handlers[em.LogonQQ].OnGroupJoinRequest(args);
                             break;
                         }
                         //群成员增加
@@ -234,7 +238,7 @@ namespace CornSDK
                                 FromGroup = em.FromGroup.GIN,
                                 FromGroupName = em.FromGroup.Name,
                             };
-                            config.groupAddMemberHandler.OnGroupAddMember(args);
+                            config.handlers[em.LogonQQ].OnGroupAddMember(args);
                             break;
                         }
                         case 5:
@@ -249,7 +253,7 @@ namespace CornSDK
                                 FromGroup = em.FromGroup.GIN,
                                 FromGroupName = em.FromGroup.Name,
                             };
-                            config.groupLeftMemberHandler.OnGroupLeftMember(args);
+                            config.handlers[em.LogonQQ].OnGroupLeftMember(args);
                             break;
                         }
                     }
@@ -269,9 +273,9 @@ namespace CornSDK
         /// <param name="toQQ">目标 QQ</param>
         /// <param name="content">内容</param>
         /// <returns></returns>
-        public Task SendPrivateMsg(long toQQ, string content) => Post("sendprivatemsg", new
+        public Task SendPrivateMsg(long toQQ, string content, long fromqq = C.self) => Post("sendprivatemsg", new
         {
-            fromqq = config.selfQQ,
+            fromqq,
             toqq = toQQ,
             text = content
         });
@@ -282,11 +286,11 @@ namespace CornSDK
         /// <param name="toGroup"></param>
         /// <param name="content"></param>
         /// <returns>time</returns>
-        public async Task<long> SendGroupMsg(long toGroup, string content, bool anonymous = false)
+        public async Task<long> SendGroupMsg(long toGroup, string content, bool anonymous = false, long fromqq = C.self)
         {
             string ret = (await Post<dynamic>("sendgroupmsg", new
             {
-                fromqq = config.selfQQ,
+                fromqq,
                 togroup = toGroup,
                 text = content,
                 anonymous = anonymous.ToString().ToLower()
@@ -302,9 +306,9 @@ namespace CornSDK
         /// <param name="toQQ"></param>
         /// <param name="content"></param>
         /// <returns></returns>
-        public Task SendTempMsg(long toGroup, long toQQ, string content) => Post("sendgrouptempmsg", new
+        public Task SendTempMsg(long toGroup, long toQQ, string content, long fromqq = C.self) => Post("sendgrouptempmsg", new
         {
-            fromqq = config.selfQQ,
+            fromqq,
             togroup = toGroup,
             toqq = toQQ,
             text = content
@@ -316,9 +320,9 @@ namespace CornSDK
         /// <param name="toQQ"></param>
         /// <param name="content"></param>
         /// <returns></returns>
-        public Task AddFriend(long toQQ, string content, string remark = "") => Post("addfriend", new
+        public Task AddFriend(long toQQ, string content, string remark = "", long fromqq = C.self) => Post("addfriend", new
         {
-            fromqq = config.selfQQ,
+            fromqq,
             toqq = toQQ,
             text = content,
             remark = remark
@@ -330,9 +334,9 @@ namespace CornSDK
         /// <param name="toGroup"></param>
         /// <param name="content"></param>
         /// <returns></returns>
-        public Task AddGroup(long toGroup, string content) => Post("addgroup", new
+        public Task AddGroup(long toGroup, string content, long fromqq = C.self) => Post("addgroup", new
         {
-            fromqq = config.selfQQ,
+            fromqq,
             togroup = toGroup,
             text = content
         });
@@ -342,9 +346,9 @@ namespace CornSDK
         /// </summary>
         /// <param name="toQQ"></param>
         /// <returns></returns>
-        public Task DeleteFriend(long toQQ) => Post("deletefriend", new
+        public Task DeleteFriend(long toQQ, long fromqq = C.self) => Post("deletefriend", new
         {
-            fromqq = config.selfQQ,
+            fromqq,
             toqq = toQQ,
         });
 
@@ -353,9 +357,9 @@ namespace CornSDK
         /// </summary>
         /// <param name="toQQ"></param>
         /// <returns></returns>
-        public Task BlockFriend(long toQQ) => Post("setfriendignmsg", new
+        public Task BlockFriend(long toQQ, long fromqq = C.self) => Post("setfriendignmsg", new
         {
-            fromqq = config.selfQQ,
+            fromqq,
             toqq = toQQ,
             ignore = "true"
         });
@@ -365,9 +369,9 @@ namespace CornSDK
         /// </summary>
         /// <param name="toQQ"></param>
         /// <returns></returns>
-        public Task UnblockFriend(long toQQ) => Post("setfriendignmsg", new
+        public Task UnblockFriend(long toQQ, long fromqq = C.self) => Post("setfriendignmsg", new
         {
-            fromqq = config.selfQQ,
+            fromqq,
             toqq = toQQ,
             ignore = "false"
         });
@@ -377,9 +381,9 @@ namespace CornSDK
         /// </summary>
         /// <param name="toQQ"></param>
         /// <returns></returns>
-        public Task SetCare(long toQQ) => Post("setfriendcare", new
+        public Task SetCare(long toQQ, long fromqq = C.self) => Post("setfriendcare", new
         {
-            fromqq = config.selfQQ,
+            fromqq,
             toqq = toQQ,
             care = "true"
         });
@@ -389,9 +393,9 @@ namespace CornSDK
         /// </summary>
         /// <param name="toQQ"></param>
         /// <returns></returns>
-        public Task UnsetCare(long toQQ) => Post("setfriendcare", new
+        public Task UnsetCare(long toQQ, long fromqq = C.self) => Post("setfriendcare", new
         {
-            fromqq = config.selfQQ,
+            fromqq,
             toqq = toQQ,
             care = "false"
         });
@@ -402,9 +406,9 @@ namespace CornSDK
         /// <param name="toQQ"></param>
         /// <param name="content"></param>
         /// <returns></returns>
-        public Task SendPrivateJsonMsg(long toQQ, string content) => Post("sendprivatejsonmsg", new
+        public Task SendPrivateJsonMsg(long toQQ, string content, long fromqq = C.self) => Post("sendprivatejsonmsg", new
         {
-            fromqq = config.selfQQ,
+            fromqq,
             toqq = toQQ,
             json = content
         });
@@ -416,10 +420,10 @@ namespace CornSDK
         /// <param name="content"></param>
         /// <param name="anonymous"></param>
         /// <returns></returns>
-        public Task SendGroupJsonMsg(long toGroup, string content, bool anonymous = false) => Post("sendgroupjsonmsg",
+        public Task SendGroupJsonMsg(long toGroup, string content, bool anonymous = false, long fromqq = C.self) => Post("sendgroupjsonmsg",
             new
             {
-                fromqq = config.selfQQ,
+                fromqq,
                 togroup = toGroup,
                 json = content,
                 anonymous = anonymous.ToString().ToLower()
@@ -433,9 +437,9 @@ namespace CornSDK
         /// <param name="toQQ"></param>
         /// <param name="content"></param>
         /// <returns></returns>
-        public Task SetGroupCard(long toGroup, long toQQ, string content) => Post("setgroupcard", new
+        public Task SetGroupCard(long toGroup, long toQQ, string content, long fromqq = C.self) => Post("setgroupcard", new
         {
-            fromqq = config.selfQQ,
+            fromqq,
             togroup = toGroup,
             toqq = toQQ,
             card = content
@@ -448,10 +452,10 @@ namespace CornSDK
         /// <param name="toQQ"></param>
         /// <param name="ignoreAddGRequest">拒绝再加群申请</param>
         /// <returns></returns>
-        public Task GroupKickMember(long toGroup, long toQQ, bool ignoreAddGRequest = false) => Post("kickgroupmember",
+        public Task GroupKickMember(long toGroup, long toQQ, bool ignoreAddGRequest = false, long fromqq = C.self) => Post("kickgroupmember",
             new
             {
-                fromqq = config.selfQQ,
+                fromqq,
                 group = toGroup,
                 toqq = toQQ,
                 ignoreaddgrequest = ignoreAddGRequest.ToString().ToLower()
@@ -463,9 +467,9 @@ namespace CornSDK
         /// <param name="toQQ"></param>
         /// <param name="fromcache"></param>
         /// <returns></returns>
-        public async Task<string> GetNick(long toQQ, bool fromcache = true) => (await Post<dynamic>("getnickname", new
+        public async Task<string> GetNick(long toQQ, bool fromcache = true, long fromqq = C.self) => (await Post<dynamic>("getnickname", new
         {
-            fromqq = config.selfQQ,
+            fromqq,
             toqq = toQQ,
             fromcache = fromcache.ToString().ToLower()
         })).ret;
@@ -475,7 +479,7 @@ namespace CornSDK
         /// </summary>
         /// <param name="group"></param>
         /// <returns></returns>
-        public async Task<string> GetGroupName(long group) => (await Post<dynamic>("getgroupnamefromcache", new
+        public async Task<string> GetGroupName(long group, long fromqq = C.self) => (await Post<dynamic>("getgroupnamefromcache", new
         {
             group
         })).ret;
@@ -485,10 +489,10 @@ namespace CornSDK
         /// </summary>
         /// <param name="group"></param>
         /// <returns></returns>
-        public async Task<List<GroupMember>> GetGroupMembers(long group) => (await Post<GroupMembers>(
+        public async Task<List<GroupMember>> GetGroupMembers(long group, long logonqq = C.self) => (await Post<GroupMembers>(
             "getgroupmemberlist", new
             {
-                logonqq = config.selfQQ,
+                logonqq,
                 group
             })).List;
 
@@ -497,12 +501,12 @@ namespace CornSDK
         /// </summary>
         /// <param name="group"></param>
         /// <param name="toQQ"></param>
-        /// <param name="fromcache"></param>
+        /// <param name="fromqq"></param>
         /// <returns></returns>
-        public async Task<string> GetGroupCard(long group, long toQQ, bool fromcache = false) => (await Post<dynamic>(
+        public async Task<string> GetGroupCard(long group, long toQQ, long fromqq = C.self) => (await Post<dynamic>(
             "getgroupcard", new
             {
-                fromqq = config.selfQQ,
+                fromqq,
                 toqq = toQQ,
                 group
             })).ret;
@@ -511,28 +515,28 @@ namespace CornSDK
         /// 取好友
         /// </summary>
         /// <returns></returns>
-        public async Task<List<Friend>> GetFriends() => (await Post<Friends>("getfriendlist", new
+        public async Task<List<Friend>> GetFriends(long logonqq = C.self) => (await Post<Friends>("getfriendlist", new
         {
-            logonqq = config.selfQQ,
+            logonqq,
         })).List;
 
         /// <summary>
         /// 取加入的群
         /// </summary>
         /// <returns></returns>
-        public async Task<List<Group>> GetGroups() => (await Post<Groups>("getgrouplist", new
+        public async Task<List<Group>> GetGroups(long logonqq = C.self) => (await Post<Groups>("getgrouplist", new
         {
-            logonqq = config.selfQQ,
+            logonqq,
         })).List;
 
         /// <summary>
         /// 上传群图片，获得一个 hash 到时候当成图片发
         /// </summary>
         /// <returns></returns>
-        public async Task<string> UploadGroupPic(long togroup, string url) => (await Post<dynamic>("sendgrouppic", new
+        public async Task<string> UploadGroupPic(long togroup, string url, long fromqq = C.self) => (await Post<dynamic>("sendgrouppic", new
         {
             togroup,
-            fromqq = config.selfQQ,
+            fromqq,
             fromtype = 2,
             url
         })).ret;
@@ -541,18 +545,18 @@ namespace CornSDK
         /// 上传私聊图片，获得一个 hash 到时候当成图片发
         /// </summary>
         /// <returns></returns>
-        public async Task<string> UploadPrivatePic(long toqq, string url) => (await Post<dynamic>("sendprivatepic", new
+        public async Task<string> UploadPrivatePic(long toqq, string url, long fromqq = C.self) => (await Post<dynamic>("sendprivatepic", new
         {
             toqq,
-            fromqq = config.selfQQ,
+            fromqq,
             fromtype = 2,
             url
         })).ret;
 
-        public async Task<string> GetPicUrl(string pic, long group = 0) => (await Post<dynamic>("getphotourl", new
+        public async Task<string> GetPicUrl(string pic, long group = 0, long fromqq = C.self) => (await Post<dynamic>("getphotourl", new
         {
             group,
-            fromqq = config.selfQQ,
+            fromqq,
             photo = pic
         })).ret;
 

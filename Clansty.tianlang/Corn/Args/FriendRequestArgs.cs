@@ -12,17 +12,18 @@ namespace CornSDK
         public long FromQQ { get; internal set; }
         public string FromNick { get; internal set; }
         public string Msg { get; internal set; }
+        internal long fromqq { private get; set; }
         internal long Seq { private get; set; }
         public Task Accept() => Robot.Post("setfriendaddrequest", new
         {
-            fromqq = Robot.config.selfQQ,
+            fromqq,
             qq = FromQQ,
             seq = Seq,
             op = 1
         });
         public Task Reject() => Robot.Post("setfriendaddrequest", new
         {
-            fromqq = Robot.config.selfQQ,
+            fromqq,
             qq = FromQQ,
             seq = Seq,
             op = 2

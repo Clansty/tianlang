@@ -4,13 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace Clansty.tianlang
 {
-    class Events : IFriendMsgHandler,
-        ITempMsgHandler,
-        IGroupMsgHandler,
-        IFriendRequestHandler,
-        IGroupInviteRequestHandler,
-        IGroupJoinRequestHandler,
-        IGroupAddMemberHandler
+    class NthsBotEvents : ICornEventHandler
     {
         public void OnTempMsg(TempMsgArgs e)
         {
@@ -259,6 +253,11 @@ namespace Clansty.tianlang
         public void OnGroupInviteRequest(GroupRequestArgs e)
         {
             e.Accept();
+        }
+
+        public void OnGroupLeftMember(GroupMemberChangedArgs e)
+        {
+            
         }
     }
 }

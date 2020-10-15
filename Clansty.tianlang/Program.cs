@@ -1,5 +1,6 @@
 using CornSDK;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Telegram.Bot;
 
@@ -17,20 +18,17 @@ namespace Clansty.tianlang
 #else
             Console.CancelKeyPress += Exit;
             Console.Title = $@"甜狼 {C.Version}";
-            var handler = new Events();
+            var nthsBotHandler = new NthsBotEvents();
             C.QQ = new Corn(new CornConfig()
             {
-                selfQQ = C.self,
                 ip = "172.16.100.6",
                 listenIp = "172.16.100.1",
                 listenPort = 7284,
-                friendMsgHandler = handler,
-                groupAddMemberHandler = handler,
-                groupInviteRequestHandler = handler,
-                groupJoinRequestHandler = handler,
-                groupMsgHandler = handler,
-                friendRequestHandler = handler,
-                tempMsgHandler = handler
+                handlers = new Dictionary<long, ICornEventHandler>()
+                {
+                    [C.self] = nthsBotHandler
+                },
+                logger = C.logger
             });
             C.TG = new TelegramBotClient(Tg.Token);
             C.TG.OnMessage += Tg.OnMsg;
