@@ -1,9 +1,5 @@
-﻿using System;
-using System.Globalization;
-using System.Linq;
-using Newtonsoft.Json.Converters;
+﻿using System.Linq;
 using Telegram.Bot.Args;
-using Telegram.Bot.Helpers;
 
 namespace Clansty.tianlang
 {
@@ -57,8 +53,9 @@ namespace Clansty.tianlang
                 }
             }
 
+            var fwdinfo = Q2TgMap.Tg2Q(e.Message.Chat.Id);
             //规则转发
-            if (G.Map.ContainsKey(e.Message.Chat.Id))
+            if (fwdinfo != null)
             {
                 long qtime;
                 var sdr = e.Message.From.FirstName;
@@ -75,6 +72,9 @@ namespace Clansty.tianlang
                     var u = new User(usrs[0]);
                     sdr = u.ProperNamecard;
                 }
+
+                if (!fwdinfo.includeSender)
+                    sdr = "";
 
                 if (e.Message.ReplyToMessage != null)
                 {
@@ -99,12 +99,16 @@ namespace Clansty.tianlang
                     }
                 }
 
+                if (!fwdinfo.includeSender)
+                    sdr += ":\n";
+
                 if (e.Message.Text != null)
                 {
                     //文本转发 tg2q
-                    qtime = await C.QQ.SendGroupMsg(G.Map[e.Message.Chat.Id],
-                        sdr + ":\n" +
-                        Utf.Encode(e.Message.Text));
+                    qtime = await C.QQ.SendGroupMsg(fwdinfo.gin,
+                        sdr +
+                        Utf.Encode(e.Message.Text),
+                        fromqq: fwdinfo.uin);
                     Db.qtime2tgmsgid.Put(qtime.ToString(), e.Message.MessageId.ToString());
                     //命令
                     if (e.Message.Chat.Id == G.TG.si)
@@ -134,10 +138,10 @@ namespace Clansty.tianlang
                 }
 
                 if (ps is null) return;
-                var targ = G.Map[e.Message.Chat.Id];
+                var targ = fwdinfo.gin;
                 var pf = await C.TG.GetFileAsync(ps);
                 var hash = await C.QQ.UploadGroupPic(targ, $"https://api.telegram.org/file/bot{Token}/{pf.FilePath}");
-                var tos = sdr + ":\n";
+                var tos = sdr;
                 if (!string.IsNullOrWhiteSpace(e.Message.Caption))
                 {
                     tos += e.Message.Caption + "\n";
@@ -145,11 +149,9 @@ namespace Clansty.tianlang
 
                 tos = Utf.Encode(tos);
                 tos += hash;
-                qtime = await C.QQ.SendGroupMsg(targ, tos);
+                qtime = await C.QQ.SendGroupMsg(targ, tos, fromqq: fwdinfo.uin);
                 Db.qtime2tgmsgid.Put(qtime.ToString(), e.Message.MessageId.ToString());
             }
-            
-            
         }
     }
 }

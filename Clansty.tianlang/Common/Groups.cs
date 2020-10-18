@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Clansty.tianlang
 {
@@ -20,24 +21,6 @@ namespace Clansty.tianlang
         internal const long ddf = 907283835;
         internal const long wxb = 904645614;
 
-        public static readonly Dictionary<long, long> Map = new Dictionary<long, long>()
-        {
-            [iDE] = TG.iDE,
-            [test] = TG.test,
-            [TG.test] = test,
-            [TG.iDE] = iDE,
-            [si] = TG.si,
-            [TG.si] = si,
-            [TG.dorm] = dorm,
-            [dorm] = TG.dorm,
-            [major] = TG.major,
-            [TG.major] = major,
-            [ddf] = TG.ddf,
-            [TG.ddf] = ddf,
-            [wxb] = TG.wxb,
-            [TG.wxb] = wxb
-        };
-
         public static class TG
         {
             internal const long iDE = -1001218396541;
@@ -47,6 +30,10 @@ namespace Clansty.tianlang
             internal const long dorm = -1001499507096;
             internal const long ddf = -1001225767506;
             internal const long wxb = -1001311008059;
+            internal const long mom = -1001310869627;
+            internal const long dad = -324967882;
+            internal const long selffwd = -263510533;
         }
+
     }
 }

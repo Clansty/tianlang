@@ -17,6 +17,8 @@ namespace CornSDK
         public string Msg { get; internal set; }
         public string ReplyMsg { get; internal set; }
         public Corn Robot { get; internal set; }
+        public long RecvQQ { get; set; }
+
         public Task Reply(string msg, bool anonymous = false) => Robot.SendGroupMsg(FromGroup, msg, anonymous);
     }
 }

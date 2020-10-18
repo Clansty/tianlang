@@ -22,7 +22,9 @@ namespace Clansty.tianlang
 
         public static async Task NewGroupMsg(GroupMsgArgs e)
         {
-            if (!G.Map.ContainsKey(e.FromGroup)) return;
+            var fwdinfo = Q2TgMap.Q2Tg(e.RecvQQ, e.FromGroup);
+            if (fwdinfo is null) return;
+
             var msg = e.Msg.Trim();
             var from = Utf.Decode(e.FromCard);
 
@@ -59,7 +61,7 @@ namespace Clansty.tianlang
             }
 
             msg = msg.Trim();
-            
+
             var picRegex = new Regex(@"\[pic,hash=\w+\]");
             Message message;
             if (picRegex.IsMatch(msg))
@@ -70,14 +72,14 @@ namespace Clansty.tianlang
                 msg = msg.Trim(' ', '\r', '\n', '\t');
                 if (!string.IsNullOrEmpty(msg))
                     msg = "\n" + Utf.Decode(msg);
-                message = await C.TG.SendPhotoAsync(G.Map[e.FromGroup],
+                message = await C.TG.SendPhotoAsync(fwdinfo.tg,
                     purl.Result,
                     from + ":" + msg,
                     replyToMessageId: replyId);
             }
             else
             {
-                message = await C.TG.SendTextMessageAsync(G.Map[e.FromGroup],
+                message = await C.TG.SendTextMessageAsync(fwdinfo.tg,
                     from + ":\n" + Utf.Decode(msg),
                     replyToMessageId: replyId);
             }

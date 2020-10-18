@@ -161,7 +161,8 @@ namespace CornSDK
                         FromTitle = gm.FromQQ.SpecTitle,
                         Msg = gm.Msg.Text,
                         ReplyMsg = gm.Msg.Text_Reply,
-                        Time = gm.TimeStamp.Send
+                        Time = gm.TimeStamp.Send,
+                        RecvQQ = gm.LogonQQ
                     };
                     config.handlers[gm.LogonQQ].OnGroupMsg(args);
                 }
@@ -306,13 +307,14 @@ namespace CornSDK
         /// <param name="toQQ"></param>
         /// <param name="content"></param>
         /// <returns></returns>
-        public Task SendTempMsg(long toGroup, long toQQ, string content, long fromqq = C.self) => Post("sendgrouptempmsg", new
-        {
-            fromqq,
-            togroup = toGroup,
-            toqq = toQQ,
-            text = content
-        });
+        public Task SendTempMsg(long toGroup, long toQQ, string content, long fromqq = C.self) => Post(
+            "sendgrouptempmsg", new
+            {
+                fromqq,
+                togroup = toGroup,
+                toqq = toQQ,
+                text = content
+            });
 
         /// <summary>
         /// 添加好友
@@ -320,13 +322,14 @@ namespace CornSDK
         /// <param name="toQQ"></param>
         /// <param name="content"></param>
         /// <returns></returns>
-        public Task AddFriend(long toQQ, string content, string remark = "", long fromqq = C.self) => Post("addfriend", new
-        {
-            fromqq,
-            toqq = toQQ,
-            text = content,
-            remark = remark
-        });
+        public Task AddFriend(long toQQ, string content, string remark = "", long fromqq = C.self) => Post("addfriend",
+            new
+            {
+                fromqq,
+                toqq = toQQ,
+                text = content,
+                remark = remark
+            });
 
         /// <summary>
         /// 添加群
@@ -406,12 +409,13 @@ namespace CornSDK
         /// <param name="toQQ"></param>
         /// <param name="content"></param>
         /// <returns></returns>
-        public Task SendPrivateJsonMsg(long toQQ, string content, long fromqq = C.self) => Post("sendprivatejsonmsg", new
-        {
-            fromqq,
-            toqq = toQQ,
-            json = content
-        });
+        public Task SendPrivateJsonMsg(long toQQ, string content, long fromqq = C.self) => Post("sendprivatejsonmsg",
+            new
+            {
+                fromqq,
+                toqq = toQQ,
+                json = content
+            });
 
         /// <summary>
         /// 发送群聊 JSON 卡片
@@ -420,14 +424,15 @@ namespace CornSDK
         /// <param name="content"></param>
         /// <param name="anonymous"></param>
         /// <returns></returns>
-        public Task SendGroupJsonMsg(long toGroup, string content, bool anonymous = false, long fromqq = C.self) => Post("sendgroupjsonmsg",
-            new
-            {
-                fromqq,
-                togroup = toGroup,
-                json = content,
-                anonymous = anonymous.ToString().ToLower()
-            });
+        public Task SendGroupJsonMsg(long toGroup, string content, bool anonymous = false, long fromqq = C.self) =>
+            Post("sendgroupjsonmsg",
+                new
+                {
+                    fromqq,
+                    togroup = toGroup,
+                    json = content,
+                    anonymous = anonymous.ToString().ToLower()
+                });
 
         //TODO sendprivatepic sendgrouppic sendprivateaudio sendgroupaudio uploadfacepic uploadgroupfacepic
         /// <summary>
@@ -437,13 +442,14 @@ namespace CornSDK
         /// <param name="toQQ"></param>
         /// <param name="content"></param>
         /// <returns></returns>
-        public Task SetGroupCard(long toGroup, long toQQ, string content, long fromqq = C.self) => Post("setgroupcard", new
-        {
-            fromqq,
-            togroup = toGroup,
-            toqq = toQQ,
-            card = content
-        });
+        public Task SetGroupCard(long toGroup, long toQQ, string content, long fromqq = C.self) => Post("setgroupcard",
+            new
+            {
+                fromqq,
+                togroup = toGroup,
+                toqq = toQQ,
+                card = content
+            });
 
         /// <summary>
         /// 群踢人
@@ -452,14 +458,15 @@ namespace CornSDK
         /// <param name="toQQ"></param>
         /// <param name="ignoreAddGRequest">拒绝再加群申请</param>
         /// <returns></returns>
-        public Task GroupKickMember(long toGroup, long toQQ, bool ignoreAddGRequest = false, long fromqq = C.self) => Post("kickgroupmember",
-            new
-            {
-                fromqq,
-                group = toGroup,
-                toqq = toQQ,
-                ignoreaddgrequest = ignoreAddGRequest.ToString().ToLower()
-            });
+        public Task GroupKickMember(long toGroup, long toQQ, bool ignoreAddGRequest = false, long fromqq = C.self) =>
+            Post("kickgroupmember",
+                new
+                {
+                    fromqq,
+                    group = toGroup,
+                    toqq = toQQ,
+                    ignoreaddgrequest = ignoreAddGRequest.ToString().ToLower()
+                });
 
         /// <summary>
         /// 取昵称
@@ -467,34 +474,37 @@ namespace CornSDK
         /// <param name="toQQ"></param>
         /// <param name="fromcache"></param>
         /// <returns></returns>
-        public async Task<string> GetNick(long toQQ, bool fromcache = true, long fromqq = C.self) => (await Post<dynamic>("getnickname", new
-        {
-            fromqq,
-            toqq = toQQ,
-            fromcache = fromcache.ToString().ToLower()
-        })).ret;
+        public async Task<string> GetNick(long toQQ, bool fromcache = true, long fromqq = C.self) =>
+            (await Post<dynamic>("getnickname", new
+            {
+                fromqq,
+                toqq = toQQ,
+                fromcache = fromcache.ToString().ToLower()
+            })).ret;
 
         /// <summary>
         /// 取群名
         /// </summary>
         /// <param name="group"></param>
         /// <returns></returns>
-        public async Task<string> GetGroupName(long group, long fromqq = C.self) => (await Post<dynamic>("getgroupnamefromcache", new
-        {
-            group
-        })).ret;
+        public async Task<string> GetGroupName(long group, long fromqq = C.self) => (await Post<dynamic>(
+            "getgroupnamefromcache", new
+            {
+                group
+            })).ret;
 
         /// <summary>
         /// 取群成员
         /// </summary>
         /// <param name="group"></param>
         /// <returns></returns>
-        public async Task<List<GroupMember>> GetGroupMembers(long group, long logonqq = C.self) => (await Post<GroupMembers>(
-            "getgroupmemberlist", new
-            {
-                logonqq,
-                group
-            })).List;
+        public async Task<List<GroupMember>> GetGroupMembers(long group, long logonqq = C.self) =>
+            (await Post<GroupMembers>(
+                "getgroupmemberlist", new
+                {
+                    logonqq,
+                    group
+                })).List;
 
         /// <summary>
         /// 取群名片
@@ -533,32 +543,35 @@ namespace CornSDK
         /// 上传群图片，获得一个 hash 到时候当成图片发
         /// </summary>
         /// <returns></returns>
-        public async Task<string> UploadGroupPic(long togroup, string url, long fromqq = C.self) => (await Post<dynamic>("sendgrouppic", new
-        {
-            togroup,
-            fromqq,
-            fromtype = 2,
-            url
-        })).ret;
+        public async Task<string> UploadGroupPic(long togroup, string url, long fromqq = C.self) =>
+            (await Post<dynamic>("sendgrouppic", new
+            {
+                togroup,
+                fromqq,
+                fromtype = 2,
+                url
+            })).ret;
 
         /// <summary>
         /// 上传私聊图片，获得一个 hash 到时候当成图片发
         /// </summary>
         /// <returns></returns>
-        public async Task<string> UploadPrivatePic(long toqq, string url, long fromqq = C.self) => (await Post<dynamic>("sendprivatepic", new
-        {
-            toqq,
-            fromqq,
-            fromtype = 2,
-            url
-        })).ret;
+        public async Task<string> UploadPrivatePic(long toqq, string url, long fromqq = C.self) => (await Post<dynamic>(
+            "sendprivatepic", new
+            {
+                toqq,
+                fromqq,
+                fromtype = 2,
+                url
+            })).ret;
 
-        public async Task<string> GetPicUrl(string pic, long group = 0, long fromqq = C.self) => (await Post<dynamic>("getphotourl", new
-        {
-            group,
-            fromqq,
-            photo = pic
-        })).ret;
+        public async Task<string> GetPicUrl(string pic, long group = 0, long fromqq = C.self) => (await Post<dynamic>(
+            "getphotourl", new
+            {
+                group,
+                fromqq,
+                photo = pic
+            })).ret;
 
         //TODO rest
 
