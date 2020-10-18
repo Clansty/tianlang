@@ -99,7 +99,7 @@ namespace Clansty.tianlang
                     }
                 }
 
-                if (!fwdinfo.includeSender)
+                if (fwdinfo.includeSender)
                     sdr += ":\n";
 
                 if (e.Message.Text != null)
