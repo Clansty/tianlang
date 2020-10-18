@@ -90,6 +90,34 @@ namespace Clansty.tianlang
                 tg = -279581459,
                 includeSender = false
             },
+            new FwdInfo()
+            {//高数
+                uin = 839827911,
+                gin = 915287147,
+                tg = -411013453,
+                includeSender = false
+            },
+            new FwdInfo()
+            {//家长群
+                uin = 839827911,
+                gin = G.parentsFwd,
+                tg = -481322235,
+                includeSender = false
+            },
+            new FwdInfo()
+            {//计算机基础
+                uin = 839827911,
+                gin = 1130629129,
+                tg = -494959345,
+                includeSender = false
+            },
+            new FwdInfo()
+            {//web
+                uin = 839827911,
+                gin = 935726131,
+                tg = -409372799,
+                includeSender = false
+            },
         };
 
         internal static FwdInfo Q2Tg(long uin, long gin)
