@@ -1,8 +1,8 @@
-﻿using System.IO;
+﻿using System.Linq;
 
 namespace Clansty.tianlang
 {
-    public class Q2TgMap
+    public static class Q2TgMap
     {
         private static readonly FwdInfo[] infos =
         {
@@ -84,6 +84,13 @@ namespace Clansty.tianlang
                 includeSender = false
             },
             new FwdInfo()
+            {//科协技术部
+                uin = 839827911,
+                gin = 865604042,
+                tg = -433260120,
+                includeSender = false
+            },
+            new FwdInfo()
             {//英语提高3班
                 uin = 839827911,
                 gin = 1156757956,
@@ -122,26 +129,12 @@ namespace Clansty.tianlang
 
         internal static FwdInfo Q2Tg(long uin, long gin)
         {
-            foreach (var i in infos)
-            {
-                if (i.uin == uin && i.gin == gin)
-                {
-                    return i;
-                }
-            }
-
-            return null;
+            return infos.FirstOrDefault(i => i.uin == uin && i.gin == gin);
         }
 
         internal static FwdInfo Tg2Q(long tguid)
         {
-            foreach (var i in infos)
-            {
-                if (i.tg == tguid)
-                    return i;
-            }
-
-            return null;
+            return infos.FirstOrDefault(i => i.tg == tguid);
         }
     }
 }
