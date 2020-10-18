@@ -26,7 +26,8 @@ namespace Clansty.tianlang
                 listenPort = 7284,
                 handlers = new Dictionary<long, ICornEventHandler>()
                 {
-                    [C.self] = nthsBotHandler
+                    [C.self] = nthsBotHandler,
+                    [839827911] = new PrivateEvents()
                 },
                 logger = C.logger
             });

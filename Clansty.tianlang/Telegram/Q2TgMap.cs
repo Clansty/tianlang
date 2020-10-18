@@ -1,4 +1,6 @@
-﻿namespace Clansty.tianlang
+﻿using System.IO;
+
+namespace Clansty.tianlang
 {
     public class Q2TgMap
     {
@@ -45,6 +47,48 @@
                 uin = C.self,
                 gin = G.wxb,
                 tg = G.TG.wxb
+            },
+            new FwdInfo()
+            {//计软院
+                uin = 839827911,
+                gin = 954226654,
+                tg = -342881810,
+                includeSender = false
+            },
+            new FwdInfo()
+            {//程序设计基础
+                uin = 839827911,
+                gin = 892697611,
+                tg = -416480031,
+                includeSender = false
+            },
+            new FwdInfo()
+            {//软合一班
+                uin = 839827911,
+                gin = 1022579554,
+                tg = -426831224,
+                includeSender = false
+            },
+            new FwdInfo()
+            {//软合二班
+                uin = 839827911,
+                gin = 1078188647,
+                tg = -425421691,
+                includeSender = false
+            },
+            new FwdInfo()
+            {//科协
+                uin = 839827911,
+                gin = 598094369,
+                tg = -337216611,
+                includeSender = false
+            },
+            new FwdInfo()
+            {//英语提高3班
+                uin = 839827911,
+                gin = 1156757956,
+                tg = -279581459,
+                includeSender = false
             },
         };
 
