@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 namespace Clansty.tianlang
@@ -42,12 +43,12 @@ namespace Clansty.tianlang
             }
         }
 
-        public static string getList()
+        public static async Task<string> getList()
         {
             var res = "";
             foreach (var i in list)
             {
-                res += $"{C.QQ.GetNick(i)}({i})\n";
+                res += $"{await C.QQ.GetNick(i)}({i})\n";
             }
 
             res.TrimEnd('\n');

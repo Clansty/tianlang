@@ -57,7 +57,7 @@ namespace Clansty.tianlang
                         case "/fire":
                             if (e.Message.Chat.Id != 351768429) return;
                             if (split.Length == 1)
-                                C.TG.SendTextMessageAsync(e.Message.Chat, FireList.getList());
+                                C.TG.SendTextMessageAsync(e.Message.Chat, await FireList.getList());
                             else if (split.Length == 2)
                             {
                                 var text = split[1];
