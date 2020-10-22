@@ -475,12 +475,12 @@ namespace CornSDK
         /// <param name="fromcache"></param>
         /// <returns></returns>
         public async Task<string> GetNick(long toQQ, bool fromcache = true, long fromqq = C.self) =>
-            (await Post<dynamic>("getnickname", new
+            Utf.Decode((await Post<dynamic>("getnickname", new
             {
                 fromqq,
                 toqq = toQQ,
                 fromcache = fromcache.ToString().ToLower()
-            })).ret;
+            })).ret);
 
         /// <summary>
         /// 取群名

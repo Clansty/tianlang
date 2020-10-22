@@ -18,7 +18,7 @@ namespace Clansty.tianlang
             }
             catch
             {
-                list=new HashSet<long>();
+                list = new HashSet<long>();
                 Db.ldb.Put("fireList", JsonConvert.SerializeObject(list));
             }
         }
@@ -48,7 +48,7 @@ namespace Clansty.tianlang
             var res = "";
             foreach (var i in list)
             {
-                res += $"{await C.QQ.GetNick(i)}({i})\n";
+                res += $"{await C.QQ.GetNick(i, fromqq: 839827911)}({i})\n";
             }
 
             res.TrimEnd('\n');
