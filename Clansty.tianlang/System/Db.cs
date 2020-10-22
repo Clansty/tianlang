@@ -14,7 +14,7 @@ namespace Clansty.tianlang
 #endif
         internal static DataTable users = new DataTable();
         internal static DataTable persons = new DataTable();
-        internal static DB qtime2tgmsgid = null;
+        internal static DB ldb = null;
         private static MySqlDataAdapter daUsers = null;
         internal static void Init()
         {
@@ -28,7 +28,7 @@ namespace Clansty.tianlang
             users.PrimaryKey = new DataColumn[] { users.Columns[0] };
             persons.PrimaryKey = new DataColumn[] { persons.Columns[0] };
             var options = new Options { CreateIfMissing = true };
-            qtime2tgmsgid = new DB(options, "/srv/lw/ldb/qtime2tgmsgid");
+            ldb = new DB(options, "/srv/lw/ldb/qtime2tgmsgid");
         }
         internal static void Commit()
         {

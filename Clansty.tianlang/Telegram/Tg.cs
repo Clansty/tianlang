@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Telegram.Bot.Args;
 
 namespace Clansty.tianlang
@@ -29,27 +30,66 @@ namespace Clansty.tianlang
             //响应命令
             if (e.Message.Text != null)
             {
-                var action = e.Message.Text.Split(' ')[0];
-                switch (action)
+                try
                 {
-                    case "/id":
-                        C.TG.SendTextMessageAsync(e.Message.Chat,
-                            $"会话 ID: {e.Message.Chat.Id}\n" +
-                            $"用户 ID: {e.Message.From.Id}");
-                        return;
-                    case "/start":
-                        if (e.Message.From.Id != e.Message.Chat.Id) return;
-                        C.TG.SendTextMessageAsync(e.Message.Chat,
-                            "请发送绑定码");
-                        return;
-                    case "bind":
-                        TgBinding.Bind(e);
-                        return;
-                    case "/update":
-                        if (e.Message.Chat.Id != 351768429) return;
-                        var ret = Cmds.gcmds["update"].Func(null);
-                        C.TG.SendTextMessageAsync(e.Message.Chat, ret);
-                        return;
+                    var split = e.Message.Text.Split(' ');
+                    var action = split[0];
+                    switch (action)
+                    {
+                        case "/id":
+                            C.TG.SendTextMessageAsync(e.Message.Chat,
+                                $"会话 ID: {e.Message.Chat.Id}\n" +
+                                $"用户 ID: {e.Message.From.Id}");
+                            return;
+                        case "/start":
+                            if (e.Message.From.Id != e.Message.Chat.Id) return;
+                            C.TG.SendTextMessageAsync(e.Message.Chat,
+                                "请发送绑定码");
+                            return;
+                        case "bind":
+                            TgBinding.Bind(e);
+                            return;
+                        case "/update":
+                            if (e.Message.Chat.Id != 351768429) return;
+                            var ret = Cmds.gcmds["update"].Func(null);
+                            C.TG.SendTextMessageAsync(e.Message.Chat, ret);
+                            return;
+                        case "/fire":
+                            if (e.Message.Chat.Id != 351768429) return;
+                            if (split.Length == 1)
+                                C.TG.SendTextMessageAsync(e.Message.Chat, FireList.getList());
+                            else if (split.Length == 2)
+                            {
+                                var text = split[1];
+                                FireList.Resume(text);
+                                C.TG.SendTextMessageAsync(e.Message.Chat, "操作成功");
+                            }
+                            else if (split.Length == 3)
+                            {
+                                switch (split[1])
+                                {
+                                    case "add":
+                                        FireList.Add(long.Parse(split[2]));
+                                        break;
+                                    case "rm":
+                                        FireList.Remove(long.Parse(split[2]));
+                                        break;
+                                    default:
+                                        C.TG.SendTextMessageAsync(e.Message.Chat, "操作无效");
+                                        return;
+                                }
+                                C.TG.SendTextMessageAsync(e.Message.Chat, "操作成功");
+                            }
+                            else
+                            {
+                                C.TG.SendTextMessageAsync(e.Message.Chat, "操作无效");
+                            }
+                            return;
+                    }
+                }
+                catch (Exception exception)
+                {
+                    C.TG.SendTextMessageAsync(e.Message.Chat, exception.ToString());
                 }
             }
 
@@ -109,7 +149,7 @@ namespace Clansty.tianlang
                         sdr +
                         Utf.Encode(e.Message.Text),
                         fromqq: fwdinfo.uin);
-                    Db.qtime2tgmsgid.Put(qtime.ToString(), e.Message.MessageId.ToString());
+                    Db.ldb.Put(qtime.ToString(), e.Message.MessageId.ToString());
                     //命令
                     if (e.Message.Chat.Id == G.TG.si)
                         Cmds.Enter(e.Message.Text, 839827911, false);
@@ -150,7 +190,7 @@ namespace Clansty.tianlang
                 tos = Utf.Encode(tos);
                 tos += hash;
                 qtime = await C.QQ.SendGroupMsg(targ, tos, fromqq: fwdinfo.uin);
-                Db.qtime2tgmsgid.Put(qtime.ToString(), e.Message.MessageId.ToString());
+                Db.ldb.Put(qtime.ToString(), e.Message.MessageId.ToString());
             }
         }
     }

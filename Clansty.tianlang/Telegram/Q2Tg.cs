@@ -34,7 +34,7 @@ namespace Clansty.tianlang
             {
                 var match = replyRegex.Match(msg);
                 var qtime = match.Groups[1].Value;
-                replyIdStr = Db.qtime2tgmsgid.Get(qtime);
+                replyIdStr = Db.ldb.Get(qtime);
                 msg = replyRegex.Replace(msg, "");
             }
 
@@ -85,7 +85,7 @@ namespace Clansty.tianlang
             }
 
             var msgid = message.MessageId;
-            Db.qtime2tgmsgid.Put(e.Time.ToString(), msgid.ToString());
+            Db.ldb.Put(e.Time.ToString(), msgid.ToString());
         }
     }
 }

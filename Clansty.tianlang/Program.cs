@@ -19,6 +19,11 @@ namespace Clansty.tianlang
             Console.CancelKeyPress += Exit;
             Console.Title = $@"甜狼 {C.Version}";
             var nthsBotHandler = new NthsBotEvents();
+            C.TG = new TelegramBotClient(Tg.Token);
+            C.TG.OnMessage += Tg.OnMsg;
+            Db.Init();
+            FireList.Init();
+            Timers.Init();
             C.QQ = new Corn(new CornConfig()
             {
                 ip = "172.16.100.6",
@@ -31,13 +36,9 @@ namespace Clansty.tianlang
                 },
                 logger = C.logger
             });
-            C.TG = new TelegramBotClient(Tg.Token);
-            C.TG.OnMessage += Tg.OnMsg;
-            Db.Init();
-            Timers.Init();
-            MemberList.UpdateMajor();
             C.TG.StartReceiving();
-
+            MemberList.UpdateMajor();
+            
             if (File.Exists("/srv/lw/tmp/tlupdate"))
             {
                 var oldver = File.ReadAllText("/srv/lw/tmp/tlupdate").Trim(' ', '\r', '\n');
