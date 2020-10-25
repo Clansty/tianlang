@@ -61,6 +61,18 @@ namespace Clansty.tianlang
             }
 
             msg = msg.Trim();
+            var atRegex = new Regex(@"\[@(\w+)\]");
+            if (atRegex.IsMatch(msg))
+            {
+                var match = atRegex.Match(msg);
+                var strAtqq = match.Groups[1].Value;
+                var isLong = long.TryParse(strAtqq, out var atqq);
+                if (isLong)
+                {
+                    var card = await C.QQ.GetGroupCard(e.FromGroup, atqq, e.RecvQQ);
+                    msg = atRegex.Replace(msg, "@"+card);
+                }
+            }
 
             var picRegex = new Regex(@"\[pic,hash=\w+\]");
             Message message;
