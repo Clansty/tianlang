@@ -125,6 +125,12 @@ namespace Clansty.tianlang
                 tg = -409372799,
                 includeSender = false
             },
+            new FwdInfo()
+            {
+                uin = C.self,
+                gin = G.testNew,
+                tg = G.TG.testNew
+            },
         };
 
         internal static FwdInfo Q2Tg(long uin, long gin)

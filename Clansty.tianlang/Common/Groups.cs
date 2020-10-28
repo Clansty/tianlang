@@ -20,6 +20,7 @@ namespace Clansty.tianlang
         internal const long dorm = 543652326;
         internal const long ddf = 907283835;
         internal const long wxb = 904645614;
+        internal const long testNew = 960701873;
 
         public static class TG
         {
@@ -33,6 +34,7 @@ namespace Clansty.tianlang
             internal const long mom = -1001310869627;
             internal const long dad = -324967882;
             internal const long selffwd = -263510533;
+            internal const long testNew = -439117980;
         }
 
     }
