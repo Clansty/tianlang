@@ -17,6 +17,10 @@ namespace Clansty.tianlang
         public void OnGroupMsg(GroupMsgArgs e)
         {
             Q2Tg.NewGroupMsg(e);
+            if (e.FromGroup == G.parents)
+            {
+                S.Group(G.parentsFwd, e.FromCard + ":\n" + e.Msg);
+            }
         }
 
         public void OnFriendRequest(FriendRequestArgs e)
