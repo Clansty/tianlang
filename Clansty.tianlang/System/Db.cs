@@ -28,7 +28,7 @@ namespace Clansty.tianlang
             users.PrimaryKey = new DataColumn[] { users.Columns[0] };
             persons.PrimaryKey = new DataColumn[] { persons.Columns[0] };
             var options = new Options { CreateIfMissing = true };
-            ldb = new DB(options, "/srv/lw/ldb/qtime2tgmsgid");
+            ldb = new DB(options, "/root/ldb/qtime2tgmsgid");
         }
         internal static void Commit()
         {

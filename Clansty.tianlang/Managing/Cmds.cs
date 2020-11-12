@@ -239,14 +239,14 @@ namespace Clansty.tianlang
                     {
                         RedirectStandardOutput = true,
                         RedirectStandardError = true,
-                        WorkingDirectory = "/srv/lw/NthsBot"
+                        WorkingDirectory = "/root/nthsbot"
                     });
                     p.WaitForExit();
                     var ret = p.StandardOutput.ReadToEnd() + p.StandardError.ReadToEnd();
                     if (p.ExitCode != 0)
                         throw new Exception(ret.Trim(' ', '\r', '\n'));
                     ret += "\n三秒后重启...";
-                    File.WriteAllText("/srv/lw/tmp/tlupdate", C.Version);
+                    File.WriteAllText("/tmp/tlupdate", C.Version);
                     Task.Run(() =>
                     {
                         Thread.Sleep(3000);
@@ -276,7 +276,7 @@ namespace Clansty.tianlang
                         {
                             RedirectStandardOutput = true,
                             RedirectStandardError = true,
-                            WorkingDirectory = "/srv/lw/NthsBot"
+                            WorkingDirectory = "/root/nthsbot"
                         });
 
                     else
@@ -284,7 +284,7 @@ namespace Clansty.tianlang
                         {
                             RedirectStandardOutput = true,
                             RedirectStandardError = true,
-                            WorkingDirectory = "/srv/lw/NthsBot"
+                            WorkingDirectory = "/root/nthsbot"
                         });
                     p.WaitForExit();
                     var ret = p.StandardOutput.ReadToEnd() + p.StandardError.ReadToEnd();

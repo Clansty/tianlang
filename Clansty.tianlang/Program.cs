@@ -26,8 +26,8 @@ namespace Clansty.tianlang
             Timers.Init();
             C.QQ = new Corn(new CornConfig()
             {
-                ip = "172.16.100.6",
-                listenIp = "172.16.100.1",
+                ip = "172.17.11.76",
+                listenIp = "172.17.11.73",
                 listenPort = 7284,
                 handlers = new Dictionary<long, ICornEventHandler>()
                 {
@@ -39,10 +39,10 @@ namespace Clansty.tianlang
             C.TG.StartReceiving();
             MemberList.UpdateMajor();
             
-            if (File.Exists("/srv/lw/tmp/tlupdate"))
+            if (File.Exists("/tmp/tlupdate"))
             {
-                var oldver = File.ReadAllText("/srv/lw/tmp/tlupdate").Trim(' ', '\r', '\n');
-                File.Delete("/srv/lw/tmp/tlupdate");
+                var oldver = File.ReadAllText("/tmp/tlupdate").Trim(' ', '\r', '\n');
+                File.Delete("/tmp/tlupdate");
                 S.Si($"更新已完成:\n{oldver} -> {C.Version}");
             }
 
