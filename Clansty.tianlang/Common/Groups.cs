@@ -21,6 +21,7 @@ namespace Clansty.tianlang
         internal const long ddf = 907283835;
         internal const long wxb = 904645614;
         internal const long testNew = 960701873;
+        internal const long check = 1167649253;
 
         public static class TG
         {
