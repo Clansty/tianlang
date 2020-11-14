@@ -424,7 +424,7 @@ namespace Clansty.tianlang
             }
             catch (Exception ex)
             {
-                var toSend = "发生错误\n" + ex.Message;
+                var toSend = "发生错误\n" + ex;
                 if (isMajor)
                 {
                     S.Major(toSend);

@@ -19,8 +19,13 @@ namespace Clansty.tianlang
         internal static DB ldb;
         internal static void Init()
         {
+            #if DEBUG
+            var jsonUsers = File.ReadAllText(@"C:\Users\clans\Desktop\users", Encoding.UTF8);
+            var jsonPersons = File.ReadAllText(@"C:\Users\clans\Desktop\persons", Encoding.UTF8);
+            #else
             var jsonUsers = File.ReadAllText("/root/data/users", Encoding.UTF8);
             var jsonPersons = File.ReadAllText("/root/data/persons", Encoding.UTF8);
+            #endif
             users = JsonConvert.DeserializeObject<DataTable>(jsonUsers);
             persons = JsonConvert.DeserializeObject<DataTable>(jsonPersons);
             users.PrimaryKey = new[] { users.Columns[0] };

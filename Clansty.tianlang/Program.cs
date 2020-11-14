@@ -13,17 +13,19 @@ namespace Clansty.tianlang
         /// </summary>
         static void Main()
         {
-#if DEBUG
-            Test.Do();
-#else
+// #if DEBUG
+//             Test.Do();
+// #else
             Console.CancelKeyPress += Exit;
             Console.Title = $@"甜狼 {C.Version}";
             var nthsBotHandler = new NthsBotEvents();
             C.TG = new TelegramBotClient(Tg.Token);
             C.TG.OnMessage += Tg.OnMsg;
             Db.Init();
+#if !DEBUG
             FireList.Init();
             Timers.Init();
+
             C.QQ = new Corn(new CornConfig()
             {
                 ip = "172.17.11.76",
@@ -38,7 +40,7 @@ namespace Clansty.tianlang
             });
             C.TG.StartReceiving();
             MemberList.UpdateMajor();
-            
+#endif
             if (File.Exists("/tmp/tlupdate"))
             {
                 var oldver = File.ReadAllText("/tmp/tlupdate").Trim(' ', '\r', '\n');
@@ -51,6 +53,15 @@ namespace Clansty.tianlang
                 var em = Console.ReadLine();
                 if (em is null)
                     continue;
+#if DEBUG
+                var key = (em.GetLeft(" ") == "" ? em : em.GetLeft(" ")).ToLower();
+                var act = em.GetRight(" ");
+                if (Cmds.gcmds.ContainsKey(key))
+                {
+                    var m = Cmds.gcmds[key];
+                    C.WriteLn(Cmds.gcmds[key].Func(act));
+                }
+#else
                 try
                 {
                     var key = (em.GetLeft(" ") == "" ? em : em.GetLeft(" ")).ToLower();
@@ -63,10 +74,10 @@ namespace Clansty.tianlang
                 }
                 catch (Exception ex)
                 {
-                    C.WriteLn(ex.Message, ConsoleColor.Red);
+                    C.WriteLn(ex, ConsoleColor.Red);
                 }
-            }
 #endif
+            }
         }
 
         internal static void Exit(object a = null, object b = null)

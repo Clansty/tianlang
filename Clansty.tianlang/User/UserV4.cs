@@ -270,9 +270,9 @@ namespace Clansty.tianlang
             get
             {
                 var rb = Row["bind"];
-                var b = 0;
+                long b = 0;
                 if (rb != DBNull.Value)
-                    b = (int) rb;
+                    b = (long) rb;
                 if (b == 0)
                     return null;
                 return Person.Get(b);
@@ -284,9 +284,9 @@ namespace Clansty.tianlang
             get
             {
                 var rb = Row["bind"];
-                var b = 0;
+                long b = 0;
                 if (rb != DBNull.Value)
-                    b = (int) rb;
+                    b = (long) rb;
                 if (b != 0)
                     return VerifingResult.succeed;
                 if (string.IsNullOrWhiteSpace(Name))
