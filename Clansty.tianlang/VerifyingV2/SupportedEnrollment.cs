@@ -8,14 +8,14 @@ namespace Clansty.tianlang
 {
     static class SupportedEnrollment
     {
-        static readonly List<int> list = new List<int>()
+        static readonly List<long> list = new List<long>()
         {
             2017,
             2018,
             2019,
             2020
         };
-        internal static bool Contains(int enr)
+        internal static bool Contains(long enr)
         {
             return list.Contains(enr);
         }

@@ -43,7 +43,7 @@ namespace Clansty.tianlang
 
         /// <exception cref="PersonNotFoundException"></exception>
         /// <exception cref="DuplicateNameException"></exception>
-        internal static Person Get(string name, int enrollment)
+        internal static Person Get(string name, long enrollment)
         {
             var rows = Db.persons.Select($"name = '{name.Replace("'", "''")}' AND enrollment = {enrollment}");
             if (rows.Length == 0)
@@ -54,7 +54,7 @@ namespace Clansty.tianlang
         }
 
         /// <exception cref="PersonNotFoundException"></exception>
-        internal static Person Get(int id)
+        internal static Person Get(long id)
         {
             var row = Db.persons.Rows.Find(id);
             if (row is null)
@@ -67,15 +67,15 @@ namespace Clansty.tianlang
         #region 实例成员 这些成员应该是只读的
 
         internal DataRow Row { get; }
-        internal int Id => (int) Row["id"];
+        internal long Id => (long) Row["id"];
         internal string Name => (string) Row["name"];
         internal bool Junior => (bool) Row["junior"];
         internal bool Branch => (bool) Row["branch"];
         internal bool Board => (bool) Row["board"];
         internal Sex Sex => (Sex) Row["sex"];
-        internal int Class => (int) Row["class"];
-        internal int? FormerClass => Row["former_class"] == DBNull.Value ? null : (int?) Row["former_class"];
-        internal int Enrollment => (int) Row["enrollment"];
+        internal long Class => (long) Row["class"];
+        internal long? FormerClass => Row["former_class"] == DBNull.Value ? null : (long?) Row["former_class"];
+        internal long Enrollment => (long) Row["enrollment"];
 
         #endregion
 

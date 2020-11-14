@@ -112,25 +112,25 @@ namespace Clansty.tianlang
             set => Row["junior"] = value;
         }
 
-        internal int Enrollment
+        internal long Enrollment
         {
             get
             {
                 var p = Person;
                 if (p is null)
-                    return (int) Row["enrollment"];
+                    return (long) Row["enrollment"];
                 return p.Enrollment;
             }
             set => Row["enrollment"] = value;
         }
 
-        internal int Step
+        internal long Step
         {
             get
             {
                 try
                 {
-                    return (int) Row["step"];
+                    return (long) Row["step"];
                 }
                 catch
                 {
