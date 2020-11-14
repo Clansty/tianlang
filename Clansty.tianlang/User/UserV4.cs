@@ -178,7 +178,7 @@ namespace Clansty.tianlang
                     return Status.no;
                 }
             }
-            set => Row["status"] = (int) value;
+            set => Row["status"] = (long) value;
         }
 
         internal UserType Role

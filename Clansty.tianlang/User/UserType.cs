@@ -1,6 +1,6 @@
 ﻿namespace Clansty.tianlang
 {
-    internal enum UserType
+    internal enum UserType : long
     {
         blackListed = -5,
         user = 0,
