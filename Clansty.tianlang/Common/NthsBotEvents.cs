@@ -108,6 +108,12 @@ namespace Clansty.tianlang
 
             if (e.Msg.StartsWith("点歌"))
                 NetEase.Request(e);
+            
+            if (e.FromGroup==G.check)
+            {
+                Watchdog.Msg(e);
+            }
+            
             if (e.FromGroup == G.si)
                 Cmds.Enter(e.Msg, e.FromQQ, false);
 

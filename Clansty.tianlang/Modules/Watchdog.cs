@@ -44,7 +44,7 @@ namespace Clansty.tianlang
 
         private static async void Timer()
         {
-            await Task.Delay(6000);
+            await Task.Delay(20000);
             if (lasterrtime != 0)
             {
                 var now = DateTime.Now;
