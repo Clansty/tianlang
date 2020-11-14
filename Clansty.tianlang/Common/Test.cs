@@ -1,5 +1,4 @@
-﻿using MySql.Data.MySqlClient;
-using SpreadsheetLight;
+﻿using SpreadsheetLight;
 using System;
 using System.Data;
 using System.Text.RegularExpressions;
