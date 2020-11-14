@@ -3,6 +3,8 @@ using SpreadsheetLight;
 using System;
 using System.Data;
 using System.Text.RegularExpressions;
+using Newtonsoft.Json;
+using File = System.IO.File;
 
 namespace Clansty.tianlang
 {
@@ -10,11 +12,11 @@ namespace Clansty.tianlang
     {
         public static void Do()
         {
-            var reply = new Regex(@"\[Reply,.+,SendTime=(\d+).*\]");
-            var sample =
-                "[Reply,Content=Clansty: 测试一下回复,SendQQID=1980853671,Req=5489,Random=72057595639747560,SendTime=1601795347] b";
-            var a = reply.Match(sample);
-
+            Db.Init();
+            var jsonUsers = JsonConvert.SerializeObject(Db.users);
+            var jsonPersons = JsonConvert.SerializeObject(Db.persons);
+            File.WriteAllText(@"C:\Users\clans\Desktop\users", jsonUsers);
+            File.WriteAllText(@"C:\Users\clans\Desktop\persons", jsonPersons);
         }
 
         static DataTable XlsxToDataTable(string vFilePath)

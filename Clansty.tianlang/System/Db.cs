@@ -1,46 +1,45 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Data;
+using System.IO;
+using System.Text;
 using LevelDB;
+using Newtonsoft.Json;
 
 namespace Clansty.tianlang
 {
     static class Db
     {
 #if DEBUG
-        const string connStr = "server = cdb-pi7fvpvu.cd.tencentcdb.com; user = root; database = tianlang_dev; port = 10058; password = gvm63Vbq9rT9uH29";
+        const string connStr = "server = cdb-pi7fvpvu.cd.tencentcdb.com; user = root; database = tianlang; port = 10058; password = gvm63Vbq9rT9uH29";
 #else
         const string connStr = "server = cdb-pi7fvpvu.cd.tencentcdb.com; user = root; database = tianlang; port = 10058; password = gvm63Vbq9rT9uH29";
 #endif
-        internal static DataTable users = new DataTable();
-        internal static DataTable persons = new DataTable();
-        internal static DB ldb = null;
-        private static MySqlDataAdapter daUsers = null;
+        internal static DataTable users;
+        internal static DataTable persons;
+        internal static readonly DB ldb;
         internal static void Init()
         {
-            const string sqlUsers = "SELECT * FROM users";
-            const string sqlPersons = "SELECT * FROM persons";
-            daUsers = new MySqlDataAdapter(sqlUsers, connStr);
-            var daPersons = new MySqlDataAdapter(sqlPersons, connStr);
-            new MySqlCommandBuilder(daUsers);
-            daUsers.FillAsync(users);
-            daPersons.FillAsync(persons);
-            users.PrimaryKey = new DataColumn[] { users.Columns[0] };
-            persons.PrimaryKey = new DataColumn[] { persons.Columns[0] };
+            var jsonUsers = File.ReadAllText("/root/data/users", Encoding.UTF8);
+            var jsonPersons = File.ReadAllText("/root/data/persons", Encoding.UTF8);
+            users = JsonConvert.DeserializeObject<DataTable>(jsonUsers);
+            persons = JsonConvert.DeserializeObject<DataTable>(jsonPersons);
+            users.PrimaryKey = new[] { users.Columns[0] };
+            persons.PrimaryKey = new[] { persons.Columns[0] };
+#if !DEBUG
             var options = new Options { CreateIfMissing = true };
             ldb = new DB(options, "/root/ldb/qtime2tgmsgid");
+#endif
         }
         internal static void Commit()
         {
-            //try
-            //{
-                daUsers.Update(users);
-                C.WriteLn("数据库同步成功");
-            //}
-            //catch (Exception ex)
-            //{
-            //    C.WriteLn(ex.ToString(), ConsoleColor.Red);                
-            //}
+            var jsonUsers = JsonConvert.SerializeObject(users);
+            var jsonPersons = JsonConvert.SerializeObject(persons);
+            File.WriteAllText("/root/data/users", jsonUsers);
+            File.WriteAllText("/root/data/persons", jsonPersons);
+            var dt = DateTime.Now.ToString("MM.dd.yyyy.HH.mm.ss");
+            File.WriteAllText($"/root/data/{dt}.users", jsonUsers);
+            File.WriteAllText($"/root/data/{dt}.persons", jsonPersons);
         }
     }
 }
