@@ -42,8 +42,8 @@ namespace Clansty.tianlang
             File.WriteAllText("/root/data/users", jsonUsers);
             File.WriteAllText("/root/data/persons", jsonPersons);
             var dt = DateTime.Now.ToString("MM.dd.yyyy.HH.mm.ss");
-            File.WriteAllText($"/root/data/{dt}.users", jsonUsers);
-            File.WriteAllText($"/root/data/{dt}.persons", jsonPersons);
+            File.WriteAllText($"/root/data/bak/{dt}.users", jsonUsers);
+            File.WriteAllText($"/root/data/bak/{dt}.persons", jsonPersons);
         }
     }
 }
