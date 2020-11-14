@@ -19,6 +19,7 @@ namespace Clansty.tianlang
             Console.CancelKeyPress += Exit;
             Console.Title = $@"甜狼 {C.Version}";
             var nthsBotHandler = new NthsBotEvents();
+            var privateHandler = new PrivateEvents();
             C.TG = new TelegramBotClient(Tg.Token);
             C.TG.OnMessage += Tg.OnMsg;
             Db.Init();
@@ -34,7 +35,8 @@ namespace Clansty.tianlang
                 handlers = new Dictionary<long, ICornEventHandler>()
                 {
                     [C.self] = nthsBotHandler,
-                    [839827911] = new PrivateEvents()
+                    [839827911] = privateHandler,
+                    [2603367939] = privateHandler
                 },
                 logger = C.logger
             });
