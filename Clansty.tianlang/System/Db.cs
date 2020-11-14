@@ -16,7 +16,7 @@ namespace Clansty.tianlang
 #endif
         internal static DataTable users;
         internal static DataTable persons;
-        internal static readonly DB ldb;
+        internal static DB ldb;
         internal static void Init()
         {
             var jsonUsers = File.ReadAllText("/root/data/users", Encoding.UTF8);
