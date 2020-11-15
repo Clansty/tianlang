@@ -83,25 +83,23 @@ namespace Clansty.tianlang
             }
 
             var picRegex = new Regex(@"\[pic,hash=\w+\]");
-            var grafRegex = new Regex(@"\[Graffiti,.+\]");
-            var spRegex = new Regex(@"\[picShow,.+\]");
-            var bfRegex = new Regex(@"\[bigFace,.+\]");
             var audioRegex = new Regex(@"\[Audio,.+,url=(.+),.*\]");
             Message message;
-            if (picRegex.IsMatch(msg) || grafRegex.IsMatch(msg) || spRegex.IsMatch(msg) || bfRegex.IsMatch(msg))
+            if (picRegex.IsMatch(msg) || msg.StartsWith("[Graffiti") || msg.StartsWith("[picShow") || msg.StartsWith("[bigFace"))
             {
                 // photo
                 var hash = "";
-                if(picRegex.IsMatch(msg))
+                if (picRegex.IsMatch(msg))
+                {
                     hash = picRegex.Match(msg).Groups[0].Value;
-                else if (grafRegex.IsMatch(msg))
-                    hash = grafRegex.Match(msg).Groups[0].Value;
-                else if (spRegex.IsMatch(msg))
-                    hash = spRegex.Match(msg).Groups[0].Value;
-                else if (bfRegex.IsMatch(msg))
-                    hash = bfRegex.Match(msg).Groups[0].Value;
+                    msg = picRegex.Replace(msg, "");
+                }
+                else
+                {
+                    hash = msg;
+                    msg = "";
+                }
                 var purl = C.QQ.GetPicUrl(hash, e.FromGroup);
-                msg = picRegex.Replace(msg, "");
                 msg = msg.Trim(' ', '\r', '\n', '\t');
                 if (!string.IsNullOrEmpty(msg))
                     msg = "\n" + Utf.Decode(msg);
@@ -111,7 +109,8 @@ namespace Clansty.tianlang
                     replyToMessageId: replyId);
             }
             else if (audioRegex.IsMatch(msg))
-            {//voice
+            {
+                //voice
                 var url = audioRegex.Match(msg).Groups[1].Value;
                 var path = "/root/silk/" + DateTime.Now.ToBinary();
                 new WebClient().DownloadFile(url, path);
