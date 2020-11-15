@@ -70,6 +70,10 @@ namespace Clansty.tianlang
                 if (isLong)
                 {
                     var card = await C.QQ.GetGroupCard(e.FromGroup, atqq, e.RecvQQ);
+                    if (card=="")
+                    {
+                        card = await C.QQ.GetNick(atqq, true, e.RecvQQ);
+                    }
                     msg = atRegex.Replace(msg, "@"+card);
                 }
             }
