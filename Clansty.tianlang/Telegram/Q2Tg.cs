@@ -85,7 +85,7 @@ namespace Clansty.tianlang
             var picRegex = new Regex(@"\[pic,hash=\w+\]");
             var audioRegex = new Regex(@"\[Audio,.+,url=(.+),.*\]");
             Message message;
-            if (picRegex.IsMatch(msg) || msg.StartsWith("[Graffiti") || msg.StartsWith("[picShow") || msg.StartsWith("[bigFace"))
+            if (picRegex.IsMatch(msg) || msg.StartsWith("[Graffiti") || msg.StartsWith("[picShow") || msg.StartsWith("[bigFace") || msg.StartsWith("[flashPic"))
             {
                 // photo
                 var hash = "";
