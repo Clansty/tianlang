@@ -106,6 +106,8 @@ namespace Clansty.tianlang
             {
                 var url = picRegex.Match(msg).Groups[0].Value;
                 var path = "/root/silk" + DateTime.Now.ToBinary();
+                C.WriteLn(url);
+                C.WriteLn(path);
                 new WebClient().DownloadFile(url, path);
                 var oggpath = Silk.decode(path);
                 message = await C.TG.SendVoiceAsync(fwdinfo.tg, oggpath, from + ":",

@@ -21,14 +21,14 @@ namespace Clansty.tianlang
             };
             t.AutoReset = true;
             t.Enabled = true;
-            t = new Timer(1000 * 60 * 10);
-            t.Elapsed += async (_, __) =>
+            u = new Timer(1000 * 60 * 10);
+            u.Elapsed += async (_, __) =>
             {
                 Watchdog.RunCheck();
                 Db.Commit();
             };
-            t.AutoReset = true;
-            t.Enabled = true;
+            u.AutoReset = true;
+            u.Enabled = true;
         }
     }
 }
