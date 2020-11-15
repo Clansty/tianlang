@@ -17,7 +17,6 @@ namespace Clansty.tianlang
             ["[file"] = "【文件】",
             ["[redpack"] = "【红包】",
             ["{\"app\":"] = "【卡片消息】",
-            ["[bigFace"] = "【大表情】",
             ["[litleVideo,"] = "【小视频】"
         };
 
