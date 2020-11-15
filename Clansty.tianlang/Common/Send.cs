@@ -31,13 +31,6 @@
                 TG.Si(msg);
         }
 
-        internal static void Test(string msg, bool syncToTg = true)
-        {
-            Group(G.test, msg);
-            if (syncToTg)
-                TG.Test(msg);
-        }
-
         internal static void IDE(string msg, bool syncToTg = true)
         {
             Group(G.iDE, msg);
@@ -57,7 +50,6 @@
 
             internal static void Major(string msg) => Text(G.TG.major, msg);
             internal static void Si(string msg) => Text(G.TG.si, msg);
-            internal static void Test(string msg) => Text(G.TG.test, msg);
             internal static void IDE(string msg) => Text(G.TG.iDE, msg);
         }
     }

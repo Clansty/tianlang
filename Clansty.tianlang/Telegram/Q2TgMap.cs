@@ -15,12 +15,6 @@ namespace Clansty.tianlang
             new FwdInfo()
             {
                 uin = C.self,
-                gin = G.test,
-                tg = G.TG.test
-            },
-            new FwdInfo()
-            {
-                uin = C.self,
                 gin = G.si,
                 tg = G.TG.si
             },

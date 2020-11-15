@@ -12,7 +12,6 @@ namespace Clansty.tianlang
         internal const long major = 646751705;
         internal const long si = 690696283;
 #endif
-        internal const long test = 828390342;
         internal const long iDE = 342975953;
         internal const long g2020 = 1132458399;
         internal const long parents = 1034335441;
@@ -26,7 +25,6 @@ namespace Clansty.tianlang
         public static class TG
         {
             internal const long iDE = -1001218396541;
-            internal const long test = -1001476579335;
             internal const long si = -1001198326304;
             internal const long major = -1001414122709;
             internal const long dorm = -1001499507096;
