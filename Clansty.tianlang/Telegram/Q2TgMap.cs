@@ -129,7 +129,8 @@ namespace Clansty.tianlang
             {
                 uin = C.self,
                 gin = G.testNew,
-                tg = G.TG.testNew
+                tg = G.TG.testNew,
+                includeSender = false
             },
         };
 
