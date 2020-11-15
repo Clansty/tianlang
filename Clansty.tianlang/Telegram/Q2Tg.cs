@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using CornSDK;
@@ -8,16 +9,16 @@ namespace Clansty.tianlang
 {
     static class Q2Tg
     {
-        static readonly string[] botCodes =
+        static readonly Dictionary<string, string> botCodes = new Dictionary<string, string>()
         {
-            "[Audio",
-            "[file",
-            "[redpack",
-            "{\"app\":",
-            "[bigFace",
-            "[Graffiti",
-            "[picShow",
-            "[litleVideo,"
+            ["[Audio"] = "【语音】",
+            ["[file"] = "【文件】",
+            ["[redpack"] = "【红包】",
+            ["{\"app\":"] = "【卡片消息】",
+            ["[bigFace"] = "【大表情】",
+            ["[Graffiti"] = "【涂鸦】",
+            ["[picShow"] = "【秀图】",
+            ["[litleVideo,"]= "【小视频】"
         };
 
         public static async Task NewGroupMsg(GroupMsgArgs e)
@@ -56,8 +57,11 @@ namespace Clansty.tianlang
 
             foreach (var i in botCodes)
             {
-                if (msg.StartsWith(i))
-                    return;
+                if (msg.StartsWith(i.Key))
+                {
+                    msg = i.Value;
+                    break;
+                }
             }
 
             msg = msg.Trim();
