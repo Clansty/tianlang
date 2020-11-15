@@ -104,7 +104,7 @@ namespace Clansty.tianlang
             }
             else if (audioRegex.IsMatch(msg))
             {
-                var url = audioRegex.Match(msg).Groups[0].Value;
+                var url = audioRegex.Match(msg).Groups[1].Value;
                 var path = "/root/silk/" + DateTime.Now.ToBinary();
                 C.WriteLn(url);
                 C.WriteLn(path);
