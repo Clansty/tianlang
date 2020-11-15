@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using CornSDK;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
+using File = System.IO.File;
 
 namespace Clansty.tianlang
 {
@@ -110,7 +111,7 @@ namespace Clansty.tianlang
                 C.WriteLn(path);
                 new WebClient().DownloadFile(url, path);
                 var oggpath = Silk.decode(path);
-                message = await C.TG.SendVoiceAsync(fwdinfo.tg, oggpath, from + ":",
+                message = await C.TG.SendVoiceAsync(fwdinfo.tg, File.OpenRead(oggpath), from + ":",
                     replyToMessageId: replyId);
             }
             else
