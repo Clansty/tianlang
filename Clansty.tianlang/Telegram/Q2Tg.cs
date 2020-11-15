@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using CornSDK;
 using Telegram.Bot.Types;
+using Telegram.Bot.Types.Enums;
 
 namespace Clansty.tianlang
 {
@@ -11,14 +13,14 @@ namespace Clansty.tianlang
     {
         static readonly Dictionary<string, string> botCodes = new Dictionary<string, string>()
         {
-            ["[Audio"] = "【语音】",
+            // ["[Audio"] = "【语音】",
             ["[file"] = "【文件】",
             ["[redpack"] = "【红包】",
             ["{\"app\":"] = "【卡片消息】",
             ["[bigFace"] = "【大表情】",
             ["[Graffiti"] = "【涂鸦】",
             ["[picShow"] = "【秀图】",
-            ["[litleVideo,"]= "【小视频】"
+            ["[litleVideo,"] = "【小视频】"
         };
 
         public static async Task NewGroupMsg(GroupMsgArgs e)
@@ -74,18 +76,21 @@ namespace Clansty.tianlang
                 if (isLong)
                 {
                     var card = await C.QQ.GetGroupCard(e.FromGroup, atqq, e.RecvQQ);
-                    if (card=="")
+                    if (card == "")
                     {
                         card = await C.QQ.GetNick(atqq, true, e.RecvQQ);
                     }
-                    msg = atRegex.Replace(msg, "@"+card);
+
+                    msg = atRegex.Replace(msg, "@" + card);
                 }
             }
 
             var picRegex = new Regex(@"\[pic,hash=\w+\]");
+            var audioRegex = new Regex(@"\[Audio,.+,url=(.+),.*\]");
             Message message;
             if (picRegex.IsMatch(msg))
             {
+                // photo
                 var hash = picRegex.Match(msg).Groups[0].Value;
                 var purl = C.QQ.GetPicUrl(hash, e.FromGroup);
                 msg = picRegex.Replace(msg, "");
@@ -97,8 +102,18 @@ namespace Clansty.tianlang
                     from + ":" + msg,
                     replyToMessageId: replyId);
             }
+            else if (audioRegex.IsMatch(msg))
+            {
+                var url = picRegex.Match(msg).Groups[0].Value;
+                var path = "/root/silk" + DateTime.Now.ToBinary();
+                new WebClient().DownloadFile(url, path);
+                var oggpath = Silk.decode(path);
+                message = await C.TG.SendVoiceAsync(fwdinfo.tg, oggpath, from + ":",
+                    replyToMessageId: replyId);
+            }
             else
             {
+                // text
                 message = await C.TG.SendTextMessageAsync(fwdinfo.tg,
                     from + ":\n" + Utf.Decode(msg),
                     replyToMessageId: replyId);
