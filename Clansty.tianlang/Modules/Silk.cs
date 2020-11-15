@@ -12,8 +12,8 @@ namespace Clansty.tianlang
             Process.Start(decoder, $"{path} {path}.pcm").WaitForExit();
             Process.Start("ffmpeg", 
                 $"-f s16le -ar 24000 -ac 1 -i {path}.pcm -c:a libopus {path}.ogg").WaitForExit();
-            File.Delete("{path}.pcm");
             File.Delete(path);
+            File.Delete("{path}.pcm");
             return path + ".ogg";
         }
     }

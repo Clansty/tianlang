@@ -14,13 +14,10 @@ namespace Clansty.tianlang
     {
         static readonly Dictionary<string, string> botCodes = new Dictionary<string, string>()
         {
-            // ["[Audio"] = "【语音】",
             ["[file"] = "【文件】",
             ["[redpack"] = "【红包】",
             ["{\"app\":"] = "【卡片消息】",
             ["[bigFace"] = "【大表情】",
-            ["[Graffiti"] = "【涂鸦】",
-            ["[picShow"] = "【秀图】",
             ["[litleVideo,"] = "【小视频】"
         };
 
@@ -87,12 +84,23 @@ namespace Clansty.tianlang
             }
 
             var picRegex = new Regex(@"\[pic,hash=\w+\]");
+            var grafRegex = new Regex(@"\[Graffiti,.+\]");
+            var spRegex = new Regex(@"\[picShow,.+\]");
+            var bfRegex = new Regex(@"\[bigFace,.+\]");
             var audioRegex = new Regex(@"\[Audio,.+,url=(.+),.*\]");
             Message message;
-            if (picRegex.IsMatch(msg))
+            if (picRegex.IsMatch(msg) || grafRegex.IsMatch(msg))
             {
                 // photo
-                var hash = picRegex.Match(msg).Groups[0].Value;
+                var hash = "";
+                if(picRegex.IsMatch(msg))
+                    hash = picRegex.Match(msg).Groups[0].Value;
+                else if (grafRegex.IsMatch(msg))
+                    hash = grafRegex.Match(msg).Groups[0].Value;
+                else if (spRegex.IsMatch(msg))
+                    hash = spRegex.Match(msg).Groups[0].Value;
+                else if (bfRegex.IsMatch(msg))
+                    hash = bfRegex.Match(msg).Groups[0].Value;
                 var purl = C.QQ.GetPicUrl(hash, e.FromGroup);
                 msg = picRegex.Replace(msg, "");
                 msg = msg.Trim(' ', '\r', '\n', '\t');
@@ -104,11 +112,9 @@ namespace Clansty.tianlang
                     replyToMessageId: replyId);
             }
             else if (audioRegex.IsMatch(msg))
-            {
+            {//voice
                 var url = audioRegex.Match(msg).Groups[1].Value;
                 var path = "/root/silk/" + DateTime.Now.ToBinary();
-                C.WriteLn(url);
-                C.WriteLn(path);
                 new WebClient().DownloadFile(url, path);
                 var oggpath = Silk.decode(path);
                 message = await C.TG.SendVoiceAsync(fwdinfo.tg, File.OpenRead(oggpath), from + ":",
