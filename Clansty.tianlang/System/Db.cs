@@ -38,12 +38,9 @@ namespace Clansty.tianlang
         internal static void Commit()
         {
             var jsonUsers = JsonConvert.SerializeObject(users);
-            var jsonPersons = JsonConvert.SerializeObject(persons);
             File.WriteAllText("/root/data/users", jsonUsers);
-            File.WriteAllText("/root/data/persons", jsonPersons);
             var dt = DateTime.Now.ToString("MM.dd.yyyy.HH.mm.ss");
             File.WriteAllText($"/root/data/bak/{dt}.users", jsonUsers);
-            File.WriteAllText($"/root/data/bak/{dt}.persons", jsonPersons);
         }
     }
 }
