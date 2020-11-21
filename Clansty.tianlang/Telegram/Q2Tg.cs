@@ -65,9 +65,8 @@ namespace Clansty.tianlang
 
             msg = msg.Trim();
             var atRegex = new Regex(@"\[@(\w+)\]");
-            if (atRegex.IsMatch(msg))
+            foreach (Match match in atRegex.Matches(msg))
             {
-                var match = atRegex.Match(msg);
                 var strAtqq = match.Groups[1].Value;
                 var isLong = long.TryParse(strAtqq, out var atqq);
                 if (isLong)
@@ -78,7 +77,7 @@ namespace Clansty.tianlang
                         card = await C.QQ.GetNick(atqq, true, e.RecvQQ);
                     }
 
-                    msg = atRegex.Replace(msg, "@" + card);
+                    msg = msg.Replace(match.Value, "@" + card);
                 }
             }
 
@@ -88,10 +87,10 @@ namespace Clansty.tianlang
             if (picRegex.IsMatch(msg) || msg.StartsWith("[Graffiti") || msg.StartsWith("[picShow") || msg.StartsWith("[bigFace") || msg.StartsWith("[flashPic"))
             {//            ✓                                ✗                              ？                             ✗                             ✓
                 // photo
-                var hash = "";
+                string hash;
                 if (picRegex.IsMatch(msg))
                 {
-                    hash = picRegex.Match(msg).Groups[0].Value;
+                    hash = picRegex.Match(msg).Value;
                     msg = picRegex.Replace(msg, "");
                 }
                 else
