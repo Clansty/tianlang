@@ -53,15 +53,6 @@ namespace Clansty.tianlang
             if (msg.Contains("<?xml"))
                 msg = msg.GetLeft("<?xml");
 
-            foreach (var i in botCodes)
-            {
-                if (msg.StartsWith(i.Key))
-                {
-                    msg = i.Value;
-                    break;
-                }
-            }
-
             msg = msg.Trim();
             var atRegex = new Regex(@"\[@(\w+)\]");
             foreach (Match match in atRegex.Matches(msg))
@@ -79,18 +70,41 @@ namespace Clansty.tianlang
                     msg = msg.Replace(match.Value, "@" + card);
                 }
             }
-            var biliRegex=new Regex(@"{.*""desc"":""哔哩哔哩"".*""prompt"":""\[QQ小程序\]哔哩哔哩"".*""qqdocurl"":""(https:\\/\\/b23.tv\\/.*\?).*"".*}");
+
+            var biliRegex =
+                new Regex(
+                    @"{.*""desc"":""哔哩哔哩"".*""prompt"":""\[QQ小程序\]哔哩哔哩"".*""qqdocurl"":""(https:\\/\\/b23.tv\\/.*\?).*"".*}");
             if (biliRegex.IsMatch(msg))
             {
                 msg = biliRegex.Match(msg).Groups[1].Value;
                 msg = msg.Replace("\\", "");
             }
 
+            var jsonLinkRegex =
+                new Regex(@"{.*""app"":""com.tencent.structmsg"".*""jumpUrl"":""(https?:\\/\\/.*)"".*}");
+            if (jsonLinkRegex.IsMatch(msg))
+            {
+                msg = jsonLinkRegex.Match(msg).Groups[1].Value;
+                msg = msg.Replace("\\/", "/");
+            }
+
+            foreach (var i in botCodes)
+            {
+                //Special bot codes that can't be proceeded by above code will be replaced
+                if (msg.StartsWith(i.Key))
+                {
+                    msg = i.Value;
+                    break;
+                }
+            }
+
             var picRegex = new Regex(@"\[pic,hash=\w+\]");
             var audioRegex = new Regex(@"\[Audio,.+,url=(.+),.*\]");
             Message message;
-            if (picRegex.IsMatch(msg) || msg.StartsWith("[Graffiti") || msg.StartsWith("[picShow") || msg.StartsWith("[bigFace") || msg.StartsWith("[flashPic"))
-            {//            ✓                                ✗                              ？                             ✗                             ✓
+            if (picRegex.IsMatch(msg) || msg.StartsWith("[Graffiti") || msg.StartsWith("[picShow") ||
+                msg.StartsWith("[bigFace") || msg.StartsWith("[flashPic"))
+            {
+                //            ✓                                ✗                              ？                             ✗                             ✓
                 // photo
                 string hash;
                 if (picRegex.IsMatch(msg))
@@ -103,6 +117,7 @@ namespace Clansty.tianlang
                     hash = msg;
                     msg = "";
                 }
+
                 var purl = C.QQ.GetPicUrl(hash, e.FromGroup);
                 msg = msg.Trim(' ', '\r', '\n', '\t');
                 if (!string.IsNullOrEmpty(msg))
