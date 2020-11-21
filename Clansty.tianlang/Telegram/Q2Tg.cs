@@ -142,7 +142,7 @@ namespace Clansty.tianlang
                 var match = videoRegex.Match(msg);
                 var param = match.Groups[1].Value;
                 var hash1 = match.Groups[2].Value;
-                var url = C.QQ.GetVideoUrl(e.RecvQQ, e.FromGroup, e.FromQQ, param, hash1);
+                var url = await C.QQ.GetVideoUrl(e.RecvQQ, e.FromGroup, e.FromQQ, param, hash1);
                 message = await C.TG.SendTextMessageAsync(fwdinfo.tg,
                     from + ":\n" + url,
                     replyToMessageId: replyId);
