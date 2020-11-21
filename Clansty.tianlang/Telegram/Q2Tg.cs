@@ -5,7 +5,6 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using CornSDK;
 using Telegram.Bot.Types;
-using Telegram.Bot.Types.Enums;
 using File = System.IO.File;
 
 namespace Clansty.tianlang
@@ -79,6 +78,12 @@ namespace Clansty.tianlang
 
                     msg = msg.Replace(match.Value, "@" + card);
                 }
+            }
+            var biliRegex=new Regex(@"{.*""desc"":""哔哩哔哩"".*""prompt"":""\[QQ小程序\]哔哩哔哩"".*""qqdocurl"":""(https:\\/\\/b23.tv\\/.*\?).*"".*}");
+            if (biliRegex.IsMatch(msg))
+            {
+                msg = biliRegex.Match(msg).Groups[1].Value;
+                msg = msg.Replace("\\", "");
             }
 
             var picRegex = new Regex(@"\[pic,hash=\w+\]");
