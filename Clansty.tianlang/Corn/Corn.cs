@@ -9,6 +9,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Clansty.tianlang;
+using Newtonsoft.Json;
 
 namespace CornSDK
 {
@@ -577,8 +578,9 @@ namespace CornSDK
                 photo = pic
             })).ret;
 
-        public async Task<string> GetVideoUrl(long loginqq, long fromgroup, long fromqq, string param, string hash1) =>
-            (await Post<dynamic>(
+        public async Task<string> GetVideoUrl(long loginqq, long fromgroup, long fromqq, string param, string hash1)
+        {
+            var ret = (await Post<dynamic>(
                 "getvideourl", new
                 {
                     loginqq,
@@ -588,6 +590,10 @@ namespace CornSDK
                     hash1,
                     fn = DateTime.Now.ToBinary() + ".mp4"
                 })).ret;
+            var rret = JsonConvert.DeserializeObject<dynamic>(ret);
+            string url = rret.downloadurl;
+            return url.Replace("\\/", "/");
+        }
 
         //TODO rest
 

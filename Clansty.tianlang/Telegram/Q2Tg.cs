@@ -86,7 +86,7 @@ namespace Clansty.tianlang
                 msg = jsonLinkRegex.Match(msg).Groups[1].Value;
                 msg = msg.Replace("\\/", "/");
             }
-            
+
             foreach (var i in botCodes)
             {
                 //Special bot codes that can't be proceeded by above code will be replaced
@@ -99,9 +99,10 @@ namespace Clansty.tianlang
 
             var picRegex = new Regex(@"\[pic,hash=\w+\]");
             var audioRegex = new Regex(@"\[Audio,.+,url=(.+),.*\]");
-            var videoRegex=new Regex(@"\[litleVideo,linkParam=(\w*),hash1=(\w*).*]");
+            var videoRegex = new Regex(@"\[litleVideo,linkParam=(\w*),hash1=(\w*).*]");
             Message message;
-            if (picRegex.IsMatch(msg) || msg.StartsWith("[Graffiti") || msg.StartsWith("[picShow") || msg.StartsWith("[bigFace") || msg.StartsWith("[flashPic"))
+            if (picRegex.IsMatch(msg) || msg.StartsWith("[Graffiti") || msg.StartsWith("[picShow") ||
+                msg.StartsWith("[bigFace") || msg.StartsWith("[flashPic"))
             {
                 //        ✓                                ✗                              ？                             ✗                             ✓
                 // photo
@@ -142,9 +143,10 @@ namespace Clansty.tianlang
                 var match = videoRegex.Match(msg);
                 var param = match.Groups[1].Value;
                 var hash1 = match.Groups[2].Value;
-                var url = await C.QQ.GetVideoUrl(e.RecvQQ, e.FromGroup, e.FromQQ, param, hash1);
-                message = await C.TG.SendTextMessageAsync(fwdinfo.tg,
-                    from + ":\n" + url,
+                var url = C.QQ.GetVideoUrl(e.RecvQQ, e.FromGroup, e.FromQQ, param, hash1);
+                message = await C.TG.SendVideoAsync(fwdinfo.tg,
+                    url.Result,
+                    caption: from + ":",
                     replyToMessageId: replyId);
             }
             else
