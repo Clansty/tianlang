@@ -3,6 +3,7 @@ using Flurl.Http;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -575,6 +576,18 @@ namespace CornSDK
                 fromqq,
                 photo = pic
             })).ret;
+
+        public async Task<string> GetVideoUrl(long loginqq, long fromgroup, long fromqq, string param, string hash1) =>
+            (await Post<dynamic>(
+                "getvideourl", new
+                {
+                    loginqq,
+                    fromgroup,
+                    fromqq,
+                    param,
+                    hash1,
+                    fn = DateTime.Now.ToBinary() + ".mp4"
+                })).ret;
 
         //TODO rest
 
