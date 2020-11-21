@@ -580,7 +580,7 @@ namespace CornSDK
 
         public async Task<string> GetVideoUrl(long loginqq, long fromgroup, long fromqq, string param, string hash1)
         {
-            var ret = (await Post<dynamic>(
+            string ret = (await Post<dynamic>(
                 "getvideourl", new
                 {
                     loginqq,
@@ -592,6 +592,7 @@ namespace CornSDK
                 })).ret;
             var rret = JsonConvert.DeserializeObject<dynamic>(ret);
             string url = rret.downloadurl;
+            C.WriteLn(url);
             return url.Replace("\\/", "/");
         }
 
