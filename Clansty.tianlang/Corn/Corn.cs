@@ -592,8 +592,7 @@ namespace CornSDK
                 })).ret;
             var rret = JsonConvert.DeserializeObject<dynamic>(ret);
             string url = rret.downloadurl;
-            C.WriteLn(url);
-            return url.Replace("\\/", "/");
+            return url;
         }
 
         //TODO rest
