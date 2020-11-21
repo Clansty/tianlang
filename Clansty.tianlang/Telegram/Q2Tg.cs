@@ -81,7 +81,7 @@ namespace Clansty.tianlang
             }
 
             var jsonLinkRegex =
-                new Regex(@"{.*""app"":""com.tencent.structmsg"".*""jumpUrl"":""(https?:\\/\\/.*)"".*}");
+                new Regex(@"{.*""app"":""com.tencent.structmsg"".*""jumpUrl"":""(https?:\\/\\/[^"",]*)"".*}");
             if (jsonLinkRegex.IsMatch(msg))
             {
                 msg = jsonLinkRegex.Match(msg).Groups[1].Value;
