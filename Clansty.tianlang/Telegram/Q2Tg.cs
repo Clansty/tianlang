@@ -144,8 +144,11 @@ namespace Clansty.tianlang
                 var param = match.Groups[1].Value;
                 var hash1 = match.Groups[2].Value;
                 var url = C.QQ.GetVideoUrl(e.RecvQQ, e.FromGroup, e.FromQQ, param, hash1);
+                C.WriteLn(url.Result);
+                var path = "/root/silk" + DateTime.Now.ToBinary() + ".mp4";
+                new WebClient().DownloadFile(url.Result, path);
                 message = await C.TG.SendVideoAsync(fwdinfo.tg,
-                    url.Result,
+                    File.OpenRead(path),
                     caption: from + ":",
                     replyToMessageId: replyId);
             }
