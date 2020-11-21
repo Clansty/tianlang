@@ -16,7 +16,6 @@ namespace Clansty.tianlang
             ["[file"] = "【文件】",
             ["[redpack"] = "【红包】",
             ["{\"app\":"] = "【卡片消息】",
-            ["[litleVideo,"] = "【小视频】"
         };
 
         public static async Task NewGroupMsg(GroupMsgArgs e)
