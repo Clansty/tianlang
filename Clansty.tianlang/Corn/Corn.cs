@@ -597,16 +597,16 @@ namespace CornSDK
         public async Task<string> GetFileUrl(string loginqq, string fromgroup, string id, string fn)
         {
             string ret = (await Post<dynamic>(
-                "getvideourl", new
+                "getfileurl", new
                 {
                     loginqq,
                     fromgroup,
                     id,
                     fn
                 })).ret;
-            var rret = JsonConvert.DeserializeObject<dynamic>(ret);
-            string url = rret.downloadurl;
-            return url;
+            // var rret = JsonConvert.DeserializeObject<dynamic>(ret);
+            // string url = rret.downloadurl;
+            return ret;
         }
 
         //TODO rest
