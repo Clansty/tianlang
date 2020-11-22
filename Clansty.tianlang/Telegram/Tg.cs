@@ -43,6 +43,17 @@ namespace Clansty.tianlang
                             return;
                         case "/start":
                             if (e.Message.From.Id != e.Message.Chat.Id) return;
+                            if (split.Length == 2)
+                            {
+                                var param = split[1];
+                                var file = param.Split(':');
+                                if (file.Length == 4)
+                                {
+                                    var link = await C.QQ.GetFileUrl(file[1], file[2], file[0], file[3]);
+                                    C.TG.SendTextMessageAsync(e.Message.Chat, link);
+                                    return;
+                                }
+                            }
                             C.TG.SendTextMessageAsync(e.Message.Chat,
                                 "请发送绑定码");
                             return;

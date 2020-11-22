@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using CornSDK;
 using Telegram.Bot.Types;
+using Telegram.Bot.Types.ReplyMarkups;
 using File = System.IO.File;
 
 namespace Clansty.tianlang
@@ -13,7 +14,6 @@ namespace Clansty.tianlang
     {
         static readonly Dictionary<string, string> botCodes = new Dictionary<string, string>()
         {
-            ["[file"] = "【文件】",
             ["[redpack"] = "【红包】",
             ["{\"app\":"] = "【卡片消息】",
         };
@@ -100,11 +100,14 @@ namespace Clansty.tianlang
             var picRegex = new Regex(@"\[pic,hash=\w+\]");
             var audioRegex = new Regex(@"\[Audio,.+,url=(.+),.*\]");
             var videoRegex = new Regex(@"\[litleVideo,linkParam=(\w*),hash1=(\w*).*]");
+            var fileRegex = new Regex(
+                @"\[file,fileId=(/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}),fileName=([^,]*),fileSize=(\d*)]");
             Message message;
             if (picRegex.IsMatch(msg) || msg.StartsWith("[Graffiti") || msg.StartsWith("[picShow") ||
+                //          ✓                                ✗                             ？    
                 msg.StartsWith("[bigFace") || msg.StartsWith("[flashPic"))
+                //                 ✗                             ✓
             {
-                //        ✓                                ✗                              ？                             ✗                             ✓
                 // photo
                 string hash;
                 if (picRegex.IsMatch(msg))
@@ -149,6 +152,25 @@ namespace Clansty.tianlang
                     caption: from + ":",
                     replyToMessageId: replyId);
             }
+            else if (fileRegex.IsMatch(msg))
+            {
+                //file
+                var match = fileRegex.Match(msg);
+                var id = match.Groups[1].Value;
+                var fn = match.Groups[2].Value;
+                var size = ConvertFileSize(long.Parse(match.Groups[3].Value));
+                message = await C.TG.SendTextMessageAsync(fwdinfo.tg,
+                    from + ":\n" +
+                    $"文件: {fn}\n" +
+                    $"大小: {size}",
+                    replyToMessageId: replyId,
+                    replyMarkup: new InlineKeyboardMarkup(
+                        new InlineKeyboardButton
+                        {
+                            Text = "下载",
+                            Url = "https://t.me/tianlangbot?start=" + id + ":" + e.RecvQQ + ":" + e.FromGroup + ":" + fn
+                        }));
+            }
             else
             {
                 // text
@@ -159,6 +181,21 @@ namespace Clansty.tianlang
 
             var msgid = message.MessageId;
             Db.ldb.Put(e.Time.ToString(), msgid.ToString());
+        }
+
+        public static string ConvertFileSize(long size)
+        {
+            const double BYTE = 1024;
+
+            if (size < BYTE)
+                return size + "B";
+            if (size < Math.Pow(BYTE, 2))
+                return (size / BYTE).ToString("f1") + "KB";
+            if (size < Math.Pow(BYTE, 3))
+                return (size / Math.Pow(BYTE, 2)).ToString("f1") + "MB";
+            if (size < Math.Pow(BYTE, 4))
+                return (size / Math.Pow(BYTE, 3)).ToString("f1") + "GB";
+            return (size / Math.Pow(BYTE, 4)).ToString("f1") + "TB";
         }
     }
 }
