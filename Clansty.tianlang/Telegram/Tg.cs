@@ -49,7 +49,7 @@ namespace Clansty.tianlang
                                 var param = split[1];
                                 var uuidRegex =
                                     new Regex(@"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}");
-                                var file = Db.ldb.Get(param).Split(':');
+                                var file = Db.ldb.Get("file" + param).Split(':');
                                 if (uuidRegex.IsMatch(param))
                                 {
                                     var link = await C.QQ.GetFileUrl(file[0], file[1], "/" + param, file[2]);
