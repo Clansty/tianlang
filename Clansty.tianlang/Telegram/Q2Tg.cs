@@ -72,7 +72,7 @@ namespace Clansty.tianlang
 
             var biliRegex =
                 new Regex(
-                    @"{.*""desc"":""哔哩哔哩"".*""prompt"":""\[QQ小程序\]哔哩哔哩"".*""qqdocurl"":""(https:\\/\\/b23.tv\\/.*\?).*"".*}");
+                    @"(https?:\\?/\\?/b23\.tv\\?/\w*)\??");
             if (biliRegex.IsMatch(msg))
             {
                 msg = biliRegex.Match(msg).Groups[1].Value;
@@ -80,7 +80,7 @@ namespace Clansty.tianlang
             }
 
             var jsonLinkRegex =
-                new Regex(@"{.*""app"":""com.tencent.structmsg"".*""jumpUrl"":""(https?:\\/\\/[^"",]*)"".*}");
+                new Regex(@"{.*""app"":""com.tencent.structmsg"".*""jumpUrl"":""(https?:\\?/\\?/[^"",]*)"".*}");
             if (jsonLinkRegex.IsMatch(msg))
             {
                 msg = jsonLinkRegex.Match(msg).Groups[1].Value;
