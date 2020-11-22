@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 using Telegram.Bot.Args;
+using Telegram.Bot.Types.ReplyMarkups;
 
 namespace Clansty.tianlang
 {
@@ -52,8 +53,16 @@ namespace Clansty.tianlang
                                 var file = Db.ldb.Get("file" + param).Split(':');
                                 if (uuidRegex.IsMatch(param))
                                 {
-                                    var link = await C.QQ.GetFileUrl(file[0], file[1], "/" + param, file[2]);
-                                    C.TG.SendTextMessageAsync(e.Message.Chat, link);
+                                    var link = await C.QQ.GetFileUrl(file[0], file[1], "/" + param, file[3]);
+                                    C.TG.SendTextMessageAsync(e.Message.Chat,  
+                                        $"文件: {file[3]}\n" +
+                                        $"大小: {file[2]}",
+                                        replyMarkup: new InlineKeyboardMarkup(
+                                            new InlineKeyboardButton
+                                            {
+                                                Text = "下载",
+                                                Url = link
+                                            }));
                                     return;
                                 }
                             }

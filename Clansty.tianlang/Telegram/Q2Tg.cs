@@ -158,17 +158,16 @@ namespace Clansty.tianlang
                 var match = fileRegex.Match(msg);
                 var id = match.Groups[1].Value;
                 var fn = match.Groups[2].Value;
-                var size = ConvertFileSize(long.Parse(match.Groups[3].Value));
-                Db.ldb.Put("file" + id, e.RecvQQ + ":" + e.FromGroup + ":" + fn);
+                var size = C.ConvertFileSize(long.Parse(match.Groups[3].Value));
+                Db.ldb.Put("file" + id, e.RecvQQ + ":" + e.FromGroup + ":" + size + ":" + fn);
                 message = await C.TG.SendTextMessageAsync(fwdinfo.tg,
                     from + ":\n" +
                     $"文件: {fn}\n" +
                     $"大小: {size}",
-                    replyToMessageId: replyId,
                     replyMarkup: new InlineKeyboardMarkup(
                         new InlineKeyboardButton
                         {
-                            Text = "下载",
+                            Text = "获取下载地址",
                             Url = "https://t.me/tianlangbot?start=" + id
                         }));
             }
@@ -182,21 +181,6 @@ namespace Clansty.tianlang
 
             var msgid = message.MessageId;
             Db.ldb.Put(e.Time.ToString(), msgid.ToString());
-        }
-
-        public static string ConvertFileSize(long size)
-        {
-            const double BYTE = 1024;
-
-            if (size < BYTE)
-                return size + "B";
-            if (size < Math.Pow(BYTE, 2))
-                return (size / BYTE).ToString("f1") + "KB";
-            if (size < Math.Pow(BYTE, 3))
-                return (size / Math.Pow(BYTE, 2)).ToString("f1") + "MB";
-            if (size < Math.Pow(BYTE, 4))
-                return (size / Math.Pow(BYTE, 3)).ToString("f1") + "GB";
-            return (size / Math.Pow(BYTE, 4)).ToString("f1") + "TB";
         }
     }
 }
