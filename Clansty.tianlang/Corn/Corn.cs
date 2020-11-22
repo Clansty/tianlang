@@ -604,9 +604,9 @@ namespace CornSDK
                     id,
                     fn
                 })).ret;
-            // var rret = JsonConvert.DeserializeObject<dynamic>(ret);
-            // string url = rret.downloadurl;
-            return ret;
+            var rret = JsonConvert.DeserializeObject<dynamic>(ret);
+            string url = rret.downloadurl;
+            return url;
         }
 
         //TODO rest
