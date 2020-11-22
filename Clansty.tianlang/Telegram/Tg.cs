@@ -47,15 +47,17 @@ namespace Clansty.tianlang
                             if (split.Length == 2)
                             {
                                 var param = split[1];
-                                var uuidRegex=new Regex(@"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}");
+                                var uuidRegex =
+                                    new Regex(@"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}");
                                 var file = Db.ldb.Get(param).Split(':');
-                                if(uuidRegex.IsMatch(param))
+                                if (uuidRegex.IsMatch(param))
                                 {
-                                    var link = await C.QQ.GetFileUrl(file[0], file[1], param, file[2]);
+                                    var link = await C.QQ.GetFileUrl(file[0], file[1], "/" + param, file[2]);
                                     C.TG.SendTextMessageAsync(e.Message.Chat, link);
                                     return;
                                 }
                             }
+
                             C.TG.SendTextMessageAsync(e.Message.Chat,
                                 "请发送绑定码");
                             return;
@@ -91,12 +93,14 @@ namespace Clansty.tianlang
                                         C.TG.SendTextMessageAsync(e.Message.Chat, "操作无效");
                                         return;
                                 }
+
                                 C.TG.SendTextMessageAsync(e.Message.Chat, "操作成功");
                             }
                             else
                             {
                                 C.TG.SendTextMessageAsync(e.Message.Chat, "操作无效");
                             }
+
                             return;
                     }
                 }
