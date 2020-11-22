@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Telegram.Bot.Args;
 
 namespace Clansty.tianlang
@@ -46,10 +47,11 @@ namespace Clansty.tianlang
                             if (split.Length == 2)
                             {
                                 var param = split[1];
-                                var file = param.Split(':');
-                                if (file.Length == 4)
+                                var uuidRegex=new Regex(@"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}");
+                                var file = Db.ldb.Get(param).Split(':');
+                                if(uuidRegex.IsMatch(param))
                                 {
-                                    var link = await C.QQ.GetFileUrl(file[1], file[2], file[0], file[3]);
+                                    var link = await C.QQ.GetFileUrl(file[0], file[1], param, file[2]);
                                     C.TG.SendTextMessageAsync(e.Message.Chat, link);
                                     return;
                                 }
