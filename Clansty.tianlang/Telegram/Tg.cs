@@ -78,39 +78,39 @@ namespace Clansty.tianlang
                             var ret = Cmds.gcmds["update"].Func(null);
                             C.TG.SendTextMessageAsync(e.Message.Chat, ret);
                             return;
-                        case "/fire":
-                            if (e.Message.Chat.Id != 351768429) return;
-                            if (split.Length == 1)
-                                C.TG.SendTextMessageAsync(e.Message.Chat, await FireList.getList());
-                            else if (split.Length == 2)
-                            {
-                                var text = split[1];
-                                FireList.Resume(text);
-                                C.TG.SendTextMessageAsync(e.Message.Chat, "操作成功");
-                            }
-                            else if (split.Length == 3)
-                            {
-                                switch (split[1])
-                                {
-                                    case "add":
-                                        FireList.Add(long.Parse(split[2]));
-                                        break;
-                                    case "rm":
-                                        FireList.Remove(long.Parse(split[2]));
-                                        break;
-                                    default:
-                                        C.TG.SendTextMessageAsync(e.Message.Chat, "操作无效");
-                                        return;
-                                }
-
-                                C.TG.SendTextMessageAsync(e.Message.Chat, "操作成功");
-                            }
-                            else
-                            {
-                                C.TG.SendTextMessageAsync(e.Message.Chat, "操作无效");
-                            }
-
-                            return;
+                        // case "/fire":
+                        //     if (e.Message.Chat.Id != 351768429) return;
+                        //     if (split.Length == 1)
+                        //         C.TG.SendTextMessageAsync(e.Message.Chat, await FireList.getList());
+                        //     else if (split.Length == 2)
+                        //     {
+                        //         var text = split[1];
+                        //         FireList.Resume(text);
+                        //         C.TG.SendTextMessageAsync(e.Message.Chat, "操作成功");
+                        //     }
+                        //     else if (split.Length == 3)
+                        //     {
+                        //         switch (split[1])
+                        //         {
+                        //             case "add":
+                        //                 FireList.Add(long.Parse(split[2]));
+                        //                 break;
+                        //             case "rm":
+                        //                 FireList.Remove(long.Parse(split[2]));
+                        //                 break;
+                        //             default:
+                        //                 C.TG.SendTextMessageAsync(e.Message.Chat, "操作无效");
+                        //                 return;
+                        //         }
+                        //
+                        //         C.TG.SendTextMessageAsync(e.Message.Chat, "操作成功");
+                        //     }
+                        //     else
+                        //     {
+                        //         C.TG.SendTextMessageAsync(e.Message.Chat, "操作无效");
+                        //     }
+                        //
+                        //     return;
                     }
                 }
                 catch (Exception exception)
@@ -178,7 +178,7 @@ namespace Clansty.tianlang
                     Db.ldb.Put(qtime.ToString(), e.Message.MessageId.ToString());
                     //命令
                     if (e.Message.Chat.Id == G.TG.si)
-                        Cmds.Enter(e.Message.Text, 839827911, false);
+                        Cmds.Enter(e.Message.Text.TrimStart('/'), 839827911, false);
 
                     if (e.Message.Chat.Id == G.TG.major)
                     {
