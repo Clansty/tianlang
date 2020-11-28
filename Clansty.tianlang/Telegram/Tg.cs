@@ -53,8 +53,12 @@ namespace Clansty.tianlang
                                 var file = Db.ldb.Get("file" + param).Split(':');
                                 if (uuidRegex.IsMatch(param))
                                 {
-                                    var link = await C.QQ.GetFileUrl(file[0], file[1], "/" + param, file[3]);
-                                    C.TG.SendTextMessageAsync(e.Message.Chat,  
+                                    string link;
+                                    if (file.Length == 4)
+                                        link = await C.QQ.GetFileUrl(file[0], file[1], "/" + param, file[3]);
+                                    else
+                                        link = await C.QQ.GetFileUrl(file[0], file[1], file[3], file[4]);
+                                    C.TG.SendTextMessageAsync(e.Message.Chat,
                                         $"文件: {file[3]}\n" +
                                         $"大小: {file[2]}",
                                         replyMarkup: new InlineKeyboardMarkup(

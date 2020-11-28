@@ -101,7 +101,7 @@ namespace Clansty.tianlang
             var audioRegex = new Regex(@"\[Audio,.+,url=(.+),.*\]");
             var videoRegex = new Regex(@"\[litleVideo,linkParam=(\w*),hash1=(\w*).*]");
             var fileRegex = new Regex(
-                @"\[file,fileId=/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}),fileName=([^,]*),fileSize=(\d*)]");
+                @"\[file,fileId=(/?[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}),fileName=([^,]*),fileSize=(\d*)]");
             Message message;
             if (picRegex.IsMatch(msg) || msg.StartsWith("[Graffiti") || msg.StartsWith("[picShow") ||
                 //          ✓                                ✗                             ？    
@@ -156,10 +156,11 @@ namespace Clansty.tianlang
             {
                 //file
                 var match = fileRegex.Match(msg);
-                var id = match.Groups[1].Value;
+                var id = new Guid().ToString();
+                var fid = match.Groups[1].Value;
                 var fn = match.Groups[2].Value;
                 var size = C.ConvertFileSize(long.Parse(match.Groups[3].Value));
-                Db.ldb.Put("file" + id, e.RecvQQ + ":" + e.FromGroup + ":" + size + ":" + fn);
+                Db.ldb.Put("file" + id, e.RecvQQ + ":" + e.FromGroup + ":" + size + ":" + fid + ":" + fn);
                 message = await C.TG.SendTextMessageAsync(fwdinfo.tg,
                     from + ":\n" +
                     $"文件: {fn}\n" +
