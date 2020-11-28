@@ -126,6 +126,27 @@ namespace Clansty.tianlang
                 tg = G.TG.testNew,
                 includeSender = false
             },
+            new FwdInfo()
+            {//xiaoshuiqun
+                uin = 839827911,
+                gin = 1057087079,
+                tg = -323962467,
+                includeSender = false
+            },
+            new FwdInfo()
+            {//huashui
+                uin = 839827911,
+                gin = 593764793,
+                tg = -497638833,
+                includeSender = false
+            },
+            new FwdInfo()
+            {//dc
+                uin = 839827911,
+                gin = 1161139803,
+                tg = -429181992,
+                includeSender = false
+            },
         };
 
         internal static FwdInfo Q2Tg(long uin, long gin)
