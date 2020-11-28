@@ -77,11 +77,8 @@ namespace Clansty.tianlang
                         case "bind":
                             TgBinding.Bind(e);
                             return;
-                        case "/update":
-                            if (e.Message.Chat.Id != 351768429) return;
-                            var ret = Cmds.gcmds["update"].Func(null);
-                            C.TG.SendTextMessageAsync(e.Message.Chat, ret);
-                            return;
+
+                        #region fire
                         // case "/fire":
                         //     if (e.Message.Chat.Id != 351768429) return;
                         //     if (split.Length == 1)
@@ -115,6 +112,7 @@ namespace Clansty.tianlang
                         //     }
                         //
                         //     return;
+                        #endregion
                     }
                 }
                 catch (Exception exception)
