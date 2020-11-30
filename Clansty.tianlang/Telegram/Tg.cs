@@ -150,20 +150,20 @@ namespace Clansty.tianlang
                     if (rmsg.From.Id == C.tguid)
                     {
                         if (rmsg.Text != null)
-                            sdr = $"「{rmsg.Text}」\n{sdr}";
+                            sdr = $"「{rmsg.Text}」\n------\n{sdr}";
                         else if (rmsg.Caption != null)
-                            sdr = $"「{rmsg.Caption}\n[图片]」\n{sdr}";
+                            sdr = $"「{rmsg.Caption}\n[图片]」\n------\n{sdr}";
                     }
                     else
                     {
                         if (rmsg.Text != null)
-                            sdr = $"「{rmsg.From.FirstName}:\n{rmsg.Text}」\n{sdr}";
+                            sdr = $"「{rmsg.From.FirstName}:\n{rmsg.Text}」\n------\n{sdr}";
                         else if (rmsg.Caption != null)
-                            sdr = $"「{rmsg.From.FirstName}:\n{rmsg.Caption}\n[图片]」\n{sdr}";
+                            sdr = $"「{rmsg.From.FirstName}:\n{rmsg.Caption}\n[图片]」\n------\n{sdr}";
                         else if (rmsg.Sticker != null)
-                            sdr = $"「{rmsg.From.FirstName}:\n[表情]」\n{sdr}";
+                            sdr = $"「{rmsg.From.FirstName}:\n[表情]」\n------\n{sdr}";
                         else if (rmsg.Photo != null)
-                            sdr = $"「{rmsg.From.FirstName}:\n[图片]」\n{sdr}";
+                            sdr = $"「{rmsg.From.FirstName}:\n[图片]」\n------\n{sdr}";
                     }
                 }
 
