@@ -66,7 +66,7 @@ namespace Clansty.tianlang
 
         #region 实例成员 这些成员应该是只读的
 
-        internal DataRow Row { get; }
+        private DataRow Row { get; }
         internal long Id => (long) Row["id"];
         internal string Name => (string) Row["name"];
         internal bool Junior => (bool) Row["junior"];
@@ -74,7 +74,7 @@ namespace Clansty.tianlang
         internal bool Board => (bool) Row["board"];
         internal Sex Sex => (Sex) Row["sex"];
         internal long Class => (long) Row["class"];
-        internal long? FormerClass => Row["former_class"] == DBNull.Value ? null : (long?) Row["former_class"];
+        internal long? FormerClass => Row["former_class"] == DBNull.Value ? null : long?.Parse((string)Row["former_class"]);
         internal long Enrollment => (long) Row["enrollment"];
 
         #endregion
