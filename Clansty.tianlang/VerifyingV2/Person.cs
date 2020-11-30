@@ -74,7 +74,7 @@ namespace Clansty.tianlang
         internal bool Board => (bool) Row["board"];
         internal Sex Sex => (Sex) Row["sex"];
         internal long Class => (long) Row["class"];
-        internal long? FormerClass => Row["former_class"] == DBNull.Value ? null : long?.Parse((string)Row["former_class"]);
+        internal long? FormerClass => Row["former_class"] == DBNull.Value ? null : (long?)long.Parse((string)Row["former_class"]);
         internal long Enrollment => (long) Row["enrollment"];
 
         #endregion
