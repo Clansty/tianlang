@@ -59,7 +59,7 @@ namespace Clansty.tianlang
                                     else
                                         link = await C.QQ.GetFileUrl(file[0], file[1], file[3], file[4]);
                                     C.TG.SendTextMessageAsync(e.Message.Chat,
-                                        $"文件: {file[3]}\n" +
+                                        $"文件: {file.Last()}\n" +
                                         $"大小: {file[2]}",
                                         replyMarkup: new InlineKeyboardMarkup(
                                             new InlineKeyboardButton
