@@ -71,8 +71,7 @@ namespace Clansty.tianlang
             }
 
             var biliRegex =
-                new Regex(
-                    @"(https?:\\?/\\?/b23\.tv\\?/\w*)\??");
+                new Regex(@"(https?:\\?/\\?/b23\.tv\\?/\w*)\??");
             if (biliRegex.IsMatch(msg))
             {
                 msg = biliRegex.Match(msg).Groups[1].Value;
@@ -86,6 +85,13 @@ namespace Clansty.tianlang
                 msg = jsonLinkRegex.Match(msg).Groups[1].Value;
                 msg = msg.Replace("\\/", "/");
             }
+            
+            var giftRegex=new Regex(@"\[Gift.*,info=(.*)\]");
+            if (giftRegex.IsMatch(msg))
+            {
+                msg = giftRegex.Match(msg).Groups[1].Value;
+            }
+      
 
             foreach (var i in botCodes)
             {
