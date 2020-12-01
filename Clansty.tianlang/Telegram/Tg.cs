@@ -43,6 +43,9 @@ namespace Clansty.tianlang
                                 $"会话 ID: {e.Message.Chat.Id}\n" +
                                 $"用户 ID: {e.Message.From.Id}");
                             return;
+                        case "/pin":
+                            C.TG.PinChatMessageAsync(e.Message.Chat, e.Message.MessageId);
+                            return;
                         case "/start":
                             if (e.Message.From.Id != e.Message.Chat.Id) return;
                             if (split.Length == 2)

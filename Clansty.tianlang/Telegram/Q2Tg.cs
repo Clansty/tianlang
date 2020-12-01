@@ -197,7 +197,7 @@ namespace Clansty.tianlang
             var msgid = message.MessageId;
             Db.ldb.Put(e.Time.ToString(), msgid.ToString());
             if (atAll)
-                C.TG.PinChatMessageAsync(fwdinfo.tg, msgid);
+                C.TG.PinChatMessageAsync(message.Chat, msgid);
         }
     }
 }

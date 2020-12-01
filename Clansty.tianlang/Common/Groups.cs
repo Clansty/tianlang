@@ -33,7 +33,7 @@ namespace Clansty.tianlang
             internal const long mom = -1001310869627;
             internal const long dad = -324967882;
             internal const long selffwd = -263510533;
-            internal const long testNew = -439117980;
+            internal const long testNew = -1001476514052;
         }
 
     }
