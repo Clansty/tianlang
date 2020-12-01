@@ -40,8 +40,9 @@ namespace Clansty.tianlang
                     {
                         case "/id":
                             C.TG.SendTextMessageAsync(e.Message.Chat,
-                                $"会话 ID: {e.Message.Chat.Id}\n" +
-                                $"用户 ID: {e.Message.From.Id}");
+                                $"ChatID: {e.Message.Chat.Id}\n" +
+                                $"MigrateFromChatId: {e.Message.MigrateFromChatId}\n" +
+                                $"UserID: {e.Message.From.Id}");
                             return;
                         case "/pin":
                             C.TG.PinChatMessageAsync(e.Message.Chat, e.Message.MessageId);
