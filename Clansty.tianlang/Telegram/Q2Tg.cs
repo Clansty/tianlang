@@ -97,6 +97,14 @@ namespace Clansty.tianlang
                 }
             }
 
+            var atAll = false;
+            if (msg.Contains("@全体成员") || msg.Contains("[@all]"))
+            {
+                atAll = true;
+                msg = msg.Replace("@全体成员", "");
+                msg = msg.Replace("[@all]", "");
+            }
+
             var picRegex = new Regex(@"\[pic,hash=\w+\]");
             var audioRegex = new Regex(@"\[Audio,.+,url=(.+),.*\]");
             var videoRegex = new Regex(@"\[litleVideo,linkParam=(\w*),hash1=(\w*).*]");
@@ -182,6 +190,8 @@ namespace Clansty.tianlang
 
             var msgid = message.MessageId;
             Db.ldb.Put(e.Time.ToString(), msgid.ToString());
+            if (atAll)
+                C.TG.PinChatMessageAsync(fwdinfo.tg, msgid);
         }
     }
 }
