@@ -1,6 +1,7 @@
 using CornSDK;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using Telegram.Bot;
 
@@ -47,7 +48,22 @@ namespace Clansty.tianlang
             {
                 var oldver = File.ReadAllText("/tmp/tlupdate").Trim(' ', '\r', '\n');
                 File.Delete("/tmp/tlupdate");
-                S.Si($"更新已完成:\n{oldver} -> {C.Version}");
+                try
+                {
+                    var p = Process.Start(new ProcessStartInfo("git", "log -1")
+                    {
+                        RedirectStandardOutput = true,
+                        RedirectStandardError = true,
+                        WorkingDirectory = "/root/nthsbot"
+                    });
+                    p.WaitForExit();
+                    var ret = p.StandardOutput.ReadToEnd() + p.StandardError.ReadToEnd();
+                    S.Si($"更新已完成:\n{oldver} -> {C.Version}\n{ret.Trim()}");
+                }
+                catch
+                {
+                    S.Si($"更新已完成:\n{oldver} -> {C.Version}");
+                }
             }
 
             while (true)
