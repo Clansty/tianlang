@@ -46,7 +46,7 @@ namespace Clansty.tianlang
             {//计软院
                 uin = 839827911,
                 gin = 954226654,
-                tg = -342881810,
+                tg = -1001342293974,
                 includeSender = false
             },
             new FwdInfo()
@@ -67,7 +67,7 @@ namespace Clansty.tianlang
             {//软合二班
                 uin = 839827911,
                 gin = 1078188647,
-                tg = -425421691,
+                tg = -1001318314287,
                 includeSender = false
             },
             new FwdInfo()
