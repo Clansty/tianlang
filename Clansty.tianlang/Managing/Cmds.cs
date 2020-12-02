@@ -6,6 +6,7 @@ using System.Drawing.Drawing2D;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace Clansty.tianlang
 {
@@ -303,6 +304,21 @@ namespace Clansty.tianlang
                 {
                     C.WriteLn(s);
                     return s;
+                }
+            },
+            ["reload"] = new GroupCommand()
+            {
+                Description = "重载配置",
+                Usage = "reload",
+                IsParamsNeeded = false,
+                Permission = UserType.administrator,
+                Func = s =>
+                {
+                    Db.Commit();
+                    Q2TgMap.infos =
+                        JsonConvert.DeserializeObject<FwdInfo[]>(File.ReadAllText("/root/data/q2tg.json"));
+                    Db.Init();
+                    return "重载完成";
                 }
             },
         };

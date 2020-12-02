@@ -12,12 +12,7 @@ namespace Clansty.tianlang
     {
         public static void Do()
         {
-            Dictionary<long, string> t=new Dictionary<long, string>
-            {
-                [888]="aaa",
-                [111]="233"
-            };
-            C.WriteLn(JsonConvert.SerializeObject(t));
+            C.WriteLn(JsonConvert.SerializeObject(Q2TgMap.infos));
         }
 
         static DataTable XlsxToDataTable(string vFilePath)
