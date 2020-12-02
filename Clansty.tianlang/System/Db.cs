@@ -19,7 +19,7 @@ namespace Clansty.tianlang
         internal static DataTable persons;
         internal static DB ldb;
         internal static Dictionary<long, SeMember> SeMembers;
-        internal static void Init()
+        internal static void Init(bool reload=false)
         {
             #if DEBUG
             var jsonUsers = File.ReadAllText(@"C:\Users\clans\Desktop\users", Encoding.UTF8);
@@ -33,8 +33,11 @@ namespace Clansty.tianlang
             users.PrimaryKey = new[] { users.Columns[0] };
             persons.PrimaryKey = new[] { persons.Columns[0] };
 #if !DEBUG
-            var options = new Options { CreateIfMissing = true };
-            ldb = new DB(options, "/root/ldb/qtime2tgmsgid");
+            if (!reload)
+            {
+                var options = new Options { CreateIfMissing = true };
+                ldb = new DB(options, "/root/ldb/qtime2tgmsgid");
+            }
             SeMembers =
                 JsonConvert.DeserializeObject<Dictionary<long, SeMember>>(File.ReadAllText("/root/data/rh.json"));
 #endif

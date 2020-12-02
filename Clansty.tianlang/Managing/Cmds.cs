@@ -317,7 +317,7 @@ namespace Clansty.tianlang
                     Db.Commit();
                     Q2TgMap.infos =
                         JsonConvert.DeserializeObject<FwdInfo[]>(File.ReadAllText("/root/data/q2tg.json"));
-                    Db.Init();
+                    Db.Init(true);
                     return "重载完成";
                 }
             },
