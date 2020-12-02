@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Text;
@@ -17,6 +18,7 @@ namespace Clansty.tianlang
         internal static DataTable users;
         internal static DataTable persons;
         internal static DB ldb;
+        internal static Dictionary<long, SeMember> SeMembers;
         internal static void Init()
         {
             #if DEBUG
@@ -33,6 +35,8 @@ namespace Clansty.tianlang
 #if !DEBUG
             var options = new Options { CreateIfMissing = true };
             ldb = new DB(options, "/root/ldb/qtime2tgmsgid");
+            SeMembers =
+                JsonConvert.DeserializeObject<Dictionary<long, SeMember>>(File.ReadAllText("/root/data/rh.json"));
 #endif
         }
         internal static void Commit()

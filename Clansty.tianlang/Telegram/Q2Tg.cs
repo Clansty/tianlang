@@ -25,6 +25,12 @@ namespace Clansty.tianlang
 
             var msg = e.Msg.Trim();
             var from = Utf.Decode(e.FromCard);
+            if (fwdinfo.preferRemark)
+            {
+                var remark = GetRemark(e.FromQQ);
+                if (remark != null)
+                    from = remark;
+            }
 
             var replyRegex = new Regex(@"\[Reply,.+,SendTime=(\d+).*\]");
             string replyIdStr = null;
@@ -198,6 +204,16 @@ namespace Clansty.tianlang
             Db.ldb.Put(e.Time.ToString(), msgid.ToString());
             if (atAll)
                 C.TG.PinChatMessageAsync(message.Chat, msgid);
+        }
+
+        private static string GetRemark(long qq)
+        {
+            if (Db.SeMembers.TryGetValue(qq, out var mem))
+            {
+                return mem.name;
+            }
+
+            return null;
         }
     }
 }

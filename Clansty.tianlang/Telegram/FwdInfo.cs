@@ -18,5 +18,6 @@
         public long tg;
 
         public bool includeSender = true;
+        public bool preferRemark = true;
     }
 }

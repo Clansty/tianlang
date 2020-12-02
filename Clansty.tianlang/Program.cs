@@ -14,9 +14,9 @@ namespace Clansty.tianlang
         /// </summary>
         static void Main()
         {
-// #if DEBUG
-//             Test.Do();
-// #else
+#if DEBUG
+            Test.Do();
+#else
             Console.CancelKeyPress += Exit;
             Console.Title = $@"甜狼 {C.Version}";
             var nthsBotHandler = new NthsBotEvents();
@@ -96,6 +96,7 @@ namespace Clansty.tianlang
                 }
 #endif
             }
+#endif
         }
 
         internal static void Exit(object a = null, object b = null)

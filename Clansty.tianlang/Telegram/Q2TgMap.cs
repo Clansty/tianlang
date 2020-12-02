@@ -4,7 +4,7 @@ namespace Clansty.tianlang
 {
     public static class Q2TgMap
     {
-        private static readonly FwdInfo[] infos =
+        public static readonly FwdInfo[] infos =
         {
             new FwdInfo()
             {

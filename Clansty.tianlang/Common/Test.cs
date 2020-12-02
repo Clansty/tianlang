@@ -1,5 +1,6 @@
 ﻿using SpreadsheetLight;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
@@ -11,11 +12,12 @@ namespace Clansty.tianlang
     {
         public static void Do()
         {
-            Db.Init();
-            var jsonUsers = JsonConvert.SerializeObject(Db.users);
-            var jsonPersons = JsonConvert.SerializeObject(Db.persons);
-            File.WriteAllText(@"C:\Users\clans\Desktop\users", jsonUsers);
-            File.WriteAllText(@"C:\Users\clans\Desktop\persons", jsonPersons);
+            Dictionary<long, string> t=new Dictionary<long, string>
+            {
+                [888]="aaa",
+                [111]="233"
+            };
+            C.WriteLn(JsonConvert.SerializeObject(t));
         }
 
         static DataTable XlsxToDataTable(string vFilePath)
