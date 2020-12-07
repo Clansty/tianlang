@@ -176,9 +176,9 @@ namespace Clansty.tianlang
             {
                 //file
                 var match = fileRegex.Match(msg);
-                var id = new Guid().ToString();
                 var fid = match.Groups[1].Value;
                 var fn = match.Groups[2].Value;
+                var id = fid.TrimStart('/');
                 var size = C.ConvertFileSize(long.Parse(match.Groups[3].Value));
                 Db.ldb.Put("file" + id, e.RecvQQ + ":" + e.FromGroup + ":" + size + ":" + fid + ":" + fn);
                 message = await C.TG.SendTextMessageAsync(fwdinfo.tg,
