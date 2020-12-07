@@ -43,77 +43,88 @@ namespace Clansty.tianlang
                 tg = G.TG.wxb
             },
             new FwdInfo()
-            {//计软院
+            {
+                //计软院
                 uin = 839827911,
                 gin = 954226654,
                 tg = -1001342293974,
                 includeSender = false
             },
             new FwdInfo()
-            {//程序设计基础
+            {
+                //程序设计基础
                 uin = 839827911,
                 gin = 892697611,
                 tg = -416480031,
                 includeSender = false
             },
             new FwdInfo()
-            {//软合一班
+            {
+                //软合一班
                 uin = 839827911,
                 gin = 1022579554,
                 tg = -426831224,
                 includeSender = false
             },
             new FwdInfo()
-            {//软合二班
+            {
+                //软合二班
                 uin = 839827911,
                 gin = 1078188647,
                 tg = -1001318314287,
                 includeSender = false
             },
             new FwdInfo()
-            {//科协
+            {
+                //科协
                 uin = 839827911,
                 gin = 598094369,
                 tg = -337216611,
                 includeSender = false
             },
             new FwdInfo()
-            {//科协技术部
+            {
+                //科协技术部
                 uin = 839827911,
                 gin = 865604042,
                 tg = -433260120,
                 includeSender = false
             },
             new FwdInfo()
-            {//英语提高3班
+            {
+                //英语提高3班
                 uin = 839827911,
                 gin = 1156757956,
                 tg = -279581459,
                 includeSender = false
             },
             new FwdInfo()
-            {//高数
+            {
+                //高数
                 uin = 839827911,
                 gin = 915287147,
                 tg = -411013453,
                 includeSender = false
             },
             new FwdInfo()
-            {//家长群
+            {
+                //家长群
                 uin = 839827911,
                 gin = G.parentsFwd,
                 tg = -481322235,
                 includeSender = false
             },
             new FwdInfo()
-            {//计算机基础
+            {
+                //计算机基础
                 uin = 839827911,
                 gin = 1130629129,
                 tg = -494959345,
                 includeSender = false
             },
             new FwdInfo()
-            {//web
+            {
+                //web
                 uin = 839827911,
                 gin = 935726131,
                 tg = -409372799,
@@ -127,24 +138,43 @@ namespace Clansty.tianlang
                 includeSender = false
             },
             new FwdInfo()
-            {//xiaoshuiqun
+            {
+                //xiaoshuiqun
                 uin = 839827911,
                 gin = 1057087079,
                 tg = -1001166128384,
                 includeSender = false
             },
             new FwdInfo()
-            {//huashui
+            {
+                //huashui
                 uin = 839827911,
                 gin = 593764793,
                 tg = -497638833,
                 includeSender = false
             },
             new FwdInfo()
-            {//dc
+            {
+                //dc
                 uin = 839827911,
                 gin = 1161139803,
                 tg = -429181992,
+                includeSender = false
+            },
+            new FwdInfo()
+            {
+                //母校行
+                uin = 839827911,
+                gin = 648795598,
+                tg = -1001234778158,
+                includeSender = false
+            },
+            new FwdInfo()
+            {
+                //nths@nuist
+                uin = 839827911,
+                gin = 311153291,
+                tg = -455439414,
                 includeSender = false
             },
         };
