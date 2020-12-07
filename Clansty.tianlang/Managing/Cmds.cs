@@ -385,11 +385,11 @@ namespace Clansty.tianlang
 
                     if (isMajor)
                     {
-                        S.TG.Major(ret);
+                        S.TG.Major(ret, true);
                     }
                     else
                     {
-                        S.TG.Si(ret);
+                        S.TG.Si(ret, true);
                     }
 
                     var lines = 0;

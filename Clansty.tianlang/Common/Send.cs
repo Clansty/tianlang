@@ -43,13 +43,17 @@
         /// </summary>
         internal static class TG
         {
-            internal static void Text(long id, string msg)
+            internal static void Text(long id, string msg, bool disableWebPagePreview = false)
             {
-                C.TG.SendTextMessageAsync(id, msg);
+                C.TG.SendTextMessageAsync(id, msg, disableWebPagePreview: disableWebPagePreview);
             }
 
-            internal static void Major(string msg) => Text(G.TG.major, msg);
-            internal static void Si(string msg) => Text(G.TG.si, msg);
+            internal static void Major(string msg, bool disableWebPagePreview = false) =>
+                Text(G.TG.major, msg, disableWebPagePreview);
+
+            internal static void Si(string msg, bool disableWebPagePreview = false) =>
+                Text(G.TG.si, msg, disableWebPagePreview);
+
             internal static void IDE(string msg) => Text(G.TG.iDE, msg);
         }
     }
