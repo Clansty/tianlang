@@ -177,6 +177,11 @@ namespace Clansty.tianlang
                 tg = -455439414,
                 includeSender = false
             },
+            new FwdInfo()
+            {
+                gin = 628301340,
+                tg = -1001192668953,
+            },
         };
 
         internal static FwdInfo Q2Tg(long uin, long gin)
