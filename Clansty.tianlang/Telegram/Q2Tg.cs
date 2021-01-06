@@ -117,7 +117,7 @@ namespace Clansty.tianlang
                 msg = msg.Replace("[@all]", "");
             }
 
-            var picRegex = new Regex(@"\[pic,hash=.*\]");
+            var picRegex = new Regex(@"\[pic,hash=(\w+),.*\]");
             var audioRegex = new Regex(@"\[Audio,.+,url=(.+),.*\]");
             var videoRegex = new Regex(@"\[litleVideo,linkParam=(\w*),hash1=(\w*).*]");
             var fileRegex = new Regex(
@@ -132,7 +132,8 @@ namespace Clansty.tianlang
                 string hash;
                 if (picRegex.IsMatch(msg))
                 {
-                    hash = picRegex.Match(msg).Value;
+                    hash = picRegex.Match(msg).Groups[1].Value;
+                    hash = $"[pic,hash={hash}]";
                     msg = picRegex.Replace(msg, "");
                 }
                 else
