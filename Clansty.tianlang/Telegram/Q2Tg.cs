@@ -117,7 +117,7 @@ namespace Clansty.tianlang
                 msg = msg.Replace("[@all]", "");
             }
 
-            var picRegex = new Regex(@"\[pic,hash=\w+\]");
+            var picRegex = new Regex(@"\[pic,hash=.*\]");
             var audioRegex = new Regex(@"\[Audio,.+,url=(.+),.*\]");
             var videoRegex = new Regex(@"\[litleVideo,linkParam=(\w*),hash1=(\w*).*]");
             var fileRegex = new Regex(
