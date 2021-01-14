@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Clansty.tianlang
+﻿namespace Clansty.tianlang
 {
     static class G
     {

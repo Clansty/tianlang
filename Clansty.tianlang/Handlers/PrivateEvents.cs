@@ -9,7 +9,7 @@ namespace Clansty.tianlang
 {
     public class PrivateEvents : IGroupMessage, IDisconnected
     {
-        private const long SELF = 839827911;
+        public const long SELF = 839827911;
 
         public async Task<bool> GroupMessage(MiraiHttpSession session, IGroupMessageEventArgs e)
         {

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using CornSDK;
 using Mirai_CSharp;
 using Mirai_CSharp.Models;
 using Telegram.Bot.Types;

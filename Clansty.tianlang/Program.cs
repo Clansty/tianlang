@@ -1,12 +1,8 @@
-using CornSDK;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using Mirai_CSharp;
-using Mirai_CSharp.Models;
-using Telegram.Bot;
 
 namespace Clansty.tianlang
 {
@@ -19,8 +15,8 @@ namespace Clansty.tianlang
         {
             Console.CancelKeyPress += Exit;
             Console.Title = $@"ClanstyBots Server {C.Version}";
-            //init telegram bots
 #if !DEBUG
+            //init telegram bots
             C.TG = new TelegramBotClient(Tg.Token);
             C.TG.OnMessage += Tg.OnMsg;
             C.TG.StartReceiving();
@@ -31,6 +27,10 @@ namespace Clansty.tianlang
             C.QQ.NthsBot = new MiraiHttpSession();
             C.QQ.NthsBot.AddPlugin(nthsBotHandler);
             C.QQ.Clansty = new MiraiHttpSession();
+            C.QQ.Clansty.AddPlugin(privateHandler);
+            await C.QQ.NthsBot.ConnectAsync(C.miraiSessionOpinions, NthsBotEvents.SELF);
+            await C.QQ.Clansty.ConnectAsync(C.miraiSessionOpinions, PrivateEvents.SELF);
+            
             //init system component
             Db.Init();
             Timers.Init();

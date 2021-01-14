@@ -1,12 +1,9 @@
-﻿using CornSDK;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing.Drawing2D;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 
 namespace Clansty.tianlang
 {
@@ -85,7 +82,7 @@ namespace Clansty.tianlang
                         if (u.Role >= UserType.powerUser)
                             return $"不能拉黑一个 {u.Role}";
                         u.Role = UserType.blackListed;
-                        C.QQ.GroupKickMember(G.major, i); //todo
+                        C.QQ.NthsBot.KickMemberAsync(i, G.major);
                         return $"已拉黑 {u.ProperNamecard}({s})";
                     }
 
@@ -106,7 +103,7 @@ namespace Clansty.tianlang
                         var u = new User(i);
                         if (u.Role >= UserType.powerUser)
                             return $"不能踢一个 {u.Role}";
-                        C.QQ.GroupKickMember(G.major, i);
+                        C.QQ.NthsBot.KickMemberAsync(i, G.major);
                         return $"已踢 {u.ProperNamecard}({s})";
                     }
 
@@ -151,7 +148,7 @@ namespace Clansty.tianlang
                     return string.IsNullOrWhiteSpace(r) ? "无结果" : r;
                 }
             },
-            ["set"] = new GroupCommand()
+            ["set"] = new GroupCommand
             {
                 Description = "修改某个人的信息",
                 Usage = "set [QQ号] [{name|nick|enrollment|junior|prefix|step|status|role|tguid}] [值]",
@@ -159,7 +156,7 @@ namespace Clansty.tianlang
                 Permission = UserType.powerUser,
                 Func = s =>
                 {
-                    var arg = s.Split(new char[] {' '}, 3);
+                    var arg = s.Split(new[] {' '}, 3);
                     var u = new User(long.Parse(arg[0]));
                     switch (arg[1])
                     {
@@ -191,7 +188,7 @@ namespace Clansty.tianlang
                     return $"操作成功，群名片 {chkQmp.Result}";
                 }
             },
-            ["sync"] = new GroupCommand()
+            ["sync"] = new GroupCommand
             {
                 Description = "将对数据库的修改提交到 MySQL",
                 Usage = "sync",
@@ -203,7 +200,7 @@ namespace Clansty.tianlang
                     return "\\u2713";
                 }
             },
-            ["chkqmp"] = new GroupCommand()
+            ["chkqmp"] = new GroupCommand
             {
                 Description = "扫描全群的群名片，请勿频繁使用",
                 Usage = "chkqmp",
@@ -215,7 +212,7 @@ namespace Clansty.tianlang
                     return "已开始扫描";
                 }
             },
-            ["exit"] = new GroupCommand()
+            ["exit"] = new GroupCommand
             {
                 Description = "结束甜狼进程",
                 Usage = "exit",
@@ -227,7 +224,7 @@ namespace Clansty.tianlang
                     return null;
                 }
             },
-            ["update"] = new GroupCommand()
+            ["update"] = new GroupCommand
             {
                 Description = "从 Git 存储库编译并更新自己",
                 Usage = "update",
@@ -256,7 +253,7 @@ namespace Clansty.tianlang
                     return ret.Trim(' ', '\r', '\n');
                 }
             },
-            ["shell"] = new GroupCommand()
+            ["shell"] = new GroupCommand
             {
                 Description = "运行 shell 命令（危",
                 Usage = "shell",
@@ -304,19 +301,6 @@ namespace Clansty.tianlang
                 {
                     C.WriteLn(s);
                     return s;
-                }
-            },
-            ["reload"] = new GroupCommand()
-            {
-                Description = "重载配置",
-                Usage = "reload",
-                IsParamsNeeded = false,
-                Permission = UserType.administrator,
-                Func = s =>
-                {
-                    Db.Commit();
-                    Db.Init(true);
-                    return "重载完成";
                 }
             },
         };

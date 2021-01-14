@@ -17,7 +17,7 @@ namespace Clansty.tianlang
 #endif
         public async Task<bool> TempMessage(MiraiHttpSession session, ITempMessageEventArgs e)
         {
-            await PrivateMessage(new PrivateMsgArgs()
+            await PrivateMessage(new PrivateMsgArgs
             {
                 FromQQ = e.Sender.Id,
                 FromNick = e.Sender.Name,
@@ -29,7 +29,7 @@ namespace Clansty.tianlang
 
         public async Task<bool> FriendMessage(MiraiHttpSession session, IFriendMessageEventArgs e)
         {
-            await PrivateMessage(new PrivateMsgArgs()
+            await PrivateMessage(new PrivateMsgArgs
             {
                 FromQQ = e.Sender.Id,
                 FromNick = e.Sender.Name,
@@ -84,18 +84,15 @@ namespace Clansty.tianlang
                     }
 
                     e.Reply(Strs.RnOccupied);
-                    return;
                 }
                 catch (PersonNotFoundException)
                 {
                     e.Reply(Strs.RnNotFound);
-                    return;
                 }
                 catch (Exception ex)
                 {
                     C.WriteLn(ex);
                     e.Reply(Strs.UnexceptedErr);
-                    return;
                 }
             } // end manual name-filling handling
             else if (e.Chain.GetPlain() == "tg")

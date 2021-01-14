@@ -66,10 +66,7 @@ namespace Clansty.tianlang
 
                 if (string.IsNullOrWhiteSpace(ret))
                 {
-                    var t = C.QQ.GetNick(Uin, false);
-                    t.Wait();
-                    ret = t.Result;
-                    Nick = ret;
+                    Nick = "No Name";
                 }
 
                 return ret;

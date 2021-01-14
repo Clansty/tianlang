@@ -10,7 +10,7 @@ namespace Clansty.tianlang
     {
         private static string checkUuid = "";
 
-        private static long lasterrtime = 0;
+        private static long lasterrtime;
 
         private static HashSet<(long, long)> session = new();
 
@@ -50,7 +50,7 @@ namespace Clansty.tianlang
             {
                 lasterrtime = DateTime.Now.ToBinary();
                 new WebClient().DownloadString(
-                    $"https://sc.ftqq.com/SCU126714T7691001cb3cc816392272193222ff72f5fafd50add6a5.send?" +
+                    "https://sc.ftqq.com/SCU126714T7691001cb3cc816392272193222ff72f5fafd50add6a5.send?" +
                     $"text=server check got {session.Count} responses");
             }
         }

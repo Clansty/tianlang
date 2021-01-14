@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Clansty.tianlang
+﻿namespace Clansty.tianlang
 {
     /// <summary>
     /// 目前只有 User.VerifyMsg 会返回这个东西

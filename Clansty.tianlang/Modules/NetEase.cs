@@ -1,9 +1,9 @@
-﻿using CornSDK;
+﻿using System;
+using System.Collections.Generic;
+using Mirai_CSharp.Extensions;
+using Mirai_CSharp.Models;
 using NeteaseCloudMusicApi;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System.Collections.Generic;
-using Mirai_CSharp.Models;
 
 namespace Clansty.tianlang
 {
@@ -16,10 +16,10 @@ namespace Clansty.tianlang
         {
             try
             {
-                var sn = e.Msg.GetRight("点歌").Trim();
+                var sn = e.Chain.GetPlain().GetRight("点歌").Trim();
                 var api = new CloudMusicApi();
                 api.Request(CloudMusicApiProviders.Search,
-                   new Dictionary<string, string>()
+                   new Dictionary<string, string>
                    {
                        ["keywords"] = sn,
                        ["limit"] = "1"
@@ -28,7 +28,7 @@ namespace Clansty.tianlang
                 sn = jobj["result"]["songs"][0].Value<int>("id").ToString();
                 //现在 sn 是 ID
                 api.Request(CloudMusicApiProviders.SongDetail,
-                    new Dictionary<string, string>()
+                    new Dictionary<string, string>
                     {
                         ["ids"] = sn
                     },
@@ -43,7 +43,7 @@ namespace Clansty.tianlang
                 //res 是歌手
                 var pic = jobj["songs"][0]["al"].Value<string>("picUrl");
                 api.Request(CloudMusicApiProviders.SongUrl,
-                                new Dictionary<string, string>()
+                                new Dictionary<string, string>
                                 {
                                     ["id"] = sn
                                 },
@@ -77,9 +77,9 @@ namespace Clansty.tianlang
                         }
                     }
                 };
-                e.Robot.SendGroupJsonMsg(e.FromGroup, JsonConvert.SerializeObject(json).Replace("https://", "http://"));
+                e.Reply(new IMessageBase[]{new JsonMessage(JsonConvert.SerializeObject(json).Replace("https://", "http://"))});
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 e.Reply(ex.ToString());
             }
