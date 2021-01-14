@@ -179,7 +179,7 @@ namespace Clansty.tianlang
                     qtime = await C.QQ.SendGroupMsg(fwdinfo.gin,
                         sdr +
                         Utf.Encode(e.Message.Text),
-                        fromqq: fwdinfo.uin);
+                        fromqq: fwdinfo.host);
                     Db.ldb.Put(qtime.ToString(), e.Message.MessageId.ToString());
                     //命令
                     if (e.Message.Chat.Id == G.TG.si)
@@ -220,7 +220,7 @@ namespace Clansty.tianlang
 
                 tos = Utf.Encode(tos);
                 tos += hash;
-                qtime = await C.QQ.SendGroupMsg(targ, tos, fromqq: fwdinfo.uin);
+                qtime = await C.QQ.SendGroupMsg(targ, tos, fromqq: fwdinfo.host);
                 Db.ldb.Put(qtime.ToString(), e.Message.MessageId.ToString());
             }
         }

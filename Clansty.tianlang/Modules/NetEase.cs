@@ -3,6 +3,7 @@ using NeteaseCloudMusicApi;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
+using Mirai_CSharp.Models;
 
 namespace Clansty.tianlang
 {
@@ -11,7 +12,7 @@ namespace Clansty.tianlang
     /// </summary>
     static class NetEase
     {
-        public static void Request(GroupMsgArgs e)
+        public static void Request(IGroupMessageEventArgs e)
         {
             try
             {

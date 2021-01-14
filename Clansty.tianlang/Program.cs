@@ -3,6 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Threading.Tasks;
+using Mirai_CSharp;
+using Mirai_CSharp.Models;
 using Telegram.Bot;
 
 namespace Clansty.tianlang
@@ -12,38 +15,26 @@ namespace Clansty.tianlang
         /// <summary>
         ///  The main entry point for the application.
         /// </summary>
-        static void Main()
+        static async Task Main()
         {
-#if DEBUG
-            Test.Do();
-#else
             Console.CancelKeyPress += Exit;
-            Console.Title = $@"甜狼 {C.Version}";
-            var nthsBotHandler = new NthsBotEvents();
-            var privateHandler = new PrivateEvents();
+            Console.Title = $@"ClanstyBots Server {C.Version}";
+            //init telegram bots
+#if !DEBUG
             C.TG = new TelegramBotClient(Tg.Token);
             C.TG.OnMessage += Tg.OnMsg;
-            Db.Init();
-#if !DEBUG
-            FireList.Init();
-            Timers.Init();
-
-            C.QQ = new Corn(new CornConfig()
-            {
-                ip = "172.17.11.76",
-                listenIp = "172.17.11.73",
-                listenPort = 7284,
-                handlers = new Dictionary<long, ICornEventHandler>()
-                {
-                    [C.self] = nthsBotHandler,
-                    [839827911] = privateHandler,
-                    [2603367939] = privateHandler
-                },
-                logger = C.logger
-            });
             C.TG.StartReceiving();
-            MemberList.UpdateMajor();
 #endif
+            //init qq bots
+            var nthsBotHandler = new NthsBotEvents();
+            var privateHandler = new PrivateEvents();
+            C.QQ.NthsBot = new MiraiHttpSession();
+            C.QQ.NthsBot.AddPlugin(nthsBotHandler);
+            C.QQ.Clansty = new MiraiHttpSession();
+            //init system component
+            Db.Init();
+            Timers.Init();
+            MemberList.UpdateMajor();
             if (File.Exists("/tmp/tlupdate"))
             {
                 var oldver = File.ReadAllText("/tmp/tlupdate").Trim(' ', '\r', '\n');
@@ -96,14 +87,12 @@ namespace Clansty.tianlang
                 }
 #endif
             }
-#endif
         }
 
         internal static void Exit(object a = null, object b = null)
         {
             Db.Commit();
-            System.Diagnostics.Process tt =
-                System.Diagnostics.Process.GetProcessById(System.Diagnostics.Process.GetCurrentProcess().Id);
+            var tt = Process.GetProcessById(Process.GetCurrentProcess().Id);
             tt.Kill();
         }
     }

@@ -1,11 +1,13 @@
-﻿namespace Clansty.tianlang
+﻿using Mirai_CSharp;
+
+namespace Clansty.tianlang
 {
     public class FwdInfo
     {
         /// <summary>
         /// qq 号
         /// </summary>
-        public long uin;
+        public MiraiHttpSession host = C.QQ.NthsBot;
 
         /// <summary>
         /// 群号

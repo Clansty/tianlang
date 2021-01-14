@@ -4,6 +4,8 @@ using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using CornSDK;
+using Mirai_CSharp;
+using Mirai_CSharp.Models;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.ReplyMarkups;
 using File = System.IO.File;
@@ -12,22 +14,22 @@ namespace Clansty.tianlang
 {
     static class Q2Tg
     {
-        static readonly Dictionary<string, string> botCodes = new Dictionary<string, string>()
+        static readonly Dictionary<string, string> botCodes = new()
         {
             ["[redpack"] = "【红包】",
             ["{\"app\":"] = "【卡片消息】",
         };
 
-        public static async Task NewGroupMsg(GroupMsgArgs e)
+        public static async Task NewGroupMsg(MiraiHttpSession recvQQ, long fromGroup,long fromQQ,string fromCard, IMessageBase[] chain )
         {
-            var fwdinfo = Q2TgMap.Q2Tg(e.RecvQQ, e.FromGroup);
+            var fwdinfo = Q2TgMap.Q2Tg(recvQQ, fromGroup);
             if (fwdinfo is null) return;
 
             var msg = e.Msg.Trim();
-            var from = Utf.Decode(e.FromCard);
+            var from = Utf.Decode(fromCard);
             if (fwdinfo.preferRemark)
             {
-                var remark = GetRemark(e.FromQQ);
+                var remark = GetRemark(fromQQ);
                 if (remark != null)
                     from = remark;
             }
@@ -66,10 +68,10 @@ namespace Clansty.tianlang
                 var isLong = long.TryParse(strAtqq, out var atqq);
                 if (isLong)
                 {
-                    var card = await C.QQ.GetGroupCard(e.FromGroup, atqq, e.RecvQQ);
+                    var card = await C.QQ.GetGroupCard(fromGroup, atqq, recvQQ);
                     if (card == "")
                     {
-                        card = await C.QQ.GetNick(atqq, true, e.RecvQQ);
+                        card = await C.QQ.GetNick(atqq, true, recvQQ);
                     }
 
                     msg = msg.Replace(match.Value, "@" + card);

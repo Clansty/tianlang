@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
-using CornSDK;
+using Mirai_CSharp.Models;
 
 namespace Clansty.tianlang
 {
@@ -12,33 +12,23 @@ namespace Clansty.tianlang
 
         private static long lasterrtime = 0;
 
-        private static readonly HashSet<long> accounts = new HashSet<long>()
-        {
-            839827911,
-            C.self,
-            2603367939
-        };
-
-        private static HashSet<(long, long)> session;
+        private static HashSet<(long, long)> session = new();
 
         public static void RunCheck()
         {
             checkUuid = Guid.NewGuid().ToString();
-            session = new HashSet<(long, long)>();
+            session.Clear();
 
-            foreach (var i in accounts)
-            {
-                C.QQ.SendGroupMsg(G.check, checkUuid, false, i);
-            }
+            C.QQ.Clansty.SendGroupMessageAsync(G.check, new PlainMessage(checkUuid));
 
             Task.Run(Timer);
         }
 
-        public static void Msg(GroupMsgArgs e)
+        public static void Msg(long fromQQ, long recvQQ, string uuid)
         {
-            if (e.Msg == checkUuid)
+            if (uuid == checkUuid)
             {
-                session.Add((e.FromQQ, e.RecvQQ));
+                session.Add((fromQQ, recvQQ));
             }
         }
 
@@ -51,11 +41,12 @@ namespace Clansty.tianlang
                 var last = DateTime.FromBinary(lasterrtime);
                 if (now - last < TimeSpan.FromHours(2))
                 {
-                    // no notification in 2 hours
+                    // no notification in 1 hours
                     return;
                 }
             }
-            if (session.Count!=6)
+
+            if (session.Count != 2)
             {
                 lasterrtime = DateTime.Now.ToBinary();
                 new WebClient().DownloadString(

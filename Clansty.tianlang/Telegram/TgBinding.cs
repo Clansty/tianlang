@@ -57,7 +57,7 @@ namespace Clansty.tianlang
             C.TG.SendTextMessageAsync(e.Message.Chat,
                 $"你的 Telegram 与 {u.ProperNamecard}({u.Uin})绑定成功\n" +
                 "点击链接加入大群:\n" +
-                C.link);
+                C.nthsGroupLink);
         }
     }
 }

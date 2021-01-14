@@ -1,41 +1,62 @@
-﻿namespace Clansty.tianlang
+﻿using Mirai_CSharp.Extensions;
+using Mirai_CSharp.Models;
+
+namespace Clansty.tianlang
 {
     static class S
     {
         internal static void Group(long group, string msg)
         {
-            C.QQ.SendGroupMsg(group, msg);
+            Group(group, new PlainMessage(msg));
+        }
+
+        internal static void Group(long group, params IMessageBase[] msg)
+        {
+            C.QQ.NthsBot.SendGroupMessageAsync(group, msg);
         }
 
         internal static void Private(long qq, string msg)
         {
-            C.QQ.SendTempMsg(G.major, qq, msg);
+            Private(qq, new PlainMessage(msg));
+        }
+
+        internal static void Private(long qq, params IMessageBase[] msg)
+        {
+            C.QQ.NthsBot.SendTempMessageAsync(qq, G.major, msg);
         }
 
         internal static void Private(User u, string msg)
         {
-            C.QQ.SendTempMsg(G.major, u.Uin, msg);
+            Private(u, new PlainMessage(msg));
+        }
+
+        internal static void Private(User u, params IMessageBase[] msg)
+        {
+            Private(u.Uin, msg);
         }
 
         internal static void Major(string msg, bool syncToTg = true)
         {
+            Major(new IMessageBase[] {new PlainMessage(msg)}, syncToTg);
+        }
+
+        internal static void Major(IMessageBase[] msg, bool syncToTg = true)
+        {
             Group(G.major, msg);
             if (syncToTg)
-                TG.Major(msg);
+                TG.Major(msg.GetPlain());
         }
 
         internal static void Si(string msg, bool syncToTg = true)
         {
-            Group(G.si, msg);
-            if (syncToTg)
-                TG.Si(msg);
+            Si(new IMessageBase[] {new PlainMessage(msg)}, syncToTg);
         }
 
-        internal static void IDE(string msg, bool syncToTg = true)
+        internal static void Si(IMessageBase[] msg, bool syncToTg = true)
         {
-            Group(G.iDE, msg);
+            Group(G.si, msg);
             if (syncToTg)
-                TG.IDE(msg);
+                TG.Si(msg.GetPlain());
         }
 
         /// <summary>
@@ -53,8 +74,6 @@
 
             internal static void Si(string msg, bool disableWebPagePreview = false) =>
                 Text(G.TG.si, msg, disableWebPagePreview);
-
-            internal static void IDE(string msg) => Text(G.TG.iDE, msg);
         }
     }
 }
