@@ -112,6 +112,8 @@ namespace Clansty.tianlang
 
         public async Task<bool> GroupMessage(MiraiHttpSession session, IGroupMessageEventArgs e)
         {
+            C.WriteLn(e.Chain);
+            
             Q2Tg.NewGroupMsg(
                 session,
                 e.Sender.Group.Id,
