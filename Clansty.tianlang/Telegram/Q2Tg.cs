@@ -50,7 +50,9 @@ namespace Clansty.tianlang
             var xmls = chain.OfType<XmlMessage>().ToArray();
             if (xmls.Any())
             {
-                if (xmls.First().Xml.Contains("url=\""))
+                if(xmls.First().Xml.Contains(@"action=""viewMultiMsg"""))
+                    msg += "\n[转发多条消息记录]";
+                else if (xmls.First().Xml.Contains("url=\""))
                     msg += "\n" + msg.Between("url = \"", "\"");
                 else
                     msg += "\n[XML 卡片]";
@@ -63,9 +65,10 @@ namespace Clansty.tianlang
             #region json
 
             var jsons = chain.OfType<JsonMessage>().ToArray();
-            if (jsons.Any())
+            var apps = chain.OfType<AppMessage>().ToArray();
+            if (jsons.Any() || apps.Any())
             {
-                var jsonText = jsons.First().Json;
+                var jsonText = jsons.Any() ? jsons.First().Json : apps.First().Content;
                 var biliRegex =
                     new Regex(@"(https?:\\?/\\?/b23\.tv\\?/\w*)\??");
                 var zhihuRegex =
@@ -93,8 +96,10 @@ namespace Clansty.tianlang
                 }
                 else if (jsonText.Contains("com.tencent.gamecenter.gameshare_sgame"))
                     msg += "\n王者荣耀组队邀请";
-                else
+                else if (jsons.Any())
                     msg += "\n[JSON 卡片消息]";
+                else if (apps.Any())
+                    msg += "\n[QQ 小程序]";
             }
 
             #endregion
