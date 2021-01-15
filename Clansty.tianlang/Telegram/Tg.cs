@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Mirai_CSharp.Extensions;
+using Mirai_CSharp.Models;
 using Telegram.Bot.Args;
 using Telegram.Bot.Types.ReplyMarkups;
 
@@ -80,42 +82,6 @@ namespace Clansty.tianlang
                         case "bind":
                             TgBinding.Bind(e);
                             return;
-
-                        #region fire
-                        // case "/fire":
-                        //     if (e.Message.Chat.Id != 351768429) return;
-                        //     if (split.Length == 1)
-                        //         C.TG.SendTextMessageAsync(e.Message.Chat, await FireList.getList());
-                        //     else if (split.Length == 2)
-                        //     {
-                        //         var text = split[1];
-                        //         FireList.Resume(text);
-                        //         C.TG.SendTextMessageAsync(e.Message.Chat, "操作成功");
-                        //     }
-                        //     else if (split.Length == 3)
-                        //     {
-                        //         switch (split[1])
-                        //         {
-                        //             case "add":
-                        //                 FireList.Add(long.Parse(split[2]));
-                        //                 break;
-                        //             case "rm":
-                        //                 FireList.Remove(long.Parse(split[2]));
-                        //                 break;
-                        //             default:
-                        //                 C.TG.SendTextMessageAsync(e.Message.Chat, "操作无效");
-                        //                 return;
-                        //         }
-                        //
-                        //         C.TG.SendTextMessageAsync(e.Message.Chat, "操作成功");
-                        //     }
-                        //     else
-                        //     {
-                        //         C.TG.SendTextMessageAsync(e.Message.Chat, "操作无效");
-                        //     }
-                        //
-                        //     return;
-                        #endregion
                     }
                 }
                 catch (Exception exception)
@@ -176,14 +142,16 @@ namespace Clansty.tianlang
                 if (e.Message.Text != null)
                 {
                     //文本转发 tg2q
-                    qtime = await C.QQ.SendGroupMsg(fwdinfo.gin,
-                        sdr +
-                        Utf.Encode(e.Message.Text),
-                        fromqq: fwdinfo.host);
+                    qtime = await fwdinfo.host.SendGroupMessageAsync(fwdinfo.gin,
+                        new PlainMessage(sdr + e.Message.Text));
                     Db.ldb.Put(qtime.ToString(), e.Message.MessageId.ToString());
                     //命令
                     if (e.Message.Chat.Id == G.TG.si)
-                        Cmds.Enter(e.Message.Text.TrimStart('/'), 839827911, false);
+                    {
+                        var rows = Db.users.Select($"tg={e.Message.From.Id}");
+                        var u = new User(rows[0]);
+                        Cmds.Enter(e.Message.Text.TrimStart('/'), u, false);
+                    }
 
                     if (e.Message.Chat.Id == G.TG.major)
                     {
@@ -191,7 +159,7 @@ namespace Clansty.tianlang
                         {
                             var rows = Db.users.Select($"tg={e.Message.From.Id}");
                             var u = new User(rows[0]);
-                            Cmds.Enter(e.Message.Text.GetRight("sudo "), u.Uin, true);
+                            Cmds.Enter(e.Message.Text.GetRight("sudo "), u, true);
                         }
                     }
                 }
@@ -211,16 +179,15 @@ namespace Clansty.tianlang
                 if (ps is null) return;
                 var targ = fwdinfo.gin;
                 var pf = await C.TG.GetFileAsync(ps);
-                var hash = await C.QQ.UploadGroupPic(targ, $"https://api.telegram.org/file/bot{Token}/{pf.FilePath}");
-                var tos = sdr;
+                var tos = new MessageBuilder();
+                tos.AddPlainMessage(sdr);
                 if (!string.IsNullOrWhiteSpace(e.Message.Caption))
                 {
-                    tos += e.Message.Caption + "\n";
+                    tos .AddPlainMessage(e.Message.Caption + "\n");
                 }
 
-                tos = Utf.Encode(tos);
-                tos += hash;
-                qtime = await C.QQ.SendGroupMsg(targ, tos, fromqq: fwdinfo.host);
+                tos.AddImageMessage(url: $"https://api.telegram.org/file/bot{Token}/{pf.FilePath}");
+                qtime = await fwdinfo.host.SendGroupMessageAsync(targ, tos);
                 Db.ldb.Put(qtime.ToString(), e.Message.MessageId.ToString());
             }
         }

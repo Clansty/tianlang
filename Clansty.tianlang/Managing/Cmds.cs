@@ -307,6 +307,10 @@ namespace Clansty.tianlang
 
         internal static void Enter(string msg, long user, bool isMajor)
         {
+            Enter(msg, new User(user), isMajor);
+        }
+        internal static void Enter(string msg, User u, bool isMajor)
+        {
             try
             {
                 msg = msg.Trim();
@@ -319,7 +323,6 @@ namespace Clansty.tianlang
                 if (gcmds.ContainsKey(key))
                 {
                     var m = gcmds[key];
-                    var u = new User(user);
                     if (u.Role < m.Permission)
                     {
                         var toSend = $"权限不够\n{key} 需要 {m.Permission}，而你属于{u.Role}";
