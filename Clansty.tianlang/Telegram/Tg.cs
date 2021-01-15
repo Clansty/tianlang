@@ -49,33 +49,6 @@ namespace Clansty.tianlang
                             C.TG.PinChatMessageAsync(e.Message.Chat, e.Message.MessageId);
                             return;
                         case "/start":
-                            if (e.Message.From.Id != e.Message.Chat.Id) return;
-                            if (split.Length == 2)
-                            {
-                                var param = split[1];
-                                var uuidRegex =
-                                    new Regex(@"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}");
-                                var file = Db.ldb.Get("file" + param).Split(':');
-                                if (uuidRegex.IsMatch(param))
-                                {
-                                    string link;
-                                    if (file.Length == 4)
-                                        link = await C.QQ.GetFileUrl(file[0], file[1], "/" + param, file[3]);
-                                    else
-                                        link = await C.QQ.GetFileUrl(file[0], file[1], file[3], file[4]);
-                                    C.TG.SendTextMessageAsync(e.Message.Chat,
-                                        $"文件: {file.Last()}\n" +
-                                        $"大小: {file[2]}",
-                                        replyMarkup: new InlineKeyboardMarkup(
-                                            new InlineKeyboardButton
-                                            {
-                                                Text = "下载",
-                                                Url = link
-                                            }));
-                                    return;
-                                }
-                            }
-
                             C.TG.SendTextMessageAsync(e.Message.Chat,
                                 "请发送绑定码");
                             return;

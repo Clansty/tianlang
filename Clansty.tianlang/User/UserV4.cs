@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using Mirai_CSharp.Models;
 
 namespace Clansty.tianlang
 {
@@ -145,9 +146,9 @@ namespace Clansty.tianlang
 #if DEBUG
                 return ProperNamecard;
 #else
-                var t = C.QQ.GetGroupCard(G.major, Uin);
+                var t = C.QQ.NthsBot.GetGroupMemberInfoAsync(G.major, Uin);
                 t.Wait();
-                return t.Result;
+                return t.Result.Name;
 #endif
             }
 
@@ -156,7 +157,12 @@ namespace Clansty.tianlang
 #if DEBUG
                 C.WriteLn($"{Uin} 群名片设置为 {value}");
 #else
-                C.QQ.SetGroupCard(G.major, Uin, value);
+                C.QQ.NthsBot.ChangeGroupMemberInfoAsync(G.major, Uin,
+                    new GroupMemberCardInfo
+                    {
+                        Name = value
+                    }
+                );
 #endif
             }
         }
@@ -374,12 +380,12 @@ namespace Clansty.tianlang
                       $"昵称: {Nick}\n" +
                       $"姓名: {Name}\n" +
                       $"入学年份: {Enrollment}\n" +
-                      $"年级: {Grade}\n" + 
+                      $"年级: {Grade}\n" +
                       $"Telegram Uid: {TgUid}\n" +
                       $"实名状态: {VerifyMsg}\n" +
                       $"是大群成员: {IsMember}";
             if (IsMember)
-                ret += "\n" + 
+                ret += "\n" +
                        $"群名片: {Namecard}\n" +
                        $"理想群名片: {ProperNamecard}\n" +
                        $"身份: {Role}";

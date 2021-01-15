@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using Mirai_CSharp;
+using Telegram.Bot;
 
 namespace Clansty.tianlang
 {
