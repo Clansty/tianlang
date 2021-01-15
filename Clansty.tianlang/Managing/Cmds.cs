@@ -9,7 +9,7 @@ namespace Clansty.tianlang
 {
     static class Cmds
     {
-        internal static readonly Dictionary<string, GroupCommand> gcmds = new()
+        internal static readonly Dictionary<string, GroupCommand> gcmds = new Dictionary<string, GroupCommand>()
         {
             ["info"] = new GroupCommand
             {

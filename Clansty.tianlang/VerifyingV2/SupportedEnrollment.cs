@@ -4,7 +4,7 @@ namespace Clansty.tianlang
 {
     static class SupportedEnrollment
     {
-        static readonly List<long> list = new()
+        static readonly List<long> list = new List<long>
         {
             2017,
             2018,

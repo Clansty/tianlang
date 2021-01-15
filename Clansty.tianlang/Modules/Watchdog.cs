@@ -12,7 +12,7 @@ namespace Clansty.tianlang
 
         private static long lasterrtime;
 
-        private static HashSet<(long, long)> session = new();
+        private static HashSet<(long, long)> session = new HashSet<(long, long)>();
 
         public static void RunCheck()
         {

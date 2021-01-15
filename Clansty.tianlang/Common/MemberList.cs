@@ -6,7 +6,7 @@ namespace Clansty.tianlang
 {
     static class MemberList
     {
-        internal static HashSet<long> major = new();
+        internal static HashSet<long> major = new HashSet<long>();
         internal static void UpdateMajor(IGroupMemberInfo[] l)
         {
             major.Clear();

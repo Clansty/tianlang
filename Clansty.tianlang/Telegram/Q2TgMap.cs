@@ -7,32 +7,32 @@ namespace Clansty.tianlang
     {
         public static readonly FwdInfo[] infos =
         {
-            new()
+            new FwdInfo
             {
                 gin = G.iDE,
                 tg = G.TG.iDE
             },
-            new()
+            new FwdInfo
             {
                 gin = G.si,
                 tg = G.TG.si
             },
-            new()
+            new FwdInfo
             {
                 gin = G.dorm,
                 tg = G.TG.dorm
             },
-            new()
+            new FwdInfo
             {
                 gin = G.major,
                 tg = G.TG.major
             },
-            new()
+            new FwdInfo
             {
                 gin = G.wxb,
                 tg = G.TG.wxb
             },
-            new()
+            new FwdInfo
             {
                 //计软院
                 host = C.QQ.Clansty,
@@ -40,7 +40,7 @@ namespace Clansty.tianlang
                 tg = -1001342293974,
                 includeSender = false
             },
-            new()
+            new FwdInfo
             {
                 //程序设计基础
                 host = C.QQ.Clansty,
@@ -48,7 +48,7 @@ namespace Clansty.tianlang
                 tg = -416480031,
                 includeSender = false
             },
-            new()
+            new FwdInfo
             {
                 //软合一班
                 host = C.QQ.Clansty,
@@ -56,7 +56,7 @@ namespace Clansty.tianlang
                 tg = -426831224,
                 includeSender = false
             },
-            new()
+            new FwdInfo
             {
                 //软合二班
                 host = C.QQ.Clansty,
@@ -64,7 +64,7 @@ namespace Clansty.tianlang
                 tg = -1001318314287,
                 includeSender = false
             },
-            new()
+            new FwdInfo
             {
                 //科协
                 host = C.QQ.Clansty,
@@ -72,7 +72,7 @@ namespace Clansty.tianlang
                 tg = -337216611,
                 includeSender = false
             },
-            new()
+            new FwdInfo
             {
                 //科协技术部
                 host = C.QQ.Clansty,
@@ -80,7 +80,7 @@ namespace Clansty.tianlang
                 tg = -433260120,
                 includeSender = false
             },
-            new()
+            new FwdInfo
             {
                 //英语提高3班
                 host = C.QQ.Clansty,
@@ -88,7 +88,7 @@ namespace Clansty.tianlang
                 tg = -279581459,
                 includeSender = false
             },
-            new()
+            new FwdInfo
             {
                 //高数
                 host = C.QQ.Clansty,
@@ -96,7 +96,7 @@ namespace Clansty.tianlang
                 tg = -411013453,
                 includeSender = false
             },
-            new()
+            new FwdInfo
             {
                 //家长群
                 host = C.QQ.Clansty,
@@ -104,7 +104,7 @@ namespace Clansty.tianlang
                 tg = -481322235,
                 includeSender = false
             },
-            new()
+            new FwdInfo
             {
                 //计算机基础
                 host = C.QQ.Clansty,
@@ -112,7 +112,7 @@ namespace Clansty.tianlang
                 tg = -494959345,
                 includeSender = false
             },
-            new()
+            new FwdInfo
             {
                 //web
                 host = C.QQ.Clansty,
@@ -120,13 +120,13 @@ namespace Clansty.tianlang
                 tg = -409372799,
                 includeSender = false
             },
-            new()
+            new FwdInfo
             {
                 gin = G.testNew,
                 tg = G.TG.testNew,
                 includeSender = false
             },
-            new()
+            new FwdInfo
             {
                 //xiaoshuiqun
                 host = C.QQ.Clansty,
@@ -134,7 +134,7 @@ namespace Clansty.tianlang
                 tg = -1001166128384,
                 includeSender = false
             },
-            new()
+            new FwdInfo
             {
                 //huashui
                 host = C.QQ.Clansty,
@@ -142,7 +142,7 @@ namespace Clansty.tianlang
                 tg = -497638833,
                 includeSender = false
             },
-            new()
+            new FwdInfo
             {
                 //dc
                 host = C.QQ.Clansty,
@@ -150,7 +150,7 @@ namespace Clansty.tianlang
                 tg = -429181992,
                 includeSender = false
             },
-            new()
+            new FwdInfo
             {
                 //母校行
                 host = C.QQ.Clansty,
@@ -158,7 +158,7 @@ namespace Clansty.tianlang
                 tg = -1001234778158,
                 includeSender = false
             },
-            new()
+            new FwdInfo
             {
                 //nths@nuist
                 host = C.QQ.Clansty,
@@ -166,7 +166,7 @@ namespace Clansty.tianlang
                 tg = -455439414,
                 includeSender = false
             },
-            new()
+            new FwdInfo
             {
                 gin = 628301340,
                 tg = -1001192668953,
