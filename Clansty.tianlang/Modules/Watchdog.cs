@@ -20,6 +20,7 @@ namespace Clansty.tianlang
             session.Clear();
 
             C.QQ.Clansty.SendGroupMessageAsync(G.check, new PlainMessage(checkUuid));
+            C.QQ.NthsBot.SendGroupMessageAsync(G.check, new PlainMessage(checkUuid));
 
             Task.Run(Timer);
         }

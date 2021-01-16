@@ -58,8 +58,6 @@ namespace Clansty.tianlang
                     msg += "\n[XML 卡片]";
             }
 
-            msg = msg.Trim(' ', '\r', '\n', '\t');
-
             #endregion
 
             #region json
@@ -81,8 +79,7 @@ namespace Clansty.tianlang
                     url = url.Replace("\\", "");
                     msg += "\n" + url;
                 }
-
-                if (zhihuRegex.IsMatch(jsonText))
+                else if (zhihuRegex.IsMatch(jsonText))
                 {
                     var url = zhihuRegex.Match(jsonText).Groups[1].Value;
                     url = url.Replace("\\", "");
@@ -118,6 +115,8 @@ namespace Clansty.tianlang
 
             #endregion
 
+            msg = msg.Trim(' ', '\r', '\n', '\t');
+            
             Message message;
             var photos = chain.OfType<ImageMessage>().ToArray();
             var voices = chain.OfType<VoiceMessage>().ToArray();
