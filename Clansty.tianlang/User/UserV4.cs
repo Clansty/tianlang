@@ -146,7 +146,7 @@ namespace Clansty.tianlang
 #if DEBUG
                 return ProperNamecard;
 #else
-                var t = C.QQ.NthsBot.GetGroupMemberInfoAsync(G.major, Uin);
+                var t = C.QQ.NthsBot.GetGroupMemberInfoAsync(Uin, G.major);
                 t.Wait();
                 return t.Result.Name;
 #endif
@@ -157,7 +157,7 @@ namespace Clansty.tianlang
 #if DEBUG
                 C.WriteLn($"{Uin} 群名片设置为 {value}");
 #else
-                C.QQ.NthsBot.ChangeGroupMemberInfoAsync(G.major, Uin,
+                C.QQ.NthsBot.ChangeGroupMemberInfoAsync(Uin, G.major,
                     new GroupMemberCardInfo
                     {
                         Name = value
