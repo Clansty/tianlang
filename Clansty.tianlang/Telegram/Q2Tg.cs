@@ -70,7 +70,7 @@ namespace Clansty.tianlang
                 var biliRegex =
                     new Regex(@"(https?:\\?/\\?/b23\.tv\\?/\w*)\??");
                 var zhihuRegex =
-                    new Regex(@"(https?:\\?/\\?/www\.zhihu\.com\\?/[^?""=]*)\??");
+                    new Regex(@"(https?:\\?/\\?/\w*\.?zhihu\.com\\?/[^?""=]*)\??");
                 var jsonLinkRegex =
                     new Regex(@"{.*""app"":""com.tencent.structmsg"".*""jumpUrl"":""(https?:\\?/\\?/[^"",]*)"".*}");
                 if (biliRegex.IsMatch(jsonText))
