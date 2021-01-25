@@ -77,7 +77,7 @@ namespace Clansty.tianlang
                         }
                     }
                 };
-                e.Reply(new IMessageBase[]{new JsonMessage(JsonConvert.SerializeObject(json).Replace("https://", "http://"))});
+                e.Reply(new IMessageBase[]{new AppMessage(JsonConvert.SerializeObject(json).Replace("https://", "http://").Replace("/", "\\/"))});
             }
             catch (Exception ex)
             {
