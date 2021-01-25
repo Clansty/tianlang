@@ -129,11 +129,6 @@ namespace Clansty.tianlang
             if (e.Chain.GetPlain().StartsWith("点歌"))
                 NetEase.Request(e);
 
-            if (e.Sender.Group.Id == G.check)
-            {
-                Watchdog.Msg(SELF, e.Sender.Id, e.Chain.GetPlain());
-            }
-
             if (e.Sender.Group.Id == G.si)
                 Cmds.Enter(e.Chain.GetPlain(), e.Sender.Id, false);
 

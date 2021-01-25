@@ -17,9 +17,9 @@ namespace Clansty.tianlang
             t.AutoReset = true;
             t.Enabled = true;
             u = new Timer(1000 * 60 * 10);
-            u.Elapsed += async (_, __) =>
+            u.Elapsed += (_, __) =>
             {
-                Watchdog.RunCheck();
+                // Watchdog.RunCheck();
                 Db.Commit();
             };
             u.AutoReset = true;
