@@ -24,13 +24,9 @@ namespace Clansty.tianlang
 #endif
             //init qq bots
             var nthsBotHandler = new NthsBotEvents();
-            var privateHandler = new PrivateEvents();
             C.QQ.NthsBot = new MiraiHttpSession();
             C.QQ.NthsBot.AddPlugin(nthsBotHandler);
-            C.QQ.Clansty = new MiraiHttpSession();
-            C.QQ.Clansty.AddPlugin(privateHandler);
             await C.QQ.NthsBot.ConnectAsync(C.miraiSessionOpinions, NthsBotEvents.SELF);
-            await C.QQ.Clansty.ConnectAsync(C.miraiSessionOpinions, PrivateEvents.SELF);
             
             //init system component
             Db.Init();
