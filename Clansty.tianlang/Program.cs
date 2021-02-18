@@ -16,18 +16,19 @@ namespace Clansty.tianlang
         {
             Console.CancelKeyPress += Exit;
             Console.Title = $@"ClanstyBots Server {C.Version}";
-#if !DEBUG
-            //init telegram bots
-            C.TG = new TelegramBotClient(Tg.Token);
-            C.TG.OnMessage += Tg.OnMsg;
-            C.TG.StartReceiving();
-#endif
             //init qq bots
             var nthsBotHandler = new NthsBotEvents();
             C.QQ.NthsBot = new MiraiHttpSession();
             C.QQ.NthsBot.AddPlugin(nthsBotHandler);
             await C.QQ.NthsBot.ConnectAsync(C.miraiSessionOpinions, NthsBotEvents.SELF);
             
+            #if !DEBUG
+            //init telegram bots
+            C.TG = new TelegramBotClient(Tg.Token);
+            C.TG.OnMessage += Tg.OnMsg;
+            C.TG.StartReceiving();
+            #endif
+
             //init system component
             Db.Init();
             Timers.Init();
