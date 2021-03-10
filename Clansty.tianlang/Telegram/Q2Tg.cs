@@ -142,7 +142,7 @@ namespace Clansty.tianlang
             {
                 //voice
                 var url = voices.First().Url;
-                var path = "/root/silk/" + DateTime.Now.ToBinary();
+                var path = "/home/clansty/silk/" + DateTime.Now.ToBinary();
                 new WebClient().DownloadFile(url, path);
                 var oggpath = Silk.decode(path);
                 message = await C.TG.SendVoiceAsync(fwdinfo.tg, File.OpenRead(oggpath), from + ":",

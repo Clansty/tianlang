@@ -5,7 +5,7 @@ namespace Clansty.tianlang
 {
     public static class Silk
     {
-        private const string decoder = "/root/silk-v3-decoder/silk/decoder";
+        private const string decoder = "/home/clansty/silk-v3-decoder/silk/decoder";
         
         public static string decode(string path)
         {

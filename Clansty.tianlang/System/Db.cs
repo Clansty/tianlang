@@ -25,8 +25,8 @@ namespace Clansty.tianlang
             var jsonUsers = File.ReadAllText(@"C:\Users\clans\Desktop\users", Encoding.UTF8);
             var jsonPersons = File.ReadAllText(@"C:\Users\clans\Desktop\persons", Encoding.UTF8);
             #else
-            var jsonUsers = File.ReadAllText("/root/data/users", Encoding.UTF8);
-            var jsonPersons = File.ReadAllText("/root/data/persons", Encoding.UTF8);
+            var jsonUsers = File.ReadAllText("/home/clansty/data/users", Encoding.UTF8);
+            var jsonPersons = File.ReadAllText("/home/clansty/data/persons", Encoding.UTF8);
             #endif
             users = JsonConvert.DeserializeObject<DataTable>(jsonUsers);
             persons = JsonConvert.DeserializeObject<DataTable>(jsonPersons);
@@ -36,18 +36,18 @@ namespace Clansty.tianlang
             if (!reload)
             {
                 var options = new Options { CreateIfMissing = true };
-                ldb = new DB(options, "/root/ldb/qtime2tgmsgid");
+                ldb = new DB(options, "/home/clansty/ldb/qtime2tgmsgid");
             }
             SeMembers =
-                JsonConvert.DeserializeObject<Dictionary<long, SeMember>>(File.ReadAllText("/root/data/rh.json"));
+                JsonConvert.DeserializeObject<Dictionary<long, SeMember>>(File.ReadAllText("/home/clansty/data/rh.json"));
 #endif
         }
         internal static void Commit()
         {
             var jsonUsers = JsonConvert.SerializeObject(users);
-            File.WriteAllText("/root/data/users", jsonUsers);
+            File.WriteAllText("/home/clansty/data/users", jsonUsers);
             var dt = DateTime.Now.ToString("MM.dd.yyyy.HH.mm.ss");
-            File.WriteAllText($"/root/data/bak/{dt}.users", jsonUsers);
+            File.WriteAllText($"/home/clansty/data/bak/{dt}.users", jsonUsers);
         }
     }
 }

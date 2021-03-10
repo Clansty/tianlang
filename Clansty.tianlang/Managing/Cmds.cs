@@ -237,7 +237,7 @@ namespace Clansty.tianlang
                     {
                         RedirectStandardOutput = true,
                         RedirectStandardError = true,
-                        WorkingDirectory = "/root/nthsbot"
+                        WorkingDirectory = "/home/clansty/nthsbot"
                     });
                     p.WaitForExit();
                     var ret = p.StandardOutput.ReadToEnd() + p.StandardError.ReadToEnd();
@@ -274,7 +274,7 @@ namespace Clansty.tianlang
                         {
                             RedirectStandardOutput = true,
                             RedirectStandardError = true,
-                            WorkingDirectory = "/root/nthsbot"
+                            WorkingDirectory = "/home/clansty/nthsbot"
                         });
 
                     else
@@ -282,7 +282,7 @@ namespace Clansty.tianlang
                         {
                             RedirectStandardOutput = true,
                             RedirectStandardError = true,
-                            WorkingDirectory = "/root/nthsbot"
+                            WorkingDirectory = "/home/clansty/nthsbot"
                         });
                     p.WaitForExit();
                     var ret = p.StandardOutput.ReadToEnd() + p.StandardError.ReadToEnd();
